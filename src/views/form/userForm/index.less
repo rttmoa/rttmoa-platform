@@ -1,0 +1,68 @@
+.userForm { 
+  .card-top{
+    display: flex;
+    flex-direction: column;
+    .div-top{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e2e8f0;
+      .userInfo {
+        display: flex;
+        align-items: center;
+        .avatar {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 32px;
+          height: 32px;
+          background-color: #34becd;
+          border-radius: 5px;
+          margin-right: 10px;
+        }
+        .auth {
+          display: flex;
+          flex-direction: column;
+          .person {
+            font-size: 13px;
+          }
+          .admin {
+            font-size: 16px;
+            font-weight: 700;
+          }
+        }
+      }
+      .userUpdate {
+        .ant-btn {
+          color: #0070D2;
+          font-size: 13px;
+        }
+      }
+    }
+    .div-bottom {
+      margin-top: 10px;
+      .anticon {
+        font-size: 18px;
+        margin-right: 10px;
+      }
+      font-size: 13px;
+    }
+  }
+  .basic-form {
+    .ant-card-body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .ant-form {
+        width: 450px;
+        // 文本颜色
+        .optional {
+          color: var(--hooks-colorTextTertiary);
+        }
+      }
+    }
+  }
+  
+}

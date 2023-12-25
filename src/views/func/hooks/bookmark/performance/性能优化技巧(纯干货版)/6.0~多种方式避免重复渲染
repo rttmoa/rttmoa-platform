@@ -1,0 +1,31 @@
+
+
+
+
+
+
+
+
+
+避免重复渲染,是react性能优化的重要方向
+    
+    1、学会使用的批量更新
+        实际主要是针对无状态组件和hooks中useState,和 class有状态组件中的this.setState，两种方法已经做了批量更新的处理
+
+    2、合并state
+        对于有状态组件，合并this.setState、避免一个函数出现出个this.setState
+        对于无状态组件，我们可以通过一个useState保存多个状态，没有必要每一个状态都用一个useState
+
+    3、useMemo React.memo隔离单元
+        可以通过使用useMemo进行隔离，形成独立的渲染单元，
+        每次更新上一个状态会被缓存，循环不会再执行，子组件也不会再次被渲染
+
+    4、‘取缔’state，学会使用缓存。
+        有状态组件中this取代state改为缓存        this.text = this.props.a
+        无状态组件中useRef取代useState改为缓存   text.current = a
+
+    5、useCallback回调
+        const fn = useCallback( () => { xxx },[])
+        pureComponent 和 react.memo 通过浅比较方式，只能判断每次更新都是新的callback，然后触发渲染更新。
+        useCallback给加了一个记忆功能，告诉我们子组件，两次是相同的 callback无需重新更新页面。
+        至于什么时候callback更改，就要取决于 useCallback 第二个参数

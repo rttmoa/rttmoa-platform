@@ -1,0 +1,39 @@
+
+
+// React 实现input输入框的防抖和节流: https://www.shuzhiduo.com/A/D854E9MYdE/
+一、防抖和节流
+    1.为什么使用防抖和节流
+        对于频繁触发的事件 比如keydown keyup事件 当频繁点击时候 会多次触发事件 页面出现卡顿 影响性能
+
+    2.函数防抖（debounce）：间隔时间内只执行一次   
+    函数节流（throttle）：间隔时间内执行
+
+    3.使用场景
+        函数防抖：搜索框等 
+        函数节流：鼠标不断点击事件等
+
+    4.目的：提升性能 提高用户体验
+
+    5.用react实现防抖和节流
+
+    6.使用lodash实现防抖和节流
+        import _ from 'lodash';
+        实现防抖 ：onClick = { _.debounce(this.ajax, 200)}
+        实现节流 ：onClick = { _.throttle(this.ajax, 200)}
+
+二、Redux： 
+    redux如何在项目中配置
+    1、Redux核心理念
+        通过 store 来 保存数据
+        通过 action 来 修改数据
+        通过 reducer 来 关联 store 和 action
+
+    2、三大原则
+        单一数据源
+        State是只读的
+        使用纯函数来执行修改
+
+    3、在redux中添加redux-thunk中间件
+
+    4、在redux中添加redux-saga中间件
+

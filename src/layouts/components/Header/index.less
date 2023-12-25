@@ -1,0 +1,163 @@
+
+// ! 头部 CSS：头部左侧布局 + 头部右侧布局 + 菜单搜索弹窗组件 + 通知组件
+
+
+/* toolBar left (头部：左侧盒子布局)  */
+.tool-bar-lf {
+  display: flex;
+  align-items: center;
+  padding-right: 50px;
+  overflow: hidden;
+  .collapsed {
+    margin-right: 20px;
+    font-size: calc((var(--hooks-fontSizeLG) + 2) * 1px);
+    color: var(--hooks-colorTextHeader);
+    cursor: pointer;
+    transition: color 0.3s;
+    &:hover {
+      color: var(--hooks-colorPrimaryText);
+    }
+  }
+  .ant-breadcrumb {
+    // 强制在同一行显示所有文本，直到文本结束或遭遇br对象
+    white-space: nowrap;
+    ol {
+      flex-wrap: nowrap;
+      li:last-child {
+        color: var(--hooks-colorTextHeader);
+      }
+      .ant-breadcrumb-separator {
+        color: var(--hooks-colorTextSecondaryHeader);
+      }
+      .ant-breadcrumb-link {
+        a {
+          color: var(--hooks-colorTextSecondaryHeader);
+          &:hover {
+            color: var(--hooks-colorTextHeader);
+            background-color: var(--hooks-colorTextHoverHeader);
+          }
+        }
+      }
+      .ant-breadcrumb-overlay-link {
+        color: var(--hooks-colorTextSecondaryHeader);
+        &:hover {
+          color: var(--hooks-colorTextHeader);
+          background-color: var(--hooks-colorTextHoverHeader);
+        }
+      }
+    }
+  }
+}
+
+/* toolBar right  (头部：右侧盒子布局) */
+.tool-bar-ri {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  height: 55px;
+  line-height: 55px;
+  .header-icon {
+    & > * {
+      margin-left: 20px;
+      color: var(--hooks-colorTextHeader);
+    }
+  }
+  .username {
+    margin: 0 12px;
+    font-size: 14px;
+    color: var(--hooks-colorTextHeader);
+  }
+  .avatar {
+    cursor: pointer;
+  }
+}
+
+/* Message  (通知图标组件：通知、消息、代办) */
+.message-popover {
+  .ant-popover-content {
+    width: 305px;
+  }
+  // 通知列表
+  .notice-list {
+    display: flex;
+    flex-direction: column;
+    // 通知列表每一项
+    .notice-item {
+      display: flex;
+      align-items: center;
+      padding: 17px 0;
+      border-bottom: 1px solid var(--hooks-colorBorderSecondary);
+      &:last-child {
+        border: none;
+      }
+      .notice-icon {
+        width: 40px;
+        height: 40px;
+        margin: 0 20px 0 5px;
+      }
+      .notice-content {
+        display: flex;
+        flex-direction: column;
+        .notice-title {
+          margin-bottom: 5px;
+        }
+        .notice-time {
+          font-size: 12px;
+          color: var(--hooks-colorTextSecondary);
+        }
+      }
+    }
+  }
+}
+
+/* Search Menu  (搜索图标组件：搜索项目所有菜单) */
+.search-modal {
+  .menu-list {
+    max-height: 510px;
+    margin-top: 15px;
+    // overflow：auto的用法和实现弹性盒横向滚动     https://blog.csdn.net/a1598452168YY/article/details/127111884
+    overflow: auto;
+    padding: 0 15px;
+    .menu-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      height: 46px;
+      padding: 0 20px;
+      margin: 10px 0;
+      color: var(--hooks-colorTextSecondary);
+      cursor: pointer;
+      background-color: transparent;
+      border: 1px solid var(--hooks-colorBorder);
+      border-radius: calc(var(--hooks-borderRadius) * 1px);
+      transition: all 0.2s ease;
+      .menu-icon {
+        margin-right: 8px;
+        font-size: 16px;
+      }
+      .menu-title {
+        font-size: 14px;
+      }
+      .menu-enter {
+        position: absolute;
+        right: 20px;
+        font-size: 16px;
+      }
+    }
+    // 移动到当前 菜单项中 (让图标、字体、回车键 都变大)
+    .menu-active {
+      color: #ffffff;
+      background-color: var(--hooks-colorPrimary);
+      .menu-icon {
+        font-size: 18px;
+      }
+      .menu-title {
+        font-size: 16px;
+      }
+      .menu-enter {
+        font-size: 20px;
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    // "moduleResolution": "bundler",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false, // 报错：出现这个波浪线提示的意思是因为你声明的变量未引用 
+    "noFallthroughCasesInSwitch": true,
+
+    /* other */
+    "baseUrl": "./",
+    "paths": {
+      "@": ["src"],
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "build/**/*.ts", "build/**/*.d.ts", "vite.config.ts", "src/component/Markdown/index.tsx", "src/component/Markdown/iconfont.js"],
+  "exclude": ["node_modules", "dist", "**/*.js"]
+}

@@ -1,0 +1,47 @@
+
+? Components
+
+1、页脚 Main > Footer
+  控制页脚显示；主题设置控制页脚是否显示，控制Footer
+
+
+2、头部 > Header
+  2.1、头部左侧：
+    √ 折叠菜单；React.createElement
+    ! 面包屑
+
+  2.2、头部右侧：
+    主题设置: 点击<i></i>字体图标后，侧边主题抽屉可见  dispatch(setGlobalState({ key: "themeDrawerVisible", value: true }))
+    ! 搜索按钮：
+    通知：点击气泡卡片Popover展示出 标签栏Tabs 通知、消息、代办项    <Popover /> <Tabs /> import.meta.glob('notice*.png') as IconImports
+    图标大小：点击Dropdown组件 配置菜单Menu 设置componentSize组件大小    dispatch(setGlobalState({ key: "componentSize", value: val.key as SizeType }));
+    切换中英文：点击Dropdown组件 配置菜单Menu 设置中英文语言    dispatch(setGlobalState({ key: "language", value: val.key as LanguageType }));
+    全屏：点击<i></i>字体图标后，变成全屏显示 (F11相同功能)    import { useFullscreen } from 'ahooks'
+    用户名：显示aliFonts字体格式、可以显示中英文用户名
+    ! 头像：
+
+
+3、主体 > Main 
+  3.0、Main：HTML + CSS 结构处理
+  3.1、Main 包含 TabViews、Footer
+  3.2、开启 最大化 | root.classList.toggle("main-maximize", maximize)
+  3.3、监视窗口变化，折叠菜单
+  3.4、<LayoutMain />  <Maximize />  <LayoutTabs />  <CSSTranstion />  <LayoutFooter />
+
+
+4、侧边栏菜单 > Menu 
+  4.1、四种布局方式的侧边栏封装方式
+  4.2、Menu属性的处理：主题颜色、菜单类型、当前选中项、菜单配置项
+
+
+5、标签栏TabViews Main > Tabs
+  5.0、路由的处理 & 接口菜单的处理
+  5.1、标签管理业务逻辑 (增删查 代码的实现及状态管理的处理)
+  5.2、Tabs 配置项 / 当前高亮激活项 / 删除 / 添加 / 切换 / 拖拽 / 更多操作   <LayoutTabs />  <DraggableTabNode />  <MoreButton />
+
+
+6、主题配置 > ThemeDrawer
+  6.0、配置相关：布局样式 & 全局主题 & 界面设置
+  6.1、怎样通过 redux 设置全局 (全局主题颜色、圆角大小)
+  6.2、主题设置组件： HTML结构 + CSS样式
+  6.3、颜色挑选  (全局主题 / 主题颜色设置)   <ColorPicker />

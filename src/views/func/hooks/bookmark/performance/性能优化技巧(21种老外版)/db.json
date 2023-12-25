@@ -1,0 +1,31 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }, 
+  
+  "employeeDetails": [
+      {"id": 1, "name": "Mayank"},
+      {"id": 2, "name": "Meha"},
+      {"id": 3, "name": "Anshul"}
+  ],
+
+  "movieLists": [
+    {"id": 1, "name": "XYZ"},
+    {"id": 2, "name": "ABC"},
+    {"id": 3, "name": "BBC"}
+]
+}
