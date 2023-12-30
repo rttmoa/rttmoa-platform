@@ -2,16 +2,18 @@
 import React from "react";
 import { Card, Descriptions, Tag, Typography } from "antd";
 import "./index.less";
-
+import Component from './components'
 const { Link, Title } = Typography;
 const style = { width: "280px" };
 
 const About: React.FC = () => {
   const { pkg, lastBuildTime } = __APP_INFO__;
   const { dependencies, devDependencies, version } = pkg;
-
+  
   return (
     <div className="about-content">
+      {/* 测试 Hooks */}
+      <Component />
       <Card className="mb10">
         <Title level={4} className="mb15">关于； Descriptions | pkg</Title>
         <span className="text">
