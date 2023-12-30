@@ -25,6 +25,7 @@ const reducer = (state: any, action: Action) => {
   }
 };
 
+// ? useApiCallOnMount-useReducer
 const useApiCallOnMount = (service: Promise<any>) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -44,4 +45,4 @@ const useApiCallOnMount = (service: Promise<any>) => {
 
 export default useApiCallOnMount;
 
-// const [loading, data, error] = useApiCallOnMount()
+// const [loading, data, error] = useApiCallOnMount(getButtonData)
