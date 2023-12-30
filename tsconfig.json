@@ -19,7 +19,7 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false, // 报错：出现这个波浪线提示的意思是因为你声明的变量未引用 
     "noFallthroughCasesInSwitch": true,
-
+    "noImplicitThis": false, 
     /* other */
     "baseUrl": "./",
     "paths": {
