@@ -5,7 +5,8 @@ type actionType = {
   data: any;
   error: string;
 };
-// ? useFetchReducer:  https://codesandbox.io/s/elastic-framework-9wqd9?file=/src/App.js:140-188
+// ? useFetchReducer
+// https://codesandbox.io/s/elastic-framework-9wqd9?file=/src/App.js:140-188
 export default function useFetchReducer(initData = null) {
   const initialState = {
     status: "idle",
