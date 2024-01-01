@@ -13,10 +13,10 @@
   "homepage": "https://github.com/rttmoa",
   "repository": {
     "type": "git",
-    "url": ".git"
+    "url": "git@github.com:rttmoa/rttmoa-platform.git"
   },
   "bugs": {
-    "url": "/issues"
+    "url": "https://github.com/rttmoa/rttmoa-platform/issues"
   },
   "scripts": {
     "start": "vite",
