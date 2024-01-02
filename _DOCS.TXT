@@ -64,3 +64,5 @@ TODO: 参考
     + 1.2 添加功能、路由跳转等等
     + 尝试使用 `npm i --save-dev @types/react-cropper-pro` (如果存在)，或者添加一个包含 `declare module 'react-cropper-pro';` 的新声明(.d.ts)文件
     + 修复bug：降低 react-transition-group 包导致项目启动失败
+
+改为自动化模式
