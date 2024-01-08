@@ -6,10 +6,10 @@
 // https://www.npmjs.com/package/axios-hooks
 // https://github.com/visionmedia/superagent
 
-import { reqFetch, getFetch, postFetch, putFetch, deleteFetch, patchFetch } from './fetch'
-import { useReqFetch, usePostFetch, useGetFetch, usePutFetch, useDeleteFetch, usePatchFetch } from './useFetch'
+import { reqFetch, getFetch, postFetch, putFetch, deleteFetch, patchFetch } from "./fetch";
+import { useReqFetch, usePostFetch, useGetFetch, usePutFetch, useDeleteFetch, usePatchFetch } from "./useFetch";
 
-export { 
+export {
   // useFetchjs (fetch Hooks)
   useReqFetch,
   usePostFetch,
@@ -24,5 +24,5 @@ export {
   postFetch,
   putFetch,
   deleteFetch,
-  patchFetch,
-}
+  patchFetch
+};
