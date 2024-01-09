@@ -20,6 +20,7 @@ const RouterProvider: React.FC = () => {
 
   useTheme(); //    ! 设置全局主题颜色
   useMessage(); //  ! 设置消息
+  // Watermark({ content: "rttmoa", container: document.getElementById("root") });
 
   const { initPermissions } = usePermissions();
 

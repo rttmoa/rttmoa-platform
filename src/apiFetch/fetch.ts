@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /**
  * Fetch Api
  * 1. reqFetch(url, params)
@@ -143,7 +144,7 @@ const handleFetchData = (url: string, options: any) => {
                 const disposition = response.headers.get("content-disposition");
                 const fileName = decodeURI(disposition?.split("=")[1].replace(/'/g, "")!).replace("utf-8''", "") || "";
                 const objectUrl = URL.createObjectURL(blob);
-                const downloadElement = document.createElement("a");
+                const downloadElement = document.createElement("a") as any;
                 document.body.appendChild(downloadElement);
                 downloadElement.style = "display: none";
                 downloadElement.href = objectUrl;

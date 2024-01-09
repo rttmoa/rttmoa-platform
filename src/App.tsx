@@ -48,7 +48,7 @@ const App: React.FC = () => {
     initLanguage();
   }, [language]);
 
-  let configProviderProps = {
+  const configProviderProps = {
     locale: language === "zh" ? zhCN : enUS, // 配置国际化：https://ant.design/docs/react/i18n-cn#configprovider
     componentSize: componentSize,
     autoInsertSpaceInButton: true,
