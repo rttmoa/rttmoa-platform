@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import CachePng from "@/assets/images/cache.png";
+import { Button, Space } from "antd";
 
 // ? 错误边界
 function ErrorBoundary(props: any) {
@@ -15,20 +17,35 @@ function ErrorBoundary(props: any) {
   }, []);
   if (error) {
     return (
-      <div>
-        <h1>
-          {"<ErrorBoundary />"}, SomeThing went wrong: {error}
-        </h1>
-        <button
-          onClick={() => {
-            window.open("/");
-            // window.replace("/");
-            // window.history.back(-1);
-            // window.location.href("/");
-          }}
-        >
-          新界面
-        </button>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div style={{ marginTop: 130 }}>
+          <img src={CachePng} alt="ErrorBoundary" style={{ width: 500 }} />
+        </div>
+        <br />
+        <h3>
+          {"<ErrorBoundary />"}, SomeThing went wrong： {error}
+        </h3>
+        <div>
+          <Space>
+            <Button
+              onClick={() => {
+                window.location.reload();
+              }}
+            >
+              重新加载
+            </Button>
+            <Button
+              onClick={() => {
+                window.open("/");
+                // window.replace("/");
+                // window.history.back(-1);
+                // window.location.href("/");
+              }}
+            >
+              跳转新界面
+            </Button>
+          </Space>
+        </div>
       </div>
     );
   }

@@ -304,6 +304,123 @@
             "isFull": false,
             "isAffix": false
           }
+        },
+        {
+          "path": "/feat/demo",
+          "element": "/feat/demo/index",
+          "meta": {
+            "key": "demo",
+            "icon": "AppstoreOutlined",
+            "title": "演示",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        },
+        {
+          "path": "/feat/parallax",
+          "element": "/feat/parallax/index",
+          "meta": {
+            "key": "parallax",
+            "icon": "AppstoreOutlined",
+            "title": "parallax",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        },
+        {
+          "path": "/feat/qrcode",
+          "element": "/feat/qrcode/index",
+          "meta": {
+            "key": "qrcode",
+            "icon": "AppstoreOutlined",
+            "title": "QRcode",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        },
+        {
+          "path": "/feat/prism",
+          "element": "/feat/prism/index",
+          "meta": {
+            "key": "prism",
+            "icon": "AppstoreOutlined",
+            "title": "PrismTitle",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        },
+        {
+          "path": "/feat/tilt",
+          "element": "/feat/tilt/index",
+          "meta": {
+            "key": "tilt",
+            "icon": "AppstoreOutlined",
+            "title": "ReactTilt",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        },
+        {
+          "path": "/feat/music",
+          "element": "/feat/music/index",
+          "meta": {
+            "key": "music",
+            "icon": "AppstoreOutlined",
+            "title": "Music",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        },
+        {
+          "path": "/feat/crypto",
+          "element": "/feat/crypto/index",
+          "meta": {
+            "key": "crypto",
+            "icon": "AppstoreOutlined",
+            "title": "Crypto",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        },
+        {
+          "path": "/feat/video",
+          "element": "/feat/video/index",
+          "meta": {
+            "key": "video",
+            "icon": "AppstoreOutlined",
+            "title": "Video",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        },
+        {
+          "path": "/feat/three",
+          "element": "/feat/three/index",
+          "meta": {
+            "key": "three",
+            "icon": "AppstoreOutlined",
+            "title": "Three",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
         }
       ]
     },
