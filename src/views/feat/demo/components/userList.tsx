@@ -1,5 +1,6 @@
-import { Card } from "antd";
-import React from "react";
+import { Card, Descriptions } from "antd";
+import React, { useState } from "react";
+import type { DescriptionsProps } from "antd";
 
 interface UserType {
   name: string;
@@ -8,11 +9,26 @@ interface UserType {
 }
 
 const UserDemo: React.FC<{ user: UserType }> = ({ user }): any => {
+  const items: DescriptionsProps["items"] = [
+    {
+      key: "1",
+      label: "name",
+      children: user["name"]
+    },
+    {
+      key: "2",
+      label: "age",
+      children: user["age"]
+    },
+    {
+      key: "3",
+      label: "address",
+      children: user["address"]
+    }
+  ];
   return (
     <>
-      <div>
-        
-      </div>
+      <Descriptions title="userInfo" items={items} />
     </>
   );
 };
