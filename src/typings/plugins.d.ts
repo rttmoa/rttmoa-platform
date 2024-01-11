@@ -4,3 +4,4 @@
 // declare module "react-transition-group";
 
 declare module "qrcode";
+declare module "crypto-js";
