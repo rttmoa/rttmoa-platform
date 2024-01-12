@@ -2,7 +2,7 @@
 /* eslint-disable prettier/prettier */
 import { Card } from "antd";
 import * as Utils from '@/utils'
-import * as Is from "@/utils/is";
+import * as Is from "@/utils/is/is";
 
 
 

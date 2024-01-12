@@ -1,4 +1,5 @@
 /* eslint-disable prefer-rest-params */
+
 class StorageFn {
   [x: string]: any;
   constructor() {

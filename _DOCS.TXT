@@ -69,7 +69,10 @@ TODO: 参考
 
 
 
-改为自动化模式
+
+TODO: 改为自动化模式
+TODO: 链接：https://blog.csdn.net/weixin_46533577/article/details/132760167
+
   1、安装:  
     E:\Project\rttmoa-platform> npm install husky -D
   
