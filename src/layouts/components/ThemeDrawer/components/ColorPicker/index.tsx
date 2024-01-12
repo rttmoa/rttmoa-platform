@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Input } from "antd";
 import { HexColorPicker } from "react-colorful";
-import { isHexColor } from "@/utils/is";
+import { isHexColor } from "@/utils/is/is";
 import { convertToSixDigitHexColor } from "@/utils";
 
 import { setGlobalState } from "@/redux/modules/global";

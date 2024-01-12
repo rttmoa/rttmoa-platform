@@ -3,7 +3,7 @@
 import React from "react";
 
 import * as uts from "@/utils/is";
-import { randomHex } from "@/utils/common";
+import { randomHex } from "@/utils/public";
 
 export default function Utils() {
   console.log("========  Utils IS ========");
