@@ -421,6 +421,19 @@
             "isFull": false,
             "isAffix": false
           }
+        },
+        {
+          "path": "/feat/mermaid",
+          "element": "/feat/mermaid/index",
+          "meta": {
+            "key": "mermaid",
+            "icon": "AppstoreOutlined",
+            "title": "Mermaid",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
         }
       ]
     },

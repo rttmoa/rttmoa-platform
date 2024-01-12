@@ -17,10 +17,10 @@ const About: React.FC = () => {
       <Card className="mb10">
         <Title level={4} className="mb15">关于； Descriptions | pkg</Title>
         <span className="text">
-          <Link href="https://github.com/HalseySpicy/Hooks-Admin" target="_blank">
-            Hooks-Admin{" "}
+          <Link href="https://github.com/rttmoa/rttmoa-platform" target="_blank">
+          rttmoa-platform
           </Link>
-          是一款基于 React18、React-Router v6、React-Hooks、Redux-Toolkit、TypeScript、Vite4、Ant-Design5 开源的后台管理框架。
+          ：技术基于 React18、React-Router v6、React-Hooks、Redux-Toolkit、TypeScript、Vite4、Ant-Design5  
         </span>
       </Card>
 
@@ -35,26 +35,26 @@ const About: React.FC = () => {
           <Descriptions.Item label="发布时间">
             <Tag color="processing">{lastBuildTime}</Tag>
           </Descriptions.Item>
-          <Descriptions.Item label="Gitee">
-            <Link href="https://gitee.com/HalseySpicy/Hooks-Admin" target="_blank">
+          {/* <Descriptions.Item label="Gitee">
+            <Link href="" target="_blank">
               Gitee
             </Link>
           </Descriptions.Item>
           <Descriptions.Item label="Github">
-            <Link href="https://github.com/HalseySpicy/Hooks-Admin" target="_blank">
+            <Link href="" target="_blank">
               Github
             </Link>
           </Descriptions.Item>
           <Descriptions.Item label="Issues">
-            <Link href="https://github.com/HalseySpicy/Hooks-Admin/issues" target="_blank">
+            <Link href="" target="_blank">
               Issues
             </Link>
           </Descriptions.Item>
           <Descriptions.Item label="预览地址">
-            <Link href="https://hooks.spicyboy.cn" target="_blank">
+            <Link href="" target="_blank">
               预览地址
             </Link>
-          </Descriptions.Item>
+          </Descriptions.Item> */}
         </Descriptions>
       </Card>
 

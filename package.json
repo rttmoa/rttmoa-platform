@@ -65,7 +65,11 @@
     "lodash": "^4.17.21",
     "maath": "^0.10.7",
     "marked": "^9.0.3",
+    "markmap-common": "^0.15.6",
+    "markmap-lib": "^0.15.8",
+    "markmap-view": "^0.15.8",
     "md5": "^2.3.0",
+    "mermaid": "^10.6.1",
     "nprogress": "^0.2.0",
     "path": "^0.12.7",
     "prism-react-renderer": "^2.3.1",
@@ -84,11 +88,13 @@
     "react-transition-group": "^4.4.5",
     "react-viewer": "^3.2.2",
     "react-virtualized": "^9.22.5",
+    "react-zoom-pan-pinch": "^3.3.0",
     "recharts": "^2.8.0",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.2",
     "styled-components": "^6.1.8",
-    "three": "^0.160.0"
+    "three": "^0.160.0",
+    "video.js": "^8.9.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.7.0",

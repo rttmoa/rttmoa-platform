@@ -1,16 +1,22 @@
 /* eslint-disable prettier/prettier */
 
 
-
-
-
-// todo 检查值是否属于某种类型
+ 
+/**
+ * @description utils-检查值是否属于某种类型
+ * @param {unknown} unknown 任意参数
+ * @param {string} string 任意参数对应的类型
+ * @returns {boolean} 返回给调用位置，校验是否为真
+ * @example  is(getData(), 'Function')
+ */ 
 export function is(val: unknown, type: string) {
   return Object.prototype.toString.call(val) === `[object ${type}]`;
 }
 
 
-// todo 检查值是否是 Function
+/** 
+ * @example  isFunction(getData())
+ */ 
 export function isFunction<T = Function>(val: unknown): val is T {
   return is(val, "Function");
 }

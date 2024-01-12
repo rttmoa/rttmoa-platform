@@ -13,7 +13,7 @@ const LayoutFooter: React.FC = () => {
       {footer && (
         <Footer className="ant-footer">
           <a href="#" target="_blank" rel="noreferrer">
-            2023 © {APP_TITLE} By React Hooks Technology.
+            {new Date().getFullYear()} © {APP_TITLE} By React Hooks Technology.
           </a>
         </Footer>
       )}
