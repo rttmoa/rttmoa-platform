@@ -67,4 +67,173 @@ TODO: 参考
     + 尝试使用 `npm i --save-dev @types/react-cropper-pro` (如果存在)，或者添加一个包含 `declare module 'react-cropper-pro';` 的新声明(.d.ts)文件
     + 修复bug：降低 react-transition-group 包导致项目启动失败
 
+
+
 改为自动化模式
+  1、安装:  
+    E:\Project\rttmoa-platform> npm install husky -D
+  
+  2、添加husky文件
+    在package.json中添加如下命令；在scripts中添加 "prepare": "husky install"
+    E:\Project\rttmoa-platform> npm run prepare
+
+  3、lint-staged（本地暂存代码检查工具）
+    E:\Project\rttmoa-platform> npm install lint-staged -D
+    E:\Project\rttmoa-platform> npx husky add .husky/pre-commit "npm run lint:lint-staged"
+    husky - created .husky/pre-commit
+
+  4、添加lint-staged.config.js 文件
+    module.exports = {
+      "*.{js,jsx,ts,tsx}": ["eslint --fix", "prettier --write"],
+      "{!(package)*.json,*.code-snippets,.!(browserslist)*rc}": ["prettier --write--parser json"],
+      "package.json": ["prettier --write"],
+      "*.vue": ["eslint --fix", "prettier --write", "stylelint --fix"],
+      "*.{scss,less,styl,html}": ["stylelint --fix", "prettier --write"],
+      "*.md": ["prettier --write"]
+    };
+  5、commit 校验工具，不符合则报错
+    E:\Project\rttmoa-platform> npm i @commitlint/cli @commitlint/config-conventional -D
+    E:\Project\rttmoa-platform> npx husky add .husky/commit-msg 'npx --no-install commitlint --edit "$1"'
+    Usage:
+      husky install [dir] (default: .husky)
+      husky uninstall
+      husky set|add <file> [cmd]
+
+  6、commitizen（基于 Node.js 的 git commit 命令行工具，生成标准化的 message）
+    # 安装 commitizen，可以快速使用 cz 或 git cz 命令进行启动。
+    npm install commitizen -D
+
+  7、cz-git
+    配置 package.json
+    "config": {
+      "commitizen": {
+        "path": "node_modules/cz-git"
+      }
+    }
+  
+  8、新建commitlint.config.js文件：（对提交信息做格式检验的）
+    @see: https://cz-git.qbenben.com/zh/guide
+    /** @type {import('cz-git').UserConfig} */
+
+    module.exports = {
+      ignores: [commit => commit === 'init'],
+      extends: ['@commitlint/config-conventional'],
+      rules: {
+        @see: https://commitlint.js.org/#/reference-rules
+        'body-leading-blank': [2, 'always'],
+        'footer-leading-blank': [1, 'always'],
+        'header-max-length': [2, 'always', 108],
+        'subject-empty': [2, 'never'],
+        'type-empty': [2, 'never'],
+        'subject-case': [0],
+        'type-enum': [
+          2,
+          'always',
+          [
+            'init',
+            'feat',
+            'page',
+            'completepage',
+            'fix',
+            'fixbug',
+            'docs',
+            'style',
+            'refactor',
+            'perf',
+            'test',
+            'build',
+            'ci',
+            'chore',
+            'revert',
+            'wip',
+            'workflow',
+            'types',
+            'release',
+          ],
+        ],
+      },
+      prompt: {
+        messages: {
+          type: '选择你要提交的类型 :',
+          scope: '选择一个提交范围（可选）:',
+          customScope: '请输入自定义的提交范围 :',
+          subject: '填写简短精炼的变更描述 :\n',
+          body: '填写更加详细的变更描述（可选）。使用 "|" 换行 :\n',
+          breaking: '列举非兼容性重大的变更（可选）。使用 "|" 换行 :\n',
+          footerPrefixsSelect: '选择关联issue前缀（可选）:',
+          customFooterPrefixs: '输入自定义issue前缀 :',
+          footer: '列举关联issue (可选) 例如: #31, #I3244 :\n',
+          confirmCommit: '是否提交或修改commit ?',
+        },
+        types: [
+          { value: 'init: 初始化', name: '初始化:   ⏳  初始化项目', emoji: '⏳' },
+          { value: 'feat: 新增功能', name: '新增:   🚀  新增功能', emoji: '🚀' },
+          { value: 'page: 新增页面', name: '页面:   📄  新增页面', emoji: '📄' },
+          { value: 'completepage: 完成页面', name: '完成页面:   🍻  完成页面', emoji: '🍻' },
+          { value: 'fixbug: 修改bug', name: 'bug:   🐛  修改bug', emoji: '🐛' },
+          { value: 'fix: 修复', name: '修复:   🧩  修复缺陷', emoji: '🧩' },
+          { value: 'docs: 文档', name: '文档:   📚  文档变更', emoji: '📚' },
+          { value: 'style: 格式', name: '格式:   🎨  代码格式（不影响功能，例如空格、分号等格式修正）', emoji: '🎨' },
+          { value: 'refactor: 重构', name: '重构:   ♻️  代码重构（不包括 bug 修复、功能新增）', emoji: '♻️' },
+          { value: 'perf: 性能', name: '性能:   ⚡️  性能优化', emoji: '⚡️' },
+          { value: 'test: 测试', name: '测试:   ✅  添加疏漏测试或已有测试改动', emoji: '✅' },
+          {
+            value: 'chore: 构建',
+            name: '构建:   📦️  构建流程、外部依赖变更（如升级 npm 包、修改 webpack 配置等）',
+            emoji: '📦️',
+          },
+          { value: 'ci: 集成', name: '集成:   🎡  修改 CI 配置、脚本', emoji: '🎡' },
+          { value: 'revert: 回退', name: '回退:   ⏪️  回滚 commit', emoji: '⏪️' },
+          { value: 'build: 打包', name: '打包:   🔨  项目打包发布', emoji: '🔨' },
+        ],
+        useEmoji: true,
+        themeColorCode: '',
+        scopes: [],
+        allowCustomScopes: true,
+        allowEmptyScopes: true,
+        customScopesAlign: 'bottom',
+        customScopesAlias: 'custom',
+        emptyScopesAlias: 'empty',
+        upperCaseSubject: false,
+        allowBreakingChanges: ['feat', 'fix'],
+        breaklineNumber: 100,
+        breaklineChar: '|',
+        skipQuestions: [],
+        issuePrefixs: [{ value: 'closed', name: 'closed:   ISSUES has been processed' }],
+        customIssuePrefixsAlign: 'top',
+        emptyIssuePrefixsAlias: 'skip',
+        customIssuePrefixsAlias: 'custom',
+        allowCustomIssuePrefixs: true,
+        allowEmptyIssuePrefixs: true,
+        confirmColorize: true,
+        maxHeaderLength: Infinity,
+        maxSubjectLength: Infinity,
+        minSubjectLength: 0,
+        scopeOverrides: undefined,
+        defaultBody: '',
+        defaultIssues: '',
+        defaultScope: '',
+        defaultSubject: '',
+      },
+    };
+
+  9、配置 package.json 命令
+    {
+      "scripts": {
+        ? 以下为必配置
+        "lint:eslint": "eslint --fix --ext .js,.ts,.vue ./src",
+        "lint:prettier": "prettier --write --loglevel warn \"src/**/*.{js,ts,json,tsx,css,less,scss,vue,html,md}\"",
+        "lint:stylelint": "stylelint --cache --fix \"**/*.{vue,less,postcss,css,scss}\" --cache --cache-location node_modules/.cache/stylelint/",
+        "lint:lint-staged": "lint-staged",
+        "prepare": "husky install",
+        "release": "standard-version",
+        "commit": "git status && git add -A && git-cz"
+      }
+    }
+
+  10、配置完成，提交代码
+    相当于将代码放到暂存区，最后需要git push才能上传
+
+    npm run commit 
+    # 如果使用yarn
+    yarn commit
