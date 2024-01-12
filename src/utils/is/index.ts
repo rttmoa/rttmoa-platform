@@ -1,5 +1,7 @@
 /* eslint-disable prettier/prettier */
 
+import { parse, stringify } from "qs";
+
 
  
 /**
@@ -15,102 +17,161 @@ export function is(val: unknown, type: string) {
 
 
 /** 
- * @example  isFunction(getData())
+ * @example 
+ * isFunction(() => {})
  */ 
 export function isFunction<T = Function>(val: unknown): val is T {
   return is(val, "Function");
 }
 
 
-// todo 检查值是否是 undefined
+/** 
+ * @example 
+ * isDef(undefined)
+ */ 
 export const isDef = <T = unknown>(val?: T): val is T => {
   return typeof val !== "undefined";
 };
 
-// todo 检查值是否是 undefined
+/** 
+ * @example 
+ * isDef(undefined)
+ */ 
 export const isUnDef = <T = unknown>(val?: T): val is T => {
   return !isDef(val);
 };
 
-
-// todo 检查值是否是 Object
+ 
+/** 
+ * @example 
+ * isObject({} || new Object || undefined || null || () => {})
+ */ 
 export const isObject = (val: any): val is Record<any, any> => {
   return val !== null && is(val, "Object");
 };
 
-// todo 检查值是否是 Date
+ 
+/** 
+ * @example 
+ * isDate(new Date())
+ */ 
 export function isDate(val: unknown): val is Date {
   return is(val, "Date");
 }
 
-// todo 检查值是否是 Number
+/** 
+ * @example 
+ * isNumber(+'1')
+ */ 
 export function isNumber(val: unknown): val is number {
   return is(val, "Number");
 }
 
-// todo 检查值是否是 AsyncFunction
+/** 
+ * @example 
+ * isAsyncFunction(async () => {})
+ */ 
 export function isAsyncFunction<T = any>(val: unknown): val is Promise<T> {
   return is(val, "AsyncFunction");
 }
 
-// todo 检查值是否是 Promise
 export function isPromise<T = any>(val: unknown): val is Promise<T> {
   return is(val, "Promise") && isObject(val) && isFunction(val.then) && isFunction(val.catch);
 }
 
-// todo 检查值是否是 String
+/** 
+ * @example 
+ * isString("")
+ */ 
 export function isString(val: unknown): val is string {
   return is(val, "String");
 }
 
-// todo 检查值是否是 Boolean
+/** 
+ * @example 
+ * isBoolean(new Boolean)
+ */ 
 export function isBoolean(val: unknown): val is boolean {
   return is(val, "Boolean");
 }
 
-// todo 检查值是否是 Array
+/** 
+ * @example 
+ * isArray([])
+ */ 
 export function isArray(val: any): val is Array<any> {
   return val && Array.isArray(val);
 }
 
+
+
 /**
- * @description: Checks if it's the client.
+ * @description: 检查是否是客户端。
+ * @example 
+ * isClient()
  */
 export const isClient = () => {
   return typeof window !== "undefined";
 };
 
 /**
- * @description: Checks if it's a browser.
+ * @description: 检查是否是浏览器.
+ * @example
+ * isWindow(window)
  */
 export const isWindow = (val: any): val is Window => {
   return typeof window !== "undefined" && is(val, "Window");
 };
 
 /**
- * @description: Checks if it's an element.
+ * @description: 检查它是否是一个元素.
+ * @example
+ * 
  */
 export const isElement = (val: unknown): val is Element => {
   return isObject(val) && !!val.tagName;
 };
 
 /**
- * @description: Checks if the value is null.
+ * @description: 检查值是否为空.
+ * @example
+ * isNull(null)
  */
 export function isNull(val: unknown): val is null {
   return val === null;
 }
 
 /**
- * @description: Checks if the value is null or undefined.
+ * @description: 检查值是否为 null 或 undefined.
+ * @example
+ * isNullOrUnDef(undefined || null)
  */
 export function isNullOrUnDef(val: unknown): val is null | undefined {
   return isUnDef(val) || isNull(val);
 }
 
 /**
- * @description: Checks if it's a hexadecimal color.
+ * @description: 检查它是否是十六进制颜色.
+ * @example
+ * isHexColor("#fff")
  */
 export const isHexColor = (str: string) => {
   return /^#?([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/.test(str);
 };
+
+export const isURLSearchParams = (val: any) => {
+  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams
+}
+
+export const getParamObject = (val: { toString: () => any; }) => {
+  if (isURLSearchParams(val)) {
+    return parse(val.toString(), { strictNullHandling: true })
+  }
+  if (typeof val === 'string') {
+    return [val]
+  }
+  return val
+}
+export const reqStringify = (val: any) => {
+  return stringify(val, { arrayFormat: 'repeat', strictNullHandling: true })
+}

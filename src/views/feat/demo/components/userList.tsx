@@ -37,7 +37,7 @@ const UserList = () => {
   return (
     <>
       <h3>TS 支持</h3>
-      <UserDemo user={{ name: "V", age: 16, address: "Shanghai" }} />
+      <UserDemo user={{ name: "Dail", age: 16, address: "Shanghai" }} />
     </>
   );
 };
