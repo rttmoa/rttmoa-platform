@@ -1,7 +1,8 @@
 import { message } from "@/hooks/useMessage";
 
-// ! ?
-/**  #### 十六进制颜色转RGB颜色  */
+/**
+ * @description 十六进制颜色转RGB颜色
+ */
 export function hexToRgb(str: string) {
   let hexs: any = "";
   let reg = /^#?[0-9A-Fa-f]{6}$/;
