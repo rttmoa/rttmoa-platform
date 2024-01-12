@@ -58,6 +58,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       proxy: createProxy(viteEnv.VITE_PROXY)
     },
     plugins: [createVitePlugins(viteEnv) /* reactVirtualized() */],
+    // 去除console、debugger
     esbuild: {
       pure: viteEnv.VITE_DROP_CONSOLE ? ["console.log", "debugger"] : []
     },
@@ -77,6 +78,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       reportCompressedSize: false,
       // Determine the chunk size that triggers the warning
       chunkSizeWarningLimit: 2000,
+      // 自定义底层的 Rollup 打包配置。
       rollupOptions: {
         output: {
           // Static resource classification and packaging

@@ -32,7 +32,8 @@
     "lint:lint-staged": "lint-staged",
     "prepare": "husky install",
     "release": "standard-version",
-    "commit": "git add -A && czg && git push"
+    "commit": "git add -A && czg && git push",
+    "commit2": "git status && git add -A && git-cz"
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.5",

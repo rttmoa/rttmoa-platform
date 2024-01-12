@@ -2,75 +2,69 @@
 
 import { parse, stringify } from "qs";
 
-
- 
 /**
  * @description utils-检查值是否属于某种类型
  * @param {unknown} unknown 任意参数
  * @param {string} string 任意参数对应的类型
  * @returns {boolean} 返回给调用位置，校验是否为真
  * @example  is(getData(), 'Function')
- */ 
+ */
 export function is(val: unknown, type: string) {
   return Object.prototype.toString.call(val) === `[object ${type}]`;
 }
 
-
-/** 
- * @example 
+/**
+ * @example
  * isFunction(() => {})
- */ 
+ */
 export function isFunction<T = Function>(val: unknown): val is T {
   return is(val, "Function");
 }
 
-
-/** 
- * @example 
+/**
+ * @example
  * isDef(undefined)
- */ 
+ */
 export const isDef = <T = unknown>(val?: T): val is T => {
   return typeof val !== "undefined";
 };
 
-/** 
- * @example 
+/**
+ * @example
  * isDef(undefined)
- */ 
+ */
 export const isUnDef = <T = unknown>(val?: T): val is T => {
   return !isDef(val);
 };
 
- 
-/** 
- * @example 
+/**
+ * @example
  * isObject({} || new Object || undefined || null || () => {})
- */ 
+ */
 export const isObject = (val: any): val is Record<any, any> => {
   return val !== null && is(val, "Object");
 };
 
- 
-/** 
- * @example 
+/**
+ * @example
  * isDate(new Date())
- */ 
+ */
 export function isDate(val: unknown): val is Date {
   return is(val, "Date");
 }
 
-/** 
- * @example 
+/**
+ * @example
  * isNumber(+'1')
- */ 
+ */
 export function isNumber(val: unknown): val is number {
   return is(val, "Number");
 }
 
-/** 
- * @example 
+/**
+ * @example
  * isAsyncFunction(async () => {})
- */ 
+ */
 export function isAsyncFunction<T = any>(val: unknown): val is Promise<T> {
   return is(val, "AsyncFunction");
 }
@@ -79,35 +73,33 @@ export function isPromise<T = any>(val: unknown): val is Promise<T> {
   return is(val, "Promise") && isObject(val) && isFunction(val.then) && isFunction(val.catch);
 }
 
-/** 
- * @example 
+/**
+ * @example
  * isString("")
- */ 
+ */
 export function isString(val: unknown): val is string {
   return is(val, "String");
 }
 
-/** 
- * @example 
+/**
+ * @example
  * isBoolean(new Boolean)
- */ 
+ */
 export function isBoolean(val: unknown): val is boolean {
   return is(val, "Boolean");
 }
 
-/** 
- * @example 
+/**
+ * @example
  * isArray([])
- */ 
+ */
 export function isArray(val: any): val is Array<any> {
   return val && Array.isArray(val);
 }
 
-
-
 /**
  * @description: 检查是否是客户端。
- * @example 
+ * @example
  * isClient()
  */
 export const isClient = () => {
@@ -126,7 +118,7 @@ export const isWindow = (val: any): val is Window => {
 /**
  * @description: 检查它是否是一个元素.
  * @example
- * 
+ *
  */
 export const isElement = (val: unknown): val is Element => {
   return isObject(val) && !!val.tagName;
@@ -159,19 +151,22 @@ export const isHexColor = (str: string) => {
   return /^#?([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/.test(str);
 };
 
+/**
+ * @description: 是否是搜索参数.
+ */
 export const isURLSearchParams = (val: any) => {
-  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams
-}
+  return typeof URLSearchParams !== "undefined" && val instanceof URLSearchParams;
+};
 
-export const getParamObject = (val: { toString: () => any; }) => {
+export const getParamObject = (val: { toString: () => any }) => {
   if (isURLSearchParams(val)) {
-    return parse(val.toString(), { strictNullHandling: true })
+    return parse(val.toString(), { strictNullHandling: true });
   }
-  if (typeof val === 'string') {
-    return [val]
+  if (typeof val === "string") {
+    return [val];
   }
-  return val
-}
+  return val;
+};
 export const reqStringify = (val: any) => {
-  return stringify(val, { arrayFormat: 'repeat', strictNullHandling: true })
-}
+  return stringify(val, { arrayFormat: "repeat", strictNullHandling: true });
+};

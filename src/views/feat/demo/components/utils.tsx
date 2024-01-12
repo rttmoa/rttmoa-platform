@@ -3,7 +3,7 @@
 import React from "react";
 
 import * as uts from "@/utils/is";
-
+import { randomHex } from "@/utils/common";
 
 export default function Utils() {
   console.log("========  Utils IS ========");
@@ -16,13 +16,11 @@ export default function Utils() {
   //   uts.isElement( document.createElement("a") )
   // );
   // console.log(!!document.createElement("a").tagName)
-  
+  console.log(randomHex());
 
-
-
-
-
-
-  
-  return <><b>Utils</b></>;
+  return (
+    <>
+      <b>Utils</b>
+    </>
+  );
 }
