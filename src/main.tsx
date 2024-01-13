@@ -10,6 +10,7 @@ import "@/assets/iconfont/iconfont.less"; // iconfont
 import "@/component/Markdown/markdown.css"; // markdown css
 import "virtual:svg-icons-register"; // svg
 import "@/assets/iconfont-Fonts/iconfontFonts.less";
+import "@/styles/tailwind.css";
 
 // todo
 // todo redux | redux持久化

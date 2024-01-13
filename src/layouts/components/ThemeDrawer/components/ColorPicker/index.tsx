@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Input } from "antd";
 import { HexColorPicker } from "react-colorful";
-import { isHexColor } from "@/utils/is/is";
+import { isHexColor } from "@/utils/is";
 import { convertToSixDigitHexColor } from "@/utils";
 
 import { setGlobalState } from "@/redux/modules/global";
@@ -41,7 +41,12 @@ const ColorPicker = () => {
   return (
     // ! 随机选择颜色 || 按钮选择颜色
     <div className="color-picker">
-      <HexColorPicker color={primary} onChange={e => { onChageEvent(e.toLocaleUpperCase()) }} />
+      <HexColorPicker
+        color={primary}
+        onChange={e => {
+          onChageEvent(e.toLocaleUpperCase());
+        }}
+      />
       <Input
         value={inputPrimary}
         className="picker-input"
@@ -58,7 +63,14 @@ const ColorPicker = () => {
       />
       <div className="picker-swatches">
         {presetColors.map(presetColor => (
-          <button className="picker-swatch" key={presetColor} style={{ background: presetColor }} onClick={() => { onChageEvent(presetColor) }}/>
+          <button
+            className="picker-swatch"
+            key={presetColor}
+            style={{ background: presetColor }}
+            onClick={() => {
+              onChageEvent(presetColor);
+            }}
+          />
         ))}
       </div>
     </div>
