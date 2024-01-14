@@ -7,7 +7,7 @@ import { parse, stringify } from "qs";
  * @param {unknown} unknown 任意参数
  * @param {string} string 任意参数对应的类型
  * @returns {boolean} 返回给调用位置，校验是否为真
- * @example  is(getData(), 'Function')
+ * @example  is(() => {}, 'Function')
  */
 export function is(val: unknown, type: string) {
   return Object.prototype.toString.call(val) === `[object ${type}]`;
