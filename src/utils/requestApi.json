@@ -1,4 +1,3 @@
-// todo 原始
 {
   "code": 200,
   "data": [{
@@ -649,6 +648,7 @@
     //     }
     //   ]
     // },
+		// ? 菜单页
     {
       "path": "/menu",
       "redirect": "/menu/menu1",
@@ -856,7 +856,7 @@
     //         "key": "gitee",
     //         "icon": "AppstoreOutlined",
     //         "title": "Gitee 仓库",
-    //         "isLink": "https://gitee.com/HalseySpicy/Hooks-Admin",
+    //         "isLink": "",
     //         "isHide": false,
     //         "isFull": false,
     //         "isAffix": false
@@ -869,7 +869,7 @@
     //         "key": "github",
     //         "icon": "AppstoreOutlined",
     //         "title": "GitHub 仓库",
-    //         "isLink": "https://github.com/HalseySpicy/Hooks-Admin",
+    //         "isLink": "",
     //         "isHide": false,
     //         "isFull": false,
     //         "isAffix": false
@@ -882,7 +882,7 @@
     //         "key": "juejin",
     //         "icon": "AppstoreOutlined",
     //         "title": "JueJin 主页",
-    //         "isLink": "https://juejin.cn/user/3263814531551816/posts",
+    //         "isLink": "",
     //         "isHide": false,
     //         "isFull": false,
     //         "isAffix": false
@@ -915,7 +915,7 @@
         "isFull": true,
         "isAffix": false
       }
-    },
+    }
 
 
 
