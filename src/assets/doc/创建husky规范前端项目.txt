@@ -1,81 +1,11 @@
-todo -项目 url; http://localhost:9527/
-todo -项目 mock; https://mock.mengxuegu.com/editor/64ce5fd3686aea63fd6b5a30/64ce649f686aea63fd6b5a34
-todo -项目 github; https://github.com/HalseySpicy/Hooks-Admin-Pro
-
-项目名：Rttmoa-Admin
-rttmoa-platform 基于 React18、React-RouterV6、React-Hooks、TypeScript、Vite4、Ant-Design5 开源的后台管理框架。
-
-! Nodejs V16.20.1
-
-! 项目目录
-  -> .husky
-  -> .vscode
-  -> build
-  -> public
-  -> src
-    √ api | 二次封装 axios 请求
-    √ assets | 字体、字体图标、图标、json、图片
-    - component
-    - components
-    √ config | 配置：可复用常量、进度条、表格配置 / HOME_URL | DEFAULT_PRIMARY | nprogress | proTable
-    √ context | 全局上下文 / createContext() | useContext()
-    √ enums | 枚举：请求配置、请求方法 / enum ResultEnum{} | enum RequestEnum {} | enum ContentTypeEnum {}
-    - hooks | 封装项目公共 Hooks / usePermissions | useTableScroll | useTheme
-    √ languages | 中文、英文
-    - layouts | 项目布局
-    × redux | redux配置：react-redux、@reduxjs/toolkit、redux-persist、redux-thunk
-    √ routers | 路由处理：静态路由(固定的) + 动态路由(接口列表中的)
-    √ styles | 全局主题配置亮/暗、公共LESS文件：  theme/global.ts | common.less、proTable.less、transition.less
-    √ typings | 声明文件 global.d.ts、utils.d.ts、window.d.ts  /  global.d.ts 与 .env.development 与 getEnv.ts|plugins.ts 处理关系
-    - utils | 处理颜色、公共方法函数  /  十六进制 <-> RGB | 加深/减轻颜色值  |  获取问候语 | 扁平化菜单 | 扁平化面包屑
-    - views
-    √ App.tsx | 全局配置、初始化配置
-    √ main.tsx | 根组件Redux、Redux-persist | 引入css、less、font、iconfont、markdown.css
-    
-进行：typescript、layouts四个布局+4个布局下的菜单、添加LESS语法、切换全局字体、Components.txt
-? antd-typescript
-
-? 要记录Markdown，比这个更清晰一些
-
-TODO: 问题记录
-  1、主题设置组件；比如主题颜色、圆角大小 ? 如何控制全局
-  2、主题设置组件；CSS样式
-  3、 LayoutVertical | LayoutClassic | LayoutTransverse | LayoutColumns & 四种 HTML 结构
-
-TODO: CHANGELOG
-CHANGE5: 添加功能
-CHANGE4: 修复bug：降低 react-transition-group 包导致项目启动失败
-CHANGE3: 尝试删除 package.json 中 "type": "module",
-CHANGE2: Axios二次封装，接口统一存放,满足RESTful风格：
-          （请求拦截、响应拦截、封装通用请求方法、存放api接口地址、挂载全局、请求示例）  https://wocwin.github.io/t-ui/projectProblem/axios.html
-CHANGE1: 梦学谷接口 -> apifox接口  https://app.apifox.com/project/3219319
 
 
-TODO: 参考
-  - 阮一峰TS；https://wangdoc.com/typescript
-  - TS 中文手册：https://typescript.bootcss.com/tutorials/typescript-in-5-minutes.html
-  - typescript: https://icodex.me/docs/typescript/React%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B
-  - typescript入门教程；https://ts.xcatliu.com/advanced/generics.html
-  - typescript入门教程 / index.d.ts声明文件；https://ts.xcatliu.com/basics/declaration-files
+! 改为自动化模式
+! 链接：https://blog.csdn.net/weixin_46533577/article/details/132760167
 
-
-
-将此设计为 Blogs
-  @copy其他项目 （功能，技术，方法，实现）
-    + 1.1 添加无限滚动表格 （添加mock地址，对应的路由，文件夹名，然后在views创建文件即可）
-    + 1.2 添加功能、路由跳转等等
-    + 尝试使用 `npm i --save-dev @types/react-cropper-pro` (如果存在)，或者添加一个包含 `declare module 'react-cropper-pro';` 的新声明(.d.ts)文件
-    + 修复bug：降低 react-transition-group 包导致项目启动失败
-
-
-
-
-TODO: 改为自动化模式
-TODO: 链接：https://blog.csdn.net/weixin_46533577/article/details/132760167
-
-  1、安装:  
+  1、安装:
     E:\Project\rttmoa-platform> npm install husky -D
-  
+
   2、添加husky文件
     在package.json中添加如下命令；在scripts中添加 "prepare": "husky install"
     E:\Project\rttmoa-platform> npm run prepare
@@ -100,7 +30,7 @@ TODO: 链接：https://blog.csdn.net/weixin_46533577/article/details/132760167
     Usage:
       husky install [dir] (default: .husky)
       husky uninstall
-      husky set|add <file> [cmd]
+      husky set|add `<file>` [cmd]
 
   6、commitizen（基于 Node.js 的 git commit 命令行工具，生成标准化的 message）
     # 安装 commitizen，可以快速使用 cz 或 git cz 命令进行启动。
@@ -113,7 +43,7 @@ TODO: 链接：https://blog.csdn.net/weixin_46533577/article/details/132760167
         "path": "node_modules/cz-git"
       }
     }
-  
+
   8、新建commitlint.config.js文件：（对提交信息做格式检验的）
     @see: https://cz-git.qbenben.com/zh/guide
     /** @type {import('cz-git').UserConfig} */
@@ -223,7 +153,7 @@ TODO: 链接：https://blog.csdn.net/weixin_46533577/article/details/132760167
   9、配置 package.json 命令
     {
       "scripts": {
-        ? 以下为必配置
+        以下为必配置
         "lint:eslint": "eslint --fix --ext .js,.ts,.vue ./src",
         "lint:prettier": "prettier --write --loglevel warn \"src/**/*.{js,ts,json,tsx,css,less,scss,vue,html,md}\"",
         "lint:stylelint": "stylelint --cache --fix \"**/*.{vue,less,postcss,css,scss}\" --cache --cache-location node_modules/.cache/stylelint/",
@@ -237,6 +167,6 @@ TODO: 链接：https://blog.csdn.net/weixin_46533577/article/details/132760167
   10、配置完成，提交代码
     相当于将代码放到暂存区，最后需要git push才能上传
 
-    npm run commit 
+    npm run commit
     # 如果使用yarn
     yarn commit
