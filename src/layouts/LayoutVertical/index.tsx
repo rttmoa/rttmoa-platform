@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Layout } from "antd";
 import { RootState, useSelector } from "@/redux";
 import ToolBarLeft from "@/layouts/components/Header/ToolBarLeft";
@@ -14,6 +14,7 @@ const APP_TITLE = import.meta.env.VITE_GLOB_APP_TITLE;
 // TODO: 一、纵向布局 - loyout-vertical
 const LayoutVertical: React.FC = () => {
   const isCollapse = useSelector((state: RootState) => state.global.isCollapse);
+
   return (
     // ! 左右布局;  自定义触发器：https://ant.design/components/layout-cn#components-layout-demo-custom-trigger
     <section className="layout-vertical">

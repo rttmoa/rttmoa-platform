@@ -1,14 +1,10 @@
+/* eslint-disable prettier/prettier */
 import React, { useState } from "react";
 import { Form, InputNumber } from "antd";
 
 type ValidateStatus = Parameters<typeof Form.Item>[0]["validateStatus"];
 
-const validatePrimeNumber = (
-  number: number
-): {
-  validateStatus: ValidateStatus;
-  errorMsg: string | null;
-} => {
+const validatePrimeNumber = (number: number): { validateStatus: ValidateStatus; errorMsg: string | null } => {
   if (number === 11) {
     return {
       validateStatus: "success",
@@ -22,7 +18,7 @@ const validatePrimeNumber = (
 };
 
 const formItemLayout = {
-  labelCol: { span: 7 },
+  labelCol: { span: 8 },
   wrapperCol: { span: 12 }
 };
 
@@ -50,8 +46,8 @@ const App: React.FC<{ value: string }> = ({ value: PropsValue }) => {
             <Form.Item
               {...formItemLayout}
               label="Prime between 8 & 12"
-              validateStatus={number.validateStatus}
-              help={number.errorMsg || tips}
+              validateStatus={number.validateStatus} // "" | "success" | "warning" | "error" | "validating" | undefined
+              help={number.errorMsg || tips} // React.ReactNode
             >
               <InputNumber min={8} max={12} value={number.value} onChange={onNumberChange} />
             </Form.Item>

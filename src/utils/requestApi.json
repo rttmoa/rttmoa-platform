@@ -556,30 +556,45 @@
       ]
     },
     {
-      "path": "/details",
-      "redirect": "/details/basicDetails",
+      "path": "/database",
+      "redirect": "/database/basicDetail",
       "meta": {
-        "key": "details",
+        "key": "database",
         "icon": "ProfileOutlined",
-        "title": "详情页面",
+        "title": "数据展示",
         "isLink": "",
         "isHide": false,
         "isFull": false,
         "isAffix": false
       },
-      "children": [{
-        "path": "/details/basicDetails",
-        "element": "/details/basicDetails/index",
-        "meta": {
-          "key": "basicDetails",
-          "icon": "AppstoreOutlined",
-          "title": "基础详情页",
-          "isLink": "",
-          "isHide": false,
-          "isFull": false,
-          "isAffix": false
-        }
-      }]
+      "children": [
+				{
+					"path": "/database/basicDetail",
+					"element": "/database/basicDetail/index",
+					"meta": {
+						"key": "basicDetail",
+						"icon": "AppstoreOutlined",
+						"title": "数据详情页",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false
+					}
+				},
+				{
+					"path": "/database/catDetail",
+					"element": "/database/catDetail/index",
+					"meta": {
+						"key": "catDetail",
+						"icon": "AppstoreOutlined",
+						"title": "小猫页",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false
+					}
+				}
+			]
     },
     // TODO: 结果页面
     // {

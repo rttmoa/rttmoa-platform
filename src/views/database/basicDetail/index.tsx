@@ -49,7 +49,7 @@ const BasicDetails: React.FC = () => {
     <React.Fragment>
       <Card className="mb10">
         <Title level={4} className="mb15">
-          基础详情页  {"<Descriptions />"} | {"<Step />"} | {"<Badge />"} | Antd ts
+          基础详情页 {"<Descriptions />"} | {"<Step />"} | {"<Badge />"} | Antd ts
         </Title>
         <Text>基础详情页常用于展示特定实体或项目的详细信息。</Text>
       </Card>
@@ -82,7 +82,9 @@ const BasicDetails: React.FC = () => {
           ]}
         />
         <Divider />
-        <Title level={5} className="mb20">退货商品</Title>
+        <Title level={5} className="mb20">
+          退货商品
+        </Title>
         <ProTable
           bordered
           pagination={false}

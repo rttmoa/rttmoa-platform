@@ -20,7 +20,7 @@ const App: React.FC<{ value: string }> = ({ value }) => {
             layout="horizontal"
             initialValues={{ size: componentSize }}
             onValuesChange={onFormLayoutChange}
-            size={componentSize as SizeType}
+            size={componentSize as SizeType} // ? 控制 size 属性，设置组价大小
             style={{ maxWidth: 600 }}
           >
             <Form.Item label="Form Size" name="size">

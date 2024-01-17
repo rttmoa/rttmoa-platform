@@ -29,7 +29,7 @@ module.exports = {
 		"font-family-no-missing-generic-family-keyword": null, // 禁止在字体族名称列表中缺少通用字体族关键字
 		"no-empty-source": null, 									// 禁止空源码
 		"selector-class-pattern": null, 					// 强制选择器类名的格式
-		"scss/at-import-partial-extension": null, // 解决不能引入scss文件
+		// "scss/at-import-partial-extension": "always", // 解决不能引入scss文件
 		"value-no-vendor-prefix": null, 					// 关闭 vendor-prefix(为了解决多行省略 -webkit-box) 
     "no-descending-specificity": null, 				// 禁止较低特异性的选择器出现在较高特异性的选择器之后
     "custom-property-pattern": null, 	 				// 允许自定义 CSS 变量名称
