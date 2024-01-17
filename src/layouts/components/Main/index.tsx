@@ -32,13 +32,16 @@ const LayoutMain: React.FC = () => {
   const flatMenuList = useSelector((state: RootState) => state.auth.flatMenuList); // ! 菜单权限列表 (扁平化数组)
 
   // ! 监视窗口变化，折叠菜单
-  const { run } = useDebounceFn(() => {
-    const screenWidth = document.body.clientWidth; // 客户端可视区域内，内容区的宽度
-    if (screenWidth) {
-      const shouldCollapse = screenWidth < 1200;
-      if (isCollapse !== shouldCollapse) dispatch(setGlobalState({ key: "isCollapse", value: shouldCollapse }));
-    }
-  }, { wait: 100 });
+  const { run } = useDebounceFn(
+    () => {
+      const screenWidth = document.body.clientWidth; // 客户端可视区域内，内容区的宽度
+      if (screenWidth) {
+        const shouldCollapse = screenWidth < 1200;
+        if (isCollapse !== shouldCollapse) dispatch(setGlobalState({ key: "isCollapse", value: shouldCollapse }));
+      }
+    },
+    { wait: 200 }
+  );
   useEffect(() => {
     window.addEventListener("resize", run, false);
     return () => window.removeEventListener("resize", run);
@@ -55,7 +58,6 @@ const LayoutMain: React.FC = () => {
   const menuList: RouteTypeWithNodeRef[] = flatMenuList.map(item => ({ ...item, nodeRef: createRef() }));
   const { nodeRef } = menuList.find(route => route.path === pathname) ?? {};
 
-
   // console.log(outlet);
   return (
     <>
@@ -63,11 +65,9 @@ const LayoutMain: React.FC = () => {
       <LayoutTabs />
       <SwitchTransition>
         <CSSTransition classNames="fade" key={pathname} nodeRef={nodeRef} timeout={300} exit={false} unmountOnExit>
-          
           {/* <Content ref={nodeRef}></Content> */}
           {/* <Content ref={nodeRef}>{outlet}</Content> */}
           <Content ref={nodeRef}>{outletShow && outlet}</Content>
-
         </CSSTransition>
       </SwitchTransition>
       <LayoutFooter />

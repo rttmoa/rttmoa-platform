@@ -34,11 +34,15 @@ const FormDisabledDemo: React.FC<{ value: string }> = ({ value }) => {
     <>
       {value == "FormDisabled" && (
         <>
-          <Checkbox checked={componentDisabled} onChange={e => setComponentDisabled(e.target.checked)}>
-            Form disabled
+          <Checkbox
+            style={{ marginLeft: 280 }}
+            checked={componentDisabled}
+            onChange={e => setComponentDisabled(e.target.checked)}
+          >
+            <b>禁用表单</b>
           </Checkbox>
           <Form
-            labelCol={{ span: 4 }}
+            labelCol={{ span: 6 }}
             wrapperCol={{ span: 14 }}
             layout="horizontal"
             disabled={componentDisabled}
@@ -47,25 +51,29 @@ const FormDisabledDemo: React.FC<{ value: string }> = ({ value }) => {
             <Form.Item label="Checkbox" name="disabled" valuePropName="checked">
               <Checkbox>Checkbox</Checkbox>
             </Form.Item>
-            <Form.Item label="Radio">
-              <Radio.Group>
+            <Form.Item label="Radio" name="fruits">
+              <Radio.Group value="apple">
                 <Radio value="apple"> Apple </Radio>
                 <Radio value="pear"> Pear </Radio>
               </Radio.Group>
             </Form.Item>
             <Form.Item label="Input">
-              <Input />
+              <Input value="我是输入框" />
             </Form.Item>
             <Form.Item label="Select">
-              <Select>
+              <Select value="demo">
                 <Select.Option value="demo">Demo</Select.Option>
               </Select>
             </Form.Item>
             <Form.Item label="TreeSelect">
-              <TreeSelect treeData={[{ title: "Light", value: "light", children: [{ title: "Bamboo", value: "bamboo" }] }]} />
+              <TreeSelect
+                value="bamboo"
+                treeData={[{ title: "Light", value: "light", children: [{ title: "Bamboo", value: "bamboo" }] }]}
+              />
             </Form.Item>
             <Form.Item label="Cascader">
               <Cascader
+                value={["hangzhou"]}
                 options={[
                   {
                     value: "zhejiang",
@@ -87,13 +95,13 @@ const FormDisabledDemo: React.FC<{ value: string }> = ({ value }) => {
               <RangePicker />
             </Form.Item>
             <Form.Item label="InputNumber">
-              <InputNumber />
+              <InputNumber value={45} />
             </Form.Item>
             <Form.Item label="TextArea">
-              <TextArea rows={4} />
+              <TextArea rows={4} value="我是一个多行的文本输入控件" />
             </Form.Item>
             <Form.Item label="Switch" valuePropName="checked">
-              <Switch />
+              <Switch value={true} />
             </Form.Item>
             <Form.Item label="Upload" valuePropName="fileList" getValueFromEvent={normFile}>
               <Upload action="/upload.do" listType="picture-card">
@@ -107,7 +115,7 @@ const FormDisabledDemo: React.FC<{ value: string }> = ({ value }) => {
               <Button>Button</Button>
             </Form.Item>
             <Form.Item label="Slider">
-              <Slider />
+              <Slider value={66} />
             </Form.Item>
             <Form.Item label="ColorPicker">
               <ColorPicker />

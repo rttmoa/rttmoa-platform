@@ -11,10 +11,11 @@ const App: React.FC<{ value: string }> = ({ value }) => {
     setFormLayout(layout);
   };
 
-  const formItemLayout = formLayout === "horizontal" ? { labelCol: { span: 4 }, wrapperCol: { span: 14 } } : null;
+  const formItemLayout = formLayout === "horizontal" ? { labelCol: { span: 4 }, wrapperCol: { span: 12 } } : null;
 
   const buttonItemLayout = formLayout === "horizontal" ? { wrapperCol: { span: 14, offset: 4 } } : null;
 
+  console.log("formItemLayout", formItemLayout);
   return (
     <>
       {value == "FormLayout" && (
@@ -36,7 +37,7 @@ const App: React.FC<{ value: string }> = ({ value }) => {
           <Form.Item label="Field A">
             <Input placeholder="input placeholder" />
           </Form.Item>
-          <Form.Item label="Field B">
+          <Form.Item label="我是 Field B...">
             <Input placeholder="input placeholder" />
           </Form.Item>
           <Form.Item {...buttonItemLayout}>
