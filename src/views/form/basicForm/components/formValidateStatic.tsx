@@ -73,7 +73,7 @@ const App: React.FC<{ value: string }> = ({ value }) => {
               <TreeSelect placeholder="I'm TreeSelect" treeData={[{ value: "xx", label: "xx" }]} allowClear />
             </Form.Item>
 
-            <Form.Item label="inline" style={{ marginBottom: 0 }}>
+            <Form.Item label="inline Form.Item" style={{ marginBottom: 0 }}>
               <Form.Item
                 validateStatus="error"
                 help="Please select right date"

@@ -22,7 +22,8 @@ const { Text, Title } = Typography;
 const BasicForm: React.FC = () => {
   const [value, setValue] = React.useState<string>("FromCollectUser");
 
-  // ! Form Hooks: https://ant.design/components/form-cn#hooks
+  // ! https://ant.design/components/form-cn
+  // ! https://procomponents.ant.design/components/login-form
   let selectOption = [
     { label: "收集用户信息 User", value: "FromCollectUser" },
     { label: "表单基本使用 Basic", value: "FormBaisc" },
@@ -73,9 +74,9 @@ const BasicForm: React.FC = () => {
         <FormDisabled value={value} />
         <FormSize value={value} />
         <FormLogin value={value} />
-        <FormRegister value={value} />
+        <FormRegister value={value} /> {/* ! reference */}
         <FormModal value={value} /> {/* reference */}
-        <FormTime value={value} />
+        <FormTime value={value} /> {/* reference */}
         <FormWithout value={value} /> {/* reference */}
         <FormValidateStatic value={value} />
         <FormValidateOther value={value} />
