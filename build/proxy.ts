@@ -7,7 +7,7 @@ type ProxyList = ProxyItem[];
 type ProxyTargetList = Record<string, ProxyOptions>;
 
 /**
- * Create proxy for parsing .env.development proxy configuration
+ * 创建代理用于解析 .env.development 代理配置
  * @param list
  */
 export function createProxy(list: ProxyList = []) {
