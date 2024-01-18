@@ -19,11 +19,6 @@ import {
 
 const { Option } = Select;
 
-const formItemLayout = {
-  labelCol: { span: 6 },
-  wrapperCol: { span: 14 }
-};
-
 const normFile = (e: any) => {
   console.log("Upload event:", e);
   if (Array.isArray(e)) {
@@ -38,14 +33,17 @@ const onFinish = (values: any) => {
 
 const App: React.FC<{ value: string }> = ({ value }) => {
   return (
+    // ? Check.Group: <Row /> <Col />
     <>
       {value === "FormValidateOther" && (
         <Form
           name="validate_other"
-          {...formItemLayout}
+          labelCol={{ span: 10 }}
+          wrapperCol={{ span: 14 }}
           onFinish={onFinish}
           initialValues={{
             "input-number": 3,
+            "radio-button": "b",
             "checkbox-group": ["A", "B"],
             rate: 3.5,
             "color-picker": null
@@ -89,11 +87,12 @@ const App: React.FC<{ value: string }> = ({ value }) => {
           </Form.Item>
 
           <Form.Item name="switch" label="Switch" valuePropName="checked">
-            <Switch />
+            <Switch value={true} />
           </Form.Item>
 
           <Form.Item name="slider" label="Slider">
             <Slider
+              value={40}
               marks={{
                 0: "A",
                 20: "B",
@@ -173,6 +172,8 @@ const App: React.FC<{ value: string }> = ({ value }) => {
               <Button icon={<UploadOutlined />}>Click to upload</Button>
             </Upload>
           </Form.Item>
+
+          {/* 拖拽盒子 */}
           <Form.Item label="Dragger">
             <Form.Item name="dragger" valuePropName="fileList" getValueFromEvent={normFile} noStyle>
               <Upload.Dragger name="files" action="/upload.do">
@@ -188,7 +189,7 @@ const App: React.FC<{ value: string }> = ({ value }) => {
             <ColorPicker />
           </Form.Item>
 
-          <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
+          <Form.Item wrapperCol={{ span: 12, offset: 10 }}>
             <Space>
               <Button type="primary" htmlType="submit">
                 Submit
