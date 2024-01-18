@@ -14,18 +14,26 @@ const formItemLayout = {
   }
 };
 
-const config = {
-  rules: [{ type: "object" as const, required: true, message: "Please select time!" }]
-};
-
-const rangeConfig = {
-  rules: [{ type: "array" as const, required: true, message: "Please select time!" }]
-};
-
 const onFinish = (fieldsValue: any) => {
-  // Should format date value before submit.
-  const rangeValue = fieldsValue["range-picker"];
-  const rangeTimeValue = fieldsValue["range-time-picker"];
+  console.log("未处理的值：", fieldsValue);
+  // date-picker: M2 {$L: 'zh-cn', $u: undefined, $d: Tue Jan 02 2024 11:30:39 GMT+0800 (中国标准时间), $y: 2024, $M: 0, …}
+  // date-time-picker: M2 {$L: 'zh-cn', $u: undefined, $d: Tue Jan 02 2024 11:32:08 GMT+0800 (中国标准时间), $y: 2024, $M: 0, …}
+  // month-picker: M2 {$L: 'zh-cn', $u: undefined, $d: Thu Jan 18 2024 11:34:39 GMT+0800 (中国标准时间), $y: 2024, $M: 0, …}
+  // range-picker: (2) [M2, M2]
+  // range-time-picker: (2) [M2, M2]
+  // time-picker: M2 {$L: 'zh-cn', $u: undefined, $d: Thu Jan 18 2024 11:35:14 GMT+0800 (中国标准时间), $y: 2024, $M: 0, …}
+
+  // 处理后的值：
+  // date-picker: "2024-01-02"
+  // date-time-picker:  "2024-01-02 11:32:08"
+  // month-picker: "2024-01"
+  // range-picker: (2) ['2024-01-05', '2024-01-13']
+  // range-time-picker: (2) ['2024-01-11 11:34:56', '2024-01-19 11:34:59']
+  // time-picker: "11:35:14"
+
+  // 应在提交前格式化日期值.
+  const rangeValue = fieldsValue["range-picker"]; // type: array
+  const rangeTimeValue = fieldsValue["range-time-picker"]; // type: array
   const values = {
     ...fieldsValue,
     "date-picker": fieldsValue["date-picker"].format("YYYY-MM-DD"),
@@ -37,13 +45,26 @@ const onFinish = (fieldsValue: any) => {
   };
   console.log("Received values of form: ", values);
 };
-
 const App: React.FC<{ value: string }> = ({ value }) => {
+  // ? 校验配置
+  const config = {
+    rules: [{ type: "object" as const, required: false, message: "Please select time!" }]
+  };
+  const rangeConfig = {
+    rules: [{ type: "array" as const, required: false, message: "Please select time!" }]
+  };
+
   return (
     <>
       {value == "FormTime" && (
         <>
-          <Form name="time_related_controls" {...formItemLayout} onFinish={onFinish} style={{ maxWidth: 600 }}>
+          <Form
+            name="time_related_controls"
+            {...formItemLayout}
+            // initialValues={{ "date-picker": "2024-01-02" }}
+            onFinish={onFinish}
+            style={{ maxWidth: 1200 }}
+          >
             <Form.Item name="date-picker" label="DatePicker" {...config}>
               <DatePicker />
             </Form.Item>

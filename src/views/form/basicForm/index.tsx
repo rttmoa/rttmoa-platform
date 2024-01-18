@@ -14,13 +14,18 @@ import FormModal from "./components/formModal";
 import FormTime from "./components/formTime";
 import FormWithout from "./components/formWithout";
 import "./index.less";
+import { useLocation, useNavigate } from "react-router-dom";
 const { Text, Title } = Typography;
 
 // ? 选择表单类型
 // Header由redux去控制
 // 此处为父组件控制子组件传值
 const BasicForm: React.FC = () => {
-  const [value, setValue] = React.useState<string>("FromCollectUser");
+  // https://blog.csdn.net/Yin_yihui/article/details/129420273
+  const navigate = useNavigate();
+  const location = useLocation();
+  let initValue = location.search ? location.search.split("=")[1] : "FromCollectUser";
+  const [value, setValue] = React.useState<string>(initValue);
 
   // ! https://ant.design/components/form-cn
   // ! https://procomponents.ant.design/components/login-form
@@ -41,8 +46,10 @@ const BasicForm: React.FC = () => {
   // 要新添加 ? 自定义表单控件、多表单联动、内联登陆栏、普通登陆框、注册新用户、弹出层中的新建表单、时间类控件、自行处理表单数据
   const handleChange = (value: string) => {
     setValue(value);
+    navigate(`/form/basicForm?select=${value}`);
   };
 
+  // ? 设计表单、？？
   return (
     <>
       <Card className="mb10">
@@ -57,11 +64,12 @@ const BasicForm: React.FC = () => {
             <b>常用表单操作：</b>
           </Text>
           <Select
-            defaultValue="FromCollectUser"
+            // defaultValue="FromCollectUser"
             style={{ width: 250 }}
             listHeight={550}
             onChange={handleChange}
             options={selectOption}
+            value={initValue}
           />
           {/* <Button onClick={() => setValue(value)}>查看</Button> */}
         </Space>
