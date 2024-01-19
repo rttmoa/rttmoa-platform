@@ -438,7 +438,7 @@
     },
     {
       "path": "/list",
-      "redirect": "/list/useProTable",
+      "redirect": "/list/basicTable",
       "meta": {
         "key": "list",
         "icon": "TableOutlined",
@@ -449,6 +449,18 @@
         "isAffix": false
       },
       "children": [{
+					"path": "/list/basicTable",
+					"element": "/list/basicTable/index",
+					"meta": {
+						"key": "basicTable",
+						"icon": "AppstoreOutlined",
+						"title": "基本表格",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false
+					}
+				},{
           "path": "/list/useProTable",
           "element": "/list/useProTable/index",
           "meta": {
