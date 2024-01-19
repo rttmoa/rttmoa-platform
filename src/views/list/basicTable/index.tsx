@@ -2,17 +2,17 @@
 import React, { useEffect } from "react";
 import { Card, Typography, Button, Space, Select, Divider } from "antd";
 import TableBasic from "./components/tableBasic";
-import FormBaisc from "./components/formBasic";
-import FromLayout from "./components/formLayout";
-import FormDisabled from "./components/formDisabled";
-import FormSize from "./components/formSize";
-import FormValidateOther from "./components/formValidateOther";
-import FormValidateStatic from "./components/formValidateStatic";
-import FormLogin from "./components/formLogin";
-import FormRegister from "./components/formRegister";
-import FormModal from "./components/formModal";
-import FormTime from "./components/formTime";
-import FormWithout from "./components/formWithout";
+import TableSelectCustom from "./components/tableSelectCustom";
+import TableFilterSort from "./components/tableFilterSort";
+import TableFilterSearch from "./components/tableFilterSearch";
+import TableFilterPanel from "./components/tableFilterPanel";
+import TableAjax from "./components/tableAjax";
+import TableTreeData from "./components/tableTreeData";
+import TableFixedHeader from "./components/tableFixedHeader";
+import TableFixedColumns from "./components/tableFixedColumns";
+import TableFixedHeaderColumns from "./components/tableFixedHeaderColumns";
+import TableHiddenColumns from "./components/tableHiddenColumns";
+import TableGrouping from "./components/tableGrouping";
 import "./index.less";
 import { useLocation, useNavigate } from "react-router-dom";
 import SelectComp from "./selectComp";
@@ -28,7 +28,7 @@ const BasicTable: React.FC = () => {
   // 要新添加 ? 自定义表单控件、多表单联动、内联登陆栏、普通登陆框、注册新用户、弹出层中的新建表单、时间类控件、自行处理表单数据
   const handleChange = (value: string) => {
     setValue(value);
-    navigate(`/form/basicTable?select=${value}`);
+    navigate(`/list/basicTable?select=${value}`);
   };
 
   return (
@@ -41,17 +41,17 @@ const BasicTable: React.FC = () => {
       </Card>
       <Card className="mb10">
         <TableBasic isShow={value === "TableBasic"} />
-        <FormBaisc value={value} />
-        <FromLayout value={value} />
-        <FormDisabled value={value} />
-        <FormSize value={value} />
-        <FormLogin value={value} />
-        <FormRegister value={value} /> {/* ! reference */}
-        <FormModal value={value} /> {/* reference */}
-        <FormTime value={value} /> {/* reference */}
-        <FormWithout value={value} /> {/* reference */}
-        <FormValidateStatic value={value} />
-        <FormValidateOther value={value} />
+        <TableSelectCustom isShow={value === "TableSelectCustom"} />
+        <TableFilterSort isShow={value === "TableFilterSort"} />
+        <TableFilterSearch isShow={value === "TableFilterSearch"} />
+        <TableFilterPanel isShow={value === "TableFilterPanel"} /> {/* ? 自定义筛选菜单 */}
+        <TableAjax isShow={value === "TableAjax"} /> {/* ? 远程加载数据 (添加 size表格尺寸 & title,footer头部底部) */}
+        <TableTreeData isShow={value === "TableTreeData"} />
+        <TableFixedHeader isShow={value === "TableFixedHeader"} />
+        <TableFixedColumns isShow={value === "TableFixedColumns"} />
+        <TableFixedHeaderColumns isShow={value === "TableFixedHeaderColumns"} />
+        <TableHiddenColumns isShow={value === "TableHiddenColumns"} />
+        <TableGrouping isShow={value === "TableGrouping"} />
       </Card>
     </>
   );

@@ -5,3 +5,4 @@
 
 declare module "qrcode";
 declare module "crypto-js";
+declare module "react-highlight-words";

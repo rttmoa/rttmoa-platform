@@ -3,18 +3,19 @@ import React from "react";
 const { Text, Title } = Typography;
 
 export const selectOption = [
-  { label: "基本用法 Basic", value: "TableBasic" },
-  { label: "表单基本使用 Basic", value: "FormBaisc" },
-  { label: "表单三种布局 Layout", value: "FormLayout" },
-  { label: "表单禁用 Disabled", value: "FormDisabled" },
-  { label: "表单尺寸 Size", value: "FormSize" },
-  { label: "普通登陆框 Login", value: "FormLogin" },
-  { label: "新用户注册 Register", value: "FormRegister" },
-  { label: "表单弹出层 Modal", value: "FormModal" },
-  { label: "时间类控件 Time", value: "FormTime" },
-  { label: "自行处理表单 Without", value: "FormWithout" },
-  { label: "自定义校验 ValidateStatic", value: "ValidateStatic" },
-  { label: "校验其他组件 ValidateOther", value: "FormValidateOther" }
+  { label: "表格基本用法 Basic", value: "TableBasic" },
+  // 选择和操作：<Table rowSelection={{ selectedRowKeys, onChange: onSelectChange }} columns={columns} dataSource={data} />
+  { label: "表头自定义选择项 SelectCustom", value: "TableSelectCustom" },
+  { label: "表头筛选和排序 FilterSort", value: "TableFilterSort" },
+  { label: "表头自定义筛选的搜索 FilterSearch", value: "TableFilterSearch" },
+  { label: "表头自定义筛选菜单 FilterPanel", value: "TableFilterPanel" },
+  { label: "表头远程加载数据 Ajax", value: "TableAjax" },
+  { label: "树形数据展示 TreeData", value: "TableTreeData" },
+  { label: "固定表头 FixedHeader", value: "TableFixedHeader" },
+  { label: "固定列 FixedColumns", value: "TableFixedColumns" },
+  { label: "固定头和列 FixedHeaderColumns", value: "TableFixedHeaderColumns" },
+  { label: "隐藏列 HiddenColumns", value: "TableHiddenColumns" },
+  { label: "表头分组 Grouping", value: "TableGrouping" }
 ];
 
 const SelectComp = ({ handleChange, initValue }: any) => {

@@ -83,6 +83,7 @@ const data: DataType[] = [
   }
 ];
 
+// ? 表格基本渲染 （无其他属性操作）
 const App: any = ({ isShow }: any) => {
   return <>{isShow && <Table columns={columns} dataSource={data} />}</>;
 };
