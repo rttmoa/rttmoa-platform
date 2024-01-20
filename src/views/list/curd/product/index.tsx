@@ -1,29 +1,83 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Popconfirm, Table, TableColumnsType, message } from "antd";
+import { Button, Card, Popconfirm, Table, TableColumnsType, message, Image } from "antd";
 import { useNavigate } from "react-router-dom";
-import { listApi } from "@/api/modules/qf";
-import Com from "./components";
+import defaultImg from "@/assets/images/defaultImg.jpg";
+
+export interface listProps {
+  list: any;
+  total: number;
+  page: number;
+}
+export const listApi: Promise<listProps> = new Promise(reslove =>
+  reslove({
+    total: 3,
+    page: 2,
+    list: [
+      {
+        onSale: true,
+        // content: "<p>是公司的公司的根深蒂固</p>",
+        content: "是公司的公司的根深蒂固",
+        quantity: 10,
+        price: 16,
+        _id: "642ee36ff3d52f4db845ff43",
+        name: "黄鹤楼",
+        coverImg: "",
+        // coverImg: "http://localhost:3009/uploads/20230406/1680794476636.jpg",
+        createdAt: "2023-04-06T15:21:19.394Z",
+        updatedAt: "2023-09-25T14:43:41.745Z",
+        __v: 0
+      },
+      {
+        onSale: false,
+        content: "东方式的防守对方身份的",
+        quantity: 10,
+        price: 17,
+        _id: "642ee364f3d52f4db845ff42",
+        name: "利群",
+        coverImg: "",
+        // coverImg: "http://localhost:3009/uploads/20230406/1680794465206.jpg",
+        createdAt: "2023-04-06T15:21:08.502Z",
+        updatedAt: "2023-05-02T07:43:32.215Z",
+        __v: 0
+      },
+      {
+        onSale: true,
+        content: "所得税的方式",
+        quantity: 10,
+        price: 23,
+        _id: "642ee364f3d52f4db845341242",
+        name: "玉溪",
+        coverImg: "",
+        // coverImg: "http://localhost:3009/uploads/20230406/1680794465206.jpg",
+        createdAt: "2023-04-06T15:21:08.502Z",
+        updatedAt: "2023-05-02T07:43:32.215Z",
+        __v: 0
+      }
+    ]
+  })
+);
+export const serverUrl = "http://localhost:3009";
 
 const List = () => {
   const navigate = useNavigate();
 
-  const [data, setData] = useState<{ list: []; total: number; page: number }>({ list: [], total: 0, page: 0 });
+  const [data, setData] = useState<listProps>({ list: [], total: 0, page: 0 });
   const { list, total, page } = data;
   // console.log(data);
 
-  useEffect(() => {
-    // 发送请求
-    listApi().then((result: any) => {
-      // console.log(result);
-      setData({ ...result.data });
-    });
-  }, []);
-
+  // 发送请求 | 通过redux去处理
   const loadData = () => {
-    // 删除 修改状态 重新发请求
+    listApi.then((res: listProps): void => {
+      // console.log(res);
+      setData(res);
+    });
   };
 
-  const columns: any = [
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const columns: TableColumnsType = [
     {
       title: "序号",
       key: "_id",
@@ -38,8 +92,10 @@ const List = () => {
     {
       title: "主图",
       dataIndex: "coverImg",
-      render: (txt: any, record: any) =>
-        record.coverImg ? <img src={record.coverImg} alt={record.name} style={{ width: 120 }} /> : "暂无图片"
+      render: (txt: any, record: any) => (
+        // record.coverImg ? <img src={record.coverImg} alt={record.name} style={{ width: 120 }} /> : "暂无图片"
+        <Image src={record.coverImg ? serverUrl + record.coverImg : defaultImg} alt={record.name} style={{ width: 60 }} />
+      )
     },
     {
       title: "价格",
@@ -59,7 +115,7 @@ const List = () => {
               type="primary"
               size="small"
               onClick={() => {
-                navigate(`/func/qf/product/list/detail?id=${record._id}`);
+                navigate(`/list/curd/product/detail?id=${record._id}`);
               }}
             >
               修改
@@ -74,7 +130,7 @@ const List = () => {
                 // delOne(record._id).then(res => {
                 //   loadData();
                 // });
-                message.info(`调用删除 api; _id=${record._id}`);
+                message.info(`删除： _id=${record._id}`);
               }}
             >
               <Button type="dashed" size="small" style={{ margin: "0 1rem" }}>
@@ -84,11 +140,10 @@ const List = () => {
             <Button
               size="small"
               onClick={() => {
-                // todo 在此修改状态
                 // modifyOne(record._id, { onSale: !record.onSale }).then(res => {
                 //   loadData();
                 // });
-                message.info(`调用修改 api; _id=${record._id}`);
+                message.info(`修改在售： _id=${record._id}`);
               }}
             >
               {record.onSale ? "下架" : "上架"}
@@ -108,7 +163,7 @@ const List = () => {
             type="primary"
             size="small"
             onClick={() => {
-              navigate("/func/qf/product/list/detail");
+              navigate("/list/curd/product/detail");
             }}
           >
             新增
