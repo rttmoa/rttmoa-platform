@@ -1,6 +1,9 @@
 /* eslint-disable prettier/prettier */
 import React, { useEffect } from "react";
 import { Card, Typography, Button, Space, Select, Divider } from "antd";
+import { useLocation, useNavigate } from "react-router-dom";
+import "./index.less";
+import SelectComp from "./selectComp";
 import TableBasic from "./components/tableBasic";
 import TableSelectCustom from "./components/tableSelectCustom";
 import TableFilterSort from "./components/tableFilterSort";
@@ -13,10 +16,14 @@ import TableFixedColumns from "./components/tableFixedColumns";
 import TableFixedHeaderColumns from "./components/tableFixedHeaderColumns";
 import TableHiddenColumns from "./components/tableHiddenColumns";
 import TableGrouping from "./components/tableGrouping";
-import "./index.less";
-import { useLocation, useNavigate } from "react-router-dom";
-import SelectComp from "./selectComp";
-const { Text, Title } = Typography;
+import TableEditCell from "./components/tableEditCell";
+import TableEditRow from "./components/tableEditRow";
+import TableSub from "./components/tableSub";
+import TableEllipsis from "./components/tableEllipsis";
+import TableVirtual from "./components/tableVirtual";
+import TableResponsive from "./components/tableResponsive";
+import TableSticky from "./components/tableSticky";
+import TableDynamic from "./components/tableDynamic";
 
 // ? Table
 const BasicTable: React.FC = () => {
@@ -34,10 +41,12 @@ const BasicTable: React.FC = () => {
   return (
     <>
       <Card className="mb10">
-        <Title level={4} className="mb15">
-          基础表格 - <Text>当有大量结构化的数据需要展现时 / 当需要对数据进行排序、搜索、分页、自定义操作等复杂行为时。</Text>
-        </Title>
-        <SelectComp handleChange={handleChange} initValue={initValue} />
+        <Space direction="vertical" size="large">
+          <span className="mb15">
+            <b>基础表格</b> - 当有大量结构化的数据需要展现时 / 当需要对数据进行排序、搜索、分页、自定义操作等复杂行为时。
+          </span>
+          <SelectComp handleChange={handleChange} initValue={initValue} />
+        </Space>
       </Card>
       <Card className="mb10">
         <TableBasic isShow={value === "TableBasic"} />
@@ -52,6 +61,14 @@ const BasicTable: React.FC = () => {
         <TableFixedHeaderColumns isShow={value === "TableFixedHeaderColumns"} />
         <TableHiddenColumns isShow={value === "TableHiddenColumns"} />
         <TableGrouping isShow={value === "TableGrouping"} />
+        <TableEditCell isShow={value === "TableEditCell"} />
+        <TableEditRow isShow={value === "TableEditRow"} />
+        <TableSub isShow={value === "TableSub"} />
+        <TableEllipsis isShow={value === "TableEllipsis"} />
+        <TableVirtual isShow={value === "TableVirtual"} />
+        <TableResponsive isShow={value === "TableResponsive"} />
+        <TableSticky isShow={value === "TableSticky"} />
+        <TableDynamic isShow={value === "TableDynamic"} />
       </Card>
     </>
   );
