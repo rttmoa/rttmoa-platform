@@ -503,7 +503,7 @@
           "path": "/list/useProList",
           "element": "/list/useProList/index",
           "meta": {
-            "key": "ProList",
+            "key": "useProList",
             "icon": "AppstoreOutlined",
             "title": "使用 ProList",
             "isLink": "",
@@ -511,6 +511,46 @@
             "isFull": false,
             "isAffix": false
           }
+        },
+				{
+          "path": "/list/curd",
+          "redirect": "/list/curd/product",
+          "meta": {
+            "key": "curd",
+            "icon": "AppstoreOutlined",
+            "title": "CURD",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          },
+          "children": [{
+						"path": "/list/curd/product",
+						"element": "/list/curd/product/index",
+						"meta": {
+							"key": "product",
+							"icon": "AppstoreOutlined",
+							"title": "商品",
+							"isLink": "",
+							"isHide": false,
+							"isFull": false,
+							"isAffix": false
+						},
+						"children": [{
+							"path": "/list/curd/product/detail",
+							"element": "/list/curd/product/detail",
+							"meta": {
+								"key": "productDetail",
+								"icon": "AppstoreOutlined",
+								"title": "商品详情",
+								"activeMenu": "/list/curd/product",
+								"isLink": "",
+								"isHide": true,
+								"isFull": false,
+								"isAffix": false
+							}
+						}]
+					}]
         }
       ]
     },

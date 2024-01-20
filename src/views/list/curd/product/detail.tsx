@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Form, Card, Input, Button, message, Upload, UploadFile, FormInstance } from "antd";
+import Icon from "@ant-design/icons";
 // 引入编辑器组件
-import BraftEditor, { EditorState } from "braft-editor";
+import BraftEditor from "braft-editor";
 // 引入编辑器样式
 import "braft-editor/dist/index.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { UploadChangeParam } from "antd/es/upload";
+import { listApi, listProps } from ".";
+import defaultImg from "@/assets/images/defaultImg.jpg";
 
 // export interface FormInstance<Values = any> {
 //   getFieldValue: (name: NamePath) => StoreValue;
@@ -26,27 +29,33 @@ import { UploadChangeParam } from "antd/es/upload";
 //   validateFields: ValidateFields<Values>;
 //   submit: () => void;
 // }
-function Edit() {
+
+const serverUrl = "http://localhost:3009";
+
+const Edit = () => {
   const navigate = useNavigate();
-  const loc = useLocation();
-  const _id = loc.search.split("=")[1];
-  // console.log(_id);
+  const location = useLocation();
 
   // const { getFieldDecorator } = props.form;
-  const [currentData, setCurrentData] = useState({});
+  const [currentData, setCurrentData] = useState<any>({});
   const [imageUrl, setImageUrl] = useState("");
   const [loading, setLoading] = useState(false);
-  const [editorState, setEditorState] = useState("");
+  const [editorState, setEditorState] = useState<any>("");
 
   // 初始化的时候执行
   useEffect(() => {
-    // if (props.match.params.id) {
-    //   getOneById(props.match.params.id).then(res => {
-    //     setCurrentData(res);
-    //     setImageUrl(res.coverImg);
-    //     setEditorState(BraftEditor.createEditorState(res.content));
-    //   });
-    // }
+    const _id = location.search.split("=")[1];
+    if (_id) {
+      listApi.then((res: listProps) => {
+        const result = res.list.filter((value: listProps["list"]) => value._id === _id);
+        // console.log(result);
+        setCurrentData(result[0]);
+        setImageUrl(result[0].coverImg);
+        setEditorState(BraftEditor.createEditorState(result[0].content) as any);
+      });
+    } else {
+      setCurrentData({ name: " " });
+    }
   }, []);
 
   // 图片上传
@@ -67,48 +76,72 @@ function Edit() {
 
   // 富文本编辑器
   const handleEditorChange = (v: any) => {
-    // setEditorState(v);
+    setEditorState(v);
   };
 
-  const onFinish = (value: any) => {
+  const onFinish = (values: any) => {
     // editorState.toHTML()获取当前富文本的内容
     // console.log(editorState.toHTML());
-    console.log(value); // {name: 'zhangsan', price: '444'}
+    console.log(values); // {name: 'zhangsan', price: '444'}
+
+    // e.preventDefault()
+    // props.form.validateFieldsAndScroll((err, values) => {}
+
+    // ? 判断是编辑 还是新建，做对应的操作
+    const _id = location.search.split("=")[1];
+    // if (_id) {
+    //   modifyOne(_id, {
+    //     ...values,
+    //     coverImg: imageUrl,
+    //     content: editorState.toHTML()
+    //   });
+    // } else {
+    //   createApi({
+    //     ...values,
+    //     coverImg: imageUrl,
+    //     content: editorState.toHTML()
+    //   })
+    //     .then(res => {
+    //       navigate("/list/curd/product");
+    //       setCurrentData({});
+    //       setImageUrl("");
+    //       setLoading(false);
+    //       setEditorState("");
+    //     })
+    //     .catch(err => { console.log(err); });
+    // }
   };
   const layout = {
-    labelCol: { span: 8 },
+    labelCol: { span: 4 },
     wrapperCol: { span: 16 }
   };
 
+  if (!currentData?.name) return;
   return (
     <Card
       title="商品编辑"
       extra={
         <Button
           onClick={() => {
-            navigate("/func/qf/product/list");
+            navigate("/list/curd/product");
           }}
         >
           返回
         </Button>
       }
     >
-      <Form {...layout} name="control-hooks" onFinish={onFinish} style={{ maxWidth: 600 }}>
-        <Form.Item
-          name="name"
-          label="名字"
-          rules={[{ required: true, message: "请输入商品名字" }]}
-          // initialValue={currentData?.name}
-        >
+      <Form
+        // {...layout}
+        name="control-hooks"
+        onFinish={onFinish}
+        // style={{ maxWidth: 600 }}
+        initialValues={{ name: currentData.name, price: currentData.price }}
+      >
+        <Form.Item name="name" label="名字" rules={[{ required: true, message: "请输入商品名字" }]}>
           <Input placeholder="请输入商品名字" />
         </Form.Item>
 
-        <Form.Item
-          name="price"
-          label="价格"
-          rules={[{ required: true, message: "请输入商品价格" }]}
-          // initialValue={currentData.price}
-        >
+        <Form.Item name="price" label="价格" rules={[{ required: true, message: "请输入商品价格" }]}>
           <Input placeholder="请输入商品价格" />
         </Form.Item>
 
@@ -118,22 +151,23 @@ function Edit() {
             listType="picture-card"
             className="avatar-uploader"
             showUploadList={true}
-            action={"/api/v1/common/file_upload"}
-            onChange={info => handleChange(info)}
+            action={serverUrl + "/api/v1/common/file_upload"}
+            onChange={handleChange}
           >
             {imageUrl ? (
-              <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
+              <img src={serverUrl + imageUrl} alt="avatar" style={{ width: "100%" }} />
             ) : (
-              <div>
-                {/* <Icon type={loading ? "loading" : "plus"} /> */}
-                <div className="ant-upload-text">Upload</div>
-              </div>
+              // <div>
+              //   <Icon type={loading ? "loading" : "plus"} />
+              //   <div className="ant-upload-text">Upload</div>
+              // </div>
+              <img src={defaultImg} alt="avatar" style={{ width: "100%" }} />
             )}
           </Upload>
         </Form.Item>
 
-        <Form.Item label="详情 （富文本）">
-          {/* <BraftEditor value={editorState} onChange={e => handleEditorChange(e)} /> */}
+        <Form.Item label="详情: ">
+          <BraftEditor value={editorState} onChange={handleEditorChange} />
         </Form.Item>
         <Form.Item>
           <Button htmlType="submit" type="primary">
@@ -143,6 +177,5 @@ function Edit() {
       </Form>
     </Card>
   );
-}
-
+};
 export default Edit;

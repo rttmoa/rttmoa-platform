@@ -5,6 +5,7 @@ import { ReqLogin, ResLogin } from "@/api/interface/index";
 import authMenuList from "@/assets/json/authMenuList.json";
 import authButtonList from "@/assets/json/authButtonList.json";
 import loginJSON from "@/assets/json/login.json";
+
 /**
  * @name AuthModule
  */

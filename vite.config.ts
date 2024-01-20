@@ -46,7 +46,10 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       }
     },
     define: {
-      __APP_INFO__: JSON.stringify(__APP_INFO__)
+      __APP_INFO__: JSON.stringify(__APP_INFO__),
+      global: {
+        // getSelection: () => {}
+      }
     },
     server: {
       host: "0.0.0.0",
