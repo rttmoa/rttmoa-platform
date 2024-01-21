@@ -74,10 +74,10 @@ const List: React.FC = () => {
                   conStacker1.getStatus === 0
                     ? "stackerGreen"
                     : conStacker1.getStatus === 1
-                    ? "stackerRed"
-                    : conStacker1.getStatus === 2
-                    ? "stackerYellow"
-                    : undefined,
+                      ? "stackerRed"
+                      : conStacker1.getStatus === 2
+                        ? "stackerYellow"
+                        : undefined,
                   "stacker1"
                 )}
               ></div>
@@ -88,10 +88,10 @@ const List: React.FC = () => {
                   conStacker2.getStatus === 0
                     ? "stackerGreen"
                     : conStacker2.getStatus === 1
-                    ? "stackerRed"
-                    : conStacker2.getStatus === 2
-                    ? "stackerYellow"
-                    : undefined,
+                      ? "stackerRed"
+                      : conStacker2.getStatus === 2
+                        ? "stackerYellow"
+                        : undefined,
                   "stacker2"
                 )}
               ></div>
@@ -102,10 +102,10 @@ const List: React.FC = () => {
                   conStacker3.getStatus === 0
                     ? "stackerGreen"
                     : conStacker3.getStatus === 1
-                    ? "stackerRed"
-                    : conStacker3.getStatus === 2
-                    ? "stackerYellow"
-                    : undefined,
+                      ? "stackerRed"
+                      : conStacker3.getStatus === 2
+                        ? "stackerYellow"
+                        : undefined,
                   "stacker3"
                 )}
               ></div>
@@ -116,10 +116,10 @@ const List: React.FC = () => {
                   conStacker4.getStatus === 0
                     ? "stackerGreen"
                     : conStacker4.getStatus === 1
-                    ? "stackerRed"
-                    : conStacker4.getStatus === 2
-                    ? "stackerYellow"
-                    : undefined,
+                      ? "stackerRed"
+                      : conStacker4.getStatus === 2
+                        ? "stackerYellow"
+                        : undefined,
                   "stacker4"
                 )}
               ></div>
@@ -130,10 +130,10 @@ const List: React.FC = () => {
                   conStacker5.getStatus === 0
                     ? "stackerGreen"
                     : conStacker5.getStatus === 1
-                    ? "stackerRed"
-                    : conStacker5.getStatus === 2
-                    ? "stackerYellow"
-                    : undefined,
+                      ? "stackerRed"
+                      : conStacker5.getStatus === 2
+                        ? "stackerYellow"
+                        : undefined,
                   "stacker5"
                 )}
               ></div>
@@ -144,10 +144,10 @@ const List: React.FC = () => {
                   conStacker6.getStatus === 0
                     ? "stackerGreen"
                     : conStacker6.getStatus === 1
-                    ? "stackerRed"
-                    : conStacker6.getStatus === 2
-                    ? "stackerYellow"
-                    : undefined,
+                      ? "stackerRed"
+                      : conStacker6.getStatus === 2
+                        ? "stackerYellow"
+                        : undefined,
                   "stacker6"
                 )}
               ></div>
@@ -158,10 +158,10 @@ const List: React.FC = () => {
                   conStacker7.getStatus === 0
                     ? "stackerGreen"
                     : conStacker7.getStatus === 1
-                    ? "stackerRed"
-                    : conStacker7.getStatus === 2
-                    ? "stackerYellow"
-                    : undefined,
+                      ? "stackerRed"
+                      : conStacker7.getStatus === 2
+                        ? "stackerYellow"
+                        : undefined,
                   "stacker7"
                 )}
               ></div>
@@ -172,10 +172,10 @@ const List: React.FC = () => {
                   conStacker8.getStatus === 0
                     ? "stackerGreen"
                     : conStacker8.getStatus === 1
-                    ? "stackerRed"
-                    : conStacker8.getStatus === 2
-                    ? "stackerYellow"
-                    : undefined,
+                      ? "stackerRed"
+                      : conStacker8.getStatus === 2
+                        ? "stackerYellow"
+                        : undefined,
                   "stacker8"
                 )}
               ></div>
