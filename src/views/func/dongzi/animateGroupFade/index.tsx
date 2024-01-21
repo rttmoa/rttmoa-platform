@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from "react";
 import { Card, Col, Row, Button } from "antd";
-import { AnimateGroupFade } from "@/assets/markdown";
+import { AnimateGroupFade } from "@/assets/dangerouslySetInnerHTML";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./index.less";
 

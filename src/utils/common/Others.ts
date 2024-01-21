@@ -48,6 +48,31 @@ function delParamsUrl(url: string, name: string | number) {
   // }
 }
 
+/*
+    判断对象是否相等 ??
+ */
+export const diff_obj = (obj1: { [x: string]: any }, obj2: { [x: string]: any }): boolean => {
+  let o1 = obj1 instanceof Object;
+  let o2 = obj2 instanceof Object;
+  if (!o1 || !o2) {
+    return obj1 === obj2;
+  }
+  if (Object.keys(obj1).length !== Object.keys(obj2).length) return false;
+
+  for (let attr in obj1) {
+    let t1 = obj1[attr] instanceof Object;
+    let t2 = obj2[attr] instanceof Object;
+    if (t1 && t2) {
+      return diff_obj(obj1[attr], obj2[attr]);
+    } else if (obj1[attr] !== obj2[attr]) {
+      return false;
+    }
+  }
+  return true;
+};
+const obj1 = { name: "zhangsan", age: 18, info: { eat: "吃", do: "do" } };
+const obj2 = { name: "zhangsan", age: 18, info: { eat: "吃", do: "do" } };
+
 /*获取十六进制随机颜色*/
 function getRandomColor() {
   return (

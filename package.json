@@ -57,6 +57,8 @@
     "clsx": "^2.0.0",
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.9",
+    "draftjs-to-html": "^0.9.1",
+    "draftjs-to-markdown": "^0.6.0",
     "echarts": "^5.4.3",
     "echarts-for-react": "^2.0.8",
     "echarts-liquidfill": "^3.1.0",

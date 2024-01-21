@@ -1,8 +1,7 @@
 export const asyncComponent = `
-    <p><strong>关于react的按需加载</strong><br>在网上也查了关于react(Ract Route 4.0)的按需加载方法,方法倒有挺多种<br>目前只尝试了第一种，因为我写<code>Vue</code>也是用import实现按需加载的，所以也就没去折腾了。</p>
-    <h3 id="1-import-">1. <a href="https://serverless-stack.com/chapters/code-splitting-in-create-react-app.html">import方法</a></h3>
+    <p><strong>React 的按需加载</strong></p>
+    <h3 id="1-import-">1. <a href="#">import方法</a></h3>
     <pre><code><span class="hljs-comment">//asyncComponent.js</span>
-    <span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>
     <span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>
     <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> loadComponent =&gt; (
         <span class="hljs-keyword">class</span> AsyncComponent <span class="hljs-keyword">extends</span> React.Component {
@@ -40,9 +39,9 @@ export const asyncComponent = `
     <li>在<code>componentDidMount</code>钩子函数通过 async/await 执行接受进来的loadComponent方法，得到<code>import</code>返回的结果，赋值给state.Component,</li>
     <li>因为我们import的是一个React组件，所以我们得到的也是React组件，到时候只需要把该组件 <code>render</code>出去就行了</li>
     </ol>
-    <h3 id="2-bundle-import-">2. <a href="https://www.jianshu.com/p/547aa7b92d8c">Bundle组件 + import</a>（跟第一种感觉差不多）</h3>
-    <h3 id="3-react-loadable">3. <a href="https://github.com/ReactTraining/react-router/blob/master/packages/react-router-dom/docs/guides/code-splitting.md">react-loadable</a></h3>
-    <h3 id="4-bundle-loader">4. <a href="https://segmentfault.com/a/1190000009539836">bundle-loader</a></h3>
+    <h3 id="2-bundle-import-">2. <a href="#">Bundle组件 + import</a></h3>
+    <h3 id="3-react-loadable">3. <a href="#">react-loadable</a></h3>
+    <h3 id="4-bundle-loader">4. <a href="#">bundle-loader</a></h3>
 `;
 export const createComponent = {
   html1: `

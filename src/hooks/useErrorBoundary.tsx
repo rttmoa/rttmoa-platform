@@ -1,24 +1,20 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from "react";
 import CachePng from "@/assets/images/cache.png";
-import { Button, List, Space, Typography } from "antd";
+import { Alert, Button, List, Space, Tag, Typography } from "antd";
 
 // ? 错误边界
 function ErrorBoundary(props: any) {
   const [error, setError] = useState(false);
-  const [errData, setErrData] = useState<any>([]); 
+  const [errInfo, setErrInfo] = useState<any>({});
 
   useEffect(() => {
-    const handleErrors = (err: any) => { 
+    const handleErrors = (err: any) => {
       if (err?.filename) {
-        setErrData((prev: any) => {
-          return [...prev, { ErrFile: err?.filename }];
-        });
+        setErrInfo((prev: any) => ({ ...prev, file: err.filename }));
       }
       if (err?.message) {
-        setErrData((prev: any) => {
-          return [...prev, { ErrMessage: err?.message }];
-        });
+        setErrInfo((prev: any) => ({ ...prev, message: err.message }));
       }
       setError(true);
     };
@@ -30,30 +26,36 @@ function ErrorBoundary(props: any) {
   // console.log("errData", errData);
 
   if (error) {
+    const desc = (
+      <div>
+        <div>
+          <Tag>错误文件</Tag>
+          {errInfo.file}
+        </div>
+        <br />
+        <div>
+          <Tag>错误消息</Tag>
+          {errInfo.message}
+        </div>
+      </div>
+    );
     return (
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
         <div className="mb30" style={{ marginTop: 130 }}>
           <img src={CachePng} alt="ErrorBoundary" style={{ width: 500 }} />
         </div>
         <br />
-        <h3 className="mb30">
-          <List
-            header={<div>{"<ErrorBoundary />"}, SomeThing went wrong</div>}
-            bordered
-            dataSource={errData}
-            renderItem={(item: any, idx) => { 
-              return (
-                <List.Item>
-                  <b>{Object.keys(item)}：</b>{"    "}
-                  <Typography.Text>{Object.values(item)}</Typography.Text>
-                </List.Item>
-              );
-            }}
-          />
-        </h3> 
+        <Alert type="error" showIcon message="SomeThing went wrong" description={desc} />
+        <br />
         <div>
-          <Space>
-            <Button onClick={() => { window.location.reload(); }}>重新加载</Button>
+          <Space size="large">
+            <Button
+              onClick={() => {
+                window.location.reload();
+              }}
+            >
+              重新加载
+            </Button>
             <Button
               onClick={() => {
                 window.open("/");

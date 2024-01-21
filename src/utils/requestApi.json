@@ -104,13 +104,26 @@
             "isAffix": false
           }
         },
+				{
+          "path": "/assembly/recharts",
+          "element": "/assembly/recharts/index",
+          "meta": {
+            "key": "recharts",
+            "icon": "AppstoreOutlined",
+            "title": "Recharts",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        },
         {
           "path": "/assembly/svgIcon",
           "element": "/assembly/svgIcon/index",
           "meta": {
             "key": "svgIcon",
             "icon": "AppstoreOutlined",
-            "title": "SVG 图标",
+            "title": "SvgIcon 图标",
             "isLink": "",
             "isHide": false,
             "isFull": false,
@@ -150,6 +163,45 @@
             "key": "watermark",
             "icon": "AppstoreOutlined",
             "title": "水印",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        },
+				{
+          "path": "/assembly/cssModules",
+          "element": "/assembly/cssModules/index",
+          "meta": {
+            "key": "cssModules",
+            "icon": "AppstoreOutlined",
+            "title": "CSSModules",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        },
+				{
+          "path": "/assembly/markdown",
+          "element": "/assembly/markdown/index",
+          "meta": {
+            "key": "markdown",
+            "icon": "AppstoreOutlined",
+            "title": "Markdown",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        },
+				{
+          "path": "/assembly/draft",
+          "element": "/assembly/draft/index",
+          "meta": {
+            "key": "draft",
+            "icon": "AppstoreOutlined",
+            "title": "富文本",
             "isLink": "",
             "isHide": false,
             "isFull": false,
@@ -433,7 +485,20 @@
             "isFull": false,
             "isAffix": false
           }
-        }
+        },
+				{
+          "path": "/feat/codeSplitting",
+          "element": "/feat/codeSplitting/index",
+          "meta": {
+            "key": "codeSplitting",
+            "icon": "AppstoreOutlined",
+            "title": "code Splitting",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        },
       ]
     },
     {
@@ -957,6 +1022,283 @@
     //     }
     //   ]
     // },
+		{
+      "path": "/func",
+      "redirect": "/func/table",
+      "meta": {
+        "key": "func",
+        "icon": "SettingOutlined",
+        "title": "功能组件",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false
+      },
+      "children": [{
+          "path": "/func/table",
+          "element": "/func/table/index",
+          "meta": {
+            "key": "table",
+            "icon": "AppstoreOutlined",
+            "title": "无限滚动表格",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        },
+        {
+          "path": "/func/wcsStacker",
+          "element": "/func/wcsStacker/index",
+          "meta": {
+            "key": "table",
+            "icon": "AppstoreOutlined",
+            "title": "WCS-Control",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        },
+        {
+          "path": "/func/dongzi",
+          "redirect": "/func/dongzi/codeSplitting",
+          "meta": {
+            "key": "breadcrumb",
+            "icon": "AppstoreOutlined",
+            "title": "dongzi",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          },
+          "children": [{
+              "path": "/func/dongzi/home",
+              "element": "/func/dongzi/home/index",
+              "meta": {
+                "key": "breadcrumbFlat",
+                "icon": "AppstoreOutlined",
+                "title": "首页",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false
+              }
+            }, {
+              "path": "/func/dongzi/codeSplitting",
+              "element": "/func/dongzi/codeSplitting/index",
+              "meta": {
+                "key": "breadcrumbFlat",
+                "icon": "AppstoreOutlined",
+                "title": "按需加载",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false
+              }
+            },
+            {
+              "path": "/func/dongzi/githubIcon",
+              "element": "/func/dongzi/githubIcon/index",
+              "meta": {
+                "key": "breadcrumbFlatDetail",
+                "icon": "AppstoreOutlined",
+                "title": "Icon",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false
+              }
+            },
+            {
+              "path": "/func/dongzi/cssModule",
+              "element": "/func/dongzi/cssModule/index",
+              "meta": {
+                "key": "breadcrumbChildren",
+                "icon": "AppstoreOutlined",
+                "title": "CSSModule",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false
+              }
+            },
+            {
+              "path": "/func/dongzi/animateFade",
+              "element": "/func/dongzi/animateFade/index",
+              "meta": {
+                "key": "breadcrumbChildren",
+                "icon": "AppstoreOutlined",
+                "title": "渐变",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false
+              },
+            },
+            {
+              "path": "/func/dongzi/animateGroupFade",
+              "element": "/func/dongzi/animateGroupFade/index",
+              "meta": {
+                "key": "breadcrumbChildren",
+                "icon": "AppstoreOutlined",
+                "title": "列表渐变",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false
+              },
+            },
+            {
+              "path": "/func/dongzi/animateSlide",
+              "element": "/func/dongzi/animateSlide/index",
+              "meta": {
+                "key": "breadcrumbChildren",
+                "icon": "AppstoreOutlined",
+                "title": "滑动",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false
+              },
+            },
+            {
+              "path": "/func/dongzi/editorMarkdown",
+              "element": "/func/dongzi/editorMarkdown/index",
+              "meta": {
+                "key": "breadcrumbChildren",
+                "icon": "AppstoreOutlined",
+                "title": "Markdown",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false
+              },
+            },
+            {
+              "path": "/func/dongzi/editorDraft",
+              "element": "/func/dongzi/editorDraft/index",
+              "meta": {
+                "key": "breadcrumbChildren",
+                "icon": "AppstoreOutlined",
+                "title": "富文本",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false
+              },
+            },
+            {
+              "path": "/func/dongzi/echarts",
+              "element": "/func/dongzi/echarts/index",
+              "meta": {
+                "key": "breadcrumbChildren",
+                "icon": "AppstoreOutlined",
+                "title": "Echarts",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false
+              },
+            }
+
+          ]
+        },
+        {
+          "path": "/func/qf",
+          "redirect": "/func/qf/list",
+          "meta": {
+            "key": "breadcrumb",
+            "icon": "AppstoreOutlined",
+            "title": "qf",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          },
+          "children": [{
+            "path": "/func/qf/product/list",
+            "element": "/func/qf/product/list/index",
+            "meta": {
+              "key": "breadcrumbFlat",
+              "icon": "AppstoreOutlined",
+              "title": "商品列表",
+              "isLink": "",
+              "isHide": false,
+              "isFull": false,
+              "isAffix": false
+            }
+          }, {
+            "path": "/func/qf/product/list/detail",
+            "element": "/func/qf/product/edit/index",
+            "meta": {
+              "key": "breadcrumbFlat",
+              "icon": "AppstoreOutlined",
+              "title": "商品详情",
+              "isLink": "",
+              "isHide": true,
+              "isFull": false,
+              "isAffix": false
+            }
+          }, ]
+        },
+        {
+          "path": "/func/hooks",
+          "redirect": "/func/hooks",
+          "meta": {
+            "key": "breadcrumb",
+            "icon": "AppstoreOutlined",
+            "title": "Hooks",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          },
+          "children": [{
+              "path": "/func/hooks/bookmark",
+              "element": "/func/hooks/bookmark/index",
+              "meta": {
+                "key": "breadcrumbFlat",
+                "icon": "AppstoreOutlined",
+                "title": "bookmark",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false
+              }
+            },
+            {
+              "path": "/func/hooks/hookbasic",
+              "element": "/func/hooks/hookbasic/index",
+              "meta": {
+                "key": "breadcrumbFlat",
+                "icon": "AppstoreOutlined",
+                "title": "hookbasic",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false
+              }
+            },
+            {
+              "path": "/func/hooks/todos",
+              "element": "/func/hooks/todos/index",
+              "meta": {
+                "key": "breadcrumbFlat",
+                "icon": "AppstoreOutlined",
+                "title": "todos",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false
+              }
+            },
+          ]
+        },
+
+
+      ]
+    },
     {
       "path": "/about/index",
       "element": "/about/index",

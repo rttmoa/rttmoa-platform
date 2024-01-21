@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from "react";
 import { Card, Col, Row, Button } from "antd";
-import { AnimateFadeHtml } from "@/assets/markdown";
+import { AnimateFadeHtml } from "@/assets/dangerouslySetInnerHTML";
 import { Transition } from "react-transition-group";
 
 const animateFade: React.FC = () => {

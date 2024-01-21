@@ -1,6 +1,7 @@
 /* eslint-disable prefer-rest-params */
+const CookieKey = "globalCookie";
 
-class StorageFn {
+class StorageHandler {
   [x: string]: any;
   constructor() {
     this.ls = window.localStorage;
@@ -39,6 +40,17 @@ class StorageFn {
   /*删除cookie*/
   removeCookie(name: any) {
     this.setCookie(name, 1, -1);
+  }
+
+  /*-----------------cookie call---------------------*/
+  getCookieToken() {
+    return this.getCookie(CookieKey);
+  }
+  setCookieToken(token: string) {
+    return this.setCookie(CookieKey, token, 1);
+  }
+  removeCookieToken() {
+    return this.removeCookie(CookieKey);
   }
 
   /*-----------------localStorage---------------------*/
