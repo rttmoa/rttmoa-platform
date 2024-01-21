@@ -23,7 +23,6 @@ interface ImportMetaEnv extends ViteEnv {
   __: unknown;
 }
 
-// 注释掉后：侧边栏关于项目模块： const{pkg,lastBuildTime} = __APP_INFO__; 报错  （Cannot find name '__APP_INFO__'.）
 /* __APP_INFO__ */
 declare const __APP_INFO__: {
   pkg: {
