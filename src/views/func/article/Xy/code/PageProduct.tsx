@@ -1,7 +1,6 @@
-import React from 'react';
+import React from "react";
 
-const PageProduct = 
-`import React, { Component } from "react";
+const PageProduct = `import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 import ProductHome from "../../components/Product/home";
 import ProductAddUpdate from "../../components/Product/add-update";
@@ -23,7 +22,6 @@ class Product extends Component {
       </Switch>
     );
   }
-}`
+}`;
 
 export default PageProduct;
- 
