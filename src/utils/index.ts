@@ -92,7 +92,11 @@ export function getMenuByPath(
  * @param {Object} result - The processed result.
  * @returns {Object}
  */
-export function getAllBreadcrumbList(menuList: RouteObjectType[], parent: RouteObjectType[] = [],  result: { [key: string]: RouteObjectType[] } = {}) {
+export function getAllBreadcrumbList(
+  menuList: RouteObjectType[],
+  parent: RouteObjectType[] = [],
+  result: { [key: string]: RouteObjectType[] } = {}
+) {
   for (const item of menuList) {
     result[item.meta!.key!] = [...parent, item];
     if (item.children) getAllBreadcrumbList(item.children, result[item.meta!.key!], result);
@@ -149,3 +153,22 @@ export function blockDebugger() {
   // 使用 setInterval 开始执行，并返回时间间隔 ID
   return setInterval(innerFunction, 50);
 }
+
+/**
+ * @description 👇 is-browser
+ * @returns {boolean}
+ */
+export const isBrowser = () => {
+  return typeof window !== "undefined" && typeof window.document !== "undefined";
+};
+
+/**
+ * @description 👇 异步延时, ms秒种
+ * @returns {void}
+ */
+export const delay = (ms: number) => {
+  return new Promise<void>((reslove, reject) => {
+    setTimeout(() => reslove(), ms);
+  });
+};
+// await delay(3000)
