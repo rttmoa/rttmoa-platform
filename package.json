@@ -31,9 +31,9 @@
     "lint:stylelint": "stylelint --cache --fix \"**/*.{less,postcss,css,scss}\" --cache --cache-location node_modules/.cache/stylelint/",
     "lint:lint-staged": "lint-staged",
     "prepare": "husky install",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "release": "standard-version",
-    "commit": "git add -A && czg && git push",
-    "commit2": "git status && git add -A && git-cz"
+    "commit": "git status && git add -A && czg && git push"
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.5",
@@ -148,7 +148,9 @@
     "vite-plugin-svg-icons": "^2.0.1"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">= 16.20.1",
+    "npm": ">= 8.19.4",
+    "yarn": ">= 1.22.19"
   },
   "browserslist": {
     "production": [
@@ -166,5 +168,11 @@
     "commitizen": {
       "path": "node_modules/cz-git"
     }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint --fix"
+  },
+  "jest": {
+    "collectCoverage": true
   }
 }
