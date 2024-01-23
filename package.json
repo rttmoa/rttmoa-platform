@@ -1,7 +1,7 @@
 {
   "name": "rttmoa-platform",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "description": "rttmoa-platform open source management system",
   "author": {
@@ -99,6 +99,7 @@
     "recharts": "^2.8.0",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.2",
+    "standard-version": "^9.5.0",
     "styled-components": "^6.1.8",
     "tailwindcss": "^3.4.1",
     "three": "^0.160.0",
