@@ -18,6 +18,8 @@
 > - 项目 [mock](https://mock.mengxuegu.com/);
 > - 阮一峰 [typescript](https://wangdoc.com/typescript/)
 > - axios封装RESTful风格API： [Link](https://wocwin.github.io/t-ui/projectProblem/axios.html)
+> - 替换富文本wangEditor，[Github Link](https://github.com/wangeditor-team/wangEditor)
+> - 百度地图API；[Link](https://lbsyun.baidu.com/faq/api?title=webapi)
 
 ## 🌱 安装使用步骤
 
