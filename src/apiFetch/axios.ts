@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 const useFetcher: React.FC<{ url: string }> = ({ url }): any => {
   const [state, setState] = useState({ data: null, error: null, status: "idle" });
 
+  // #region vscode1.17的收缩代码块功能  业务代码 axios useEffect钩子
   useEffect(() => {
     // AbortController 中断请求：https://www.jianshu.com/p/2f23c33e1922
     let controller = new AbortController();
@@ -31,6 +32,8 @@ const useFetcher: React.FC<{ url: string }> = ({ url }): any => {
       controller.abort();
     };
   }, [url]);
+  // #endregion
+
   return state;
 };
 export default useFetcher;
