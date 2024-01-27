@@ -1,6 +1,6 @@
 import { Alert, Card, Col, Descriptions, Row, Space, Typography } from "antd";
 import SvgIcon from "@/components/SvgIcon";
-import GithubIcon from "@/component/Github";
+import GithubIcon from "@/components/Common/Github";
 import "./index.less";
 const { Link } = Typography;
 
