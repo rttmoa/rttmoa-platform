@@ -2,9 +2,9 @@ import http from "@/api";
 import { AuthState } from "@/redux/interface";
 import { PORT1 } from "@/api/config/servicePort";
 import { ReqLogin, ResLogin } from "@/api/interface/index";
-import authMenuList from "@/assets/json/authMenuList.json";
-import authButtonList from "@/assets/json/authButtonList.json";
-import loginJSON from "@/assets/json/login.json";
+import authMenuList from "@/assets/api/authMenuList.json";
+import authButtonList from "@/assets/api/authButtonList.json";
+import loginJSON from "@/assets/api/login.json";
 
 /**
  * @name AuthModule

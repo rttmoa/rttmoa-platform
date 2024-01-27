@@ -3,7 +3,7 @@
 import React from "react";
 import marked from "marked";
 import highlightJs from "highlight.js";
-import IconSvg from "../../components/SvgIcon";
+import IconSvg from "../../SvgIcon";
 import "./index.less";
 import "./iconfont";
 
@@ -35,7 +35,7 @@ class Markdown extends React.Component {
       gfm: true, //允许 Git Hub标准的markdown.
       // tables: true, //允许支持表格语法。该选项要求 gfm 为true。
       breaks: true, //允许回车换行。该选项要求 gfm 为true。
-      pedantic: false, //尽可能地兼容 markdown.pl的晦涩部分。不纠正原始模型任何的不良行为和错误。
+      pedantic: false //尽可能地兼容 markdown.pl的晦涩部分。不纠正原始模型任何的不良行为和错误。
       // sanitize: true, //对输出进行过滤（清理），将忽略任何已经输入的html代码（标签）
       // smartLists: true, //使用比原生markdown更时髦的列表。 旧的列表将可能被作为pedantic的处理内容过滤掉.
       // smartypants: false, //使用更为时髦的标点，比如在引用语法中加入破折号。
@@ -55,7 +55,7 @@ class Markdown extends React.Component {
     );
   }
   // 插入图片
-  async insertImg(e: { target: { files: (string | Blob)[]; }; }) {
+  async insertImg(e: { target: { files: (string | Blob)[] } }) {
     let formData = new FormData(),
       img = "";
     formData.append("img", e.target.files[0]);
@@ -77,7 +77,7 @@ class Markdown extends React.Component {
   insertLink() {
     this.setState(
       {
-        linkMask: false,
+        linkMask: false
         // link: this.refs.link['value']
       },
       () => {
@@ -113,7 +113,7 @@ class Markdown extends React.Component {
       dom.focus();
       let sel: any;
       // sel = document.getSelection.createRange();
-      sel = document.getSelection
+      sel = document.getSelection;
       sel.text = val;
       sel.select();
     } else if (dom.selectionStart || dom.selectionStart == "0") {

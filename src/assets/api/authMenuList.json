@@ -576,46 +576,6 @@
             "isFull": false,
             "isAffix": false
           }
-        },
-				{
-          "path": "/list/curd",
-          "redirect": "/list/curd/product",
-          "meta": {
-            "key": "curd",
-            "icon": "AppstoreOutlined",
-            "title": "CURD",
-            "isLink": "",
-            "isHide": false,
-            "isFull": false,
-            "isAffix": false
-          },
-          "children": [{
-						"path": "/list/curd/product",
-						"element": "/list/curd/product/index",
-						"meta": {
-							"key": "product",
-							"icon": "AppstoreOutlined",
-							"title": "商品",
-							"isLink": "",
-							"isHide": false,
-							"isFull": false,
-							"isAffix": false
-						},
-						"children": [{
-							"path": "/list/curd/product/detail",
-							"element": "/list/curd/product/detail",
-							"meta": {
-								"key": "productDetail",
-								"icon": "AppstoreOutlined",
-								"title": "商品详情",
-								"activeMenu": "/list/curd/product",
-								"isLink": "",
-								"isHide": true,
-								"isFull": false,
-								"isAffix": false
-							}
-						}]
-					}]
         }
       ]
     },
@@ -834,60 +794,115 @@
         }
       ]
     },
-    // TODO: 系统管理
-    // {
-    //   "path": "/system",
-    //   "redirect": "/system/accountManage",
-    //   "meta": {
-    //     "key": "system",
-    //     "icon": "SettingOutlined",
-    //     "title": "系统管理",
-    //     "isLink": "",
-    //     "isHide": false,
-    //     "isFull": false,
-    //     "isAffix": false
-    //   },
-    //   "children": [{
-    //       "path": "/system/accountManage",
-    //       "element": "/system/accountManage/index",
-    //       "meta": {
-    //         "key": "accountManage",
-    //         "icon": "AppstoreOutlined",
-    //         "title": "账号管理",
-    //         "isLink": "",
-    //         "isHide": false,
-    //         "isFull": false,
-    //         "isAffix": false
-    //       }
-    //     },
-    //     {
-    //       "path": "/system/roleManage",
-    //       "element": "/system/roleManage/index",
-    //       "meta": {
-    //         "key": "roleManage",
-    //         "icon": "AppstoreOutlined",
-    //         "title": "角色管理",
-    //         "isLink": "",
-    //         "isHide": false,
-    //         "isFull": false,
-    //         "isAffix": false
-    //       }
-    //     },
-    //     {
-    //       "path": "/system/menuMange",
-    //       "element": "/system/menuMange/index",
-    //       "meta": {
-    //         "key": "menuMange",
-    //         "icon": "AppstoreOutlined",
-    //         "title": "菜单管理",
-    //         "isLink": "",
-    //         "isHide": false,
-    //         "isFull": false,
-    //         "isAffix": false
-    //       }
-    //     }
-    //   ]
-    // },
+		{
+      "path": "/module",
+      "redirect": "/module/product",
+      "meta": {
+        "key": "module",
+        "icon": "SettingOutlined",
+        "title": "功能模块",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false
+      },
+      "children": [ 
+				{
+					"path": "/module/product",
+					"element": "/module/product/index",
+					"meta": {
+						"key": "product",
+						"icon": "AppstoreOutlined",
+						"title": "商品",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false
+					},
+					"children": [{
+						"path": "/module/product/detail",
+						"element": "/module/product/detail",
+						"meta": {
+							"key": "productDetail",
+							"icon": "AppstoreOutlined",
+							"title": "商品详情",
+							"activeMenu": "/module/product",
+							"isLink": "",
+							"isHide": true,
+							"isFull": false,
+							"isAffix": false
+						}
+					}]
+				}
+      ]
+    },
+		{
+      "path": "/system",
+      "redirect": "/system/userManage",
+      "meta": {
+        "key": "system",
+        "icon": "SettingOutlined",
+        "title": "系统管理",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false
+      },
+      "children": [
+				{
+          "path": "/system/userManage",
+          "element": "/system/userManage/index",
+          "meta": {
+            "key": "userManage",
+            "icon": "AppstoreOutlined",
+            "title": "用户管理",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        },
+				{
+          "path": "/system/accountManage",
+          "element": "/system/accountManage/index",
+          "meta": {
+            "key": "accountManage",
+            "icon": "AppstoreOutlined",
+            "title": "账号管理",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        },
+        {
+          "path": "/system/roleManage",
+          "element": "/system/roleManage/index",
+          "meta": {
+            "key": "roleManage",
+            "icon": "AppstoreOutlined",
+            "title": "角色管理",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        },
+        {
+          "path": "/system/menuMange",
+          "element": "/system/menuMange/index",
+          "meta": {
+            "key": "menuMange",
+            "icon": "AppstoreOutlined",
+            "title": "菜单管理",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        }
+      ]
+    },
     // TODO: 外部链接
     // {
     //   "path": "/link",
@@ -955,6 +970,10 @@
     //     }
     //   ]
     // }, 
+
+
+
+
     {
       "path": "/about/index",
       "element": "/about/index",
@@ -993,7 +1012,7 @@
 				"isFull": true,
 				"isAffix": false
 			}
-		},
+		}
 
 
 

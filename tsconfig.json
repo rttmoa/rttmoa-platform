@@ -139,10 +139,14 @@
   // 路径：  ** 表示任意目录   * 表示任意文件
 
   // include 用来指定那些 ts 文件需要被编译 
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "build/**/*.ts", "build/**/*.d.ts", "vite.config.ts", "src/component/Markdown/index.tsx", "src/component/Markdown/iconfont.js", "src/views/assembly/markdown/component/index.js"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "build/**/*.ts", "build/**/*.d.ts", "vite.config.ts"],
 
   // exclude 不需要被编译的文件目录
-  "exclude": ["node_modules", "dist", "**/*.js"],
+  "exclude": [
+		"node_modules", 
+		"dist", 
+		// "**/*.js"
+	],
   
   // ! rules: https://blog.csdn.net/qq_34532969/article/details/116483642
   "rules": {
