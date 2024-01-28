@@ -170,11 +170,6 @@ const UserManage = () => {
       // width: "6%",
     },
     {
-      title: "生日",
-      dataIndex: "birthday"
-      // width: "6%",
-    },
-    {
       title: "手机号",
       render() {
         let tele = 15303663375;
@@ -185,6 +180,7 @@ const UserManage = () => {
     },
     {
       title: "身份证号",
+      width: 150,
       render() {
         let identity = 231085199811011415n;
         let strIdentity = identity + ""; // 数字类型转字符串
@@ -194,7 +190,17 @@ const UserManage = () => {
     },
     {
       title: "联系地址",
-      dataIndex: "address"
+      dataIndex: "address",
+      width: 250
+    },
+    {
+      title: "邮箱",
+      dataIndex: "email"
+      // width: 250,
+    },
+    {
+      title: "生日",
+      dataIndex: "birthday"
       // width: "6%",
     },
     {

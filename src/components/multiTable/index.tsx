@@ -1,14 +1,21 @@
 import { Table } from "antd";
+import { TableRowSelection } from "antd/es/table/interface";
 import React, { useState } from "react";
 
 interface ETableProps {
-  columns: [];
-  selectedRowKeys?: [];
-  rowSelection: string | boolean | null;
-  updateSelectedItem: () => {};
+  loading?: boolean;
+  columns: any[];
+  dataSource: any[];
+  pagination: {};
+  scroll?: {};
+  rowSelection?: any;
+  selectedRowKeys?: number[];
+  selectedIds?: number[];
+  selectedItem?: any[];
+  updateSelectedItem?: (selectKey?: any, selectedRows?: any, selectedIds?: any) => void;
 }
 
-export default function ETable(props: any) {
+export default function ETable(props: ETableProps) {
   const { columns, selectedRowKeys, rowSelection, updateSelectedItem } = props;
   const [state, setState] = useState<any>({});
 
@@ -90,11 +97,11 @@ export default function ETable(props: any) {
         if (i === -1) {
           //避免重复添加
           selectedIds.push(record.id);
-          selectedRowKeys.push(index);
+          selectedRowKeys && selectedRowKeys.push(index);
           selectedItem.push(record);
         } else {
           selectedIds.splice(i, 1);
-          selectedRowKeys.splice(i, 1);
+          selectedRowKeys && selectedRowKeys.splice(i, 1);
           selectedItem.splice(i, 1);
         }
       } else {
@@ -112,7 +119,8 @@ export default function ETable(props: any) {
       updateSelectedItem && updateSelectedItem(selectKey, record || {});
     }
   };
-  const rowSelectConfig = {
+  // const rowSelectConfig: TableRowSelection<T>['rowSelection'] = {}
+  const rowSelectConfig: any = {
     type: "radio",
     selectedRowKeys,
     onChange: onSelectChange,
@@ -136,7 +144,7 @@ export default function ETable(props: any) {
       {...props}
       bordered
       rowSelection={rowSelProps ? rowSelectConfig : null}
-      onRow={(record: any, index: number) => ({
+      onRow={(record: any, index: any) => ({
         onClick() {
           if (!rowSelProps) return;
           onRowClick(record, index);

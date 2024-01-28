@@ -862,19 +862,6 @@
             "isAffix": false
           }
         },
-				{
-          "path": "/system/accountManage",
-          "element": "/system/accountManage/index",
-          "meta": {
-            "key": "accountManage",
-            "icon": "AppstoreOutlined",
-            "title": "账号管理",
-            "isLink": "",
-            "isHide": false,
-            "isFull": false,
-            "isAffix": false
-          }
-        },
         {
           "path": "/system/roleManage",
           "element": "/system/roleManage/index",
@@ -882,6 +869,19 @@
             "key": "roleManage",
             "icon": "AppstoreOutlined",
             "title": "角色管理",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        },
+				{
+          "path": "/system/accountManage",
+          "element": "/system/accountManage/index",
+          "meta": {
+            "key": "accountManage",
+            "icon": "AppstoreOutlined",
+            "title": "账号管理",
             "isLink": "",
             "isHide": false,
             "isFull": false,
