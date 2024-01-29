@@ -1,6 +1,7 @@
 import { Button, Card, Form, Modal, Space } from "antd";
 import MultiTable from "@/components/multiTable";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { roleList } from "@/api/modules/system/roleManage";
 
 function formateDate(time: string) {
   if (!time) return "";
@@ -28,6 +29,22 @@ const RoleManage: React.FC = () => {
   const [formRole] = Form.useForm(); // 创建的角色的 Form表单
   const [formPerm] = Form.useForm();
   const [formUser] = Form.useForm();
+
+  const [rolelist, setRolelist] = useState([]);
+  const [selectedRowKeys, setSelectedRowKeys] = useState<any>([]);
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [selectedItem, setSelectedItem] = useState({});
+
+  // 获取角色列表
+  useEffect(() => {
+    (async function () {
+      roleList().then((result: any) => {
+        console.log(result);
+        const list = result.data.list.map((item: any, i: number) => ({ ...item, key: i }));
+        setRolelist(list);
+      });
+    })();
+  }, []);
 
   const column = [
     {
@@ -61,24 +78,66 @@ const RoleManage: React.FC = () => {
     }
   ];
 
+  const updateSelectedItem = (selectedRowKeys: any, selectedRows: any, selectedIds: any) => {
+    if (selectedIds) {
+      setSelectedRowKeys(selectedRowKeys);
+      setSelectedIds(selectedIds);
+      setSelectedItem(selectedRows);
+    } else {
+      setSelectedRowKeys(selectedRowKeys);
+      setSelectedItem(selectedRows);
+    }
+  };
+
+  // 弹窗：角色创建
+  const createRoleBtn = () => {
+    console.log("创建角色按钮");
+    setIsRoleVisible(true);
+  };
+  // 弹窗：角色提交
+  const createRoleSubmit = () => {};
+  // 弹窗：设置权限
+  const setPermBtn = () => {};
+  // 弹窗：权限提交
+  const setPermSubmit = () => {};
+  // 弹窗：用户授权
+  const userPermBtn = () => {};
+  const userPermSubmit = () => {};
+
   return (
     <>
       <Card
         extra={
           <Space size="middle">
-            <Button type="primary">创建角色</Button>
-            <Button type="primary">设置权限</Button>
-            <Button type="primary">用户授权</Button>
+            <Button type="primary" onClick={createRoleBtn}>
+              创建角色
+            </Button>
+            <Button type="primary" onClick={setPermBtn}>
+              设置权限
+            </Button>
+            <Button type="primary" onClick={userPermBtn}>
+              用户授权
+            </Button>
           </Space>
         }
       >
-        <MultiTable columns={column} dataSource={[]} rowSelection={undefined} pagination={{}} />
+        <MultiTable
+          columns={column}
+          dataSource={rolelist}
+          selectedRowKeys={selectedRowKeys}
+          selectedIds={selectedIds}
+          selectedItem={selectedItem}
+          pagination={{}}
+          updateSelectedItem={updateSelectedItem}
+        />
       </Card>
       <Modal
         title="创建角色"
         open={isRoleVisible}
         // onOk={}
-        // onCancel={}
+        onCancel={() => {
+          setIsRoleVisible(false);
+        }}
       ></Modal>
       <Modal
         title="权限设置"

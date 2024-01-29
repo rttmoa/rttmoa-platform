@@ -11,11 +11,12 @@ interface ETableProps {
   rowSelection?: any;
   selectedRowKeys?: number[];
   selectedIds?: number[];
-  selectedItem?: any[];
+  selectedItem?: any;
   updateSelectedItem?: (selectKey?: any, selectedRows?: any, selectedIds?: any) => void;
 }
 
 export default function ETable(props: ETableProps) {
+  // console.log('ETable props', props);
   const { columns, selectedRowKeys, rowSelection, updateSelectedItem } = props;
   const [state, setState] = useState<any>({});
 
@@ -95,14 +96,14 @@ export default function ETable(props: ETableProps) {
       if (selectedIds) {
         const i = selectedIds.indexOf(record.id);
         if (i === -1) {
-          //避免重复添加
+          // 避免重复添加
           selectedIds.push(record.id);
           selectedRowKeys && selectedRowKeys.push(index);
-          selectedItem.push(record);
+          selectedItem.push(record); // FIXME: 这里要判断是对象还是数组
         } else {
           selectedIds.splice(i, 1);
           selectedRowKeys && selectedRowKeys.splice(i, 1);
-          selectedItem.splice(i, 1);
+          selectedItem.splice(i, 1); // FIXME: 这里要判断是对象还是数组
         }
       } else {
         selectedIds = [record.id];
@@ -112,7 +113,7 @@ export default function ETable(props: ETableProps) {
       updateSelectedItem && updateSelectedItem(selectedRowKeys, selectedItem || {}, selectedIds);
     } else {
       let selectKey = [index];
-      const selectedRowKeys = this.props.selectedRowKeys;
+      const selectedRowKeys = props.selectedRowKeys;
       if (selectedRowKeys && selectedRowKeys[0] === index) {
         return;
       }

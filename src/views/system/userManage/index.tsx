@@ -39,7 +39,10 @@ const UserManage = () => {
   const [list, setList] = useState<any>({ list: [], pagination: {} });
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [selectedParams, setSelectedParams] = useState<any>({ selectedRowKeys: null, selectedIds: null, selectedItem: null });
+  const [selectedRowKeys, setSelectedRowKeys] = useState<any>([]);
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [selectedItem, setSelectedItem] = useState<any>(null);
+
   const [loading, setLoading] = useState(false);
 
   const [modalTitle, setModalTitle] = useState("");
@@ -90,22 +93,12 @@ const UserManage = () => {
 
   const updateSelectedItem = (selectedRowKeys: any, selectedRows: any, selectedIds: any) => {
     if (selectedIds) {
-      setSelectedParams((state: any) => {
-        return {
-          ...state,
-          selectedRowKeys,
-          selectedIds: selectedIds,
-          selectedItem: selectedRows
-        };
-      });
+      setSelectedRowKeys(selectedRowKeys);
+      setSelectedIds(selectedIds);
+      setSelectedItem(selectedRows);
     } else {
-      setSelectedParams((state: any) => {
-        return {
-          ...state,
-          selectedRowKeys,
-          selectedItem: selectedRows
-        };
-      });
+      setSelectedRowKeys(selectedRowKeys);
+      setSelectedItem(selectedRows);
     }
   };
 
@@ -259,7 +252,7 @@ const UserManage = () => {
     } else if (type === "delete") {
       message.success(`删除用户成功！ id：${item.id}`);
     } else if (type === "moreDelete") {
-      message.success(`删除更多用户成功！ id：${JSON.stringify(selectedParams.selectedIds)}`);
+      message.success(`删除更多用户成功！ id：${JSON.stringify(selectedIds)}`);
     }
   };
   // ! 操作员工： 新建、编辑、详情、删除  弹窗内容提交
@@ -353,7 +346,9 @@ const UserManage = () => {
           columns={columnConfig}
           dataSource={list.list}
           pagination={list.pagination}
-          selectedRowKeys={selectedParams.selectedRowKeys}
+          selectedRowKeys={selectedRowKeys}
+          selectedIds={selectedIds}
+          selectedItem={selectedItem}
           updateSelectedItem={updateSelectedItem}
           loading={loading}
           scroll={{ x: 1500 }}
