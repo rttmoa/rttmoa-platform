@@ -1,6 +1,6 @@
 // Request response parameters (excluding data)
 export interface Result {
-  code: string;
+  code: number;
   msg: string;
 }
 

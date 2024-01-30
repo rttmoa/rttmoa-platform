@@ -3,6 +3,7 @@ import { Card, Badge, Button, Space, Tag, Table, message, Modal, Form, Input, Ra
 import { createUser, editUser, userList } from "@/api/modules/system/userManage";
 import MultiForm from "@/components/multiForm";
 import MultiTable from "@/components/multiTable";
+import { roleList } from "@/api/modules/system/roleManage";
 interface stateConfig {
   [propName: number]: React.ReactNode;
 }
@@ -36,6 +37,8 @@ function pagination(data: any, callback: (page: number, pageSize: number) => voi
 }
 
 const UserManage = () => {
+  const [roleObj, setroleObj] = useState<any>({});
+  const [roleAll, setroleAll] = useState([]);
   const [list, setList] = useState<any>({ list: [], pagination: {} });
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -86,8 +89,22 @@ const UserManage = () => {
       });
     }, 500);
   };
+  const getRoleData = () => {
+    roleList().then((res: any) => {
+      console.log(res);
+      let data = res.data.list;
+      // console.log(data);
+      const roleNames: [] = data.reduce((prev: { [x: string]: any }, curr: { id: string | number; role_name: string }) => {
+        prev[curr.id] = curr.role_name;
+        return prev;
+      }, {});
+      setroleObj(roleNames || []);
+      setroleAll(data);
+    });
+  };
   useEffect(() => {
     getData(page, pageSize);
+    getRoleData();
   }, []);
   // console.log('最新', page, pageSize );
 
@@ -101,7 +118,7 @@ const UserManage = () => {
       setSelectedItem(selectedRows);
     }
   };
-
+  // console.log('roleNames', roleNames);
   const columnConfig = [
     {
       title: "id",
@@ -159,8 +176,14 @@ const UserManage = () => {
       dataIndex: "isMarried",
       render(isMarried: number) {
         return isMarried ? <Badge status="success" text="已婚" /> : <Badge status="error" text="未婚" />;
-      }
-      // width: "6%",
+      },
+      width: 80
+    },
+    {
+      title: "所属角色",
+      dataIndex: "role_id",
+      render: (roleiD: number) => roleObj[roleiD],
+      width: 80
     },
     {
       title: "手机号",
@@ -366,7 +389,7 @@ const UserManage = () => {
           setModalUserInfo({});
         }}
       >
-        <UserFormModal userInfo={modalUserInfo} type={modalType} form={form} />
+        <UserFormModal roles={roleAll} userInfo={modalUserInfo} type={modalType} form={form} />
       </Modal>
     </div>
   );
@@ -374,9 +397,9 @@ const UserManage = () => {
   return <>{structure}</>;
 };
 
-const UserFormModal: any = ({ userInfo, type, form }: any) => {
+const UserFormModal: any = ({ userInfo, type, form, roles }: any) => {
   const formItemLayout = { labelCol: { span: 4 }, wrapperCol: { span: 16 } };
-  console.log("userInfo???", userInfo);
+  // console.log("userInfo???", userInfo);
 
   useEffect(() => {
     return () => {
@@ -396,7 +419,8 @@ const UserFormModal: any = ({ userInfo, type, form }: any) => {
             sex: type === "create" ? null : userInfo.sex,
             state: type === "create" ? null : userInfo["state"],
             // birthday: type === "create" ? null : userInfo.birthday,
-            address: type === "create" ? null : userInfo.address
+            address: type === "create" ? null : userInfo.address,
+            roleiD: type === "create" ? null : userInfo.role_id
           }}
         >
           <Form.Item name="id" label="id">
@@ -418,6 +442,22 @@ const UserFormModal: any = ({ userInfo, type, form }: any) => {
               <Select.Option value={3}>迷茫</Select.Option>
               <Select.Option value={4}>平淡</Select.Option>
               <Select.Option value={5}>开心</Select.Option>
+            </Select>
+          </Form.Item>
+          <Form.Item name="roleiD" label="角色">
+            <Select disabled={type === "detail"}>
+              {roles.map((role: any) => {
+                return (
+                  <Select.Option key={role.id} value={role.id}>
+                    {role.role_name}
+                  </Select.Option>
+                );
+              })}
+              {/* <Select.Option value={1}>痛苦</Select.Option>
+              <Select.Option value={2}>委屈</Select.Option>
+              <Select.Option value={3}>迷茫</Select.Option>
+              <Select.Option value={4}>平淡</Select.Option>
+              <Select.Option value={5}>开心</Select.Option> */}
             </Select>
           </Form.Item>
           <Form.Item name="birthday" label="生日">

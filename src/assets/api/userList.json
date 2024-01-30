@@ -9,6 +9,7 @@
       "state|1-5": 1,
       "interest|1-8": 1,
       "isMarried|0-1": 1,
+			"role_id|0-5":1,
       "birthday": "@date('yyyy-MM-dd')",
       "address": "@county(true)",
       "time": "@time('HH:mm:ss')",

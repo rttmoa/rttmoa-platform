@@ -1,6 +1,6 @@
 import { Button, Card, Form, Input, Modal, Select, Space, Transfer, Tree } from "antd";
 import MultiTable from "@/components/multiTable";
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { roleList, roleTransferList } from "@/api/modules/system/roleManage";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux";
@@ -8,7 +8,7 @@ import { FormInstance } from "antd/lib";
 
 function formateDate(time: string) {
   if (!time) return "";
-  let date = new Date(time);
+  let date = new Date(Number(time));
   return (
     date.getFullYear() +
     "-" +
@@ -50,11 +50,13 @@ const RoleManage: React.FC = () => {
   const [isAuthClosed, setIsAuthClosed] = useState<any>(null);
   const [detailUserInfo, setdetailUserInfo] = useState({}); // 单选用户信息
 
+  const getStatusV = useRef<any>();
+
   // 获取角色列表
   useEffect(() => {
     (async function () {
       roleList().then((result: any) => {
-        // console.log(result);
+        console.log(result);
         const list = result.data.list.map((item: any, i: number) => ({ ...item, key: i }));
         setRolelist(list);
       });
@@ -62,10 +64,10 @@ const RoleManage: React.FC = () => {
   }, []);
 
   const column = [
-    {
-      title: "角色iD",
-      dataIndex: "id"
-    },
+    // {
+    //   title: "角色iD",
+    //   dataIndex: "id"
+    // },
     {
       title: "角色名称",
       dataIndex: "role_name"
@@ -84,12 +86,14 @@ const RoleManage: React.FC = () => {
     {
       title: "创建时间",
       dataIndex: "create_time",
-      render: formateDate
+      render: formateDate,
+      width: 150
     },
     {
       title: "授权时间",
       dataIndex: "authorize_time",
-      render: formateDate
+      render: formateDate,
+      width: 150
     }
   ];
 
@@ -135,6 +139,7 @@ const RoleManage: React.FC = () => {
     // console.log('提交权限菜单：', formData);
     formData.role_id = selectedItem.id;
     formData.menus = menuInfo;
+    formData.authorize_time = Date.now();
     // 1.提交到后台接口
     // 2.接口返回成功，重新获取数据
     // 3.初始化表单值
@@ -182,6 +187,7 @@ const RoleManage: React.FC = () => {
     let data: any = {};
     data.user_ids = targetKeys || [];
     data.role_id = selectedItem.id;
+    data.authorize_time = Date.now();
     // 将 data 传递到服务端
     // 重置表单值
     formUser.resetFields();
@@ -197,12 +203,17 @@ const RoleManage: React.FC = () => {
             <Button type="primary" onClick={createRoleBtn}>
               创建角色
             </Button>
-            <Button type="primary" onClick={setPermBtn}>
+            <Button type={selectedItem.id ? "primary" : "default"} onClick={setPermBtn} disabled={!selectedItem.id}>
               设置权限
             </Button>
-            <Button type="primary" onClick={userPermBtn}>
+            <Button type={selectedItem.id ? "primary" : "default"} onClick={userPermBtn} disabled={!selectedItem.id}>
               用户授权
             </Button>
+            {/* <Button type="dashed" onClick={() => { 
+							console.log(getStatusV.current);
+						}}>
+              用户授权组件状态值
+            </Button> */}
           </Space>
         }
       >
@@ -266,6 +277,7 @@ const RoleManage: React.FC = () => {
           patchUserInfo={(targetKeys: any) => {
             settargetKeys(targetKeys);
           }}
+          ref={getStatusV}
         />
       </Modal>
     </>
@@ -297,6 +309,15 @@ function RoleForm({ form }: { form: FormInstance }): React.ReactNode {
 }
 
 function PermEditForm({ form, detailInfo, menuInfo, patchMenuInfo, menuConfig }: any): React.ReactNode {
+  const renderBtnTreedNode = (menu: any, parentKey = "") => {
+    const btnTreeNode: any = [];
+    menu.btnList.forEach((item: any) => {
+      // console.log(parentKey + "-btn-" + item.key);
+      btnTreeNode.push(<Tree.TreeNode title={item.meta.title} key={parentKey + "-btn-" + item.path} className="op-role-tree" />);
+    });
+    return btnTreeNode;
+  };
+
   const renderTreeNode = (renderMenu: [], key: string): any => {
     // console.log("renderMenu", renderMenu);
     return renderMenu.map((item: any) => {
@@ -318,18 +339,21 @@ function PermEditForm({ form, detailInfo, menuInfo, patchMenuInfo, menuConfig }:
       return <Tree.TreeNode title={item.meta.title} key={parentKey} />;
     });
   };
-  const renderBtnTreedNode = (menu: any, parentKey = "") => {
-    const btnTreeNode: any = [];
-    menu.btnList.forEach((item: any) => {
-      // console.log(parentKey + "-btn-" + item.key);
-      btnTreeNode.push(<Tree.TreeNode title={item.meta.title} key={parentKey + "-btn-" + item.path} className="op-role-tree" />);
-    });
-    return btnTreeNode;
+
+  // 优化一下、渲染菜单列表
+  const renderTreeNode2 = (menuList: [], key: string): any => {
+    return menuList.reduce((prev: any, curr: any): any => {
+      let parentKey = curr.path;
+      prev.push(
+        <Tree.TreeNode title={curr.meta.title} key={parentKey}>
+          {curr.children ? renderTreeNode2(curr.children, "") : null}
+        </Tree.TreeNode>
+      );
+      return prev;
+    }, []);
   };
-  const formItemLayout = {
-    labelCol: { span: 4 },
-    wrapperCol: { span: 16 }
-  };
+
+  const formItemLayout = { labelCol: { span: 4 }, wrapperCol: { span: 16 } };
   return (
     <Form form={form} layout="horizontal" {...formItemLayout} initialValues={{ status2: 1, role_name2: detailInfo.role_name }}>
       <Card>
@@ -361,7 +385,15 @@ function PermEditForm({ form, detailInfo, menuInfo, patchMenuInfo, menuConfig }:
   );
 }
 
-function RoleAuthForm({ form, isClose, detailUserInfo, targetKeys, transferData, patchUserInfo }: any): React.ReactNode {
+function RoleAuthForm({ form, isClose, detailUserInfo, targetKeys, transferData, patchUserInfo, ref }: any): React.ReactNode {
+  const [status, setstatus] = useState(11);
+  const statusValue = () => {
+    setstatus(status + 1);
+    return status;
+  };
+  // useImperativeHandle(ref, createHandle, [deps])
+  useImperativeHandle(ref, () => ({ status, statusValue }));
+
   const filterOption = (inputValue: any, option: any) => {
     return option.title.indexOf(inputValue) > -1;
   };

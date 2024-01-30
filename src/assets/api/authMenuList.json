@@ -813,7 +813,7 @@
 					"meta": {
 						"key": "product",
 						"icon": "AppstoreOutlined",
-						"title": "商品",
+						"title": "商品管理",
 						"isLink": "",
 						"isHide": false,
 						"isFull": false,
@@ -833,7 +833,20 @@
 							"isAffix": false
 						}
 					}]
-				}
+				},
+				{
+          "path": "/module/category",
+          "element": "/module/category/index",
+          "meta": {
+            "key": "category",
+            "icon": "AppstoreOutlined",
+            "title": "分类管理",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        }
       ]
     },
 		{
