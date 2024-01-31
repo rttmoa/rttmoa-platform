@@ -33,7 +33,7 @@ const EChartInner: React.ForwardRefRenderFunction<EChartsRef, EChartProps> = (
 
   useEffect(() => {
     if (cRef.current) {
-      cInstance.current = echarts.getInstanceByDom(cRef.current) as ReturnType<EChartsRef["instance"]>;
+      cInstance.current = echarts.getInstanceByDom(cRef.current) as unknown as ReturnType<EChartsRef["instance"]>;
       if (!cInstance.current) {
         cInstance.current = echarts.init(cRef.current, undefined, { renderer: "svg" }) as unknown as ReturnType<
           EChartsRef["instance"]
