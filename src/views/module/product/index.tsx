@@ -2,79 +2,44 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Popconfirm, Table, TableColumnsType, message, Image } from "antd";
 import { useNavigate } from "react-router-dom";
 import defaultImg from "@/assets/images/defaultImg.jpg";
+import { productList } from "@/api/modules/module/product";
 
 export interface listProps {
-  list: any;
-  total: number;
-  page: number;
+  list?: any;
+  total?: number;
+  page?: number;
+  pageSize?: number;
 }
-export const listApi: Promise<listProps> = new Promise(reslove =>
-  reslove({
-    total: 3,
-    page: 2,
-    list: [
-      {
-        onSale: true,
-        // content: "<p>是公司的公司的根深蒂固</p>",
-        content: "是公司的公司的根深蒂固",
-        quantity: 10,
-        price: 16,
-        _id: "642ee36ff3d52f4db845ff43",
-        name: "黄鹤楼",
-        coverImg: "",
-        // coverImg: "http://localhost:3009/uploads/20230406/1680794476636.jpg",
-        createdAt: "2023-04-06T15:21:19.394Z",
-        updatedAt: "2023-09-25T14:43:41.745Z",
-        __v: 0
-      },
-      {
-        onSale: false,
-        content: "东方式的防守对方身份的",
-        quantity: 10,
-        price: 17,
-        _id: "642ee364f3d52f4db845ff42",
-        name: "利群",
-        coverImg: "",
-        // coverImg: "http://localhost:3009/uploads/20230406/1680794465206.jpg",
-        createdAt: "2023-04-06T15:21:08.502Z",
-        updatedAt: "2023-05-02T07:43:32.215Z",
-        __v: 0
-      },
-      {
-        onSale: true,
-        content: "所得税的方式",
-        quantity: 10,
-        price: 23,
-        _id: "642ee364f3d52f4db845341242",
-        name: "玉溪",
-        coverImg: "",
-        // coverImg: "http://localhost:3009/uploads/20230406/1680794465206.jpg",
-        createdAt: "2023-04-06T15:21:08.502Z",
-        updatedAt: "2023-05-02T07:43:32.215Z",
-        __v: 0
-      }
-    ]
-  })
-);
+
+// coverImg: "http://localhost:3009/uploads/20230406/1680794476636.jpg"
 export const serverUrl = "http://localhost:3009";
 
 const List = () => {
   const navigate = useNavigate();
-
-  const [data, setData] = useState<listProps>({ list: [], total: 0, page: 0 });
-  const { list, total, page } = data;
-  // console.log(data);
+  const [loading, setLoading] = useState(false);
+  const [searchName, setsearchName] = useState("");
+  const [searchType, setsearchType] = useState("productName");
+  const [data, setData] = useState<listProps>({ list: [], total: 0, page: 1, pageSize: 5 });
+  const { list, total, page, pageSize } = data;
 
   // 发送请求 | 通过redux去处理
-  const loadData = () => {
-    listApi.then((res: listProps): void => {
-      // console.log(res);
-      setData(res);
-    });
+  const loadData = async (page: number, pageSize: number) => {
+    setData({ page: page });
+    setLoading(true);
+    let result: any;
+    if (searchName) {
+      result = await productList(page, pageSize, searchName, searchType);
+    } else {
+      result = await productList(page, pageSize);
+    }
+    if (result.code == 200) {
+      setLoading(false);
+      setData(result.data);
+    }
   };
 
   useEffect(() => {
-    loadData();
+    loadData(page!, pageSize!);
   }, []);
 
   const columns: TableColumnsType = [
@@ -86,25 +51,32 @@ const List = () => {
       render: (text: any, record: any, index: number): any => index + 1
     },
     {
-      title: "名字",
+      title: "商品名称",
       dataIndex: "name"
     },
     {
       title: "主图",
       dataIndex: "coverImg",
       render: (txt: any, record: any) => (
-        // record.coverImg ? <img src={record.coverImg} alt={record.name} style={{ width: 120 }} /> : "暂无图片"
-        <Image src={record.coverImg ? serverUrl + record.coverImg : defaultImg} alt={record.name} style={{ width: 60 }} />
+        // <Image src={record.coverImg ? serverUrl + record.coverImg : defaultImg} alt={record.name} style={{ width: 60 }} />
+        <Image src={record.coverImg} alt={record.name} style={{ width: 60 }} />
       )
     },
     {
       title: "价格",
-      dataIndex: "price"
+      dataIndex: "price",
+      render(price) {
+        return `￥${price}`;
+      }
     },
     {
       title: "是否在售",
       dataIndex: "onSale",
       render: (txt: any, record: any) => (record.onSale ? "在售" : "已下架")
+    },
+    {
+      title: "商品描述",
+      dataIndex: "desc"
     },
     {
       title: "操作",
@@ -115,7 +87,7 @@ const List = () => {
               type="primary"
               size="small"
               onClick={() => {
-                navigate(`/list/curd/product/detail?id=${record._id}`);
+                navigate(`/module/product/detail?id=${record._id}`);
               }}
             >
               修改
@@ -141,7 +113,8 @@ const List = () => {
               size="small"
               onClick={() => {
                 // modifyOne(record._id, { onSale: !record.onSale }).then(res => {
-                //   loadData();
+                //   重新拿参数去请求：页码，请求参数，信息去请求
+                //   loadData(page!, pageSize!);
                 // });
                 message.info(`修改在售： _id=${record._id}`);
               }}
@@ -163,7 +136,7 @@ const List = () => {
             type="primary"
             size="small"
             onClick={() => {
-              navigate("/list/curd/product/detail");
+              navigate("/module/product/detail");
             }}
           >
             新增
@@ -171,12 +144,26 @@ const List = () => {
         }
       >
         <Table
-          rowKey="_id"
           bordered
+          rowKey="_id"
+          loading={loading}
           rowClassName={(record: any) => (record?.onSale ? "" : "bg-red")}
           columns={columns}
           dataSource={list}
-          pagination={{ total, defaultPageSize: 5, onChange: change => {} }}
+          pagination={{
+            current: page, // 当前页数
+            total, // 数据总数
+            defaultPageSize: pageSize, // 默认的每页条数
+            showSizeChanger: true,
+            pageSizeOptions: ["3", "5", "10", "15"],
+            showQuickJumper: true,
+            onChange: loadData, // 页码改变的回调，参数是改变后的页码及每页条数
+            onShowSizeChange: (current, size) => {
+              // console.log('pageSize 变化的回调', current, size);
+              setData({ pageSize: size });
+              loadData(page!, size);
+            }
+          }}
         />
       </Card>
     </div>

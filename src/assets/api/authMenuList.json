@@ -799,7 +799,7 @@
       "redirect": "/module/product",
       "meta": {
         "key": "module",
-        "icon": "SettingOutlined",
+        "icon": "ScheduleOutlined",
         "title": "功能模块",
         "isLink": "",
         "isHide": false,
