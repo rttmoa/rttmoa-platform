@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/rttmoa/rttmoa-platform/compare/v1.2.0...v1.3.0) (2024-01-31)
+
+### Features
+
+- **user-manage:** 🚀 user-mangert ([fee7e89](https://github.com/rttmoa/rttmoa-platform/commit/fee7e89f2b0197c2bca073657dc178d190389f49))
+- **userManage:** 🚀 添加用户管理 ([dc822c2](https://github.com/rttmoa/rttmoa-platform/commit/dc822c23f5a269ca9715f532a1326c9324f90485))
+- **view:** 🚀 添加分类列表 ([0d4d9d0](https://github.com/rttmoa/rttmoa-platform/commit/0d4d9d06512d0dd2ec65f33a5d81d4a9eb4febda))
+- **view:** 🚀 role manage ([22ecda0](https://github.com/rttmoa/rttmoa-platform/commit/22ecda0f2277a006928b9fe60ffffc6192cd9e83))
+
+### Bug Fixes
+
+- **.gitignore:** 🧩 .gitignore 忽略文件 ([bf1abb5](https://github.com/rttmoa/rttmoa-platform/commit/bf1abb56a52681f7253ce0664d17280b838de761))
+- 🧩 修改商品内容 ([e990496](https://github.com/rttmoa/rttmoa-platform/commit/e99049681f54588f9f29effdfb1117cc4e70e007))
+- 🧩 chinaCity ([51bbe97](https://github.com/rttmoa/rttmoa-platform/commit/51bbe97131b54b1dc24593aef0d167670043dd93))
+- 🧩 fix assets ([db368ec](https://github.com/rttmoa/rttmoa-platform/commit/db368ecd3272a5b5363a7be22ef7e7b062230523))
+- **fix:** 🧩 fix content ([ba32356](https://github.com/rttmoa/rttmoa-platform/commit/ba32356b6e0e2c4b2751f032e6b383f3640ad298))
+- **package.json:** 🧩 readme ([ec9e592](https://github.com/rttmoa/rttmoa-platform/commit/ec9e592ad079fdf6cd2c73b000d22909ee7c2859))
+- **user manager:** 🧩 user manager ([13823b7](https://github.com/rttmoa/rttmoa-platform/commit/13823b78b3bb178b43efa5c5f44d29aa37373b26))
+- **view:** 🧩 role manage ([645a3a9](https://github.com/rttmoa/rttmoa-platform/commit/645a3a95985f873be1dfb7fb9e7eb5473db32031))
+- **vite.config.ts:** 🧩 vite.config.ts ([2ac93bd](https://github.com/rttmoa/rttmoa-platform/commit/2ac93bdfed50e8bb930b2ec357bf06141697f61b))
+
 ## 1.2.0 (2024-01-23)
 
 ### Features
