@@ -1,5 +1,6 @@
 {
   "code": 200,
+  "msg": "成功",
   "data": [{
       "path": "/home/index",
       "element": "/home/index",
@@ -498,7 +499,7 @@
             "isFull": false,
             "isAffix": false
           }
-        },
+        }
       ]
     },
     {
@@ -915,76 +916,7 @@
           }
         }
       ]
-    },
-    // TODO: 外部链接
-    // {
-    //   "path": "/link",
-    //   "redirect": "/link/bing",
-    //   "meta": {
-    //     "key": "link",
-    //     "icon": "PaperClipOutlined",
-    //     "title": "外部链接",
-    //     "isLink": "",
-    //     "isHide": false,
-    //     "isFull": false,
-    //     "isAffix": false
-    //   },
-    //   "children": [{
-    //       "path": "/link/bing",
-    //       "element": "/link/bing/index",
-    //       "meta": {
-    //         "key": "bing",
-    //         "icon": "AppstoreOutlined",
-    //         "title": "Bing 内嵌",
-    //         "isLink": "",
-    //         "isHide": false,
-    //         "isFull": false,
-    //         "isAffix": false
-    //       }
-    //     },
-    //     {
-    //       "path": "/link/gitee",
-    //       "element": "/link/gitee/index",
-    //       "meta": {
-    //         "key": "gitee",
-    //         "icon": "AppstoreOutlined",
-    //         "title": "Gitee 仓库",
-    //         "isLink": "",
-    //         "isHide": false,
-    //         "isFull": false,
-    //         "isAffix": false
-    //       }
-    //     },
-    //     {
-    //       "path": "/link/github",
-    //       "element": "/link/github/index",
-    //       "meta": {
-    //         "key": "github",
-    //         "icon": "AppstoreOutlined",
-    //         "title": "GitHub 仓库",
-    //         "isLink": "",
-    //         "isHide": false,
-    //         "isFull": false,
-    //         "isAffix": false
-    //       }
-    //     },
-    //     {
-    //       "path": "/link/juejin",
-    //       "element": "/link/juejin/index",
-    //       "meta": {
-    //         "key": "juejin",
-    //         "icon": "AppstoreOutlined",
-    //         "title": "JueJin 主页",
-    //         "isLink": "",
-    //         "isHide": false,
-    //         "isFull": false,
-    //         "isAffix": false
-    //       }
-    //     }
-    //   ]
-    // }, 
-
-
+    }, 
 
 
     {
@@ -1012,25 +944,11 @@
         "isFull": true,
         "isAffix": false
       }
-    },
-		{
-			"path": "/func/wcs",
-			"element": "/func/wcs/index",
-			"meta": {
-				"key": "wcs",
-				"icon": "AppstoreOutlined",
-				"title": "WCS-Control",
-				"isLink": "",
-				"isHide": true,
-				"isFull": true,
-				"isAffix": false
-			}
-		}
+    }
 
 
 
 
 
-  ],
-  "msg": "成功"
+  ]
 }
