@@ -1,5 +1,5 @@
 import { Button, Card, Form, Input, Modal, Select, Space, Transfer, Tree } from "antd";
-import MultiTable from "@/components/multiTable";
+import MultiTable from "@/components/Tables";
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { roleList, roleTransferList } from "@/api/modules/system/roleManage";
 import { useSelector } from "react-redux";

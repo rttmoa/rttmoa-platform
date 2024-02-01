@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Card, Badge, Button, Space, Tag, Table, message, Modal, Form, Input, Radio, Select, DatePicker } from "antd";
 import { createUser, editUser, userList } from "@/api/modules/system/userManage";
-import MultiForm from "@/components/multiForm";
-import MultiTable from "@/components/multiTable";
+import MultiForm from "@/components/Forms";
+import MultiTable from "@/components/Tables";
 import { roleList } from "@/api/modules/system/roleManage";
 interface stateConfig {
   [propName: number]: React.ReactNode;
