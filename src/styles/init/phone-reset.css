@@ -74,8 +74,8 @@ abbr[title] {
 b,
 strong {
   /* font-weight: inherit; */
-	font-weight: bolder;
-} 
+  font-weight: bolder;
+}
 code,
 kbd,
 samp {
@@ -298,14 +298,14 @@ menu {
   padding: 0;
   box-sizing: border-box;
   list-style: none;
-} 
+}
 html,
 body {
   /* 禁止选中文本 */
   user-select: none;
   font: Oswald, "Open Sans", Helvetica, Arial, sans-serif;
-	-webkit-overflow-scrolling: touch;
-} 
+  -webkit-overflow-scrolling: touch;
+}
 
 /* 禁止长按链接与图片弹出菜单 */
 a,

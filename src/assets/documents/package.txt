@@ -1,0 +1,105 @@
+
+
+
+  "scripts": {
+    ! cross-env 设置多个全局变量通过 process.env.BUILD_GOAL | process.env.NODE_ENV | process.env.USE_ANALYZE 获取
+    ! install-changed 这个包是一种快速、简单的方法来确定 package.json 是否已被修改。如果文件已修改，它会执行 npm install，否则不执行任何操作。
+    "pre:run": "install-changed",
+
+    "dev": "npm run start",
+    "start": "npm run pre:run && cross-env BUILD_GOAL=development NODE_ENV=development        webpack serve --config ./webpack/webpack.dev.js --stats-error-details",
+    "dev:faker": "concurrently -r \"npm run start\" \"npm run faker\"", //-------->  concurrently一次启动两个服务、加上-r参数防止乱码、
+
+    ! 部署：无 BUILD_SERVE
+    "build:production": "npm run && cross-env SENTRY_SOURCE_MAP=no BUILD_GOAL=production NODE_ENV=production     webpack --config ./webpack/webpack.prod.js --stats-error-details",
+    "build:test": "cross-env SENTRY_SOURCE_MAP=no BUILD_GOAL=test NODE_ENV=production     webpack --config ./webpack/webpack.prod.js --stats-error-details",
+    "build:dev": "cross-env SENTRY_SOURCE_MAP=no BUILD_GOAL=dev NODE_ENV=production       webpack --config ./webpack/webpack.prod.js --stats-error-details",
+
+    ! 部署：有 BUILD_SERVE
+    "prod:serve": "cross-env SENTRY_SOURCE_MAP=no BUILD_SERVE=prod BUILD_GOAL=production NODE_ENV=production       webpack --config ./webpack/webpack.prod.js --stats-error-details",
+    "dev:serve": "cross-env SENTRY_SOURCE_MAP=no BUILD_SERVE=prod BUILD_GOAL=dev NODE_ENV=production   webpack --config ./webpack/webpack.prod.js --stats-error-details",
+    "test:serve": "cross-env SENTRY_SOURCE_MAP=no BUILD_SERVE=prod BUILD_GOAL=test NODE_ENV=production  webpack --config ./webpack/webpack.prod.js --stats-error-details",
+
+    ! 分析捆绑包大小
+    "analyze:build": "cross-env SENTRY_SOURCE_MAP=no BUILD_GOAL=production NODE_ENV=production USE_ANALYZE=1        webpack --config ./webpack/webpack.prod.js --stats-error-details --profile --json=compilation-stats.json",  //------->  分析结果写入到 compilation-stats.json 文件中
+    "analyze:stats": "npx webpack --profile --json=stats.json",   //------->  生成 stats.json 文件
+    "analyze:stat-json": "webpack-bundle-analyzer compilation-stats.json",  //-------> 读取文件 查看打包后的结果大小
+
+    ! 采用serve本地运行前端项目
+    "serve:prod": "npm run prod:serve && serve -s dist -l 5000",
+    "serve:dev": "npm run dev:serve && serve -s dist -l 5000",
+    "serve:test": "npm run test:serve && serve -s dist -l 7000",
+
+    ! 采用http-server本地运行前端项目
+    "http:dev": "npm run dev:serve && npm run http-server",
+    "http:prod": "npm run prod:serve && npm run http-server",
+    "http:test": "npm run test:serve && npm run http-server",
+    "http-server": "http-server ./dist -p 9090 --proxy https://my-json-server.typicode.com -o --cors --log-ip --gzip",
+    "faker": "nodemon faker/index.js",
+
+
+
+
+    ! 测试 test
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:jest": "jest",
+
+    ! 一键升级 package.json 中依赖的版本
+    "update:yarn": "yarn upgrade-interactive --latest",
+    "update:npm": "ncu -u && npm install",
+
+    ! 校验文件等
+    "lint:fix": "npm run eslint:fix && npm run stylelint:fix && npm run prettier:fix",
+    "lint": "npm run eslint && npm run stylelint && npm run prettier:check",
+    "stylelint": "stylelint \"src/**/*.less\" --custom-syntax postcss-less",  //------->  Stylelint 是一个强大、先进的 CSS 代码检查器
+    "stylelint:fix": "stylelint \"src/**/*.less\" --fix --custom-syntax postcss-less",
+    "prettier:check": "prettier --check \"src/**/*\" --end-of-line auto --ignore-unknown", //-------->  Prettier 前端代码格式化工具
+    "prettier:fix": "prettier --write \"src/**/*\" --end-of-line auto --ignore-unknown",
+    "prettier:fix:all": "prettier --write . --end-of-line auto --ignore-unknown",
+    "eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",  //-------->  发现并修复你 JavaScript 代码中的问题
+    "eslint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
+
+    ! markdown 语法检查器
+    "markdownlint": "markdownlint *.md",
+    "markdownlint:fix": "markdownlint --fix *.md",
+
+    ! Github相关版本控制
+    ! standard-version自动化JavaScript 项目版本控制： https://www.jianshu.com/p/acfdd4ca0104
+    "commit" : "git-cz"
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "release": "standard-version",
+    "release:minor": "standard-version --release-as minor",
+    "release:patch": "standard-version --release-as patch",
+    "release:major": "standard-version --release-as major",
+    ! git push --tags & git push --follow-tags 两者的区别在于，git push --tags 只推送标签，而 git push --follow-tags 既推送提交，也推送标签。
+    "push:tags": "git push --follow-tags origin pre-gh-pages",   //-------->  表示推送到pre-gh-pages分支上
+
+
+    ! 配置 Git Husky 代码提交约束: https://blog.csdn.net/qq_39157944/article/details/129860331
+    "prepare": "husky install",
+
+    ! 执行脚本
+    "process": "node webpack/process",  //-------->  node
+    "sentry:check": "node check-sentry.js", //-------->  node
+    "check:version": "node webpack/check-version.js", //-------->  node 无此文件
+
+    ! 部署
+    "predeploy": "npm run build:production", //-------->  预部署
+    "deploy": "gh-pages -d dist", //-------->  打包部署发布到gh-pages分支上
+
+    "postinstall": "install-changed --hash-only", //-------->  package-lock.json has not been modified.
+    "preinstall": "npx pm-keeper npm",            //-------->  预安装脚本: 在项目中强制使用包管理器的简单方法。
+
+    ! Vite启动相关
+    "vite:dev": "concurrently -r \"vite -- --host\" \"npm run faker\"",
+    "vite:dev:faker": "concurrently -r \"npm run vite:dev\" \"npm run faker\"",
+    "vite:build": "vite build",
+    "vite:preview": "vite preview",
+    "vite:start:dev": "vite --mode dev",
+    "vite:build:production": "vite build --mode production",
+
+    ! 删除文件&文件夹
+    "clean:lock": "rimraf package-lock.json yarn.lock pnpm-lock.yaml",
+    "clean:dist": "rm -rf ./dist",
+    "clean:modules": "rm -rf node_modules"
+  },

@@ -35,7 +35,13 @@ module.exports = {
     "custom-property-pattern": null, 	 				// 允许自定义 CSS 变量名称
     "media-feature-range-notation": null,	
     "selector-pseudo-class-no-unknown": [ true, { ignorePseudoClasses: ["global"] }],
-		
+		// 'at-rule-no-unknown': null,
+    // 'scss/at-rule-no-unknown': [
+    //     true,
+    //     {
+    //         'ignoreAtRules': ['tailwind']
+    //     }
+    // ],
 		// "string-quotes": "double", 						// 指定字符串使用单引号或双引号
 		// "unit-case": null, 										// 指定单位的大小写 "lower(全小写)"|"upper(全大写)"
 		// "color-hex-case": "lower", 						// 指定 16 进制颜色的大小写 "lower(全小写)"|"upper(全大写)" 

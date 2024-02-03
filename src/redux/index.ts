@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable no-multiple-empty-lines */
 import { TypedUseSelectorHook, useDispatch as useReduxDispatch, useSelector as useReduxSelector } from "react-redux";
 import { configureStore, combineReducers, Middleware, AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist"; // todo 持久化
