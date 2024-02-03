@@ -3,7 +3,7 @@ import { Button, Form, Input, Radio } from "antd";
 
 type LayoutType = Parameters<typeof Form>[0]["layout"];
 
-const App: React.FC<{ value: string }> = ({ value }) => {
+const App: React.FC<{ value: string }> = ({ value }: any) => {
   const [form] = Form.useForm();
   const [formLayout, setFormLayout] = useState<LayoutType>("horizontal");
 

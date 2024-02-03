@@ -26,8 +26,16 @@ export function createProxy(list: ProxyList = []) {
       ...(isHttps ? { secure: false } : {})
     };
   }
+  // console.log('ret', ret);
   return ret;
   // proxy: {
+  // 	'/api': {
+  // 		target: 'https://mock.apifox.com/m1/3219319-0-default/',
+  // 		changeOrigin: true,
+  // 		ws: true,
+  // 		rewrite: [Function: rewrite],
+  // 		secure: false
+  // 	},
   // 	'/faker': {
   // 		target: 'http://localhost:4000',
   // 		pathRewrite: { '^/faker': '' },

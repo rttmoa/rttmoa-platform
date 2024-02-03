@@ -5,26 +5,26 @@ import { wrapperEnv } from "./build/getEnv";
 import { resolve } from "path";
 import pkg from "./package.json";
 import dayjs from "dayjs";
-// import path from "path";
-// import fs from "fs";
-// const path = require("path");
-// const fs = require("fs");
+const path = require("path");
+const fs = require("fs");
 
-// FIXME: react-virtualized
-// const WRONG_CODE = `import { bpfrpt_proptype_WindowScroller } from "../WindowScroller.js";`;
-// export function reactVirtualized() {
-//   return {
-//     name: "my:react-virtualized",
-//     configResolved() {
-//       const file = path
-//         .resolve("react-virtualized")
-//         .replace(path.join("dist", "commonjs", "index.js"), path.join("dist", "es", "WindowScroller", "utils", "onScroll.js"));
-//       const code = fs.readFileSync(file, "utf-8");
-//       const modified = code.replace(WRONG_CODE, "");
-//       fs.writeFileSync(file, modified);
-//     }
-//   };
-// }
+// FIXME: react-virtualized: vite构建阶段react-virtualized报错
+const WRONG_CODE = `import { bpfrpt_proptype_WindowScroller } from "../WindowScroller.js";`;
+export function reactVirtualized() {
+  return {
+    name: "my:react-virtualized",
+    configResolved() {
+      const file = path
+        .resolve("react-virtualized")
+        .replace(path.join("dist", "commonjs", "index.js"), path.join("dist", "es", "WindowScroller", "utils", "onScroll.js"));
+      const code = fs.readFileSync(file, "utf-8");
+      const modified = code.replace(WRONG_CODE, "");
+      fs.writeFileSync(file, modified);
+    }
+  };
+}
+
+// 获取 package 信息
 const { dependencies, devDependencies, name, version } = pkg;
 const __APP_INFO__ = {
   pkg: { dependencies, devDependencies, name, version },
@@ -34,8 +34,8 @@ const __APP_INFO__ = {
 // @see: https://vitejs.dev/config/
 export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
   const root = process.cwd();
-  const env = loadEnv(mode, root);
-  const viteEnv = wrapperEnv(env);
+  const env = loadEnv(mode, root); // 读取目录，读取模式。  加载 .env.development 文件
+  const viteEnv = wrapperEnv(env); // 处理 env 文件
 
   return {
     base: viteEnv.VITE_PUBLIC_PATH,
@@ -54,7 +54,6 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       port: viteEnv.VITE_PORT,
       open: viteEnv.VITE_OPEN,
       cors: true,
-      // ? 代理  从 .env.development 加载代理配置
       proxy: createProxy(viteEnv.VITE_PROXY)
     },
     // ? 插件配置
@@ -78,7 +77,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       // 	}
       // },
       // 构建后是否生成 source map 文件
-      sourcemap: false,
+      sourcemap: true,
       // 禁用 gzip 压缩大小报告，这会稍微减少打包时间
       reportCompressedSize: false,
       // 确定触发警告的块大小

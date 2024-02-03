@@ -6,7 +6,6 @@
     "skipLibCheck": true,
 
     /* Bundler mode */
-    // "moduleResolution": "bundler",
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true, // * 它可以允许在非 TypeScript 文件中导入 .ts 或 .tsx 文件。
     "resolveJsonModule": true,
@@ -79,8 +78,8 @@
     // "maxNodeModuleJsDepth": 1,                        /*指定用于从 `node_modules` 检查 JavaScript 文件的最大文件夹深度。仅适用于“allowJs”。 */
 
     /* Emit */
-    // "declaration": true,                              /*从项目中的 TypeScript 和 JavaScript 文件生成 .d.ts 文件。 */
-    // "declarationMap": true,                           /*为 d.ts 文件创建源映射。 */
+    "declaration": true,                              /*从项目中的 TypeScript 和 JavaScript 文件生成 .d.ts 文件。 */
+    "declarationMap": true,                           /*为 d.ts 文件创建源映射。 */
     // "emitDeclarationOnly": true,                      /*只输出 d.ts 文件而不输出 JavaScript 文件。 */
     // "sourceMap": true,                                /*为发出的 JavaScript 文件创建源映射文件。 */
     // "outFile": "./",                                  /*指定一个文件，将所有输出捆绑到一个 JS 文件中。如果“declaration”为 true，指定一个捆绑所有 .d.ts 输出的文件。 */
@@ -132,20 +131,23 @@
     // "allowUnreachableCode": true,                     /*禁用无法访问代码的错误报告。 */
 
     /* Completeness */
-    // "skipDefaultLibCheck": true,                      /* 跳过 TypeScript 附带的类型检查 .d.ts 文件。 */
+    "skipDefaultLibCheck": true,                      /* 跳过 TypeScript 附带的类型检查 .d.ts 文件。 */
     // "skipLibCheck": true                              /* 跳过所有 .d.ts 文件的类型检查。 */
   },
 
   // 路径：  ** 表示任意目录   * 表示任意文件
 
   // include 用来指定那些 ts 文件需要被编译 
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "build/**/*.ts", "build/**/*.d.ts", "vite.config.ts"],
+  // "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "build/**/*.ts", "build/**/*.d.ts", "vite.config.ts"],
+	"include": ["src/**/*", "build/**/*.ts", "build/**/*.d.ts", "vite.config.ts"],
 
   // exclude 不需要被编译的文件目录
   "exclude": [
 		"node_modules", 
 		"dist", 
-		"**/*.js"
+		".husky",
+		".vscode"
+		// "**/*.js"
 	],
   
   // ! rules: https://blog.csdn.net/qq_34532969/article/details/116483642

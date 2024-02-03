@@ -22,34 +22,34 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
       // 在所有 *.js 和 *.tsx 文件中使用 React 插件
       include: "**/*.{js,ts,tsx}"
     }),
-    // esLint error messages are displayed on the browser interface
+    // ESLint 错误消息显示在浏览器界面上
     checker({ typescript: true }),
-    // Create a packaged compression configuration
+    // 创建打包压缩配置
     createCompression(viteEnv),
-    // Inject variable into html file
+    // 将变量注入到 html 文件中
     createHtmlPlugin({
       inject: {
         data: { title: VITE_GLOB_APP_TITLE }
       }
     }),
-    // Create svg icons
+    // 创建 svg 图标
     createSvgIconsPlugin({
       iconDirs: [resolve(process.cwd(), "src/assets/icons")],
       symbolId: "icon-[dir]-[name]"
     }),
     // vitePWA
     VITE_PWA && createVitePwa(viteEnv),
-    // Whether to generate package preview, analyze dependent package size for optimization
+    // 是否生成包预览，分析依赖包大小进行优化
     VITE_REPORT && (visualizer({ filename: "stats.html", gzipSize: true, brotliSize: true }) as unknown as PluginOption),
     requireTransform({
-      // .ts文件中使用 require()
+      // .ts文件中使用 commonjs require()
       fileRegex: /.ts$/
     })
   ];
 };
 
 /**
- * Generate different compression rules according to the compress configuration
+ * 根据压缩配置生成不同的压缩规则
  * @param viteEnv
  */
 const createCompression = (viteEnv: ViteEnv): PluginOption | PluginOption[] => {

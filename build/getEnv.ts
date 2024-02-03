@@ -21,10 +21,11 @@ export function isReportMode(): boolean {
 
 // Read all environment variable configuration files to process.env
 export function wrapperEnv(envConf: Recordable): ViteEnv {
+  // console.log('envConf', envConf);
   const ret: any = {};
   for (const envName of Object.keys(envConf)) {
     let realName = envConf[envName].replace(/\\n/g, "\n");
-    realName = realName === "true" ? true : realName === "false" ? false : realName;
+    realName = realName === "true" ? true : realName === "false" ? false : realName; // 将 string 转 boolean
     if (envName === "VITE_PORT") realName = Number(realName);
     if (envName === "VITE_PROXY") {
       try {
