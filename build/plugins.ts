@@ -7,6 +7,7 @@ import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import react from "@vitejs/plugin-react";
 import checker from "vite-plugin-checker";
 import viteCompression from "vite-plugin-compression";
+import requireTransform from "vite-plugin-require-transform";
 
 /**
  * Create vite plugin
@@ -35,7 +36,10 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
     // vitePWA
     VITE_PWA && createVitePwa(viteEnv),
     // Whether to generate package preview, analyze dependent package size for optimization
-    VITE_REPORT && (visualizer({ filename: "stats.html", gzipSize: true, brotliSize: true }) as unknown as PluginOption)
+    VITE_REPORT && (visualizer({ filename: "stats.html", gzipSize: true, brotliSize: true }) as unknown as PluginOption),
+    requireTransform({
+      fileRegex: /.ts$/
+    })
   ];
 };
 

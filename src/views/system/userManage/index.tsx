@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Card, Badge, Button, Space, Tag, Table, message, Modal, Form, Input, Radio, Select, DatePicker } from "antd";
-import { createUser, editUser, userList } from "@/api/modules/system/userManage";
+import { createUser, editUser, getUserList } from "@/api/modules/system/userManage";
 import MultiForm from "@/components/Forms";
 import MultiTable from "@/components/Tables";
 import { roleList } from "@/api/modules/system/roleManage";
+import { TableProps } from "antd/lib/table/InternalTable";
 interface stateConfig {
   [propName: number]: React.ReactNode;
 }
@@ -11,6 +12,23 @@ interface InterestConfig {
   [propName: number]: string;
 }
 
+interface UserListResults {
+  code?: number;
+  data: {
+    list: [];
+    page?: number;
+    page_count?: number;
+    page_size?: number;
+    total_count?: number;
+  };
+  msg?: string;
+}
+
+interface Pagination {
+  page: number;
+  pageSize: number;
+  totalCount?: number;
+}
 function pagination(data: any, callback: (page: number, pageSize: number) => void) {
   return {
     // 页码改变的回调，参数是改变后的页码及每页条数
@@ -37,33 +55,34 @@ function pagination(data: any, callback: (page: number, pageSize: number) => voi
 }
 
 const UserManage = () => {
+  // 处理角色
   const [roleObj, setroleObj] = useState<any>({});
   const [roleAll, setroleAll] = useState([]);
-  const [list, setList] = useState<any>({ list: [], pagination: {} });
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<any>([]);
-  const [selectedIds, setSelectedIds] = useState([]);
-  const [selectedItem, setSelectedItem] = useState<any>(null);
 
+  // Table 表格
   const [loading, setLoading] = useState(false);
+  const [userList, setUserList] = useState<any>([]);
+  const [pagination, setPagination] = useState<Pagination>({ page: 1, pageSize: 10, totalCount: 0 });
+  const [selectRowItem, setSelectRowItem] = useState<any>({ selectedRowKeys: [], selectedIds: [], selectedItem: {} });
 
+  // 处理弹窗
   const [modalTitle, setModalTitle] = useState("");
   const [modalIsVisible, setModalIsVisible] = useState(false);
   const [modalType, setModalType] = useState("");
   const [modalUserInfo, setModalUserInfo] = useState({});
 
+  // 表单过滤条件
   const [searchFilter, setSearchFilter] = useState({});
   const [form] = Form.useForm();
   const [multiForm] = Form.useForm();
 
-  // console.log(list.pagination.current = 3);
-  // console.log("selectedParams", selectedParams);
-  const getData = (page: number, pageSize: number) => {
+  const getData = () => {
     setLoading(true);
     setTimeout(() => {
       // console.log('最近', page, pageSize );
-      userList({ page, pageSize }).then((res: any) => {
+      const { page, pageSize } = pagination;
+      let searchParams = { page, pageSize, ...searchFilter };
+      getUserList(searchParams).then((res: any) => {
         // console.log("响应结果：", res);
         setLoading(false);
         const newData = res.data.list.map((item: any, index: number) => {
@@ -78,13 +97,11 @@ const UserManage = () => {
           page_size: pageSize,
           total_count: 130
         };
-        setList({
-          list: newData.splice(0, pageSize),
-          pagination: pagination(resData, async (page: number, pageSize: number) => {
-            setPage(page);
-            setPageSize(pageSize);
-            getData(page, pageSize);
-          })
+        setUserList(newData.splice(0, pageSize));
+        setPagination({
+          page: res.data.page,
+          pageSize: res.data.page_size,
+          totalCount: res.data.total_count
         });
       });
     }, 500);
@@ -103,33 +120,35 @@ const UserManage = () => {
     });
   };
   useEffect(() => {
-    getData(page, pageSize);
+    // const { page, pageSize } = pagination;
+    getData();
     getRoleData();
   }, []);
   // console.log('最新', page, pageSize );
 
   const updateSelectedItem = (selectedRowKeys: any, selectedRows: any, selectedIds: any) => {
-    if (selectedIds) {
-      setSelectedRowKeys(selectedRowKeys);
-      setSelectedIds(selectedIds);
-      setSelectedItem(selectedRows);
-    } else {
-      setSelectedRowKeys(selectedRowKeys);
-      setSelectedItem(selectedRows);
-    }
+    // console.log("updateSelectedItem", selectedRowKeys, selectedRows, selectedIds);
+    setSelectRowItem({
+      selectedRowKeys,
+      selectedIds: selectedIds && selectedIds.length > 0 ? selectedIds : [],
+      selectedRows
+    });
   };
-  // console.log('roleNames', roleNames);
-  const columnConfig = [
+  const updatePage = (page: number, pageSize: number) => {
+    setPagination((state: Pagination) => ({ ...state, page, pageSize }));
+  };
+
+  const columnConfig: TableProps["columns"] = [
     {
       title: "id",
       dataIndex: "id",
-      width: "5%",
+      width: 80,
       fixed: "left"
     },
     {
       title: "用户名",
       dataIndex: "username",
-      width: "6%",
+      width: 80,
       fixed: "left"
     },
     {
@@ -176,14 +195,14 @@ const UserManage = () => {
       dataIndex: "isMarried",
       render(isMarried: number) {
         return isMarried ? <Badge status="success" text="已婚" /> : <Badge status="error" text="未婚" />;
-      },
-      width: 80
+      }
+      // width: 80
     },
     {
       title: "所属角色",
       dataIndex: "role_id",
-      render: (roleiD: number) => roleObj[roleiD],
-      width: 80
+      render: (roleiD: number) => roleObj[roleiD]
+      // width: 80
     },
     {
       title: "手机号",
@@ -196,7 +215,7 @@ const UserManage = () => {
     },
     {
       title: "身份证号",
-      width: 150,
+      // width: 150,
       render() {
         let identity = 231085199811011415n;
         let strIdentity = identity + ""; // 数字类型转字符串
@@ -206,8 +225,8 @@ const UserManage = () => {
     },
     {
       title: "联系地址",
-      dataIndex: "address",
-      width: 250
+      dataIndex: "address"
+      // width: 250
     },
     {
       title: "邮箱",
@@ -227,7 +246,7 @@ const UserManage = () => {
     {
       title: "操作",
       fixed: "right",
-      width: "12%",
+      width: 200,
       render(record: any) {
         return (
           <Space>
@@ -275,7 +294,7 @@ const UserManage = () => {
     } else if (type === "delete") {
       message.success(`删除用户成功！ id：${item.id}`);
     } else if (type === "moreDelete") {
-      message.success(`删除更多用户成功！ id：${JSON.stringify(selectedIds)}`);
+      message.success(`删除更多用户成功！ id：${JSON.stringify(selectRowItem.selectedIds)}`);
     }
   };
   // ! 操作员工： 新建、编辑、详情、删除  弹窗内容提交
@@ -303,6 +322,14 @@ const UserManage = () => {
       initialValue: "",
       width: 80
     },
+    // {
+    // 	type: "TIME",
+    //   label: "联系地址",
+    //   field: "timeshe",
+    //   placeholder: "请输入联系地址",
+    //   initialValue: "",
+    //   width: 80
+    // },
     {
       type: "SELECT",
       label: "婚姻状态",
@@ -330,15 +357,62 @@ const UserManage = () => {
       ]
     }
   ];
+  const extendFormList = [
+    {
+      type: "TIME",
+      style: 200
+    },
+    {
+      type: "INPUT",
+      placeholder: "请输入电影名",
+      width: "200px",
+      label: "电影",
+      field: "movies"
+    },
+    {
+      type: "SELECT",
+      placeholder: "请选择电影",
+      width: "200px",
+      label: "选择种类",
+      field: "kinds1",
+      name: "key",
+      list: [
+        {
+          id: 1,
+          key: "泰坦尼克号"
+        },
+        {
+          id: 2,
+          key: "阿凡达"
+        },
+        {
+          id: 3,
+          key: "蜘蛛侠"
+        }
+      ]
+    }
+  ];
   const handleFilter = (filterParams = {}) => {
-    console.log("父组件 filterParams", multiForm.getFieldsValue());
+    console.log("父组件 filterParams", filterParams);
     setSearchFilter(filterParams);
-    getData(page, pageSize);
   };
+
+  const [moreSearch, setmoreSearch] = useState(false);
+
+  // console.log(userList);
   const structure = (
     <div>
       <Card className="mb20">
-        <MultiForm formList={formList} filterSubmit={handleFilter} multiForm={multiForm} />
+        <MultiForm
+          formList={formList}
+          filterSubmit={handleFilter}
+          multiForm={multiForm}
+          extendFormList={extendFormList}
+          moreSearch={moreSearch}
+          changeExport={() => {
+            setmoreSearch(moreSearch => !moreSearch);
+          }}
+        />
       </Card>
       <Card
         className="mb30"
@@ -367,14 +441,19 @@ const UserManage = () => {
         <MultiTable
           rowSelection="checkbox"
           columns={columnConfig}
-          dataSource={list.list}
-          pagination={list.pagination}
-          selectedRowKeys={selectedRowKeys}
-          selectedIds={selectedIds}
-          selectedItem={selectedItem}
+          dataSource={userList}
+          pagination={pagination}
+          selectedRowKeys={selectRowItem.selectedRowKeys}
+          selectedIds={selectRowItem.selectedIds}
+          selectedItem={selectRowItem.selectedItem}
           updateSelectedItem={updateSelectedItem}
+          updatePage={updatePage}
           loading={loading}
-          scroll={{ x: 1500 }}
+          // scroll={{ x: 1500 }}
+          id="cart-scrollTable"
+          xScroll
+          // yScroll
+          // scroll={{y: 1000}}
         />
       </Card>
       <Modal
@@ -400,7 +479,6 @@ const UserManage = () => {
 const UserFormModal: any = ({ userInfo, type, form, roles }: any) => {
   const formItemLayout = { labelCol: { span: 4 }, wrapperCol: { span: 16 } };
   // console.log("userInfo???", userInfo);
-
   useEffect(() => {
     return () => {
       form.resetFields(); // 组件卸载将清空Form值
@@ -453,11 +531,6 @@ const UserFormModal: any = ({ userInfo, type, form, roles }: any) => {
                   </Select.Option>
                 );
               })}
-              {/* <Select.Option value={1}>痛苦</Select.Option>
-              <Select.Option value={2}>委屈</Select.Option>
-              <Select.Option value={3}>迷茫</Select.Option>
-              <Select.Option value={4}>平淡</Select.Option>
-              <Select.Option value={5}>开心</Select.Option> */}
             </Select>
           </Form.Item>
           <Form.Item name="birthday" label="生日">
