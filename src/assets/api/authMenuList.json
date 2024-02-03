@@ -1,7 +1,8 @@
 {
   "code": 200,
   "msg": "成功",
-  "data": [{
+  "data": [
+    {
       "path": "/home/index",
       "element": "/home/index",
       "meta": {
@@ -39,7 +40,8 @@
         "isFull": false,
         "isAffix": false
       },
-      "children": [{
+      "children": [
+        {
           "path": "/auth/page",
           "element": "/auth/page/index",
           "meta": {
@@ -79,7 +81,8 @@
         "isFull": false,
         "isAffix": false
       },
-      "children": [{
+      "children": [
+        {
           "path": "/assembly/guide",
           "element": "/assembly/guide/index",
           "meta": {
@@ -105,7 +108,7 @@
             "isAffix": false
           }
         },
-				{
+        {
           "path": "/assembly/recharts",
           "element": "/assembly/recharts/index",
           "meta": {
@@ -170,7 +173,7 @@
             "isAffix": false
           }
         },
-				{
+        {
           "path": "/assembly/cssModules",
           "element": "/assembly/cssModules/index",
           "meta": {
@@ -183,7 +186,7 @@
             "isAffix": false
           }
         },
-				{
+        {
           "path": "/assembly/markdown",
           "element": "/assembly/markdown/index",
           "meta": {
@@ -196,7 +199,7 @@
             "isAffix": false
           }
         },
-				{
+        {
           "path": "/assembly/draft",
           "element": "/assembly/draft/index",
           "meta": {
@@ -223,7 +226,8 @@
         "isFull": false,
         "isAffix": false
       },
-      "children": [{
+      "children": [
+        {
           "path": "/feat/tabs",
           "element": "/feat/tabs/index",
           "meta": {
@@ -235,20 +239,22 @@
             "isFull": false,
             "isAffix": false
           },
-          "children": [{
-            "path": "/feat/tabs/detail/:id",
-            "element": "/feat/tabs/detail",
-            "meta": {
-              "key": "tabsDetail",
-              "icon": "AppstoreOutlined",
-              "title": "Tab 详情",
-              "activeMenu": "/feat/tabs",
-              "isLink": "",
-              "isHide": true,
-              "isFull": false,
-              "isAffix": false
+          "children": [
+            {
+              "path": "/feat/tabs/detail/:id",
+              "element": "/feat/tabs/detail",
+              "meta": {
+                "key": "tabsDetail",
+                "icon": "AppstoreOutlined",
+                "title": "Tab 详情",
+                "activeMenu": "/feat/tabs",
+                "isLink": "",
+                "isHide": true,
+                "isFull": false,
+                "isAffix": false
+              }
             }
-          }]
+          ]
         },
         {
           "path": "/feat/breadcrumb",
@@ -262,7 +268,8 @@
             "isFull": false,
             "isAffix": false
           },
-          "children": [{
+          "children": [
+            {
               "path": "/feat/breadcrumb/flat",
               "element": "/feat/breadcrumb/flat/index",
               "meta": {
@@ -301,20 +308,22 @@
                 "isFull": false,
                 "isAffix": false
               },
-              "children": [{
-                "path": "/feat/breadcrumb/children/detail",
-                "element": "/feat/breadcrumb/children/detail",
-                "meta": {
-                  "key": "breadcrumbChildrenDetail",
-                  "icon": "AppstoreOutlined",
-                  "title": "层级详情",
-                  "activeMenu": "/feat/breadcrumb/children",
-                  "isLink": "",
-                  "isHide": true,
-                  "isFull": false,
-                  "isAffix": false
+              "children": [
+                {
+                  "path": "/feat/breadcrumb/children/detail",
+                  "element": "/feat/breadcrumb/children/detail",
+                  "meta": {
+                    "key": "breadcrumbChildrenDetail",
+                    "icon": "AppstoreOutlined",
+                    "title": "层级详情",
+                    "activeMenu": "/feat/breadcrumb/children",
+                    "isLink": "",
+                    "isHide": true,
+                    "isFull": false,
+                    "isAffix": false
+                  }
                 }
-              }]
+              ]
             }
           ]
         },
@@ -487,7 +496,7 @@
             "isAffix": false
           }
         },
-				{
+        {
           "path": "/feat/codeSplitting",
           "element": "/feat/codeSplitting/index",
           "meta": {
@@ -514,19 +523,21 @@
         "isFull": false,
         "isAffix": false
       },
-      "children": [{
-					"path": "/list/basicTable",
-					"element": "/list/basicTable/index",
-					"meta": {
-						"key": "basicTable",
-						"icon": "AppstoreOutlined",
-						"title": "基本表格",
-						"isLink": "",
-						"isHide": false,
-						"isFull": false,
-						"isAffix": false
-					}
-				},{
+      "children": [
+        {
+          "path": "/list/basicTable",
+          "element": "/list/basicTable/index",
+          "meta": {
+            "key": "basicTable",
+            "icon": "AppstoreOutlined",
+            "title": "基本表格",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        },
+        {
           "path": "/list/useProTable",
           "element": "/list/useProTable/index",
           "meta": {
@@ -592,7 +603,8 @@
         "isFull": false,
         "isAffix": false
       },
-      "children": [{
+      "children": [
+        {
           "path": "/form/basicForm",
           "element": "/form/basicForm/index",
           "meta": {
@@ -646,35 +658,35 @@
         "isAffix": false
       },
       "children": [
-				{
-					"path": "/database/basicDetail",
-					"element": "/database/basicDetail/index",
-					"meta": {
-						"key": "basicDetail",
-						"icon": "AppstoreOutlined",
-						"title": "数据详情页",
-						"isLink": "",
-						"isHide": false,
-						"isFull": false,
-						"isAffix": false
-					}
-				},
-				{
-					"path": "/database/catDetail",
-					"element": "/database/catDetail/index",
-					"meta": {
-						"key": "catDetail",
-						"icon": "AppstoreOutlined",
-						"title": "小猫页",
-						"isLink": "",
-						"isHide": false,
-						"isFull": false,
-						"isAffix": false
-					}
-				}
-			]
-    }, 
-		// ? 菜单页
+        {
+          "path": "/database/basicDetail",
+          "element": "/database/basicDetail/index",
+          "meta": {
+            "key": "basicDetail",
+            "icon": "AppstoreOutlined",
+            "title": "数据详情页",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        },
+        {
+          "path": "/database/catDetail",
+          "element": "/database/catDetail/index",
+          "meta": {
+            "key": "catDetail",
+            "icon": "AppstoreOutlined",
+            "title": "小猫页",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        }
+      ]
+    },
+    // ? 菜单页
     {
       "path": "/menu",
       "redirect": "/menu/menu1",
@@ -687,7 +699,8 @@
         "isFull": false,
         "isAffix": false
       },
-      "children": [{
+      "children": [
+        {
           "path": "/menu/menu1",
           "element": "/menu/menu1/index",
           "meta": {
@@ -712,7 +725,8 @@
             "isFull": false,
             "isAffix": false
           },
-          "children": [{
+          "children": [
+            {
               "path": "/menu/menu2/menu21",
               "element": "/menu/menu2/menu21/index",
               "meta": {
@@ -737,7 +751,8 @@
                 "isFull": false,
                 "isAffix": false
               },
-              "children": [{
+              "children": [
+                {
                   "path": "/menu/menu2/menu22/menu221",
                   "element": "/menu/menu2/menu22/menu221/index",
                   "meta": {
@@ -795,7 +810,7 @@
         }
       ]
     },
-		{
+    {
       "path": "/module",
       "redirect": "/module/product",
       "meta": {
@@ -807,35 +822,37 @@
         "isFull": false,
         "isAffix": false
       },
-      "children": [ 
-				{
-					"path": "/module/product",
-					"element": "/module/product/index",
-					"meta": {
-						"key": "product",
-						"icon": "AppstoreOutlined",
-						"title": "商品管理",
-						"isLink": "",
-						"isHide": false,
-						"isFull": false,
-						"isAffix": false
-					},
-					"children": [{
-						"path": "/module/product/detail",
-						"element": "/module/product/detail",
-						"meta": {
-							"key": "productDetail",
-							"icon": "AppstoreOutlined",
-							"title": "商品详情",
-							"activeMenu": "/module/product",
-							"isLink": "",
-							"isHide": true,
-							"isFull": false,
-							"isAffix": false
-						}
-					}]
-				},
-				{
+      "children": [
+        {
+          "path": "/module/product",
+          "element": "/module/product/index",
+          "meta": {
+            "key": "product",
+            "icon": "AppstoreOutlined",
+            "title": "商品管理",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          },
+          "children": [
+            {
+              "path": "/module/product/detail",
+              "element": "/module/product/detail",
+              "meta": {
+                "key": "productDetail",
+                "icon": "AppstoreOutlined",
+                "title": "商品详情",
+                "activeMenu": "/module/product",
+                "isLink": "",
+                "isHide": true,
+                "isFull": false,
+                "isAffix": false
+              }
+            }
+          ]
+        },
+        {
           "path": "/module/category",
           "element": "/module/category/index",
           "meta": {
@@ -850,7 +867,7 @@
         }
       ]
     },
-		{
+    {
       "path": "/system",
       "redirect": "/system/userManage",
       "meta": {
@@ -863,7 +880,7 @@
         "isAffix": false
       },
       "children": [
-				{
+        {
           "path": "/system/userManage",
           "element": "/system/userManage/index",
           "meta": {
@@ -889,7 +906,7 @@
             "isAffix": false
           }
         },
-				{
+        {
           "path": "/system/accountManage",
           "element": "/system/accountManage/index",
           "meta": {
@@ -916,8 +933,7 @@
           }
         }
       ]
-    }, 
-
+    },
 
     {
       "path": "/about/index",
@@ -945,10 +961,5 @@
         "isAffix": false
       }
     }
-
-
-
-
-
   ]
 }

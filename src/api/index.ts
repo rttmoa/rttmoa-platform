@@ -18,9 +18,6 @@ const config: AxiosRequestConfig = {
   withCredentials: false
 };
 
-
-
-
 // ! 1.根据packagejson中开发模式还是生产模式适用于什么接口环境
 // ! 2.Axios二次封装，接口统一存放,满足RESTful风格： https://wocwin.github.io/t-ui/projectProblem/axios.html
 // ! 3.参考 Axios Typescript 属性
@@ -35,7 +32,8 @@ class RequestHttp {
      * Client sends request -> [request interceptor] -> server
      * token verification (JWT): Accept the token returned by the server and store it in redux/local storage
      */
-    this.service.interceptors.request.use((config: CustomAxiosRequestConfig) => {
+    this.service.interceptors.request.use(
+      (config: CustomAxiosRequestConfig) => {
         // 当前请求需要显示加载，这由 API 服务中指定的第三个参数控制： {loading: true}
         config.loading && showFullScreenLoading();
 
@@ -52,15 +50,16 @@ class RequestHttp {
 
         if (config.headers && typeof config.headers.set === "function") {
           const token: string = store.getState().user.token;
-          if(token){
+          if (token) {
             config.headers.set("x-access-token", token);
-            config.headers["Authorization"] = `Bearer ${token}` // qianfeng request
+            config.headers["Authorization"] = `Bearer ${token}`; // qianfeng request
           }
         }
-        // console.log('请求拦截', config); 
+        // console.log('请求拦截', config);
         return config;
-      }, (error: AxiosError) => {
-        console.log('请求错误拦截', error);
+      },
+      (error: AxiosError) => {
+        console.log("请求错误拦截", error);
         return Promise.reject(error);
       }
     );
@@ -69,7 +68,8 @@ class RequestHttp {
      * @description response interceptor
      *  The server returns the information -> [intercept unified processing] -> the client JS gets the information
      */
-    this.service.interceptors.response.use((response: AxiosResponse) => {
+    this.service.interceptors.response.use(
+      (response: AxiosResponse) => {
         const { data, config, headers, status, statusText } = response;
         tryHideFullScreenLoading();
 
@@ -80,7 +80,7 @@ class RequestHttp {
           console.log("code=401");
           store.dispatch(setToken(""));
           message.error(data.msg);
-          window.$navigate(LOGIN_URL); 
+          window.$navigate(LOGIN_URL);
           return Promise.reject(data);
         }
 
@@ -102,17 +102,17 @@ class RequestHttp {
         // }
         // return response.data
 
-
         // console.log('响应拦截：', response);
         // console.log("请求地址和结果：", response.config.url, response.data); // ! 响应结果
         return data; // 结果：{code: 200, data: Array(14), msg: '成功'}
       },
       async (error: AxiosError) => {
-        console.log('响应错误拦截:', error);
+        console.log("响应错误拦截:", error);
         const { response } = error;
         tryHideFullScreenLoading();
         // 分别判断请求超时 && 网络错误，无响应
-        if (error.message.indexOf("timeout") !== -1) { // "timeout of 2000ms exceeded"
+        if (error.message.indexOf("timeout") !== -1) {
+          // "timeout of 2000ms exceeded"
           message.error("请求超时！请您稍后重试");
         }
         if (error.message.indexOf("Network Error") !== -1) {

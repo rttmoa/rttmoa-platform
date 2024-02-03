@@ -27,4 +27,18 @@ export function createProxy(list: ProxyList = []) {
     };
   }
   return ret;
+  // proxy: {
+  // 	'/faker': {
+  // 		target: 'http://localhost:4000',
+  // 		pathRewrite: { '^/faker': '' },
+  // 		secure: false,
+  // 		changeOrigin: true,
+  // 		cookieDomainRewrite: 'localhost',
+  // 	},
+  // 	'/v2': {
+  // 		target: 'https://www.mocky.io',
+  // 		secure: false,
+  // 		changeOrigin: true,
+  // 	},
+  // },
 }

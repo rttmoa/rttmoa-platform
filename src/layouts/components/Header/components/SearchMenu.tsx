@@ -29,8 +29,6 @@ const SearchMenu: React.FC = () => {
   const showModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  
-
   // ? 搜索值匹配路由关键字
   const searchList = useMemo(() => {
     // console.log(flatMenuList); // (60)[{…}, {…}, {…}, .........................]
@@ -142,7 +140,9 @@ const SearchMenu: React.FC = () => {
           prefix={<SearchOutlined />}
           allowClear={true}
           value={searchValue}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setSearchValue(event.target.value) }}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            setSearchValue(event.target.value);
+          }}
         />
         {searchList.length ? searchMenuListStructure() : <Empty className="mt40 mb30" description="暂无菜单" />}
       </Modal>

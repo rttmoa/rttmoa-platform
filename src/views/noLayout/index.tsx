@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import back from "@/assets/images/back.svg";
 import "./index.less";
 
-
-
 // ! link: http://localhost:9527/#/nolayout/index
 const NoLayout: React.FC = () => {
   const navigate = useNavigate();

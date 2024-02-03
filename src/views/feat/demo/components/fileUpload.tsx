@@ -65,10 +65,10 @@ const FileUpload: React.FC = () => {
       }
     },
     onRemove(file) {
-      const index = fileList.indexOf(file)
-      const newFileList = fileList.slice(index)
-      newFileList.splice(index, 1)
-      setFileList(newFileList)
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice(index);
+      newFileList.splice(index, 1);
+      setFileList(newFileList);
     },
     // 上传前校验 & 上传前转换文件
     beforeUpload(file: RcFile, FileList) {
@@ -137,7 +137,9 @@ const FileUpload: React.FC = () => {
   return (
     <>
       <div>
-        <h3><b>文件上传</b></h3>
+        <h3>
+          <b>文件上传</b>
+        </h3>
         <Upload {...uploadProps}>
           <Button icon={loading ? <LoadingOutlined /> : <UploadOutlined />}></Button>
         </Upload>

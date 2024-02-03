@@ -1,3 +1,0 @@
-To create the Build use:
-
-npm run-script build

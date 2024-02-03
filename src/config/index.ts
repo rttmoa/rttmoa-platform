@@ -1,8 +1,6 @@
 /* eslint-disable prettier/prettier */
 // ? Global default configuration items
 
-
-
 export const HOME_URL: string = "/home/index";
 
 export const LOGIN_URL: string = "/login";

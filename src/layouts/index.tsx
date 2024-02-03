@@ -13,9 +13,6 @@ const LayoutIndex: React.FC = () => {
   const layout = useSelector((state: RootState) => state.global.layout); // vertical | classic | transverse | columns
   const watermark = useSelector((state: RootState) => state.global.watermark);
 
-
-
-  
   // ? 分析页面结构：HTML + CSS 如何布局
   const LayoutComponents = {
     vertical: <LayoutVertical />, // ! ------ 一、纵向

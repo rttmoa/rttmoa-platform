@@ -3,14 +3,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-
-
-
-
 const Component = () => {
   function getStorageValue(key: any, defaultValue: any) {
     if (typeof window !== "undefined") {
-      return defaultValue
+      return defaultValue;
     }
   }
 
@@ -24,18 +20,18 @@ const Component = () => {
     return [value, setValue];
   };
 
-  const [value, setValue] = useLocalStorage('zs', 33)
+  const [value, setValue] = useLocalStorage("zs", 33);
   console.log(value);
 
-
-
   const onChange = () => {
-    setValue((value:number) => value+1)
-  }
-  
-  return <div>
-    <button onClick={onChange}>切换按钮</button>
-  </div>;
+    setValue((value: number) => value + 1);
+  };
+
+  return (
+    <div>
+      <button onClick={onChange}>切换按钮</button>
+    </div>
+  );
 };
 
 export default Component;

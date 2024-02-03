@@ -10,8 +10,8 @@ import global from "./modules/global"; // ! 设置全局属性：是否黑暗模
 import tabs from "./modules/tabs"; // ! 存储Tabs、添加Tabs、溢出Tabs、关闭Tabs、关闭其他Tabs、设置Tabs标题
 import auth from "./modules/auth"; // ! 菜单权限、按钮权限
 import user from "./modules/user"; // ! 用户Token、用户个人信息
-import todos from "../views/func/hooks/todos/store/reducer";
-const reducer = combineReducers({ global: global, tabs, auth, user, todos });
+// import todos from "../views/func/hooks/todos/store/reducer";
+const reducer = combineReducers({ global: global, tabs, auth, user });
 
 // redux persist
 const persistConfig = {

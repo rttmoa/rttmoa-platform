@@ -2,25 +2,27 @@
 import React from "react";
 import { Card, Descriptions, Tag, Typography } from "antd";
 import "./index.less";
-import Component from './components'
+import Component from "./components";
 const { Link, Title } = Typography;
 const style = { width: "280px" };
 
 const About: React.FC = () => {
   const { pkg, lastBuildTime } = __APP_INFO__;
   const { dependencies, devDependencies, version } = pkg;
-  
+
   return (
     <div className="about-content">
       {/* 测试 Hooks */}
       <Component />
       <Card className="mb10">
-        <Title level={4} className="mb15">关于； Descriptions | pkg</Title>
+        <Title level={4} className="mb15">
+          关于； Descriptions | pkg
+        </Title>
         <span className="text">
           <Link href="https://github.com/rttmoa/rttmoa-platform" target="_blank">
-          rttmoa-platform
+            rttmoa-platform
           </Link>
-          ：技术基于 React18、React-Router v6、React-Hooks、Redux-Toolkit、TypeScript、Vite4、Ant-Design5  
+          ：技术基于 React18、React-Router v6、React-Hooks、Redux-Toolkit、TypeScript、Vite4、Ant-Design5
         </span>
       </Card>
 

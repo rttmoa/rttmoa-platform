@@ -22,18 +22,14 @@ export const RefreshProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [count, setCount] = useState(1);
 
   const updateOutletShow = (val: boolean) => {
-    console.log("TabsView中 刷新操作，调用全局函数 RefreshContext"); 
+    console.log("TabsView中 刷新操作，调用全局函数 RefreshContext");
     setOutletShow(val);
   };
   // console.log("全局刷新组件 <RefreshProvider />");
   // console.log("outletShow", outletShow);
   // console.log(count);
   const contextValue = { count, outletShow, updateOutletShow, setCount };
-  return (
-    <RefreshContext.Provider value={contextValue}>
-      {children}
-    </RefreshContext.Provider>
-  )
+  return <RefreshContext.Provider value={contextValue}>{children}</RefreshContext.Provider>;
 };
 
 // ? 使用：

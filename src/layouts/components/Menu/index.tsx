@@ -41,7 +41,13 @@ const LayoutMenu: React.FC<LayoutMenuProps> = ({ mode, menuList, menuSplit }) =>
   const [splitSelectedKeys, setSplitSelectedKeys] = useState<string[]>([]); // todo 当分割时，当前选中菜单项的key数组
 
   type MenuItem = Required<MenuProps>["items"][number];
-  function getItem(label: React.ReactNode, key?: React.Key | null, icon?: React.ReactNode, children?: MenuItem[], type?: "group"): MenuItem {
+  function getItem(
+    label: React.ReactNode,
+    key?: React.Key | null,
+    icon?: React.ReactNode,
+    children?: MenuItem[],
+    type?: "group"
+  ): MenuItem {
     return {
       key,
       icon,
@@ -63,7 +69,6 @@ const LayoutMenu: React.FC<LayoutMenuProps> = ({ mode, menuList, menuSplit }) =>
   // console.log(menuList, showMenuList); // 经典和分栏传递菜单
   const antdMenuList = useMemo(() => AsAntdMenu(menuList ?? showMenuList), [menuList, showMenuList]);
 
-  
   useEffect(() => {
     const meta = matches[matches.length - 1].data as MetaProps;
     const path = meta?.activeMenu ?? pathname;
@@ -80,7 +85,6 @@ const LayoutMenu: React.FC<LayoutMenuProps> = ({ mode, menuList, menuSplit }) =>
     if (accordion) setTimeout(() => isCollapse || setOpenKeys(getOpenKeys(pathname)));
   }, [matches, isCollapse]);
 
-
   // ! Menu['onOpenChange']： SubMenu 展开/关闭的回调
   // ! Menu['openKeys']：当前展开的 SubMenu 菜单项 key 数组
   const onOpenChange: MenuProps["onOpenChange"] = openKeys => {
@@ -91,7 +95,6 @@ const LayoutMenu: React.FC<LayoutMenuProps> = ({ mode, menuList, menuSplit }) =>
     if (latestOpenKey.includes(openKeys[0])) return setOpenKeys(openKeys);
     setOpenKeys([latestOpenKey]);
   };
-
 
   const handleMenuNavigation = (path: string) => {
     const menuItem = flatMenuList.find(item => item.path === path);
@@ -121,7 +124,6 @@ const LayoutMenu: React.FC<LayoutMenuProps> = ({ mode, menuList, menuSplit }) =>
     if (siderInverted && !isTransverseLayout && !menuSplit) return true;
     return false;
   }, [layout, isDark, headerInverted, siderInverted, menuSplit]);
-
 
   // console.log("是否分割+模式", !!menuSplit, mode); // inline / horizontal
   return (

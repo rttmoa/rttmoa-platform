@@ -16,7 +16,7 @@ const AuthPage: React.FC = () => {
     // 执行退出接口
     await logoutApi();
 
-    // Set token to empty 
+    // Set token to empty
     dispatch(setToken(""));
 
     // Set menu list empty

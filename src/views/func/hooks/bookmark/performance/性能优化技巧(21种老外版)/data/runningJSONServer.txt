@@ -1,7 +1,0 @@
-Install JSON Server:
-
-npm install -g json-server --save
-
-Running JSON Server:
-
-json-server --watch db.json --port 3004

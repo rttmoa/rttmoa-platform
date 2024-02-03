@@ -1,101 +1,65 @@
 {
   "code": 200,
-	"msg": "成功",
+  "msg": "成功",
   "data": {
     "page": 1,
     "page_size": 10,
     "total_count": 35,
     "page_count": 5,
-    "list": [ 
-			{
+    "list": [
+      {
         "id": 0,
         "role_name": "普通用户",
         "status|1-2": 1,
         "authorize_user_name": "@cname",
         "authorize_time": "@datetime('T')",
         "create_time": "@datetime('T')",
-        "menus|+2": [
-          "/home/index",
-          "/assembly/guide",
-          "/assembly/echarts",
-          "/feat/demo",
-          "/feat/qrcode"
-        ]
-      },	
-		{
+        "menus|+2": ["/home/index", "/assembly/guide", "/assembly/echarts", "/feat/demo", "/feat/qrcode"]
+      },
+      {
         "id": 1,
         "role_name": "客服专员",
         "status|1-2": 1,
         "authorize_user_name": "@cname",
         "authorize_time": "@datetime('T')",
         "create_time": "@datetime('T')",
-        "menus|+2": [
-          "/home/index",
-          "/assembly/guide",
-          "/assembly/echarts",
-          "/feat/demo",
-          "/feat/qrcode"
-        ]
+        "menus|+2": ["/home/index", "/assembly/guide", "/assembly/echarts", "/feat/demo", "/feat/qrcode"]
       },
-			{
+      {
         "id": 2,
         "role_name": "前端开发",
         "status|1-2": 1,
         "authorize_user_name": "@cname",
         "authorize_time": "@datetime('T')",
         "create_time": "@datetime('T')",
-        "menus|+2": [
-          "/home/index",
-          "/assembly/guide",
-          "/assembly/echarts",
-          "/feat/demo",
-          "/feat/qrcode"
-        ]
+        "menus|+2": ["/home/index", "/assembly/guide", "/assembly/echarts", "/feat/demo", "/feat/qrcode"]
       },
-			{
+      {
         "id": 3,
         "role_name": "后端开发",
         "status|1-2": 1,
         "authorize_user_name": "@cname",
         "authorize_time": "@datetime('T')",
         "create_time": "@datetime('T')",
-        "menus|+2": [
-          "/home/index",
-          "/assembly/guide",
-          "/assembly/echarts",
-          "/feat/demo",
-          "/feat/qrcode"
-        ]
+        "menus|+2": ["/home/index", "/assembly/guide", "/assembly/echarts", "/feat/demo", "/feat/qrcode"]
       },
-			{
+      {
         "id": 4,
         "role_name": "运维",
         "status|1-2": 1,
         "authorize_user_name": "@cname",
         "authorize_time": "@datetime('T')",
         "create_time": "@datetime('T')",
-        "menus|+2": [
-          "/home/index",
-          "/assembly/guide",
-          "/assembly/echarts",
-          "/feat/demo",
-          "/feat/qrcode"
-        ]
+        "menus|+2": ["/home/index", "/assembly/guide", "/assembly/echarts", "/feat/demo", "/feat/qrcode"]
       },
-			{
+      {
         "id": 5,
         "role_name|+1": "管理员",
         "status|1-2": 1,
         "authorize_user_name": "@cname",
         "authorize_time": "@datetime('T')",
         "create_time": "@datetime('T')",
-        "menus|+2": [
-          "/home/index",
-          "/assembly/guide",
-          "/assembly/echarts",
-          "/feat/demo",
-          "/feat/qrcode"
-        ]
+        "menus|+2": ["/home/index", "/assembly/guide", "/assembly/echarts", "/feat/demo", "/feat/qrcode"]
       }
     ]
   }

@@ -1,106 +1,106 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <style>
-    .app {
-      /* display: flex;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .app {
+        /* display: flex;
       align-items: center;
       justify-content: center; */
-    }
-    .form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-  </style>
-</head>
+      }
+      .form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+  </head>
 
-<body>
-  <!-- TODO: input 输入框类型 -->
-  <div class="app">
-    <br><br>
-    <form name="inputTypeForm" id="typeForm" novalidate="true" enctype="text/plain" class="form">
+  <body>
+    <!-- TODO: input 输入框类型 -->
+    <div class="app">
+      <br /><br />
+      <form name="inputTypeForm" id="typeForm" novalidate="true" enctype="text/plain" class="form">
+        <div>
+          <label>用户名：</label><input type="text" name="name" autofocus="autofocus" pattern="[A-z]{3}" required="required" />
+        </div>
+        <br />
+        <div><label>密码：</label><input type="password" name="pass" /></div>
+        <br />
+        <div><label>确定按钮：</label><input type="button" name="确定" value="确定" /></div>
+        <br />
+        <!--表单的提交按钮 + formnovalidate为true时是对该项免去浏览器默认的验证 + formaction存在值得时候是对当前的表单重新选择提交路径-->
+        <div><label>提交按钮：</label><input type="submit" name="提交" formnovalidate="true" formaction="demo_admin.asp" /></div>
+        <br />
+        <div><label>重置按钮：</label><input type="reset" value="重置" /></div>
+        <br />
+        <!--单选按钮让用户只选其一-->
+        <div>
+          <label>男：</label><input type="radio" name="sex" value="man" /> <label>女：</label
+          ><input type="radio" name="sex" value="woman" />
+        </div>
+        <br />
+        <!--表单的多选框-->
+        <div>
+          <label>白：</label><input type="checkbox" name="white" value="white" /> <label>蓝：</label
+          ><input type="checkbox" name="blue" value="blue" /> <label>绿：</label
+          ><input type="checkbox" name="green" value="green" />
+        </div>
+        <br />
+        <!--用于定义隐藏字段-->
+        <div><label>隐藏input的type=hidden：</label><input type="hidden" name="city" value="city" /></div>
+        <br />
+        <!--用于用户选择文件上传 + multiple 支持多选、默认情况下是单选-->
+        <div><label>文件上传：</label><input type="file" multiple /></div>
+        <br />
+        <!--不提倡使用type=image作为表单的提交按钮要结合alt src使用。提交时会将按钮的x/y坐标提交上去 + width、height是css3新加的属性 -->
+        <div>
+          <label>图片类型：</label
+          ><input type="image" src="http://demo.jb51.net/js/2015/jquery_lunbo/images/4.jpg" alt="submit" width="99" height="99" />
+        </div>
+        <br />
 
-      <div><label>用户名：</label><input type="text" name="name" autofocus="autofocus" pattern="[A-z]{3}" required="required"></div>
-      <br>
-      <div><label>密码：</label><input type="password" name="pass"></div>
-      <br>
-      <div><label>确定按钮：</label><input type="button" name="确定" value="确定"></div>
-      <br>
-      <!--表单的提交按钮 + formnovalidate为true时是对该项免去浏览器默认的验证 + formaction存在值得时候是对当前的表单重新选择提交路径-->
-      <div><label>提交按钮：</label><input type="submit" name="提交" formnovalidate="true" formaction="demo_admin.asp"></div>
-      <br>
-      <div><label>重置按钮：</label><input type="reset" value="重置"></div>
-      <br>
-      <!--单选按钮让用户只选其一-->
-      <div>
-        <label>男：</label><input type="radio" name="sex" value="man">
-        <label>女：</label><input type="radio" name="sex" value="woman">
-      </div>
-      <br>
-      <!--表单的多选框-->
-      <div>
-        <label>白：</label><input type="checkbox" name="white" value="white">
-        <label>蓝：</label><input type="checkbox" name="blue" value="blue">
-        <label>绿：</label><input type="checkbox" name="green" value="green">
-      </div>
-      <br>
-      <!--用于定义隐藏字段-->
-      <div><label>隐藏input的type=hidden：</label><input type="hidden" name="city" value="city"></div>
-      <br>
-      <!--用于用户选择文件上传 + multiple 支持多选、默认情况下是单选-->
-      <div><label>文件上传：</label><input type="file" multiple></div>
-      <br>
-      <!--不提倡使用type=image作为表单的提交按钮要结合alt src使用。提交时会将按钮的x/y坐标提交上去 + width、height是css3新加的属性 -->
-      <div><label>图片类型：</label><input type="image" src="http://demo.jb51.net/js/2015/jquery_lunbo/images/4.jpg" alt="submit" width="99" height="99"></div>
-      <br>
+        <!--新增控件类型 下面是html5新加的表单类型，使得html更加的强大 可以设置最小值、最大值和每次点击跳的步数-->
+        <div><label>number类型：</label><input type="number" min="0" max="10" step="3" /></div>
+        <br />
+        <!--自带的邮箱输入框已经做好了验证-->
+        <div><label>email类型：</label><input type="email" placeholder="请输入邮箱" /></div>
+        <br />
+        <!--如果想要输入一个连接通过url来控制-->
+        <div><label>url类型：</label><input type="url" placeholder="请输入链接" /></div>
+        <br />
+        <!--可以选择颜色-->
+        <div><label>color类型：</label><input type="color" placeholder="请选择颜色" /></div>
+        <br />
+        <!--可以选择范围-->
+        <div><label>range类型：</label><input type="range" placeholder="请选择范围" /></div>
+        <br />
 
-      <!--新增控件类型 下面是html5新加的表单类型，使得html更加的强大 可以设置最小值、最大值和每次点击跳的步数-->
-      <div><label>number类型：</label><input type="number" min="0" max="10" step="3"></div>
-      <br>
-      <!--自带的邮箱输入框已经做好了验证-->
-      <div><label>email类型：</label><input type="email" placeholder="请输入邮箱"></div>
-      <br>
-      <!--如果想要输入一个连接通过url来控制-->
-      <div><label>url类型：</label><input type="url" placeholder="请输入链接"></div>
-      <br>
-      <!--可以选择颜色-->
-      <div><label>color类型：</label><input type="color" placeholder="请选择颜色"></div>
-      <br>
-      <!--可以选择范围-->
-      <div><label>range类型：</label><input type="range" placeholder="请选择范围"></div>
-      <br>
+        <!--日期的选择当然时间这块的类型有点多  date/month/week/time/datetime-->
+        <div><label>date类型：</label><input type="date" placeholder="请选择时间" /></div>
+        <br />
 
-      <!--日期的选择当然时间这块的类型有点多  date/month/week/time/datetime-->
-      <div><label>date类型：</label><input type="date" placeholder="请选择时间"></div>
-      <br>
+        <!--html5新加的列表标签、更形象化 相当于自己封装了一个select-->
+        <datalist id="url_list">
+          <option label="W3Schools" value="http://www.w3school.com.cn" />
+          <option label="Google" value="http://www.google.com" />
+          <option label="Microsoft" value="http://www.microsoft.com" />
+        </datalist>
 
-      <!--html5新加的列表标签、更形象化 相当于自己封装了一个select-->
-      <datalist id="url_list">
-        <option label="W3Schools" value="http://www.w3school.com.cn" />
-        <option label="Google" value="http://www.google.com" />
-        <option label="Microsoft" value="http://www.microsoft.com" />
-      </datalist>
-      
-      
-      <!--在form表单之外但是一样是属于id为typeForm的表单 + 但所属为多个form的时候各个id用空格分割开-->
-      <div><label>text类型：</label><input type="text" name="nickname" form="typeForm"></div>
-      <br>
-    </form>
-  </div>
+        <!--在form表单之外但是一样是属于id为typeForm的表单 + 但所属为多个form的时候各个id用空格分割开-->
+        <div><label>text类型：</label><input type="text" name="nickname" form="typeForm" /></div>
+        <br />
+      </form>
+    </div>
 
-
-  <script>
-    let data = `"{"StatusCode":200,"Message":"发送打印标签指令成功","data":[P23094-Z1/3RT26361AP03/6,KM1,KM2,KM3,KM4,KM5,KM6]}"`
-    let data2 = data.indexOf("data")
-    console.log(data.substring(data2))
-    // console.log(data2)
-  </script>
-</body>
-
+    <script>
+      let data = `"{"StatusCode":200,"Message":"发送打印标签指令成功","data":[P23094-Z1/3RT26361AP03/6,KM1,KM2,KM3,KM4,KM5,KM6]}"`;
+      let data2 = data.indexOf("data");
+      console.log(data.substring(data2));
+      // console.log(data2)
+    </script>
+  </body>
 </html>

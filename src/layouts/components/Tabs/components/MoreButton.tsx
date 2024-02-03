@@ -9,14 +9,19 @@ import { useNavigate } from "react-router-dom";
 import { RefreshContext } from "@/context/Refresh";
 import { setGlobalState } from "@/redux/modules/global";
 import { removeTab, closeMultipleTab, closeTabsOnSide } from "@/redux/modules/tabs";
-import {  
-  ReloadOutlined,  ExpandOutlined,  CloseCircleOutlined,  ColumnWidthOutlined,  SwitcherOutlined,  VerticalLeftOutlined,  VerticalRightOutlined
+import {
+  ReloadOutlined,
+  ExpandOutlined,
+  CloseCircleOutlined,
+  ColumnWidthOutlined,
+  SwitcherOutlined,
+  VerticalLeftOutlined,
+  VerticalRightOutlined
 } from "@ant-design/icons";
 
 interface MoreButtonProps {
   path: string;
 }
-
 
 // todo TabsView；更多操作
 const MoreButton: React.FC<MoreButtonProps> = ({ path }) => {
@@ -34,7 +39,7 @@ const MoreButton: React.FC<MoreButtonProps> = ({ path }) => {
   };
 
   const style: CSSProperties = { fontSize: "14px" };
-  
+
   const items: MenuProps["items"] = [
     {
       key: "1",
@@ -42,7 +47,7 @@ const MoreButton: React.FC<MoreButtonProps> = ({ path }) => {
       icon: <ReloadOutlined style={style} />,
       onClick: refreshCurrentPage,
       danger: true,
-      disabled: path === HOME_URL,
+      disabled: path === HOME_URL
     },
     {
       key: "2",
@@ -98,7 +103,7 @@ const MoreButton: React.FC<MoreButtonProps> = ({ path }) => {
     // 下拉菜单：https://ant.design/components/dropdown-cn
     <>
       <div className="more-button">
-        <Dropdown  menu={{ items }} placement="bottomRight" arrow={{ pointAtCenter: true }} trigger={["click"]}>
+        <Dropdown menu={{ items }} placement="bottomRight" arrow={{ pointAtCenter: true }} trigger={["click"]}>
           <div className="more-button-item">
             <IconFont style={{ fontSize: 22 }} type="icon-xiala" />
           </div>

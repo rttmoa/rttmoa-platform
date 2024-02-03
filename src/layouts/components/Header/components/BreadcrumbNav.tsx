@@ -25,7 +25,7 @@ const BreadcrumbNav: React.FC = () => {
   // ? 使用递归查找 所有面包屑数据
   const breadcrumbAllList = useMemo(() => getAllBreadcrumbList(authMenuList), [authMenuList]);
   // console.log('处理后的面包屑列表', breadcrumbAllList); // Object： {home: Array(1), dataScreen: Array(1), auth: Array(1), pageMenu: Array(2), authButton: Array(2),…}
-  
+
   const [curBreadcrumbList, setCurBreadcrumbList] = useState<ItemType[]>([]); // 设置 当前路由的面包屑 格式
 
   // Render Breadcrumb Title
@@ -43,7 +43,7 @@ const BreadcrumbNav: React.FC = () => {
   useEffect(() => {
     const meta = matches[matches.length - 1].data as MetaProps;
     if (!meta?.key) return;
-    // console.log(matches, matches[matches.length - 1].pathname, meta.key); 
+    // console.log(matches, matches[matches.length - 1].pathname, meta.key);
     // (2)[{…}, {…}] '/menu/menu2/menu21' 'menu21'  ||  (2)[{…}, {…}] '/feat/breadcrumb/children' 'breadcrumbChildren'
     let breadcrumbList = breadcrumbAllList[meta.key] || [];
     // console.log('当前访问面包屑数据：', breadcrumbAllList[meta.key]);
@@ -87,8 +87,6 @@ const BreadcrumbNav: React.FC = () => {
   // console.log("当前访问页面包屑数组：", curBreadcrumbList);
   // console.log("==============================");
   // Typescript Breadcrumb || https://ant.design/components/breadcrumb-cn#api
-
-
 
   // ! 返回处理后的 面包屑导航
   return <React.Fragment>{breadcrumb && <Breadcrumb items={curBreadcrumbList}></Breadcrumb>}</React.Fragment>;

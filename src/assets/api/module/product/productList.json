@@ -1,23 +1,23 @@
 {
-	"code": 200,
-	"msg": "成功",
-	"data": {
-		"total": 3,
+  "code": 200,
+  "msg": "成功",
+  "data": {
+    "total": 3,
     "page": 2,
     "list": [
-			{
-        "onSale": true, 
+      {
+        "onSale": true,
         "quantity": 10,
         "price": 1699,
         "_id": "642ee36ff3d52f4db845ff43",
         "name": "海尔全自动洗衣机",
         "coverImg": "https://gw.alicdn.com/imgextra/i3/2576991140/O1CN0161WyAa1KIABFOX3kz_!!2576991140.jpg_110x10000Q75.jpg_.webp",
-				// coverImg: "http://localhost:3009/uploads/20230406/1680794476636.jpg",
+        // coverImg: "http://localhost:3009/uploads/20230406/1680794476636.jpg",
         "createdAt": "2023-04-06T15:21:19.394Z",
         "updatedAt": "2023-09-25T14:43:41.745Z",
-				"desc": "海尔10公斤全自动家用洗脱一体变频滚筒洗衣机MATE3S"
-			},
-			{
+        "desc": "海尔10公斤全自动家用洗脱一体变频滚筒洗衣机MATE3S"
+      },
+      {
         "onSale": false,
         "quantity": 10,
         "price": 17,
@@ -26,9 +26,9 @@
         "coverImg": "https://gw.alicdn.com/imgextra/i2/2212608305912/O1CN01HeydQ01tXkRJagUrF_!!2212608305912.jpg_110x10000Q75.jpg_.webp",
         "createdAt": "2023-04-06T15:21:08.502Z",
         "updatedAt": "2023-05-02T07:43:32.215Z",
-				"desc": "Apple/苹果 iPhone14Pro国行14ProMax新款5G手机双卡现货顺丰速发"
-			},
-			{
+        "desc": "Apple/苹果 iPhone14Pro国行14ProMax新款5G手机双卡现货顺丰速发"
+      },
+      {
         "onSale": true,
         "quantity": 10,
         "price": 23,
@@ -37,8 +37,8 @@
         "coverImg": "https://gw.alicdn.com/imgextra/i3/2238083774/O1CN01tr0rQv1dkXfOQ2WzH_!!2238083774.jpg_110x10000Q75.jpg_.webp",
         "createdAt": "2023-04-06T15:21:08.502Z",
         "updatedAt": "2023-05-02T07:43:32.215Z",
-				"desc": "Apple/苹果 iPhone 11国行苹果11pro双卡苹果11promax免息分期购"
-			}
-		]
-	}
+        "desc": "Apple/苹果 iPhone 11国行苹果11pro双卡苹果11promax免息分期购"
+      }
+    ]
+  }
 }

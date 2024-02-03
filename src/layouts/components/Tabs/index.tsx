@@ -40,7 +40,7 @@ const DraggableTabNode = ({ ...props }: DraggableTabPaneProps) => {
 };
 
 // todo Tabs
-// todo Tabs 配置项 / 当前高亮激活项 / 删除 / 添加 / 切换 / 拖拽 / 更多操作 
+// todo Tabs 配置项 / 当前高亮激活项 / 删除 / 添加 / 切换 / 拖拽 / 更多操作
 const LayoutTabs: React.FC = () => {
   const matches = useMatches();
   const dispatch = useDispatch();
@@ -147,7 +147,9 @@ const LayoutTabs: React.FC = () => {
                 <SortableContext items={items.map(i => i.key)} strategy={horizontalListSortingStrategy}>
                   <DefaultTabBar {...tabBarProps}>
                     {node => (
-                      <DraggableTabNode {...node.props} key={node.key}>{node}</DraggableTabNode>
+                      <DraggableTabNode {...node.props} key={node.key}>
+                        {node}
+                      </DraggableTabNode>
                     )}
                   </DefaultTabBar>
                 </SortableContext>

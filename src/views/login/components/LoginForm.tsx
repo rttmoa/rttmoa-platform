@@ -147,7 +147,9 @@ const LoginForm: React.FC = () => {
       setDisabled(true);
       CountDown();
       if (!timer) timer = setInterval(CountDown, 1000);
-    } catch (error) {}
+    } catch (error: any) {
+      console.log("sendCode Error", console.log(error));
+    }
   };
 
   useEffect(() => {

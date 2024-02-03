@@ -47,9 +47,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
     },
     define: {
       __APP_INFO__: JSON.stringify(__APP_INFO__),
-      global: {
-        // getSelection: () => {}
-      }
+      process // 解决未定义问题，推荐 import.meta.env
     },
     server: {
       host: "0.0.0.0",
@@ -59,9 +57,11 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       // ? 代理  从 .env.development 加载代理配置
       proxy: createProxy(viteEnv.VITE_PROXY)
     },
+    // ? 插件配置
     plugins: [createVitePlugins(viteEnv) /* reactVirtualized() */],
-    // 去除console、debugger
+
     esbuild: {
+      // 去除console、debugger
       pure: viteEnv.VITE_DROP_CONSOLE ? ["console.log", "debugger"] : []
     },
     build: {
@@ -77,6 +77,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       // 		drop_debugger: true
       // 	}
       // },
+      // 构建后是否生成 source map 文件
       sourcemap: false,
       // 禁用 gzip 压缩大小报告，这会稍微减少打包时间
       reportCompressedSize: false,
@@ -91,6 +92,11 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
           assetFileNames: "assets/[ext]/[name]-[hash].[ext]"
         }
       }
+    },
+    // https://cn.vitejs.dev/config/preview-options.html#preview-port
+    // 指定开发服务器端口。注意，如果设置的端口已被使用，Vite 将自动尝试下一个可用端口，所以这可能不是最终监听的服务器端口。
+    preview: {
+      port: 9999
     }
   };
 });

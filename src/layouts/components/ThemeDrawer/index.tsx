@@ -34,11 +34,20 @@ const ThemeDrawer: React.FC = () => {
   } = useSelector((state: RootState) => state.global);
 
   return (
-    <Drawer className="theme-drawer" title="主题配置" width={290} closable={false} maskClosable={true} open={themeDrawerVisible}
+    <Drawer
+      className="theme-drawer"
+      title="主题配置"
+      width={290}
+      closable={false}
+      maskClosable={true}
+      open={themeDrawerVisible}
       onClose={() => dispatch(setGlobalState({ key: "themeDrawerVisible", value: false }))}
     >
       {/* TODO: ====布局样式==== */}
-      <Divider className="divider"><LayoutOutlined />布局样式</Divider>
+      <Divider className="divider">
+        <LayoutOutlined />
+        布局样式
+      </Divider>
       {/* 开始；四个布局：纵向、经典、横向、流式 */}
       <div className="layout-box">
         <Tooltip placement="top" title="纵向" arrow={true} mouseEnterDelay={0.2}>
@@ -123,7 +132,10 @@ const ThemeDrawer: React.FC = () => {
       </div>
 
       {/* TODO: --全局主题-- */}
-      <Divider className="divider"><FireOutlined />全局主题</Divider>
+      <Divider className="divider">
+        <FireOutlined />
+        全局主题
+      </Divider>
       <div className="theme-item">
         <span>主题颜色</span>
         <Popover placement="left" trigger="click" content={<ColorPicker />}>
@@ -161,11 +173,18 @@ const ThemeDrawer: React.FC = () => {
       </div>
       <div className="theme-item">
         <span>紧凑主题</span>
-        <Switch checked={compactAlgorithm} onChange={(value: any) => dispatch(setGlobalState({ key: "compactAlgorithm", value }))} />
+        <Switch
+          checked={compactAlgorithm}
+          onChange={(value: any) => dispatch(setGlobalState({ key: "compactAlgorithm", value }))}
+        />
       </div>
       <div className="theme-item  mb35">
         <span>圆角大小</span>
-        <InputNumber min={1} max={20} style={{ width: 80 }} defaultValue={borderRadius}
+        <InputNumber
+          min={1}
+          max={20}
+          style={{ width: 80 }}
+          defaultValue={borderRadius}
           formatter={(value: any) => `${value}px`}
           parser={(value: any) => (value ? value!.replace("px", "") : 6) as number}
           onChange={(value: number) => {
@@ -176,7 +195,10 @@ const ThemeDrawer: React.FC = () => {
       </div>
 
       {/* TODO: --界面设置-- */}
-      <Divider className="divider"><SettingOutlined />界面设置</Divider>
+      <Divider className="divider">
+        <SettingOutlined />
+        界面设置
+      </Divider>
       <div className="theme-item">
         <span>菜单折叠</span>
         <Switch checked={isCollapse} onChange={(value: any) => dispatch(setGlobalState({ key: "isCollapse", value }))} />

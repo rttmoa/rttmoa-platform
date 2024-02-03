@@ -24,9 +24,7 @@
         "x-apifox-status": "released",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "授权"
-        ],
+        "tags": ["授权"],
         "parameters": [],
         "responses": {
           "200": {
@@ -54,9 +52,7 @@
         "x-apifox-status": "released",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "菜单/按钮"
-        ],
+        "tags": ["菜单/按钮"],
         "parameters": [],
         "responses": {
           "200": {
@@ -83,9 +79,7 @@
         "x-apifox-status": "released",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "授权"
-        ],
+        "tags": ["授权"],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -128,9 +122,7 @@
         "x-apifox-status": "released",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "菜单/按钮"
-        ],
+        "tags": ["菜单/按钮"],
         "parameters": [],
         "responses": {
           "200": {
@@ -157,9 +149,7 @@
         "x-apifox-status": "released",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "用户列表"
-        ],
+        "tags": ["用户列表"],
         "parameters": [],
         "responses": {
           "200": {
@@ -195,16 +185,8 @@
             "type": "string"
           }
         },
-        "x-apifox-orders": [
-          "code",
-          "data",
-          "msg"
-        ],
-        "required": [
-          "code",
-          "data",
-          "msg"
-        ],
+        "x-apifox-orders": ["code", "data", "msg"],
+        "required": ["code", "data", "msg"],
         "x-apifox-ignore-properties": [],
         "x-apifox-folder": ""
       }

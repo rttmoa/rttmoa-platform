@@ -17,7 +17,11 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
   const { VITE_GLOB_APP_TITLE, VITE_REPORT, VITE_PWA } = viteEnv;
 
   return [
-    react(),
+    // react(),
+    react({
+      // 在所有 *.js 和 *.tsx 文件中使用 React 插件
+      include: "**/*.{js,ts,tsx}"
+    }),
     // esLint error messages are displayed on the browser interface
     checker({ typescript: true }),
     // Create a packaged compression configuration
@@ -38,6 +42,7 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
     // Whether to generate package preview, analyze dependent package size for optimization
     VITE_REPORT && (visualizer({ filename: "stats.html", gzipSize: true, brotliSize: true }) as unknown as PluginOption),
     requireTransform({
+      // .ts文件中使用 require()
       fileRegex: /.ts$/
     })
   ];
