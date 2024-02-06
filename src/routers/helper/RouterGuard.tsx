@@ -3,6 +3,7 @@ import { RootState, useSelector } from "@/redux";
 import { MetaProps } from "@/routers/interface";
 import { useLoaderData, useLocation, useNavigate } from "react-router-dom";
 import { HOME_URL, LOGIN_URL, ROUTER_WHITE_LIST } from "@/config";
+import StorageHandler from "@/utils/common/StorageFn";
 
 interface RouterGuardProps {
   children: React.ReactNode;
@@ -36,6 +37,12 @@ const RouterGuard: React.FC<RouterGuardProps> = props => {
       console.log("当没有token时，访问 / 拦截至登录页 Login");
       return navigate(LOGIN_URL, { replace: true });
     }
+
+    // 无 Cookie 时，拦截至登陆页
+    // const value = new StorageHandler()
+    // if(!value.getCookieToken()) {
+    // 	return navigate(LOGIN_URL, { replace: true });
+    // }
   }, [loader]);
 
   return props.children;

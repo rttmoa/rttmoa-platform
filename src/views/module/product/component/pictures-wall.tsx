@@ -28,7 +28,7 @@ export default function PicturesWall({ images }: any) {
    * 父组件获取此值
    * @returns
    */
-  const getImgs = () => this.state.fileList.map((file: any) => file.name);
+  const getImgs = () => fileList.map((file: any) => file.name);
 
   const handlePreview = (file: any) => {
     setpreviewImage(file.url || file.thumbUrl);

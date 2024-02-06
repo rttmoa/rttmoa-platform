@@ -111,3 +111,4 @@ class StorageHandler {
     this.ss.clear();
   }
 }
+export default StorageHandler;

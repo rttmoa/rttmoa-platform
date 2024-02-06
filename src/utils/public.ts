@@ -50,7 +50,7 @@ export const getEnv = () => {
   }
   return env;
 };
-export const customizeTimer = {
+export const customizeTimer: any = {
   intervalTimer: null,
   timeoutTimer: null,
   setTimeout(cb: () => void, interval: number) {

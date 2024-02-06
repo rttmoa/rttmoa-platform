@@ -26,7 +26,7 @@ export default function RichTextEditor({ detail }: any) {
    */
   const getDetail = () => {
     // 返回输入数据对应的html格式的文本
-    return draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()));
+    return draftToHtml(convertToRaw(editorState.getCurrentContent()));
   };
 
   /**

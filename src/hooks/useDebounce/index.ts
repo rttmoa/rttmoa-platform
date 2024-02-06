@@ -23,9 +23,8 @@ export default function useDebounce(fn: Function, delay: number) {
         clearTimeout(timerRef.current);
       }
       timerRef.current = setTimeout(() => {
-        // eslint-disable-next-line @typescript-eslint/no-this-alias
-        const that = this;
-        fnRef.current.apply(that, args);
+        // const that = this;
+        // fnRef.current.apply(that, args);
       }, delay);
     },
     [delay]
