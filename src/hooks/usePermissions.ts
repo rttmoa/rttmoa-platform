@@ -9,16 +9,22 @@ import { getAuthMenuListApi, getAuthButtonListApi } from "@/api/modules/login";
 const usePermissions = () => {
   const dispatch = useDispatch();
 
+  /**
+   * 传递token获取用户按钮权限、菜单权限
+   * @param {token} 用户 token
+   * @returns {error} 返回Promise错误信息
+   */
   const initPermissions = async (token: string) => {
     if (token) {
       try {
         const { data: buttonList } = await getAuthButtonListApi(); // 用户按钮权限
         const { data: menuList } = await getAuthMenuListApi(); // 用户菜单权限
+        // 获取Cookie、存储Cookie
         dispatch(setAuthButtonList(buttonList));
         dispatch(setAuthMenuList(menuList));
         // console.log(menuList);
 
-        // No menu permission
+        // 无菜单权限
         if (!menuList.length) {
           notification.warning({
             message: "无权限访问",

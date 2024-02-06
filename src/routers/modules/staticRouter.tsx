@@ -24,7 +24,6 @@ export const staticRouter: RouteObjectType[] = [
       title: "登录"
     }
   },
-  // error pages
   {
     path: "/403",
     element: <NotAuth />,
