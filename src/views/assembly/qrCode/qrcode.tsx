@@ -1,4 +1,4 @@
-import { Button, Card, Input, Space } from "antd";
+import { Button, Card, Input, Space, message } from "antd";
 import React, { useState } from "react";
 import QRCode from "qrcode";
 
@@ -7,6 +7,10 @@ const QrCode = () => {
   const [url, setUrl] = useState("");
   const [qr, setQr] = useState("");
   const GenerateQRCode = () => {
+    if (!url) {
+      message.info("输入信息");
+      return;
+    }
     QRCode.toDataURL(
       url,
       {
@@ -37,32 +41,30 @@ const QrCode = () => {
     );
   };
   return (
-    <>
-      <Card>
-        <h2>QR Generator</h2>
-        <Space>
-          <Input
-            placeholder="https://google.com"
-            value={url}
-            onChange={e => {
-              setUrl(e.target.value);
-            }}
-          />
-          <Button onClick={GenerateQRCode}>Generate</Button>
-          <Button onClick={RandomGenerateQRCode}>Random Generate</Button>
-        </Space>
-        <section>
-          {qr && (
-            <Space>
-              <img src={qr} alt="QRCode" width={300} />
-              <Button type="link" href={qr} download={`${+new Date()}.png`}>
-                DownLoad
-              </Button>
-            </Space>
-          )}
-        </section>
-      </Card>
-    </>
+    <div className="w-full min-h-80 bg-white p-6">
+      <h2 className="mb-3 text-base">生成二维码</h2>
+      <Space>
+        <Input
+          placeholder="https://google.com"
+          value={url}
+          onChange={e => {
+            setUrl(e.target.value);
+          }}
+        />
+        <Button onClick={GenerateQRCode}>Generate</Button>
+        <Button onClick={RandomGenerateQRCode}>Random Generate</Button>
+      </Space>
+      <section>
+        {qr && (
+          <Space>
+            <img src={qr} alt="QRCode" width={300} />
+            <Button type="link" href={qr} download={`${+new Date()}.png`}>
+              DownLoad
+            </Button>
+          </Space>
+        )}
+      </section>
+    </div>
   );
 };
 

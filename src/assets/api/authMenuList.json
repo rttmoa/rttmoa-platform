@@ -71,7 +71,7 @@
     },
     {
       "path": "/assembly",
-      "redirect": "/assembly/guide",
+      "redirect": "/assembly/echarts",
       "meta": {
         "key": "assembly",
         "icon": "MedicineBoxOutlined",
@@ -81,20 +81,7 @@
         "isFull": false,
         "isAffix": false
       },
-      "children": [
-        {
-          "path": "/assembly/guide",
-          "element": "/assembly/guide/index",
-          "meta": {
-            "key": "guide",
-            "icon": "AppstoreOutlined",
-            "title": "引导页",
-            "isLink": "",
-            "isHide": false,
-            "isFull": false,
-            "isAffix": false
-          }
-        },
+      "children": [ 
         {
           "path": "/assembly/echarts",
           "element": "/assembly/echarts/index",
@@ -391,20 +378,7 @@
             "isFull": false,
             "isAffix": false
           }
-        },
-        {
-          "path": "/feat/qrcode",
-          "element": "/feat/qrcode/index",
-          "meta": {
-            "key": "qrcode",
-            "icon": "AppstoreOutlined",
-            "title": "QRcode",
-            "isLink": "",
-            "isHide": false,
-            "isFull": false,
-            "isAffix": false
-          }
-        },
+        }, 
         {
           "path": "/feat/prism",
           "element": "/feat/prism/index",
@@ -450,7 +424,7 @@
           "meta": {
             "key": "crypto",
             "icon": "AppstoreOutlined",
-            "title": "Crypto",
+            "title": "加密解密",
             "isLink": "",
             "isHide": false,
             "isFull": false,

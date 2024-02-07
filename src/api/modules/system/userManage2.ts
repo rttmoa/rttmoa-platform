@@ -26,7 +26,20 @@ export const fetchRoleList = (params = {}) => {
   return http.get(PORT1 + `/rolelist`, params);
 };
 
-// 设置用户是否冻结状态
 export const fetchChangeUserStatus = (params = {}) => {
-  return http.get(PORT1 + `/user/updateStatus`, params);
+  return http.get(PORT1 + `/user/changeStatus`, params);
+};
+
+// 弹窗: 修改人员信息
+export const fetchUserDetailUpdate = (params = {}) => {
+  return http.post(PORT1 + `/user/detailUpdate`, params);
+};
+// 弹窗: 新增人员信息
+export const fetchUserAdd = (params = {}) => {
+  return http.post(PORT1 + `/user/add`, params);
+};
+
+// 角色：修改角色信息
+export const fetchUserSetRole = (params = {}) => {
+  return http.post(PORT1 + `/user/set/role`, params);
 };

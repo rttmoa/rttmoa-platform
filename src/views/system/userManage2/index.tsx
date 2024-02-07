@@ -7,17 +7,19 @@ import {
   fetchUserDetail,
   fetchUserList
 } from "@/api/modules/system/userManage2";
-import { Layout, Form, Spin, Button, Input, Popconfirm } from "antd";
+import { Layout, Form, Spin, Button, Input, Popconfirm, Card } from "antd";
 import TreeList from "./treeList";
 import TableList from "./tableList";
 import { message, notification } from "@/hooks/useMessage";
 import AddPolice from "./addPolice";
 import SelectRole from "./selectRole";
+import "./index.less";
 const FormItem = Form.Item;
 const { Content, Sider } = Layout;
 
 const UserManager2: React.FC = () => {
   const [formSearch] = Form.useForm();
+  const [formAddPolice] = Form.useForm();
 
   const [searchtitle, setsearchtitle] = useState("");
   const [PoliceAdd, setPoliceAdd] = useState({
@@ -27,7 +29,7 @@ const UserManager2: React.FC = () => {
   });
   const [currPeopleId, setcurrPeopleId] = useState("");
 
-  const [RoleVisible, setRoleVisible] = useState(false);
+  const [roleModal, setRoleModal] = useState(false);
 
   const [spinloading, setspinloading] = useState(false);
 
@@ -62,8 +64,9 @@ const UserManager2: React.FC = () => {
 
   const GetUserList = (callback: Function) => {
     fetchUserList(searchKey).then((res: any) => {
-      // console.log("获取用户列表数据：", res);
-      setuserListResult({ list: res.data });
+      let data = res.data;
+      data.list.splice(0, data.list.length - 10);
+      setuserListResult({ list: data });
       callback && callback();
     });
   };
@@ -87,18 +90,17 @@ const UserManager2: React.FC = () => {
     GetUserList(() => {});
   }, []);
 
+  // #region 收缩业务代码功能
+
   // 人员角色 （角色弹窗）
   const handleUserRole = (id: string) => {
-    // fetchUserDetail({id}).then((res: any) => {
-    // 	console.log("用户角色信息：", res);
-    // 	setuserDetailResult({list: res.data})
-    // 	setPoliceAdd({
-    // 		PoliceAddVisible: true,
-    // 		moduletype:"edit",
-    // 		moduletitle:"详情",
-    // 	})
-    // 	setcurrPeopleId(id)
-    // })
+    // roleList({id}).then((res) => {})
+    roleList().then((res: any) => {
+      console.log("用户角色信息：", res);
+      setuserRoleSetResult({ list: res.data });
+      setRoleModal(true);
+      setcurrPeopleId(id);
+    });
   };
   // 操作 - 详情
   const handleUserInfo = (id: string) => {
@@ -174,21 +176,22 @@ const UserManager2: React.FC = () => {
       key: "roles",
       width: "20%",
       render: (text: any, record: any, index: any) => {
-        // console.log("角色", text)
+        // console.log("角色", text);
         const roleNames: any[] = [];
-        (text || []).map((item: { roleName: any }) => {
-          roleNames.push(item.roleName);
+        (text || []).map((item: { role_name: any }) => {
+          roleNames.push(item.role_name);
         });
         // return roleNames.length === 0 ? "" : roleNames.join(",");
         let roleN = roleNames.length === 0 ? "" : roleNames.join(",");
         return (
-          <button
+          <Button
+            type="default"
             onClick={() => {
               handleUserRole(record.id);
             }}
           >
             {roleN || "普通用户"}
-          </button>
+          </Button>
         );
       }
     },
@@ -228,6 +231,7 @@ const UserManager2: React.FC = () => {
   ];
   // 点击树节点TreeList
   const treeListOnSelect = (info = [], title: string) => {
+    console.log("onSelect", info, title);
     setspinloading(true);
     setsearchtitle(title);
     setsearchKey((state: any) => {
@@ -246,8 +250,7 @@ const UserManager2: React.FC = () => {
   };
 
   // 输入框搜索内容
-  const handleSearch = (event: any) => {
-    event.preventDefault();
+  const handleSearch = () => {
     const keyword = formSearch.getFieldsValue();
     setspinloading(true);
     setsearchKey((state: any) => {
@@ -325,16 +328,16 @@ const UserManager2: React.FC = () => {
     GetUserList(() => {});
   };
 
-  const handleOkRole = () => {};
-  const handleCancelRole = () => {};
+  // #endregion
+
   return (
     <div className="page page-scrollfix page-usermanage">
       <Layout>
         <Layout className="page-body">
           {/* 左侧 杭州市 + 下城区 + 文一路 */}
-          <Sider width={240} style={{ display: "flex", flexDirection: "column" }}>
+          <Sider width={240}>
             <Spin spinning={spinloading}>
-              <h3 className="page-title">杭州市</h3>
+              <h3 className="page-title">城市</h3>
               {/* --------封装的Tree结构----------- */}
               <div className="treeside">
                 <TreeList trees={userDeptResult.list} curDeptCode={searchKey.deptCode} onSelect={treeListOnSelect} />
@@ -346,33 +349,33 @@ const UserManager2: React.FC = () => {
           <Content>
             <h3 className="page-title">
               {searchtitle}
-              <span className="error"> {userListResult.totalCount ? userListResult.totalCount : 0}</span>人
+              <span className="error"> {userListResult.list.totalCount ? userListResult.list.totalCount : 0}</span>人
             </h3>
             <div className="page-header">
-              <div className="layout-between">
-                <Form className="flexrow" form={formSearch} onFinish={handleSearch}>
-                  <FormItem>
-                    <Input className="input-base-width" placeholder="请输入关键字进行搜索" />
-                  </FormItem>
-                  <Button type="primary" htmlType="submit">
-                    搜索
-                  </Button>
-                </Form>
-              </div>
+              <Form layout="inline" className="flexrow" form={formSearch} onFinish={handleSearch}>
+                <FormItem labelCol={{ span: 6 }}>
+                  <Input className="input-base-width" placeholder="请输入关键字进行搜索" />
+                </FormItem>
+                <Button type="primary" size="middle" htmlType="submit">
+                  搜索
+                </Button>
+              </Form>
             </div>
             <div className="page-content has-pagination table-flex table-scrollfix">
               <TableList
+                size="small"
                 style={{ maxHeight: 800 }}
                 rowKey="id"
                 columns={column}
                 currentPage={searchKey.pageNo}
                 pageSize={searchKey.pageSize}
                 dataSource={userListResult.list.list}
-                loading={userListResult.loading}
+                loading={spinloading}
                 totalCount={userListResult.list.totalCount}
                 // scroll={{ y: true }}
                 onChange={pageChange}
                 onShowSizeChange={pageSizeChange}
+                border
               />
             </div>
             {/* 新增人员 / 同步人员 */}
@@ -399,6 +402,7 @@ const UserManager2: React.FC = () => {
       {/* 允许新增的判断 */}
       {PoliceAdd.PoliceAddVisible ? (
         <AddPolice
+          form={formAddPolice}
           visible={PoliceAdd.PoliceAddVisible}
           type={PoliceAdd.moduletype}
           title={PoliceAdd.moduletitle}
@@ -409,17 +413,23 @@ const UserManager2: React.FC = () => {
           onCancel={() => {
             setPoliceAdd({ PoliceAddVisible: false, moduletype: "", moduletitle: "" });
           }} // 关闭弹窗
-          roleList={userRoleSetResult.list || []}
+          roleList={userRoleSetResult.list.list || []}
         />
       ) : null}
-      {RoleVisible ? (
+      {roleModal ? (
         <SelectRole
-          visible={RoleVisible}
-          handleOkRole={handleOkRole}
+          visible={roleModal}
+          handleOkRole={() => {
+            setRoleModal(false);
+            GetUserList(() => {});
+          }}
           values={userDetailResult}
           currPeopleId={currPeopleId}
-          select={userRoleSetResult.list}
-          onCancel={handleCancelRole}
+          select={userRoleSetResult.list.list}
+          onCancel={() => {
+            message.info("取消成功");
+            setRoleModal(false);
+          }}
         />
       ) : null}
     </div>

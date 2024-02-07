@@ -32,7 +32,7 @@ export default function TableList(props: any) {
   });
 
   const { currentPage, pageSize, totalCount, onShowSizeChange, onChange, columns } = props;
-  console.log(props);
+  // console.log(props);
   const hasMultiHead = columns.filter((one: any) => !!one.children).length > 0;
   return (
     <div className={`table-content ${hasMultiHead ? "clear-overlap-border" : ""}`}>

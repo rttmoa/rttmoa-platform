@@ -1,5 +1,6 @@
 import { Button, Card, Col, Input, Popover, QRCode, QRCodeProps, Row, Segmented, Space, theme } from "antd";
 import React, { useState } from "react";
+import QRcode from "./qrcode";
 import "./index.less";
 
 const { useToken } = theme;
@@ -81,6 +82,9 @@ const QRCodePage: React.FC = () => {
             <img width={100} height={100} src={src} alt="icon" style={{ cursor: "pointer" }} />
           </Popover>
         </Card>
+      </Col>
+      <Col xl={24} lg={24} md={24} sm={24} xs={24}>
+        <QRcode />
       </Col>
     </Row>
   );
