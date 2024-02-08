@@ -34,25 +34,25 @@
 // 	return a;
 // }
 
-// /**
-// * @param  {arr} 数组
-// * @param  {type} 1：从小到大   2：从大到小   3：随机
-// * @return {Array}
-// */
-// function sort (arr: any, type = 1) {
-// 	return arr.sort((a: number, b: number) => {
-// 		switch(type) {
-// 				case 1:
-// 						return a - b;
-// 				case 2:
-// 						return b - a;
-// 				case 3:
-// 						return Math.random() - 0.5;
-// 				default:
-// 						return arr;
-// 		}
-// 	})
-// }
+/**
+ * @param  {arr} 数组排序
+ * @param  {type} type 1：从小到大   2：从大到小   3：随机
+ * @return {Array}
+ */
+function sort(arr: any, type = 1) {
+  return arr.sort((a: number, b: number) => {
+    switch (type) {
+      case 1:
+        return a - b;
+      case 2:
+        return b - a;
+      case 3:
+        return Math.random() - 0.5;
+      default:
+        return arr;
+    }
+  });
+}
 
 // /*去重*/
 // function unique (arr: []) {

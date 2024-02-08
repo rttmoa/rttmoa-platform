@@ -1,11 +1,10 @@
 /**
  * 去除空格
  * @param  {str}
- * @param  {type}
- *       type:  1-所有空格  2-前后空格  3-前空格 4-后空格
+ * @param  {type} type:  1-所有空格  2-前后空格  3-前空格 4-后空格
  * @return {String}
  */
-function trim(str: string, type: number) {
+export function trim(str: string, type: number) {
   type = type || 1;
   switch (type) {
     case 1:
@@ -18,16 +17,19 @@ function trim(str: string, type: number) {
       return str.replace(/(\s*$)/g, "");
     default:
       return str;
+    // trim(" s   ss 123 1   ", 1) // "sss1231"
+    // trim(" s   ss 123 1   ", 2) // "s   ss 123 1"
+    // trim(" s   ss 123 1   ", 3) // "s   ss 123 1   "
+    // trim(" s   ss 123 1   ", 4) // " s   ss 123 1"
   }
 }
 
 /**
  * @param  {str}
- * @param  {type}
- *       type:  1:首字母大写  2：首页母小写  3：大小写转换  4：全部大写  5：全部小写
+ * @param  {type} type:  1:首字母大写  2：首页母小写  3：大小写转换  4：全部大写  5：全部小写
  * @return {String}
  */
-function changeCase(str: string, type: number) {
+export function changeCase(str: string, type: number) {
   type = type || 4;
   switch (type) {
     case 1:
@@ -56,12 +58,17 @@ function changeCase(str: string, type: number) {
     default:
       return str;
   }
+  // changeCase("abcd", 1) // Abcd
+  // changeCase("abcd", 2) // aBCD
+  // changeCase("aBcD", 3) // AbCd
+  // changeCase("aBcD", 4) // ABCD
+  // changeCase("aBcD", 5) // abcd
 }
 
 /*
 	检测密码强度
 */
-function checkPwd(str: any) {
+export function checkPwd(str: any) {
   var Lv = 0;
   if (str.length < 6) {
     return Lv;
@@ -75,17 +82,9 @@ function checkPwd(str: any) {
   if (/[A-Z]/.test(str)) {
     Lv++;
   }
-  // if (/[\.|-|_]/.test(str)) {
-  //   Lv++;
-  // }
+  if (/[.|-|_]/.test(str)) {
+    Lv++;
+  }
   return Lv;
-}
-
-/*过滤html代码(把<>转换)*/
-function filterTag(str: string) {
-  str = str.replace(/&/gi, "&amp;");
-  str = str.replace(/</gi, "&lt;");
-  str = str.replace(/>/gi, "&gt;");
-  str = str.replace(" ", "&nbsp;");
-  return str;
+  // checkPwd("xxAbc123.") // 4
 }

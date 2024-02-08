@@ -1,36 +1,28 @@
-/* eslint-disable prettier/prettier */
 import React from "react";
 import { Card, Descriptions, Tag, Typography } from "antd";
-import "./index.less";
-import Component from "./components";
-const { Link, Title } = Typography;
-const style = { width: "280px" };
+import TestUtil from "./test-util";
 
 const About: React.FC = () => {
   const { pkg, lastBuildTime } = __APP_INFO__;
   const { dependencies, devDependencies, version } = pkg;
 
   return (
-    <div className="about-content">
-      {/* 测试 Hooks */}
-      <Component />
+    <>
+      <TestUtil />
       <Card className="mb10">
-        <Title level={4} className="mb15">
-          关于； Descriptions | pkg
-        </Title>
-        <span className="text">
-          <Link href="https://github.com/rttmoa/rttmoa-platform" target="_blank">
-            rttmoa-platform
-          </Link>
-          ：技术基于 React18、React-Router v6、React-Hooks、Redux-Toolkit、TypeScript、Vite4、Ant-Design5
+        <span className="text-base text-gray-500">
+          <a href="https://github.com/rttmoa/rttmoa-platform" target="_blank">
+            rttmoa-platform：
+          </a>
+          技术基于 react18、react-router6、react-hook、redux-toolkit、typeScript、vite4、antd5
         </span>
       </Card>
 
       <Card className="mb10">
-        <Title level={4} className="mb15">
+        <Typography.Title level={4} className="mb15">
           项目信息
-        </Title>
-        <Descriptions column={2} bordered size="middle" labelStyle={style}>
+        </Typography.Title>
+        <Descriptions column={2} bordered size="middle" labelStyle={{ width: "280px" }}>
           <Descriptions.Item label="版本号">
             <Tag color="processing">{version}</Tag>
           </Descriptions.Item>
@@ -61,10 +53,10 @@ const About: React.FC = () => {
       </Card>
 
       <Card className="mb10">
-        <Title level={4} className="mb15">
+        <Typography.Title level={4} className="mb15">
           生产环境依赖
-        </Title>
-        <Descriptions column={3} bordered size="middle" labelStyle={style}>
+        </Typography.Title>
+        <Descriptions column={3} bordered size="small" labelStyle={{ width: "280px" }}>
           {Object.keys(dependencies).map(key => {
             return (
               <React.Fragment key={key}>
@@ -78,10 +70,10 @@ const About: React.FC = () => {
       </Card>
 
       <Card>
-        <Title level={4} className="mb15">
+        <Typography.Title level={4} className="mb15">
           开发环境依赖
-        </Title>
-        <Descriptions column={3} bordered size="middle" labelStyle={style}>
+        </Typography.Title>
+        <Descriptions column={3} bordered size="small" labelStyle={{ width: "280px" }}>
           {Object.keys(devDependencies).map(key => {
             return (
               <React.Fragment key={key}>
@@ -93,7 +85,7 @@ const About: React.FC = () => {
           })}
         </Descriptions>
       </Card>
-    </div>
+    </>
   );
 };
 

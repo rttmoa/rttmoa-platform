@@ -1,5 +1,5 @@
-/* eslint-disable no-multiple-empty-lines */
-/* eslint-disable prettier/prettier */
+import { changeToChinese } from "@/utils/common/Others";
+import { changeCase, checkPwd, trim } from "@/utils/common/string";
 import React from "react";
 import { useState, useEffect } from "react";
 
@@ -21,17 +21,15 @@ const Component = () => {
   };
 
   const [value, setValue] = useLocalStorage("zs", 33);
-  console.log(value);
+  // console.log(value);
 
   const onChange = () => {
     setValue((value: number) => value + 1);
   };
 
-  return (
-    <div>
-      <button onClick={onChange}>切换按钮</button>
-    </div>
-  );
+  // console.log(checkPwd("xxAbc123."));
+
+  return null;
 };
 
 export default Component;

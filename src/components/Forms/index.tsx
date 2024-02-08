@@ -22,7 +22,11 @@ function formateDate(time: string | number) {
   const data = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
   return `${date.getFullYear()}-${month}-${data}`;
 }
-
+/**
+ * 封装 Form 表格查询条件条件
+ * @param props
+ * @returns
+ */
 export default function MultiForm(props: any) {
   const { filterSubmit, multiForm } = props;
 

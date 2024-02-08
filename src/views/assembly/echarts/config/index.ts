@@ -691,7 +691,7 @@ export const option9Fn = (): any => {
       text: "Vehicles"
     },
     legend: {
-      data: ["2015", "2016"]
+      data: ["2021", "2022"]
     },
     tooltip: {
       trigger: "axis",
@@ -727,7 +727,7 @@ export const option9Fn = (): any => {
     },
     series: [
       {
-        name: "2015",
+        name: "2021",
         type: "pictorialBar",
         label: labelSetting,
         symbolRepeat: true,
@@ -757,7 +757,7 @@ export const option9Fn = (): any => {
         ]
       },
       {
-        name: "2016",
+        name: "2022",
         type: "pictorialBar",
         barGap: "10%",
         label: labelSetting,

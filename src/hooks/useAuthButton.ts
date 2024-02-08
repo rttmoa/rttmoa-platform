@@ -24,7 +24,6 @@ const useAuthButton = () => {
   //     ]
   // }
   const meta = getMenuByPath()?.meta ?? {};
-  // console.log(meta);
 
   let currentPageAuthButton: { [key: string]: boolean } = {};
 

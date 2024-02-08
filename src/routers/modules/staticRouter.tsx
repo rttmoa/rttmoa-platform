@@ -9,9 +9,8 @@ import NotNetwork from "@/components/Error/500";
 import RouterGuard from "../helper/RouterGuard";
 
 /**
- * ! staticRouter; 全屏组件
+ * @description 静态路由：首页、登陆、403页面、404页面、500页面、*
  */
-// 首页、登陆、403页面、404页面、500页面
 export const staticRouter: RouteObjectType[] = [
   {
     path: "/",
@@ -52,9 +51,7 @@ export const staticRouter: RouteObjectType[] = [
   }
 ];
 
-// ! 重新处理静态router；用高阶组件包装每个元素
 export const wrappedStaticRouter = staticRouter.map(route => {
-  // console.log(route);
   return {
     ...route,
     element: <RouterGuard>{route.element}</RouterGuard>,

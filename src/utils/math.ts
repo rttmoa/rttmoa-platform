@@ -1,4 +1,3 @@
-// import math from '@/utils/math'
 // import math from "mathjs";
 const math = require("mathjs");
 
