@@ -3,7 +3,7 @@ import { Layout } from "antd";
 import ToolBarRight from "@/layouts/components/Header/ToolBarRight";
 import LayoutMenu from "@/layouts/components//Menu";
 import LayoutMain from "@/layouts/components/Main";
-import logo from "@/assets/images/logo.svg";
+import logo from "@/assets/images/rttmoa-128x128.png";
 import "./index.less";
 
 const { Header } = Layout;

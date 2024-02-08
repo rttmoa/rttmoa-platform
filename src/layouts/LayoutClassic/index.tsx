@@ -9,7 +9,7 @@ import ToolBarRight from "@/layouts/components/Header/ToolBarRight";
 import LayoutMenu from "@/layouts/components//Menu";
 import LayoutMain from "@/layouts/components/Main";
 import CollapseIcon from "../components/Header/components/CollapseIcon";
-import logo from "@/assets/images/logo.svg";
+import logo from "@/assets/images/rttmoa-128x128.png";
 import "./index.less"; // todo 经典布局LESS
 
 const { Header, Sider } = Layout;

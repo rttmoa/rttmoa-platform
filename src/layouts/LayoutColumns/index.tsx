@@ -8,7 +8,7 @@ import ToolBarLeft from "@/layouts/components/Header/ToolBarLeft";
 import ToolBarRight from "@/layouts/components/Header/ToolBarRight";
 import LayoutMenu from "@/layouts/components//Menu";
 import LayoutMain from "@/layouts/components/Main";
-import logo from "@/assets/images/logo.svg";
+import logo from "@/assets/images/rttmoa-128x128.png";
 import "./index.less"; // todo 分栏布局 LESS
 
 const { Header, Sider } = Layout;

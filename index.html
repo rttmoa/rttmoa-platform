@@ -1,16 +1,17 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- <link rel="icon" type="image/svg+xml" href="/react.svg" /> -->
-    
-    <link rel="icon" type="image/svg+xml" href="/Pro-128x128.png" />
+    <link rel="icon" type="image/svg+xml" href="/rttmoa.svg" />
+    <!-- logo design -->
+    <!-- 图片转换：https://products.aspose.app/pdf/zh/conversion/png-to-svg -->
+    <!-- <link rel="icon" type="image/svg+xml" href="/Pro-128x128.png" /> -->
     <link rel="stylesheet" type="text/css" href="./index.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%- title %></title>
   </head>
   <body>
-    <!-- ! 动画参考；https://www.cnblogs.com/lhb25/p/loading-spinners-animated-with-css3.html -->
+    <!-- 动画参考；https://www.cnblogs.com/lhb25/p/loading-spinners-animated-with-css3.html -->
     <!-- https://www.cnblogs.com/nangras/p/14838276.html -->
     <!-- <div id="root"> 
       <div class="loading-box">
@@ -31,7 +32,7 @@
     </div>
 
     <!-- TODO 读取本地redux持久化数据内容 -->
-    <script> 
+    <script>
       const reduxState = JSON.parse(window.localStorage.getItem("persist:redux-state"));
       if (reduxState) {
         const globalState = JSON.parse(reduxState.global);

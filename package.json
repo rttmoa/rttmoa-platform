@@ -43,15 +43,14 @@
     "predeploy": "npm run build:production",
     "deploy": "gh-pages -d dist",
     "release": "standard-version",
-    "release:minor": "standard-version --release-as minor",
     "release:patch": "standard-version --release-as patch",
+    "release:minor": "standard-version --release-as minor",
     "release:major": "standard-version --release-as major",
     "push:tags": "git push --follow-tags origin pre-gh-pages",
     "commit": "git add -A && czg && git push",
-    "commitCz": "git status && git add -A && git-cz",
     "clean:lock": "rimraf package-lock.json yarn.lock pnpm-lock.yaml",
-    "clean:dist": "rm -rf ./dist",
-    "clean:modules": "rm -rf node_modules"
+    "clean:dist": "rimraf ./dist",
+    "clean:modules": "rimraf node_modules"
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.5",
