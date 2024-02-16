@@ -5,173 +5,173 @@
 @space-base: 8px;
 @blue: #5a8def; //蓝色
 .flexcolumn {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
+	display: flex;
+	flex: 1;
+	flex-direction: column;
 }
 
 // start
 .page-usermanage {
-  .page-body {
-    border: @border-split;
-    flex-direction: row;
-    height: calc(100vh - 55px - 40px - 30px - 20px);
-  }
-  .page-body-main {
-    .flexcolumn;
-  }
-  .ant-layout-content {
-    .flexcolumn;
+	.page-body {
+		border: @border-split;
+		flex-direction: row;
+		height: calc(100vh - 55px - 40px - 30px - 20px);
+	}
+	.page-body-main {
+		.flexcolumn;
+	}
+	.ant-layout-content {
+		.flexcolumn;
 
-    background-color: #ffffff;
-    padding: 0;
-    .page-content,
-    .ant-pagination {
-      padding-bottom: @space-big * 2;
-      right: @space-big * 2;
-    }
-    // Table 表格
-    .page-content {
-      flex: auto;
-      padding: 16px;
-      .table-content {
-        margin-top: 0;
-        // max-height: 800px;
-        // Table 单元格
-        .ant-table-cell {
-          background-color: #f6f8fc;
-          color: #666666;
-          text-align: center;
-          border: 1px solid #f1f2f3;
-          span {
-            a {
-              color: #4da9ec;
-            }
-            .ant-divider {
-              width: 0;
-              border-right: 1px solid #c8ced6;
-              margin: 0 4px;
-            }
-          }
-        }
-      }
-      .ant-pagination {
-        position: fixed;
-        right: 30px;
-        bottom: 25px;
-      }
-    }
-    .page-footer {
-      display: flex;
-      align-items: center;
-      height: 55px;
-      padding: 5px 15px;
-      border-top: 1px solid #dfe4ea;
-    }
-  }
-  .page-title {
-    height: 34px;
-    line-height: 34px;
-    color: #333333;
-    padding: 0 16px;
-    font-size: 12px;
-    font-weight: 700;
-    border-bottom: @border-split;
-  }
-  .page-header {
-    flex: initial;
-    margin: 15px 16px;
-  }
-  .ant-layout-sider-children {
-    .flexcolumn;
+		background-color: #ffffff;
+		padding: 0;
+		.page-content,
+		.ant-pagination {
+			padding-bottom: @space-big * 2;
+			right: @space-big * 2;
+		}
+		// Table 表格
+		.page-content {
+			flex: auto;
+			padding: 16px;
+			.table-content {
+				margin-top: 0;
+				// max-height: 800px;
+				// Table 单元格
+				.ant-table-cell {
+					background-color: #f6f8fc;
+					color: #666666;
+					text-align: center;
+					border: 1px solid #f1f2f3;
+					span {
+						a {
+							color: #4da9ec;
+						}
+						.ant-divider {
+							width: 0;
+							border-right: 1px solid #c8ced6;
+							margin: 0 4px;
+						}
+					}
+				}
+			}
+			.ant-pagination {
+				position: fixed;
+				right: 30px;
+				bottom: 25px;
+			}
+		}
+		.page-footer {
+			display: flex;
+			align-items: center;
+			height: 55px;
+			padding: 5px 15px;
+			border-top: 1px solid #dfe4ea;
+		}
+	}
+	.page-title {
+		height: 34px;
+		line-height: 34px;
+		color: black;
+		padding: 0 16px;
+		font-size: 14px;
+		font-weight: 700;
+		border-bottom: @border-split;
+	}
+	.page-header {
+		flex: initial;
+		margin: 15px 16px;
+	}
+	.ant-layout-sider-children {
+		.flexcolumn;
 
-    height: 100%;
-    .ant-spin-nested-loading {
-      .flexcolumn;
-      .ant-spin-container {
-        .flexcolumn;
-        .page-title {
-          border-right: @border-split;
-        }
-        .treeside {
-          .flexcolumn;
+		height: 100%;
+		.ant-spin-nested-loading {
+			.flexcolumn;
+			.ant-spin-container {
+				.flexcolumn;
+				.page-title {
+					border-right: @border-split;
+				}
+				.treeside {
+					.flexcolumn;
 
-          margin-bottom: 0;
-          background: @component-background;
-          border-right: @border-split;
-          padding: @space-big;
-          overflow: auto;
-          > div {
-            .flexcolumn;
-          }
-          .ant-tree-switcher-noop {
-            display: none;
-          }
-          .ant-tree {
-            max-width: 190px;
-            li {
-              margin: 0;
-              position: relative;
-              padding: 1px 0;
-              .ant-tree-node-content-wrapper {
-                width: 100%;
-                padding: 7.5px 5px;
-                margin-left: 2px;
-                font-size: 13px;
-                color: #4a4a4a;
-                &:hover {
-                  background-color: rgb(90 141 239 / 12%);
-                  .right-icon {
-                    display: block;
-                  }
-                }
-              }
-              .ant-tree-child-tree {
-                position: relative;
-              }
-              .ant-tree-child-tree li::after {
-                content: "";
-                position: absolute;
-                left: -13px;
-                top: -18px;
-                bottom: 17px;
-                border-left: 1px solid @border-color-split;
-              }
-              .ant-tree-child-tree li::before {
-                content: "";
-                position: absolute;
-                left: -12px;
-                top: 18px;
-                width: 12px;
-                border-top: 1px solid @border-color-split;
-              }
-              .ant-tree-switcher.ant-tree-switcher_close,
-              .ant-tree-switcher.ant-tree-switcher_open {
-                cursor: pointer;
-                display: inline-block;
-                width: 12px;
-                height: 12px;
-                text-align: center;
-                background: #ffffff;
-                z-index: 9;
-                position: relative;
-              }
-            }
-            .right-icon {
-              float: right;
-              margin-right: 20px;
-              display: none;
-              i {
-                margin-left: @space-base;
-                color: @blue;
-                &:hover {
-                  color: @blue;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+					margin-bottom: 0;
+					background: @component-background;
+					border-right: @border-split;
+					padding: @space-big;
+					overflow: auto;
+					> div {
+						.flexcolumn;
+					}
+					.ant-tree-switcher-noop {
+						display: none;
+					}
+					.ant-tree {
+						max-width: 190px;
+						li {
+							margin: 0;
+							position: relative;
+							padding: 1px 0;
+							.ant-tree-node-content-wrapper {
+								width: 100%;
+								padding: 7.5px 5px;
+								margin-left: 2px;
+								font-size: 13px;
+								color: #4a4a4a;
+								&:hover {
+									background-color: rgb(90 141 239 / 12%);
+									.right-icon {
+										display: block;
+									}
+								}
+							}
+							.ant-tree-child-tree {
+								position: relative;
+							}
+							.ant-tree-child-tree li::after {
+								content: "";
+								position: absolute;
+								left: -13px;
+								top: -18px;
+								bottom: 17px;
+								border-left: 1px solid @border-color-split;
+							}
+							.ant-tree-child-tree li::before {
+								content: "";
+								position: absolute;
+								left: -12px;
+								top: 18px;
+								width: 12px;
+								border-top: 1px solid @border-color-split;
+							}
+							.ant-tree-switcher.ant-tree-switcher_close,
+							.ant-tree-switcher.ant-tree-switcher_open {
+								cursor: pointer;
+								display: inline-block;
+								width: 12px;
+								height: 12px;
+								text-align: center;
+								background: #ffffff;
+								z-index: 9;
+								position: relative;
+							}
+						}
+						.right-icon {
+							float: right;
+							margin-right: 20px;
+							display: none;
+							i {
+								margin-left: @space-base;
+								color: @blue;
+								&:hover {
+									color: @blue;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }

@@ -1,79 +1,61 @@
-import React, { useEffect, useState } from "react";
-import { Editor, EditorState, RawDraftContentState } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import "./index.less";
+import "@wangeditor/editor/dist/css/style.css"; // 引入 css
 
-export default function Draft({ callback }: any) {
-  const [editorContent, setEditorContent] = useState<any>("");
-  const [contentState, setContentState] = useState(null);
-  const [editorState, setEditorState] = useState<any>("");
-  useEffect(() => {
-    return () => {
-      setEditorContent("");
-      setContentState(null);
-      setEditorState("");
-    };
-  }, []);
-  useEffect(() => {}, [editorState]);
+import React, { useState, useEffect } from "react";
+import { Editor, Toolbar } from "@wangeditor/editor-for-react";
+import { IDomEditor, IEditorConfig, IToolbarConfig } from "@wangeditor/editor";
 
-  const onEditorStateChange = (editorState: EditorState) => {
-    setEditorState(editorState);
-  };
-  const imageUploadCallBack = (file: unknown) => {
-    return new Promise((reslove, reject) => {
-      console.log(file);
-      setTimeout(() => {
-        reslove(file);
-      }, 1000);
-    });
-  };
-  const onEditorChange = (editorParams: RawDraftContentState) => {
-    setEditorContent(editorParams);
-    callback && callback({ content: editorContent });
-  };
-  return (
-    <div id="draft">
-      <Editor
-        editorState={editorState}
-        toolbarClassName="draft-toolbar"
-        wrapperClassName="draft-wrapper"
-        editorClassName="draft-editor"
-        onEditorStateChange={onEditorStateChange}
-        toolbar={{
-          history: { inDropdown: true },
-          list: { inDropdown: true },
-          textAlign: { inDropdown: true },
-          image: { uploadCallback: imageUploadCallBack }
-        }}
-        onContentStateChange={onEditorChange}
-        placeholder="@某人哦！"
-        spellCheck
-        onFocus={() => {
-          console.log("focus");
-        }}
-        onBlur={() => {
-          console.log("blur");
-        }}
-        onTab={() => {
-          console.log("tab");
-          return true;
-        }}
-        localization={{ locale: "zh", translations: { "generic.add": "Add" } }}
-        mention={{
-          separator: " ",
-          trigger: "@",
-          caseSensitive: true,
-          suggestions: [
-            { text: "A", value: "AB", url: "href-a" },
-            { text: "AB", value: "ABC", url: "href-ab" },
-            { text: "ABC", value: "ABCD", url: "href-abc" },
-            { text: "ABCD", value: "ABCDDDD", url: "href-abcd" },
-            { text: "ABCDE", value: "ABCDE", url: "href-abcde" },
-            { text: "ABCDEF", value: "ABCDEF", url: "href-abcdef" },
-            { text: "ABCDEFG", value: "ABCDEFG", url: "href-abcdefg" }
-          ]
-        }}
-      />
-    </div>
-  );
+/**
+ * 富文本编辑器
+ * 配置：https://www.wangeditor.com/v5/
+ * @returns
+ */
+function MyEditor() {
+	// editor 实例
+	const [editor, setEditor] = useState<IDomEditor | null>(null);
+
+	// 编辑器内容
+	const [html, setHtml] = useState("<p>hello</p>");
+
+	// 模拟 ajax 请求，异步设置 html
+	useEffect(() => {
+		setTimeout(() => {
+			setHtml("<p>hello world</p>");
+		}, 1500);
+	}, []);
+
+	// 工具栏配置
+	const toolbarConfig: Partial<IToolbarConfig> = {};
+
+	// 编辑器配置
+	const editorConfig: Partial<IEditorConfig> = {
+		placeholder: "请输入内容..."
+	};
+
+	// 及时销毁 editor ，重要！
+	useEffect(() => {
+		return () => {
+			if (editor == null) return;
+			editor.destroy();
+			setEditor(null);
+		};
+	}, [editor]);
+
+	return (
+		<>
+			<div style={{ border: "1px solid #ccc", zIndex: 100 }}>
+				<Toolbar editor={editor} defaultConfig={toolbarConfig} mode="default" style={{ borderBottom: "1px solid #ccc" }} />
+				<Editor
+					defaultConfig={editorConfig}
+					value={html}
+					onCreated={setEditor}
+					onChange={editor => setHtml(editor.getHtml())}
+					mode="default"
+					style={{ height: "500px", overflowY: "hidden" }}
+				/>
+			</div>
+			<pre>{html}</pre>
+		</>
+	);
 }
+
+export default MyEditor;

@@ -3,33 +3,33 @@ import { Card, Descriptions, Tag, Typography } from "antd";
 import TestUtil from "./test-util";
 
 const About: React.FC = () => {
-  const { pkg, lastBuildTime } = __APP_INFO__;
-  const { dependencies, devDependencies, version } = pkg;
+	const { pkg, lastBuildTime } = __APP_INFO__;
+	const { dependencies, devDependencies, version } = pkg;
 
-  return (
-    <>
-      <TestUtil />
-      <Card className="mb10">
-        <span className="text-base text-gray-500">
-          <a href="https://github.com/rttmoa/rttmoa-platform" target="_blank">
-            rttmoa-platform：
-          </a>
-          技术基于 react18、react-router6、react-hook、redux-toolkit、typeScript、vite4、antd5
-        </span>
-      </Card>
+	return (
+		<>
+			<TestUtil />
+			<Card className="mb10">
+				<span className="text-base text-gray-500">
+					<a href="https://github.com/rttmoa/rttmoa-platform" target="_blank">
+						rttmoa-platform：
+					</a>
+					技术基于 react18、react-router6、react-hook、redux-toolkit、typeScript、vite4、antd5
+				</span>
+			</Card>
 
-      <Card className="mb10">
-        <Typography.Title level={4} className="mb15">
-          项目信息
-        </Typography.Title>
-        <Descriptions column={2} bordered size="middle" labelStyle={{ width: "280px" }}>
-          <Descriptions.Item label="版本号">
-            <Tag color="processing">{version}</Tag>
-          </Descriptions.Item>
-          <Descriptions.Item label="发布时间">
-            <Tag color="processing">{lastBuildTime}</Tag>
-          </Descriptions.Item>
-          {/* <Descriptions.Item label="Gitee">
+			<Card className="mb10">
+				<Typography.Title level={4} className="mb15">
+					项目信息
+				</Typography.Title>
+				<Descriptions column={2} bordered size="middle" labelStyle={{ width: "280px" }}>
+					<Descriptions.Item label="版本号">
+						<Tag color="processing">{version}</Tag>
+					</Descriptions.Item>
+					<Descriptions.Item label="发布时间">
+						<Tag color="processing">{lastBuildTime}</Tag>
+					</Descriptions.Item>
+					{/* <Descriptions.Item label="Gitee">
             <Link href="" target="_blank">
               Gitee
             </Link>
@@ -49,44 +49,44 @@ const About: React.FC = () => {
               预览地址
             </Link>
           </Descriptions.Item> */}
-        </Descriptions>
-      </Card>
+				</Descriptions>
+			</Card>
 
-      <Card className="mb10">
-        <Typography.Title level={4} className="mb15">
-          生产环境依赖
-        </Typography.Title>
-        <Descriptions column={3} bordered size="small" labelStyle={{ width: "280px" }}>
-          {Object.keys(dependencies).map(key => {
-            return (
-              <React.Fragment key={key}>
-                <Descriptions.Item label={key}>
-                  <Tag color="default">{dependencies[key]} </Tag>
-                </Descriptions.Item>
-              </React.Fragment>
-            );
-          })}
-        </Descriptions>
-      </Card>
+			<Card className="mb10">
+				<Typography.Title level={4} className="mb15">
+					生产环境依赖
+				</Typography.Title>
+				<Descriptions column={3} bordered size="small" labelStyle={{ width: "280px" }}>
+					{Object.keys(dependencies).map(key => {
+						return (
+							<React.Fragment key={key}>
+								<Descriptions.Item label={key}>
+									<Tag color="default">{dependencies[key]} </Tag>
+								</Descriptions.Item>
+							</React.Fragment>
+						);
+					})}
+				</Descriptions>
+			</Card>
 
-      <Card>
-        <Typography.Title level={4} className="mb15">
-          开发环境依赖
-        </Typography.Title>
-        <Descriptions column={3} bordered size="small" labelStyle={{ width: "280px" }}>
-          {Object.keys(devDependencies).map(key => {
-            return (
-              <React.Fragment key={key}>
-                <Descriptions.Item label={key}>
-                  <Tag color="default">{devDependencies[key]} </Tag>
-                </Descriptions.Item>
-              </React.Fragment>
-            );
-          })}
-        </Descriptions>
-      </Card>
-    </>
-  );
+			<Card>
+				<Typography.Title level={4} className="mb15">
+					开发环境依赖
+				</Typography.Title>
+				<Descriptions column={3} bordered size="small" labelStyle={{ width: "280px" }}>
+					{Object.keys(devDependencies).map(key => {
+						return (
+							<React.Fragment key={key}>
+								<Descriptions.Item label={key}>
+									<Tag color="default">{devDependencies[key]} </Tag>
+								</Descriptions.Item>
+							</React.Fragment>
+						);
+					})}
+				</Descriptions>
+			</Card>
+		</>
+	);
 };
 
 export default About;

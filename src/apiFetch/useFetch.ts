@@ -1,47 +1,44 @@
 /**
  * Fetch Hooks
- * url： api endpoint
- * opts: 参见 fetch.ts
  */
 import { useCallback, useEffect, useState } from "react";
-// import reqFetch
-const reqFetch = (url: string, opt: any) => Promise;
+import { reqFetch } from ".";
 
 export const useReqFetch = (url: string, opts: any) => {
-  const [res, setRes] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<boolean>(false);
+	const [res, setRes] = useState<any>(null);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<boolean>(false);
 
-  const asyncFetch = async (canceled: boolean, controller: any) => {
-    try {
-      if (loading) return;
-      setLoading(true);
-      const resDate = await reqFetch(url, { ...opts, controller });
-      if (!canceled) {
-        setRes(resDate);
-      }
-    } catch (error) {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  };
+	const asyncFetch = async (canceled: boolean, controller: any) => {
+		try {
+			if (loading) return;
+			setLoading(true);
+			const resDate = await reqFetch(url, { ...opts, controller });
+			if (!canceled) {
+				setRes(resDate);
+			}
+		} catch (error) {
+			setError(true);
+		} finally {
+			setLoading(false);
+		}
+	};
 
-  const reFetch = useCallback(() => {
-    let canceled = false;
-    let controller = new AbortController();
-    asyncFetch(canceled, controller);
+	const reFetch = useCallback(() => {
+		let canceled = false;
+		let controller = new AbortController();
+		asyncFetch(canceled, controller);
 
-    return () => {
-      setRes(() => {});
-      canceled = true;
-      controller.abort();
-    };
-  }, [url, opts]);
+		return () => {
+			setRes(() => {});
+			canceled = true;
+			controller.abort();
+		};
+	}, [url, opts]);
 
-  useEffect(reFetch, []);
+	useEffect(reFetch, []);
 
-  return [res, loading, error];
+	return [res, loading, error];
 };
 
 // GET 请求时，将payload对象解析成地址栏请求参数

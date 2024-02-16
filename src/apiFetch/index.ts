@@ -9,20 +9,4 @@
 import { reqFetch, getFetch, postFetch, putFetch, deleteFetch, patchFetch } from "./fetch";
 import { useReqFetch, usePostFetch, useGetFetch, usePutFetch, useDeleteFetch, usePatchFetch } from "./useFetch";
 
-export {
-  // useFetchjs (fetch Hooks)
-  useReqFetch,
-  usePostFetch,
-  useGetFetch,
-  usePutFetch,
-  useDeleteFetch,
-  usePatchFetch,
-
-  // fetchjs
-  reqFetch,
-  getFetch,
-  postFetch,
-  putFetch,
-  deleteFetch,
-  patchFetch
-};
+export { useReqFetch, usePostFetch, useGetFetch, usePutFetch, useDeleteFetch, usePatchFetch, reqFetch, getFetch, postFetch, putFetch, deleteFetch, patchFetch };

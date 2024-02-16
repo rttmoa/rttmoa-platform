@@ -2,11 +2,11 @@
 
 module.exports = {
   // 指定最大换行长度
-  printWidth: 130,
+  printWidth: 160,
   // 制表符宽度（以制表符或空格表示）
-  tabWidth: 2,
-  // 使用制表符进行缩进 (true: tabs, false: spaces)
-  useTabs: false,
+  tabWidth: 4,
+  // 使用 tab 进行缩进 (true: tabs, false: spaces)
+  useTabs: true,
   // 在语句末尾使用分号 (true: yes, false: no)
   semi: true,
   // 对字符串使用单引号 (true: single quotes, false: double quotes)
@@ -20,7 +20,8 @@ module.exports = {
   // 在对象文字和数组中的大括号之间添加空格 "{ foo: bar }" (true: yes, false: no)
   bracketSpacing: true,
   // todo 将 > 的 JSX 元素放在最后一行的末尾而不是新行上 (true: 最后一行的末尾, false: 在新行上)
-  bracketSameLine: false,
+  bracketSameLine: true,
+	jsxBracketSameLine: true, // jsx尖括号不换行
   // 在唯一的箭头函数参数周围包含括号 (avoid: omit parentheses, always: include parentheses)
   arrowParens: "avoid",
   // 指定要使用的解析器，无需在文件开头包含 @prettier
@@ -35,5 +36,5 @@ module.exports = {
   endOfLine: "auto",
   // 这两个选项可用于格式化以给定字符偏移量开始和结束的代码 (rangeStart: start, rangeEnd: end)
   rangeStart: 0,
-  rangeEnd: Infinity
+  rangeEnd: Infinity, 
 };
