@@ -1,0 +1,8 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><link rel="icon" type="image/svg+xml" href="/rttmoa.svg"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>rttmoa</title><script type="module" crossorigin src="/assets/js/index-a865b264.js"></script><link rel="stylesheet" href="/assets/css/index-cd54f8d2.css"><link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head><body><div id="root"><div class="spinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div></div><script>const reduxState = JSON.parse(window.localStorage.getItem("persist:redux-state"));
+      if (reduxState) {
+        const globalState = JSON.parse(reduxState.global);
+        const dot = document.querySelectorAll(".dot i");
+        const html = document.querySelector("html");
+        dot.forEach(item => (item.style.background = globalState.primary));
+        if (globalState.isDark) html.style.background = "#141414";
+      }</script></body></html>

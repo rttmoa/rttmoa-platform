@@ -1,0 +1,2 @@
+import{j as r,a as e,C as t}from"./index-a865b264.js";import i from"./index-7fabf8d3.js";import{C as s}from"./index-032fce13.js";import"./Skeleton-6487b1eb.js";function x(){return r.jsx("div",{children:r.jsx(s,{children:r.jsxs(e,{gutter:16,children:[r.jsx(t,{span:24,children:r.jsx(s,{children:r.jsx(i,{})})}),r.jsx(t,{span:12,children:r.jsx(s,{title:"同步转换Markdown",bordered:!0})}),r.jsx(t,{span:12,children:r.jsx(s,{title:"同步转换Html",bordered:!0})})]})})})}export{x as default};
+//# sourceMappingURL=index-68a641a4.js.map
