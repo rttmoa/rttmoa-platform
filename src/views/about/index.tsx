@@ -2,7 +2,13 @@ import React from "react";
 import { Card, Descriptions, Tag, Typography } from "antd";
 import TestUtil from "./test-util";
 
+// export default function About () {
+// 	return
+// }
+
 const About: React.FC = () => {
+	// return null
+
 	const { pkg, lastBuildTime } = __APP_INFO__;
 	const { dependencies, devDependencies, version } = pkg;
 
@@ -88,5 +94,4 @@ const About: React.FC = () => {
 		</>
 	);
 };
-
 export default About;

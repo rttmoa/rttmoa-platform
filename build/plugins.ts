@@ -8,73 +8,92 @@ import react from "@vitejs/plugin-react";
 import checker from "vite-plugin-checker";
 import viteCompression from "vite-plugin-compression";
 import requireTransform from "vite-plugin-require-transform";
+const path = require("path");
+const fs = require("fs");
 
 /**
  * Create vite plugin
  * @param viteEnv
  */
 export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOption[])[] => {
-  const { VITE_GLOB_APP_TITLE, VITE_REPORT, VITE_PWA } = viteEnv;
+	const { VITE_GLOB_APP_TITLE, VITE_REPORT, VITE_PWA } = viteEnv;
 
-  return [
-    // react(),
-    react({
-      // 在所有 *.js 和 *.tsx 文件中使用 React 插件
-      include: "**/*.{js,ts,tsx}"
-    }),
-    // ESLint 错误消息显示在浏览器界面上
-    checker({ typescript: true }),
-    // 创建打包压缩配置
-    createCompression(viteEnv),
-    // 将变量注入到 html 文件中
-    createHtmlPlugin({
-      inject: {
-        data: { title: VITE_GLOB_APP_TITLE }
-      }
-    }),
-    // 创建 svg 图标
-    createSvgIconsPlugin({
-      iconDirs: [resolve(process.cwd(), "src/assets/icons")],
-      symbolId: "icon-[dir]-[name]"
-    }),
-    // vitePWA
-    VITE_PWA && createVitePwa(viteEnv),
-    // 是否生成包预览，分析依赖包大小进行优化
-    VITE_REPORT && (visualizer({ filename: "stats.html", gzipSize: true, brotliSize: true }) as unknown as PluginOption),
-    requireTransform({
-      // .ts文件中使用 commonjs require()
-      fileRegex: /.ts$/
-    })
-  ];
+	return [
+		// react(),
+		react({
+			// 在所有 *.js 和 *.tsx 文件中使用 React 插件
+			include: "**/*.{js,ts,tsx}"
+		}),
+		// ESLint 错误消息显示在浏览器界面上
+		checker({ typescript: true }),
+		// 创建打包压缩配置
+		createCompression(viteEnv),
+		// 将变量注入到 html 文件中
+		createHtmlPlugin({
+			inject: {
+				data: { title: VITE_GLOB_APP_TITLE }
+			}
+		}),
+		// 创建 svg 图标
+		createSvgIconsPlugin({
+			iconDirs: [resolve(process.cwd(), "src/assets/icons")],
+			symbolId: "icon-[dir]-[name]"
+		}),
+		// vitePWA
+		VITE_PWA && createVitePwa(viteEnv),
+		// 是否生成包预览，分析依赖包大小进行优化
+		VITE_REPORT && (visualizer({ filename: "stats.html", gzipSize: true, brotliSize: true }) as unknown as PluginOption),
+		requireTransform({
+			// .ts文件中使用 commonjs require()
+			fileRegex: /.ts$/
+		})
+		// reactVirtualized()
+	];
 };
+
+// FIXME: react-virtualized: vite构建阶段react-virtualized报错
+const WRONG_CODE = `import { bpfrpt_proptype_WindowScroller } from "../WindowScroller.js";`;
+export function reactVirtualized() {
+	return {
+		name: "my:react-virtualized",
+		configResolved() {
+			const file = path
+				.resolve("react-virtualized")
+				.replace(path.join("dist", "commonjs", "index.js"), path.join("dist", "es", "WindowScroller", "utils", "onScroll.js"));
+			const code = fs.readFileSync(file, "utf-8");
+			const modified = code.replace(WRONG_CODE, "");
+			fs.writeFileSync(file, modified);
+		}
+	};
+}
 
 /**
  * 根据压缩配置生成不同的压缩规则
  * @param viteEnv
  */
 const createCompression = (viteEnv: ViteEnv): PluginOption | PluginOption[] => {
-  const { VITE_BUILD_COMPRESS = "none", VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE } = viteEnv;
-  const compressList = VITE_BUILD_COMPRESS.split(",");
-  const plugins: PluginOption[] = [];
-  if (compressList.includes("gzip")) {
-    plugins.push(
-      viteCompression({
-        ext: ".gz",
-        algorithm: "gzip",
-        deleteOriginFile: VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE
-      })
-    );
-  }
-  if (compressList.includes("brotli")) {
-    plugins.push(
-      viteCompression({
-        ext: ".br",
-        algorithm: "brotliCompress",
-        deleteOriginFile: VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE
-      })
-    );
-  }
-  return plugins;
+	const { VITE_BUILD_COMPRESS = "none", VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE } = viteEnv;
+	const compressList = VITE_BUILD_COMPRESS.split(",");
+	const plugins: PluginOption[] = [];
+	if (compressList.includes("gzip")) {
+		plugins.push(
+			viteCompression({
+				ext: ".gz",
+				algorithm: "gzip",
+				deleteOriginFile: VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE
+			})
+		);
+	}
+	if (compressList.includes("brotli")) {
+		plugins.push(
+			viteCompression({
+				ext: ".br",
+				algorithm: "brotliCompress",
+				deleteOriginFile: VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE
+			})
+		);
+	}
+	return plugins;
 };
 
 /**
@@ -82,31 +101,31 @@ const createCompression = (viteEnv: ViteEnv): PluginOption | PluginOption[] => {
  * @param viteEnv
  */
 const createVitePwa = (viteEnv: ViteEnv): PluginOption | PluginOption[] => {
-  const { VITE_GLOB_APP_TITLE } = viteEnv;
-  return VitePWA({
-    registerType: "autoUpdate",
-    manifest: {
-      name: VITE_GLOB_APP_TITLE,
-      short_name: VITE_GLOB_APP_TITLE,
-      theme_color: "#ffffff",
-      icons: [
-        {
-          src: "/logo.png",
-          sizes: "192x192",
-          type: "image/png"
-        },
-        {
-          src: "/logo.png",
-          sizes: "512x512",
-          type: "image/png"
-        },
-        {
-          src: "/logo.png",
-          sizes: "512x512",
-          type: "image/png",
-          purpose: "any maskable"
-        }
-      ]
-    }
-  });
+	const { VITE_GLOB_APP_TITLE } = viteEnv;
+	return VitePWA({
+		registerType: "autoUpdate",
+		manifest: {
+			name: VITE_GLOB_APP_TITLE,
+			short_name: VITE_GLOB_APP_TITLE,
+			theme_color: "#ffffff",
+			icons: [
+				{
+					src: "/logo.png",
+					sizes: "192x192",
+					type: "image/png"
+				},
+				{
+					src: "/logo.png",
+					sizes: "512x512",
+					type: "image/png"
+				},
+				{
+					src: "/logo.png",
+					sizes: "512x512",
+					type: "image/png",
+					purpose: "any maskable"
+				}
+			]
+		}
+	});
 };
