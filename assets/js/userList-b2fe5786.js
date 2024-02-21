@@ -1,2 +1,0 @@
-import{j as e}from"./index-a865b264.js";import{D as a}from"./index-37b722a0.js";const n=({user:s})=>{const r=[{key:"1",label:"name",children:s.name},{key:"2",label:"age",children:s.age},{key:"3",label:"address",children:s.address}];return e.jsx(e.Fragment,{children:e.jsx(a,{title:"userInfo",items:r})})},l=()=>e.jsxs(e.Fragment,{children:[e.jsx("h3",{children:"TS 支持"}),e.jsx(n,{user:{name:"Dail",age:16,address:"Shanghai"}})]});export{l as default};
-//# sourceMappingURL=userList-b2fe5786.js.map

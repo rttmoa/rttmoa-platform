@@ -1,0 +1,1 @@
+{"version":3,"file":"index-0514f393.js","sources":["../../../src/views/feat/music/index.tsx"],"sourcesContent":["import React from \"react\";\n\nconst Music = () => {\n  return <div>Music</div>;\n};\n\nexport default Music;\n"],"names":["Music","jsx"],"mappings":"wCAEA,MAAMA,EAAQ,IACLC,EAAA,IAAC,OAAI,SAAK,OAAA,CAAA"}
