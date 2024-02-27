@@ -1,2 +1,0 @@
-import{j as r}from"./index-f77a2189.js";import m from"./fileUpload-96dbe708.js";import o from"./userList-ea5c8580.js";import t from"./utils-b5c15af1.js";import{C as s}from"./index-06473150.js";import"./index-40d103fa.js";import"./Skeleton-c1cd4f3a.js";const n=()=>r.jsxs(r.Fragment,{children:[r.jsx(s,{className:"mb20",children:r.jsx(m,{})}),r.jsx(s,{className:"mb20",children:r.jsx(o,{})}),r.jsx(s,{children:r.jsx(t,{})})]});export{n as default};
-//# sourceMappingURL=index-de501ff8.js.map

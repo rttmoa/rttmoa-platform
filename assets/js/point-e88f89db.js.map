@@ -1,1 +1,0 @@
-{"version":3,"file":"point-e88f89db.js","sources":["../../../node_modules/d3-shape/src/point.js"],"sourcesContent":["export function x(p) {\n  return p[0];\n}\n\nexport function y(p) {\n  return p[1];\n}\n"],"names":["x","p","y"],"mappings":"AAAO,SAASA,EAAEC,EAAG,CACnB,OAAOA,EAAE,CAAC,CACZ,CAEO,SAASC,EAAED,EAAG,CACnB,OAAOA,EAAE,CAAC,CACZ","x_google_ignoreList":[0]}

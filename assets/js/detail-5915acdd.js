@@ -1,2 +1,0 @@
-import{J as e,N as r,d as i,r as c,O as p,j as s}from"./index-f77a2189.js";import{C as l}from"./index-06473150.js";import{T as m}from"./index-589b89cf.js";import"./Skeleton-c1cd4f3a.js";import"./styleChecker-a4bf52b3.js";import"./transButton-d766c0a1.js";const{Title:t}=m,h=()=>{const{id:a}=e();r();const o=i();return c.useEffect(()=>{o(p(`No.${a} - Tab 详情`))},[]),s.jsxs(l,{children:[s.jsx(t,{level:4,children:" 我是 Tab 详情页"}),s.jsxs(t,{level:5,children:["params ：",a]})]})};export{h as default};
-//# sourceMappingURL=detail-5915acdd.js.map

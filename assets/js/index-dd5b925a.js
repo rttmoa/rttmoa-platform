@@ -1,2 +1,0 @@
-import{j as r}from"./index-f77a2189.js";import s from"./normal-55c01bfe.js";import o from"./reactCssModules-78291c87.js";import{C as m}from"./index-06473150.js";import"./Skeleton-c1cd4f3a.js";function n(){return r.jsxs(r.Fragment,{children:[r.jsx(m,{className:"mb30",children:r.jsx(s,{})}),r.jsx(m,{className:"mb30",children:r.jsx(o,{})})]})}export{n as default};
-//# sourceMappingURL=index-dd5b925a.js.map
