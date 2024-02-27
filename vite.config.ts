@@ -14,6 +14,10 @@ const __APP_INFO__ = {
 };
 
 // @see: https://vitejs.dev/config/
+// @see: cdn优化 https://blog.csdn.net/m0_68324632/article/details/126828350
+// @see: vite优化 https://blog.csdn.net/newbalsh/article/details/134673964
+// @see: vite插件 https://zhuanlan.zhihu.com/p/660064289
+// @see: vite优化 https://juejin.cn/post/7263341982408212536
 export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
 	const root = process.cwd();
 	const env = loadEnv(mode, root); // 读取目录，读取模式。  加载 .env.development 文件
@@ -23,9 +27,12 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
 		base: viteEnv.VITE_PUBLIC_PATH,
 		root,
 		resolve: {
+			// 路径别名
 			alias: {
 				"@": resolve(__dirname, "./src")
-			}
+			},
+			// 文件尾缀
+			extensions: [".js", ".ts", ".tsx", ".json"]
 		},
 		define: {
 			__APP_INFO__: JSON.stringify(__APP_INFO__) // JSON.stringify(__APP_INFO__)
@@ -39,7 +46,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
 			proxy: createProxy(viteEnv.VITE_PROXY)
 		},
 		// ? 插件配置
-		plugins: [createVitePlugins(viteEnv) /* reactVirtualized() */],
+		plugins: [createVitePlugins(viteEnv)],
 
 		esbuild: {
 			// 去除console、debugger
@@ -49,7 +56,6 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
 			outDir: "dist",
 			// esbuild 打包速度较快，但不能去掉 console.log
 			minify: "esbuild",
-			// eslint-disable-next-line no-irregular-whitespace
 			// terser打包速度较慢，但​可以去掉console.log
 			// minify: "terser",
 			// terserOptions: {
@@ -58,9 +64,9 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
 			// 		drop_debugger: true
 			// 	}
 			// },
-			// 构建后是否生成 source map 文件
-			sourcemap: true,
-			// 禁用 gzip 压缩大小报告，这会稍微减少打包时间
+			// 构建后是否生成source map文件     // 这个生产环境一定要关闭，不然打包的产物会很大
+			sourcemap: false,
+			// 关闭文件计算
 			reportCompressedSize: false,
 			// 确定触发警告的块大小
 			chunkSizeWarningLimit: 2000,
@@ -68,9 +74,15 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
 			rollupOptions: {
 				output: {
 					// 静态资源分类与打包
-					chunkFileNames: "assets/js/[name]-[hash].js",
-					entryFileNames: "assets/js/[name]-[hash].js",
-					assetFileNames: "assets/[ext]/[name]-[hash].[ext]"
+					chunkFileNames: "assets/js/[name]-[hash].js", // 引入文件名的名称
+					entryFileNames: "assets/js/[name]-[hash].js", // 包的入口文件名称
+					assetFileNames: "assets/[ext]/[name]-[hash].[ext]", // 资源文件像：字体、图片、mp4、css等
+					manualChunks(id) {
+						// iD 为文件的绝对路径
+						if (id.includes("node_modules")) {
+							return id.toString().split("node_modules/")[1].split("/")[0].toString();
+						}
+					}
 				}
 			}
 		},

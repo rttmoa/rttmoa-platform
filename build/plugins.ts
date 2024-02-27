@@ -8,6 +8,8 @@ import react from "@vitejs/plugin-react";
 import checker from "vite-plugin-checker";
 import viteCompression from "vite-plugin-compression";
 import requireTransform from "vite-plugin-require-transform";
+import legacyPlugin from "@vitejs/plugin-legacy";
+
 const path = require("path");
 const fs = require("fs");
 
@@ -41,13 +43,18 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
 		}),
 		// vitePWA
 		VITE_PWA && createVitePwa(viteEnv),
-		// 是否生成包预览，分析依赖包大小进行优化
+		// 图形化文件大小，分析依赖包大小进行优化
 		VITE_REPORT && (visualizer({ filename: "stats.html", gzipSize: true, brotliSize: true }) as unknown as PluginOption),
 		requireTransform({
 			// .ts文件中使用 commonjs require()
 			fileRegex: /.ts$/
 		})
-		// reactVirtualized()
+		// reactVirtualized(),
+		// 低版本浏览器兼容
+		// legacyPlugin({
+		// 	targets: ['chrome 52', 'Android &gt; 39', 'iOS &gt;= 10.3', 'iOS &gt;= 10.3'], // 需要兼容的目标列表，可以设置多个
+		// 	additionalLegacyPolyfills: ['regenerator-runtime/runtime'] // 面向IE11时需要此插件
+		// })
 	];
 };
 
