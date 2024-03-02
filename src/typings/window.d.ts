@@ -10,6 +10,7 @@ declare global {
 		connection: NetworkState;
 		mozConnection: NetworkState;
 		webkitConnection: NetworkState;
+		deviceMemory: number;
 	}
 	interface Window {
 		$navigate: NavigateFunction;

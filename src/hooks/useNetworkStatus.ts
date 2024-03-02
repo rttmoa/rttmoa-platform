@@ -9,6 +9,10 @@ export interface NetworkState {
 	// 估算的往返时间
 	rtt: number;
 	type: "bluetooth" | "cellular" | "ethernet" | "none" | "wifi" | "wimax" | "other" | "unknown";
+	// 打开/请求数据保护模式
+	saveData: string;
+	// 有值代表网络状态变更
+	onchange: any;
 }
 
 function getConnection() {
