@@ -1,5 +1,40 @@
 import { parse, stringify } from "qs";
 
+//* 优点：能够快速区分基本数据类型 缺点：不能将Object、Array和Null区分，都返回object
+function judge_typeof() {
+	console.log(typeof 2); // number
+	console.log(typeof true); // boolean
+	console.log(typeof "str"); // string
+	console.log(typeof undefined); // undefined
+	console.log(typeof []); // object
+	console.log(typeof {}); // object
+	console.log(typeof function () {}); // function
+	console.log(typeof null); // object
+}
+
+//* 优点：能够区分Array、Object和Function，适合用于判断自定义的类实例对象 缺点：Number，Boolean，String基本数据类型不能判断
+function judge_instanceof() {
+	// console.log(2 instanceof Number); // false
+	// console.log(true instanceof Boolean); // false
+	// console.log("str" instanceof String); // false
+	console.log([] instanceof Array); // true
+	console.log(function () {} instanceof Function); // true
+	console.log({} instanceof Object); // true
+}
+
+//* 优点：精准判断数据类型 缺点：写法繁琐不容易记，推荐进行封装后使用
+function judge_call() {
+	const toString = Object.prototype.toString;
+	console.log(toString.call(2)); //[object Number]
+	console.log(toString.call(true)); //[object Boolean]
+	console.log(toString.call("str")); //[object String]
+	console.log(toString.call([])); //[object Array]
+	console.log(toString.call(function () {})); //[object Function]
+	console.log(toString.call({})); //[object Object]
+	console.log(toString.call(undefined)); //[object Undefined]
+	console.log(toString.call(null)); //[object Null]
+}
+
 /**
  * @description utils-检查值是否属于某种类型
  * @param {unknown} unknown 任意参数
@@ -11,42 +46,42 @@ export function is(val: unknown, type: string) {
 }
 
 /**
- * @description 是字符串
+ * @description 👇 是字符串
  */
 export function isString(val: unknown): val is string {
 	// isString("")
 	return is(val, "String");
 }
 /**
- * @description 是数值
+ * @description 👇 是数值
  */
 export function isNumber(val: unknown): val is number {
 	// isNumber(+'1')
 	return is(val, "Number");
 }
 /**
- * @description 是布尔
+ * @description 👇 是布尔
  */
 export function isBoolean(val: unknown): val is boolean {
 	// isBoolean(new Boolean)
 	return is(val, "Boolean");
 }
 /**
- * @description 是对象
+ * @description 👇 是对象
  */
 export const isObject = (val: any): val is Record<any, any> => {
 	// isObject({} || new Object || undefined || null || () => {})
 	return val !== null && is(val, "Object");
 };
 /**
- * @description 是数组
+ * @description 👇 是数组
  */
 export function isArray(val: any): val is Array<any> {
 	// isArray([])
 	return val && Array.isArray(val);
 }
 /**
- * @description 是日期
+ * @description 👇 是日期
  */
 export function isDate(val: unknown): val is Date {
 	// isDate(new Date())
@@ -54,14 +89,14 @@ export function isDate(val: unknown): val is Date {
 }
 
 /**
- * @description 是函数
+ * @description 👇 是函数
  */
 export function isFunction<T = Function>(val: unknown): val is T {
 	// isFunction(() => {})
 	return is(val, "Function");
 }
 /**
- * @description 是false
+ * @description 👇 是false
  */
 export function isFalse(o: any) {
 	if (o == "" || o == undefined || o == null || o == "null" || o == "undefined" || o == 0 || o == false || Number.isNaN(o)) return true;
@@ -69,7 +104,7 @@ export function isFalse(o: any) {
 }
 
 /**
- * @description 是undefined
+ * @description 👇 是undefined
  */
 export const isDef = <T = unknown>(val?: T): val is T => {
 	// isDef(undefined)
@@ -77,14 +112,14 @@ export const isDef = <T = unknown>(val?: T): val is T => {
 };
 
 /**
- * @description 不是undefined
+ * @description 👇 不是undefined
  */
 export const isUnDef = <T = unknown>(val?: T): val is T => {
 	// isDef(undefined)
 	return !isDef(val);
 };
 /**
- * @description: 是null.
+ * @description: 👇 是null.
  */
 export function isNull(val: unknown): val is null {
 	// isNull(null)
@@ -92,7 +127,7 @@ export function isNull(val: unknown): val is null {
 }
 
 /**
- * @description: 检查值是否为 null 或 undefined.
+ * @description: 👇 检查值是否为 null 或 undefined.
  */
 export function isNullOrUnDef(val: unknown): val is null | undefined {
 	// isNullOrUnDef(undefined || null)
@@ -100,7 +135,7 @@ export function isNullOrUnDef(val: unknown): val is null | undefined {
 }
 
 /**
- * @description 检查一个值是否是一个普通对象
+ * @description 👇 检查一个值是否是一个普通对象
  * Copied from https://github.com/sindresorhus/is-plain-obj/blob/97480673cf12145b32ec2ee924980d66572e8a86/index.js
  */
 export function isPlainObject(value: unknown): boolean {
@@ -112,7 +147,7 @@ export function isPlainObject(value: unknown): boolean {
 }
 
 /**
- * @description 判断数据类型
+ * @description 👇 判断数据类型
  * @param {Any} val 需要判断类型的数据
  * @return string
  */
@@ -123,42 +158,42 @@ export const isType = (val: any) => {
 };
 
 /**
- * @description 是AsyncFunction
+ * @description 👇 是AsyncFunction
  */
 export function isAsyncFunction<T = any>(val: unknown): val is Promise<T> {
 	// isAsyncFunction(async () => {})
 	return is(val, "AsyncFunction");
 }
 /**
- * @description 是Promise
+ * @description 👇 是Promise
  */
 export function isPromise<T = any>(val: unknown): val is Promise<T> {
 	return is(val, "Promise") && isObject(val) && isFunction(val.then) && isFunction(val.catch);
 }
 
 /**
- * @description: 检查是否是客户端。
+ * @description: 👇 检查是否是客户端。
  */
 export const isClient = () => {
 	return typeof window !== "undefined";
 };
 
 /**
- * @description: 检查是否是浏览器.
+ * @description: 👇 检查是否是浏览器.
  */
 export const isWindow = (val: any): val is Window => {
 	return typeof window !== "undefined" && is(val, "Window");
 };
 
 /**
- * @description: 检查它是否是一个元素.
+ * @description: 👇 检查它是否是一个元素.
  */
 export const isElement = (val: unknown): val is Element => {
 	return isObject(val) && !!val.tagName;
 };
 
 /**
- * @description: 检查它是否是十六进制颜色.
+ * @description: 👇 检查它是否是十六进制颜色.
  */
 export const isHexColor = (str: string) => {
 	// isHexColor("#fff")
@@ -166,14 +201,14 @@ export const isHexColor = (str: string) => {
 };
 
 /**
- * @description: 是否是搜索参数.
+ * @description: 👇 是否是搜索参数.
  */
 export const isURLSearchParams = (val: any) => {
 	return typeof URLSearchParams !== "undefined" && val instanceof URLSearchParams;
 };
 
 /**
- * @description 获取参数对象
+ * @description 👇 获取参数对象
  */
 export const getParamObject = (val: { toString: () => any }) => {
 	if (isURLSearchParams(val)) {
@@ -186,7 +221,7 @@ export const getParamObject = (val: { toString: () => any }) => {
 };
 
 /**
- * @description 格式化请求参数
+ * @description 👇 格式化请求参数
  */
 export const reqStringify = (val: any) => {
 	return stringify(val, { arrayFormat: "repeat", strictNullHandling: true });
@@ -236,7 +271,7 @@ export function checkStr(str: any, type: string) {
 	}
 }
 
-/** #### 严格的身份证校验  */
+/** #### 👇 严格的身份证校验  */
 export function isCardID(sId: any) {
 	if (!/(^\d{15}$)|(^\d{17}(\d|X|x)$)/.test(sId)) {
 		alert("你输入的身份证长度或格式错误");
@@ -311,7 +346,7 @@ export function isCardID(sId: any) {
 	return true;
 }
 
-/** #### 是否是IOS  */
+/** #### 👇 是否是IOS  */
 export function isIos() {
 	var u = navigator.userAgent;
 	if (u.indexOf("Android") > -1 || u.indexOf("Linux") > -1) {
@@ -335,7 +370,7 @@ export function isIos() {
 	}
 }
 
-/** #### 是否是PC  */
+/** #### 👇 是否是PC  */
 export function isPC() {
 	var userAgentInfo = navigator.userAgent;
 	var Agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
@@ -349,7 +384,7 @@ export function isPC() {
 	return flag;
 }
 
-/** #### 获取浏览器、返回浏览器版本  */
+/** #### 👇 获取浏览器、返回浏览器版本  */
 export function browserType() {
 	var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
 	var isOpera = userAgent.indexOf("Opera") > -1; //判断是否Opera浏览器
