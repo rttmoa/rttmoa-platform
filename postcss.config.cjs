@@ -3,7 +3,8 @@ module.exports = {
   plugins: {
     tailwindcss: {},
     autoprefixer: {},
-		// 缩小 CSS
-		// ...(process.env.NODE_ENV === 'production' ? { cssnano: {} } : {})
+		// 优化：压缩 CSS
+		// https://github.com/cssnano/cssnano?tab=readme-ov-file
+		...(process.env.NODE_ENV === 'production' ? { cssnano: {} } : {})
   }
 };

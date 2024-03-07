@@ -35,6 +35,11 @@ function judge_call() {
 	console.log(toString.call(null)); //[object Null]
 }
 
+type argParams = string | number | [] | Object | Function | undefined | null;
+const getType = (arg: argParams) => {
+	return Object.prototype.toString.call(arg).slice(8, -1);
+};
+
 /**
  * @description utils-检查值是否属于某种类型
  * @param {unknown} unknown 任意参数
