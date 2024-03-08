@@ -56,6 +56,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
 			outDir: "dist",
 			// esbuild 打包速度较快，但不能去掉 console.log
 			minify: "esbuild",
+
 			// terser打包速度较慢，但​可以去掉console.log
 			// minify: "terser",
 			// terserOptions: {

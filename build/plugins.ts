@@ -19,7 +19,7 @@ const fs = require("fs");
  */
 export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOption[])[] => {
 	const { VITE_GLOB_APP_TITLE, VITE_REPORT, VITE_PWA } = viteEnv;
-
+	// console.log('VITE_GLOB_APP_TITLE', VITE_GLOB_APP_TITLE); // rttmoa
 	return [
 		// react(),
 		react({
