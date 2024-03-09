@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.4](https://github.com/rttmoa/rttmoa-platform/compare/v2.0.3...v2.0.4) (2024-03-09)
+
+### Bug Fixes
+
+-   🧩 util ([1c170ed](https://github.com/rttmoa/rttmoa-platform/commit/1c170ed3e9249f60b7ea85a352a4b00212b402a0))
+-   🧩 utils ([9e14543](https://github.com/rttmoa/rttmoa-platform/commit/9e14543cfa50c4ae3721018ef4b7640d8b3b231f))
+-   🧩 utils ([1c95b38](https://github.com/rttmoa/rttmoa-platform/commit/1c95b38a49800b4f8133ff05ab3aea6f723dea0d))
+-   🧩 vite.config ([fd0999a](https://github.com/rttmoa/rttmoa-platform/commit/fd0999a045d638807abefd51b277fa7101160fbb))
+-   🧩 viteconfig ([25f2164](https://github.com/rttmoa/rttmoa-platform/commit/25f216471a354b6524e4d806f2b19f01110ee567))
+
 ### [2.0.3](https://github.com/rttmoa/rttmoa-platform/compare/v2.0.2...v2.0.3) (2024-02-27)
 
 ### Bug Fixes
