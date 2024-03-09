@@ -1,1 +1,0 @@
-function b(a){for(var e=a.length/6|0,f=new Array(e),c=0;c<e;)f[c]="#"+a.slice(c*6,++c*6);return f}const n=b("1f77b4ff7f0e2ca02cd627289467bd8c564be377c27f7f7fbcbd2217becf"),o=b("4e79a7f28e2ce1575976b7b259a14fedc949af7aa1ff9da79c755fbab0ab");export{n as c,o as s};
