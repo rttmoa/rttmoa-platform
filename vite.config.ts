@@ -77,13 +77,13 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
 					// 静态资源分类与打包
 					chunkFileNames: "assets/js/[name]-[hash].js", // 引入文件名的名称
 					entryFileNames: "assets/js/[name]-[hash].js", // 包的入口文件名称
-					assetFileNames: "assets/[ext]/[name]-[hash].[ext]", // 资源文件像：字体、图片、mp4、css等
-					manualChunks(id) {
-						// iD 为文件的绝对路径
-						if (id.includes("node_modules")) {
-							return id.toString().split("node_modules/")[1].split("/")[0].toString();
-						}
-					}
+					assetFileNames: "assets/[ext]/[name]-[hash].[ext]" // 资源文件像：字体、图片、mp4、css等
+					// manualChunks(id) {
+					// 	// iD 为文件的绝对路径
+					// 	if (id.includes("node_modules")) {
+					// 		return id.toString().split("node_modules/")[1].split("/")[0].toString();
+					// 	}
+					// }
 				}
 			}
 		},
