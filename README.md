@@ -21,7 +21,7 @@
 > -   替换富文本 wangEditor，[🚀](https://github.com/wangeditor-team/wangEditor)
 > -   百度地图 Web服务Api；[🚀](https://lbsyun.baidu.com/faq/api?title=webapi)
 > -   错误边界 react-error-boundary；[🚀](https://github.com/bvaughn/react-error-boundary)
-> -   vercel现场部署；[🚀](https://vercel.com/)
+> -   vercel线上部署；[🚀](https://vercel.com/)
 
 ## 🌱 安装使用步骤
 
