@@ -1,0 +1,1 @@
+import{j as t,a9 as r}from"./index-5ef7b9c8.js";import{C as a}from"./index-ed9ec480.js";import"./Skeleton-46f32237.js";const l=()=>t.jsx(t.Fragment,{children:t.jsx(a,{children:t.jsxs("h3",{children:["参考Demo：",t.jsx(r,{target:"_blank",to:"https://mkosir.github.io/react-parallax-tilt",children:"react-parallax-tilt"})]})})});export{l as default};
