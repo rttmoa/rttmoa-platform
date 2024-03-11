@@ -1,0 +1,1 @@
+import{j as e}from"./index-3e43e27d.js";import{C as t}from"./index-0a51a5c6.js";import"./Skeleton-b792f8fd.js";const a=()=>e.jsx(t,{children:e.jsxs("span",{className:"text",children:["参考个人信息页面    ",e.jsx("a",{href:"https://lolicode.gitee.io/scui-doc/demo/#/usercenter",target:"_blank",style:{color:"blue"},children:"参考个人信息页面"})]})});export{a as default};
