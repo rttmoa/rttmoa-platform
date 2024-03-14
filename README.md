@@ -36,47 +36,47 @@ https://github.com/rttmoa/rttmoa-platform.git
 
 ```
 # 安装
-yarn
+pnpm install
 ```
 
 -   **Run：**
 
 ```
 # 启动
-yarn start
+pnpm start
 ```
 
 -   **Build：**
 
 ```
 # 开发环境
-yarn build:dev
+pnpm build:dev
 
 # 测试环境
-yarn build:test
+pnpm build:test
 
 # 生产环境
-yarn build:pro
+pnpm build:pro
 ```
 
 -   **Lint：**
 
 ```
 # eslint 检测代码
-yarn lint:eslint
+pnpm lint:eslint
 
 # prettier 格式化代码
-yarn lint:prettier
+pnpm lint:prettier
 
 # stylelint 格式化样式
-lint:stylelint
+pnpm lint:stylelint
 ```
 
 -   **commit：**
 
 ```
 # 提交代码（会自动执行 lint:lint-staged 命令）
-yarn commit
+pnpm commit
 ```
 
 ## 📂 文件资源目录

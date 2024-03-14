@@ -18,7 +18,7 @@
 		"url": "https://github.com/rttmoa/rttmoa-platform/issues"
 	},
 	"scripts": {
-		"start": "vite",
+		"start": "nvm use 18.18.0 && vite",
 		"serve": "vite",
 		"preview_Dev": "npm run build:dev && vite preview",
 		"preview_Prod": "npm run build:production && vite preview",
@@ -53,7 +53,8 @@
 		"release": "standard-version",
 		"release:patch": "standard-version --release-as patch",
 		"release:minor": "standard-version --release-as minor",
-		"release:major": "standard-version --release-as major"
+		"release:major": "standard-version --release-as major",
+		"rimraf": "rimraf node_modules"
 	},
 	"dependencies": {
 		"@ant-design/icons": "^5.2.5",
@@ -80,6 +81,7 @@
 		"clsx": "^2.0.0",
 		"crypto-js": "^4.2.0",
 		"dayjs": "^1.11.9",
+		"dotenv": "^16.4.5",
 		"draftjs-to-html": "^0.9.1",
 		"draftjs-to-markdown": "^0.6.0",
 		"echarts": "^5.4.3",
@@ -176,7 +178,7 @@
 		"vite-plugin-svg-icons": "^2.0.1"
 	},
 	"engines": {
-		"node": ">=16.0.0"
+		"node": ">=14.0.0"
 	},
 	"browserslist": {
 		"production": [
