@@ -178,7 +178,7 @@
 		"vite-plugin-svg-icons": "^2.0.1"
 	},
 	"engines": {
-		"node": ">=14.0.0"
+		"node": ">=18.0.0"
 	},
 	"browserslist": {
 		"production": [
