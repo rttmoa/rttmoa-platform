@@ -32,6 +32,9 @@ dependencies:
   '@react-three/fiber':
     specifier: ^8.15.13
     version: 8.15.19(react-dom@18.2.0)(react@18.2.0)(three@0.160.1)
+  '@react-three/postprocessing':
+    specifier: ^2.16.2
+    version: 2.16.2(@react-three/fiber@8.15.19)(@types/three@0.162.0)(react@18.2.0)(three@0.160.1)
   '@reduxjs/toolkit':
     specifier: ^1.9.5
     version: 1.9.7(react-redux@8.1.3)(react@18.2.0)
@@ -230,6 +233,9 @@ dependencies:
   video.js:
     specifier: ^8.9.0
     version: 8.10.0
+  xlsx:
+    specifier: ^0.18.5
+    version: 0.18.5
 
 devDependencies:
   '@commitlint/cli':
@@ -2783,6 +2789,25 @@ packages:
       zustand: 3.7.2(react@18.2.0)
     dev: false
 
+  /@react-three/postprocessing@2.16.2(@react-three/fiber@8.15.19)(@types/three@0.162.0)(react@18.2.0)(three@0.160.1):
+    resolution: {integrity: sha512-2ya1gXLDpzyfbELobi3rPHNNZZCrCfyq20GMYJD1yD7ZyBFSpRG9YSPMBnOal6A89kXanPBw273h6/Dqev0n7g==, tarball: https://registry.npmmirror.com/@react-three/postprocessing/-/postprocessing-2.16.2.tgz}
+    peerDependencies:
+      '@react-three/fiber': '>=8.0'
+      react: '>=18.0'
+      three: '>= 0.138.0'
+    dependencies:
+      '@react-three/fiber': 8.15.19(react-dom@18.2.0)(react@18.2.0)(three@0.160.1)
+      buffer: 6.0.3
+      maath: 0.6.0(@types/three@0.162.0)(three@0.160.1)
+      n8ao: 1.8.1(postprocessing@6.35.2)(three@0.160.1)
+      postprocessing: 6.35.2(three@0.160.1)
+      react: 18.2.0
+      three: 0.160.1
+      three-stdlib: 2.29.5(three@0.160.1)
+    transitivePeerDependencies:
+      - '@types/three'
+    dev: false
+
   /@reduxjs/toolkit@1.9.7(react-redux@8.1.3)(react@18.2.0):
     resolution: {integrity: sha512-t7v8ZPxhhKgOKtU+uyJT13lu4vL7az5aFi4IdoDs/eS548edn2M8Ik9h8fxgvMjGoAUVFSt6ZC1P5cWmQ014QQ==, tarball: https://registry.npmmirror.com/@reduxjs/toolkit/-/toolkit-1.9.7.tgz}
     peerDependencies:
@@ -3809,6 +3834,11 @@ packages:
       object-assign: 4.1.1
     dev: false
 
+  /adler-32@1.3.1:
+    resolution: {integrity: sha512-ynZ4w/nUUv5rrsR8UUGoe1VC9hZj6V5hU9Qw1HlMDJGEJw5S7TfTErWTjMys6M7vr0YWcPqs3qAr4ss0nDfP+A==, tarball: https://registry.npmmirror.com/adler-32/-/adler-32-1.3.1.tgz}
+    engines: {node: '>=0.8'}
+    dev: false
+
   /aes-decrypter@4.0.1:
     resolution: {integrity: sha512-H1nh/P9VZXUf17AA5NQfJML88CFjVBDuGkp5zDHa7oEhYN9TTpNLJknRY1ie0iSKWlDf6JRnJKaZVDSQdPy6Cg==, tarball: https://registry.npmmirror.com/aes-decrypter/-/aes-decrypter-4.0.1.tgz}
     dependencies:
@@ -4518,6 +4548,14 @@ packages:
       unique-random-array: 2.0.0
     dev: false
 
+  /cfb@1.2.2:
+    resolution: {integrity: sha512-KfdUZsSOw19/ObEWasvBP/Ac4reZvAGauZhs6S/gqNhXhI7cKwvlH7ulj+dOEYnca4bm4SGo8C1bTAQvnTjgQA==, tarball: https://registry.npmmirror.com/cfb/-/cfb-1.2.2.tgz}
+    engines: {node: '>=0.8'}
+    dependencies:
+      adler-32: 1.3.1
+      crc-32: 1.2.2
+    dev: false
+
   /chalk@1.1.3:
     resolution: {integrity: sha512-U3lRVLMSlsCfjqYPbLyVv11M9CPW4I728d6TCKMAOJueEeB9/8o+eSsMnxPJD+Q+K909sdESg7C+tIkoH6on1A==, tarball: https://registry.npmmirror.com/chalk/-/chalk-1.1.3.tgz}
     engines: {node: '>=0.10.0'}
@@ -4650,6 +4688,11 @@ packages:
   /clsx@2.1.0:
     resolution: {integrity: sha512-m3iNNWpd9rl3jvvcBnu70ylMdrXt8Vlq4HYadnU5fwcOtvkSQWPmj7amUcDT2qYI7risszBjI5AUIUox9D16pg==, tarball: https://registry.npmmirror.com/clsx/-/clsx-2.1.0.tgz}
     engines: {node: '>=6'}
+    dev: false
+
+  /codepage@1.15.0:
+    resolution: {integrity: sha512-3g6NUTPd/YtuuGrhMnOMRjFc+LJw/bnMp3+0r/Wcz3IXUuCosKRJvMphm5+Q+bvTVGcJJuRvVLuYba+WojaFaA==, tarball: https://registry.npmmirror.com/codepage/-/codepage-1.15.0.tgz}
+    engines: {node: '>=0.8'}
     dev: false
 
   /collection-visit@1.0.0:
@@ -4870,6 +4913,12 @@ packages:
 
   /countup.js@2.8.0:
     resolution: {integrity: sha512-f7xEhX0awl4NOElHulrl4XRfKoNH3rB+qfNSZZyjSZhaAoUk6elvhH+MNxMmlmuUJ2/QNTWPSA7U4mNtIAKljQ==, tarball: https://registry.npmmirror.com/countup.js/-/countup.js-2.8.0.tgz}
+    dev: false
+
+  /crc-32@1.2.2:
+    resolution: {integrity: sha512-ROmzCKrTnOwybPcJApAA6WBWij23HVfGVNKqqrZpuyZOHqK2CwHSvpGuyt/UNNvaIjEd8X5IFGp4Mh+Ie1IHJQ==, tarball: https://registry.npmmirror.com/crc-32/-/crc-32-1.2.2.tgz}
+    engines: {node: '>=0.8'}
+    hasBin: true
     dev: false
 
   /create-require@1.1.1:
@@ -6550,6 +6599,11 @@ packages:
       mime-types: 2.1.35
     dev: false
 
+  /frac@1.1.2:
+    resolution: {integrity: sha512-w/XBfkibaTl3YDqASwfDUqkna4Z2p9cFSr1aHDt0WoMTECnRfBOv2WArlZILlqgWlmdIlALXGpM2AOhEk5W3IA==, tarball: https://registry.npmmirror.com/frac/-/frac-1.1.2.tgz}
+    engines: {node: '>=0.8'}
+    dev: false
+
   /fraction.js@4.3.4:
     resolution: {integrity: sha512-pwiTgt0Q7t+GHZA4yaLjObx4vXmmdcS0iSJ19o8d/goUGgItX9UZWKWNnLHehxviD8wU2IWRsnR8cD5+yOJP2Q==, tarball: https://registry.npmmirror.com/fraction.js/-/fraction.js-4.3.4.tgz}
     dev: false
@@ -7946,6 +8000,16 @@ packages:
       three: 0.160.1
     dev: false
 
+  /maath@0.6.0(@types/three@0.162.0)(three@0.160.1):
+    resolution: {integrity: sha512-dSb2xQuP7vDnaYqfoKzlApeRcR2xtN8/f7WV/TMAkBC8552TwTLtOO0JTcSygkYMjNDPoo6V01jTw/aPi4JrMw==, tarball: https://registry.npmmirror.com/maath/-/maath-0.6.0.tgz}
+    peerDependencies:
+      '@types/three': '>=0.144.0'
+      three: '>=0.144.0'
+    dependencies:
+      '@types/three': 0.162.0
+      three: 0.160.1
+    dev: false
+
   /maath@0.9.0(@types/three@0.162.0)(three@0.160.1):
     resolution: {integrity: sha512-aAR8hoUqPxlsU8VOxkS9y37jhUzdUxM017NpCuxFU1Gk+nMaZASZxymZrV8LRSHzRk/watlbfyNKu6XPUhCFrQ==, tarball: https://registry.npmmirror.com/maath/-/maath-0.9.0.tgz}
     peerDependencies:
@@ -8584,6 +8648,16 @@ packages:
       any-promise: 1.3.0
       object-assign: 4.1.1
       thenify-all: 1.6.0
+    dev: false
+
+  /n8ao@1.8.1(postprocessing@6.35.2)(three@0.160.1):
+    resolution: {integrity: sha512-biKUW09KnflZpeWmbCy1gjuiyZsbeG6y+EsqV+1IDqQ1KqEydXc6nUUseZp9ZRbjvEOPnsvsjaTce8Pta0803A==, tarball: https://registry.npmmirror.com/n8ao/-/n8ao-1.8.1.tgz}
+    peerDependencies:
+      postprocessing: '>=6.30.0'
+      three: '>=0.137'
+    dependencies:
+      postprocessing: 6.35.2(three@0.160.1)
+      three: 0.160.1
     dev: false
 
   /namespace-emitter@2.0.1:
@@ -9521,6 +9595,15 @@ packages:
       posthtml-parser: 0.2.1
       posthtml-render: 1.4.0
     dev: true
+
+  /postprocessing@6.35.2(three@0.160.1):
+    resolution: {integrity: sha512-yGmidrVzA1dSEmExYGgWOGcRvyOVahvurNo9iuzOonRCY6f1hnJe6/HMVSnKV9ppjLtCTqzZOI9iz8CACkmijw==, tarball: https://registry.npmmirror.com/postprocessing/-/postprocessing-6.35.2.tgz}
+    engines: {node: '>= 0.13.2'}
+    peerDependencies:
+      three: '>= 0.152.0 < 0.163.0'
+    dependencies:
+      three: 0.160.1
+    dev: false
 
   /potpack@1.0.2:
     resolution: {integrity: sha512-choctRBIV9EMT9WGAZHn3V7t0Z2pMQyl0EZE6pFc/6ml3ssw7Dlf/oAOvFwjm1HVsqfQN8GfeFyJ+d8tRzqueQ==, tarball: https://registry.npmmirror.com/potpack/-/potpack-1.0.2.tgz}
@@ -11276,6 +11359,13 @@ packages:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==, tarball: https://registry.npmmirror.com/sprintf-js/-/sprintf-js-1.0.3.tgz}
     dev: false
 
+  /ssf@0.11.2:
+    resolution: {integrity: sha512-+idbmIXoYET47hH+d7dfm2epdOMUDjqcB4648sTZ+t2JwoyBFL/insLfB/racrDmsKB3diwsDA696pZMieAC5g==, tarball: https://registry.npmmirror.com/ssf/-/ssf-0.11.2.tgz}
+    engines: {node: '>=0.8'}
+    dependencies:
+      frac: 1.1.2
+    dev: false
+
   /ssr-window@3.0.0:
     resolution: {integrity: sha512-q+8UfWDg9Itrg0yWK7oe5p/XRCJpJF9OBtXfOPgSJl+u3Xd5KI328RUEvUqSMVM9CiQUEf1QdBzJMkYGErj9QA==, tarball: https://registry.npmmirror.com/ssr-window/-/ssr-window-3.0.0.tgz}
     dev: false
@@ -12733,6 +12823,16 @@ packages:
     resolution: {integrity: sha512-DXukZJxpHA8LuotRwL0pP1+rS6CS7FF2qStDDE1C7DDg2rLud2PXRMuEDYIPhgEezwnlHNL4c+N6MfMTjCGTng==, tarball: https://registry.npmmirror.com/wildcard/-/wildcard-1.1.2.tgz}
     dev: false
 
+  /wmf@1.0.2:
+    resolution: {integrity: sha512-/p9K7bEh0Dj6WbXg4JG0xvLQmIadrner1bi45VMJTfnbVHsc7yIajZyoSoK60/dtVBs12Fm6WkUI5/3WAVsNMw==, tarball: https://registry.npmmirror.com/wmf/-/wmf-1.0.2.tgz}
+    engines: {node: '>=0.8'}
+    dev: false
+
+  /word@0.3.0:
+    resolution: {integrity: sha512-OELeY0Q61OXpdUfTp+oweA/vtLVg5VDOXh+3he3PNzLGG/y0oylSOC1xRVj0+l4vQ3tj/bB1HVHv1ocXkQceFA==, tarball: https://registry.npmmirror.com/word/-/word-0.3.0.tgz}
+    engines: {node: '>=0.8'}
+    dev: false
+
   /workbox-background-sync@7.0.0:
     resolution: {integrity: sha512-S+m1+84gjdueM+jIKZ+I0Lx0BDHkk5Nu6a3kTVxP4fdj3gKouRNmhO8H290ybnJTOPfBDtTMXSQA/QLTvr7PeA==, tarball: https://registry.npmmirror.com/workbox-background-sync/-/workbox-background-sync-7.0.0.tgz}
     dependencies:
@@ -12914,6 +13014,20 @@ packages:
     dependencies:
       imurmurhash: 0.1.4
       signal-exit: 4.1.0
+
+  /xlsx@0.18.5:
+    resolution: {integrity: sha512-dmg3LCjBPHZnQp5/F/+nnTa+miPJxUXB6vtk42YjBBKayDNagxGEeIdWApkYPOf3Z3pm3k62Knjzp7lMeTEtFQ==, tarball: https://registry.npmmirror.com/xlsx/-/xlsx-0.18.5.tgz}
+    engines: {node: '>=0.8'}
+    hasBin: true
+    dependencies:
+      adler-32: 1.3.1
+      cfb: 1.2.2
+      codepage: 1.15.0
+      crc-32: 1.2.2
+      ssf: 0.11.2
+      wmf: 1.0.2
+      word: 0.3.0
+    dev: false
 
   /y18n@4.0.3:
     resolution: {integrity: sha512-JKhqTOwSrqNA1NY5lSztJ1GrBiUodLMmIZuLiDaMRJ+itFd+ABVE8XBjOvIWL+rSqNDC74LCSFmlb/U4UZ4hJQ==, tarball: https://registry.npmmirror.com/y18n/-/y18n-4.0.3.tgz}

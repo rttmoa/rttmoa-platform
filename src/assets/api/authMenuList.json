@@ -921,10 +921,22 @@
         }
       ]
     },
-
+		{
+      "path": "/isHide/person/index",
+      "element": "/isHide/person/index",
+      "meta": {
+        "key": "person",
+        "icon": "ExclamationCircleOutlined",
+        "title": "个人信息",
+        "isLink": "",
+        "isHide": true,
+        "isFull": false,
+        "isAffix": false
+      }
+    },
     {
-      "path": "/about/index",
-      "element": "/about/index",
+      "path": "/isHide/about/index",
+      "element": "/isHide/about/index",
       "meta": {
         "key": "about",
         "icon": "ExclamationCircleOutlined",
@@ -936,8 +948,8 @@
       }
     },
     {
-      "path": "/noLayout/index",
-      "element": "/noLayout/index",
+      "path": "/isHide/noLayout/index",
+      "element": "/isHide/noLayout/index",
       "meta": {
         "key": "noLayout",
         "icon": "SelectOutlined",

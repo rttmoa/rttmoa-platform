@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Card, Badge, Button, Space, Tag, Table, message, Modal, Form, Input, Radio, Select, DatePicker, Popconfirm, Tabs } from "antd";
+import { Card, Badge, Button, Space, Tag, Table, message, Modal, Form, Input, Radio, Select, DatePicker, Popconfirm, Tabs, Upload } from "antd";
 import { createUser, editUser, getUserList } from "@/api/modules/system/userManage";
 import MultiForm from "@/components/Forms";
 import MultiTable from "@/components/Tables";
@@ -9,6 +9,7 @@ import UserFormModal from "./components/UserFormModal";
 import { SelectFilterData, extendFormList, formList } from "./config";
 import { DeleteOutlined } from "@ant-design/icons";
 import SelectFilter, { selectdProps } from "@/components/SelectFilter";
+import useExportExcle from "@/hooks/useExportExcle";
 
 interface stateConfig {
 	[propName: number]: React.ReactNode;
@@ -36,6 +37,7 @@ interface Pagination {
 }
 
 const UserManage = () => {
+	const { handleExportAll } = useExportExcle();
 	// 处理角色
 	const [roleObj, setroleObj] = useState<any>({});
 	const [roleAll, setroleAll] = useState([]);
@@ -74,6 +76,7 @@ const UserManage = () => {
 					...item,
 					key: index
 				}));
+				// console.log('newData', newData);
 				setUserList(newData.splice(0, pageSize));
 				setPagination({
 					page: res.data.page,
@@ -269,6 +272,16 @@ const UserManage = () => {
 	const selectChange = (value: selectdProps) => {
 		setfilterResult(value);
 	};
+
+	const header = {
+		address: "地址",
+		birthday: "生日",
+		email: "邮箱",
+		id: "id",
+		interest: "爱好",
+		isMarried: "婚姻状态"
+	};
+	// console.log('userList', userList);
 	const structure = (
 		<div>
 			<Card className="mb20" style={{}}>
@@ -310,6 +323,7 @@ const UserManage = () => {
 							}}>
 							新建
 						</Button>
+
 						<Popconfirm
 							title="批量删除"
 							description="你确定要删除吗？"
@@ -322,6 +336,24 @@ const UserManage = () => {
 								批量删除
 							</Button>
 						</Popconfirm>
+						<Button
+							size="middle"
+							onClick={() => {
+								handleExportAll(header, userList, "用户列表");
+							}}>
+							导出Excel
+						</Button>
+						<Upload
+							beforeUpload={file => {
+								const isExcel = /\.(xlsx|xls)$/.test(file.name.toLowerCase());
+								if (!isExcel) {
+									message.error("请上传Excel文件（.xlsx 或 .xls）");
+									return false;
+								}
+								return false;
+							}}>
+							<Button>上传Excel</Button>
+						</Upload>
 					</Space>
 				}
 				style={{ width: "100%" }}>
