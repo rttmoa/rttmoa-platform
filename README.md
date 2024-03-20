@@ -22,6 +22,7 @@
 > -   百度地图 Web服务Api；[🚀](https://lbsyun.baidu.com/faq/api?title=webapi)
 > -   错误边界 react-error-boundary；[🚀](https://github.com/bvaughn/react-error-boundary)
 > -   vercel线上部署；[🚀](https://vercel.com/)
+> -   Prettier+ESLint+TS常用配置项目；[🚀](https://www.cnblogs.com/terrylin/p/17024130.html)
 
 ## 🌱 安装使用步骤
 
