@@ -20,7 +20,7 @@ class AdminService extends Service {
 
     const token = app.jwt.sign({ ...oldUser }, app.config.jwt.secret, {
       // expiresIn: '3s', // 控制 token 过期时间
-      expiresIn: '1h',
+      expiresIn: '1y', // 一年
     });
     console.log('token', token);
 

@@ -29,7 +29,7 @@ class AdminController extends Controller {
     // console.log('service', service.admin.adminLogin); // this中服务都可以 点 出来
 
     const data = ctx.request.body;
-    // console.log(ctx.request.body); // { userName: 'admin', password: '123456' }
+    console.log(ctx.request.body); // { userName: 'admin', password: '123456' }
     ctx.validate(this.createRule, data);
     const res = await service.admin.adminLogin(data);
     ctx.helper.success({ ctx, res });

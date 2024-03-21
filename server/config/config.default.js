@@ -46,8 +46,10 @@ module.exports = appInfo => {
   };
 
   config.mongoose = {
-    url: 'mongodb://127.0.0.1/blog',
-    options: {},
+    url: 'mongodb://127.0.0.1/rttmoaBlog',
+    options: {
+      useUnifiedTopology: true,
+    },
   };
 
   config.jwt = {

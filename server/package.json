@@ -33,7 +33,7 @@
   "scripts": {
     "start:server": "egg-scripts start --daemon --title=egg-server-server",
     "stop": "egg-scripts stop --title=egg-server-server",
-    "start": "egg-bin dev",
+    "start": "egg-bin dev --trace-warnings",
     "debug": "egg-bin debug",
     "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",

@@ -28,9 +28,9 @@ module.exports = app => {
     password: '123456',
   };
   helper.genSaltPassword(adminUser.password).then(async hash => {
-    console.log('------> admin 创建');
-    console.log(hash);
-    console.log('\n\n\n\n\n\n');
+    // console.log('------> admin 创建');
+    // console.log(hash);
+    // console.log('\n\n\n\n\n\n');
     const oldUser = await AdminModel.find({ userName: adminUser.userName });
     if (oldUser.length === 0) {
       adminUser.password = hash; // hash: $2b$10$sVjj6PgSfDD.JrrHrJ1TwexGH.34z8C8HXsTeY3ejMs1I063At.xi
