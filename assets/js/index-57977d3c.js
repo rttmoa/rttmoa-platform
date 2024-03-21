@@ -1,0 +1,1 @@
+import{j as r}from"./index-7bcec0ef.js";import{C as s}from"./index-45139d10.js";import"./Skeleton-0244f262.js";const n=()=>r.jsx(s,{children:r.jsx("span",{className:"text",children:"我是 Menu 3 页面"})});export{n as default};
