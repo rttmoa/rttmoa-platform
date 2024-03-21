@@ -1,7 +1,7 @@
 {
 	"name": "rttmoa-platform",
 	"private": true,
-	"version": "2.2.1",
+	"version": "2.2.2",
 	"description": "rttmoa-platform open source management system",
 	"author": {
 		"name": "rttmoa",
@@ -51,8 +51,8 @@
 		"predeploy": "npm run build:production",
 		"deploy": "gh-pages -d dist -b gh-pages",
 		"push:tags": "git push --follow-tags origin pre-gh-pages",
-		"release": "standard-version",
 		"release:patch": "standard-version --release-as patch",
+		"release": "standard-version",
 		"release:minor": "standard-version --release-as minor",
 		"release:major": "standard-version --release-as major",
 		"rimraf": "rimraf node_modules"
