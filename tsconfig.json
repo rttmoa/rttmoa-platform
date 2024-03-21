@@ -127,7 +127,8 @@
 		"dist", 
 		".husky",
 		".vscode",
-		// "**/*.js"
+		// "**/*.js",
+		"server"
 	],
   
   // ! rules: https://blog.csdn.net/qq_34532969/article/details/116483642

@@ -13,35 +13,40 @@
 		<!-- 问题：https://community.render.com/t/uncaught-typeerror-react-dom-3ae15c20-js/17120 -->
 
 		<!-- 动画参考；https://www.cnblogs.com/lhb25/p/loading-spinners-animated-with-css3.html -->
-		<!-- https://www.cnblogs.com/nangras/p/14838276.html -->
-		<!-- <div id="root"> 
-      <div class="loading-box">
-        <div class="loading-wrap">
-          <span class="dot dot-spin"><i></i><i></i><i></i><i></i></span>
-        </div>
-      </div>
-    </div> -->
-
+		<!-- antd旋转的四个小球加载中的动画特效：https://www.cnblogs.com/nangras/p/14838276.html -->
 		<div id="root">
 			<div class="spinner">
-				<div class="rect1"></div>
-				<div class="rect2"></div>
-				<div class="rect3"></div>
-				<div class="rect4"></div>
-				<div class="rect5"></div>
+				<div class="spinner-container container1">
+					<div class="circle1"></div>
+					<div class="circle2"></div>
+					<div class="circle3"></div>
+					<div class="circle4"></div>
+				</div>
+				<div class="spinner-container container2">
+					<div class="circle1"></div>
+					<div class="circle2"></div>
+					<div class="circle3"></div>
+					<div class="circle4"></div>
+				</div>
+				<div class="spinner-container container3">
+					<div class="circle1"></div>
+					<div class="circle2"></div>
+					<div class="circle3"></div>
+					<div class="circle4"></div>
+				</div>
 			</div>
 		</div>
 
 		<!-- TODO 读取本地redux持久化数据内容 -->
 		<script>
-			const reduxState = JSON.parse(window.localStorage.getItem("persist:redux-state"));
+			const reduxState = JSON.parse(window.localStorage.getItem('persist:redux-state'))
 			// console.log('reduxState', reduxState)
 			if (reduxState) {
-				const globalState = JSON.parse(reduxState.global);
-				const dot = document.querySelectorAll(".dot i");
-				const html = document.querySelector("html");
-				dot.forEach(item => (item.style.background = globalState.primary));
-				if (globalState.isDark) html.style.background = "#141414";
+				const globalState = JSON.parse(reduxState.global)
+				const dot = document.querySelectorAll('.dot i')
+				const html = document.querySelector('html')
+				dot.forEach(item => (item.style.background = globalState.primary))
+				if (globalState.isDark) html.style.background = '#141414'
 			}
 		</script>
 		<script type="module" src="./src/main.tsx"></script>

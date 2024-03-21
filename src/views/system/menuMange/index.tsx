@@ -1,5 +1,5 @@
 import { Button, Card } from 'antd'
-import React, { Children, useState } from 'react'
+import React, { useState } from 'react'
 import { Space, Switch, Table } from 'antd'
 import type { TableColumnsType, TableProps } from 'antd'
 import * as antIcon from '@ant-design/icons'
@@ -89,7 +89,7 @@ const MenuMange: React.FC = () => {
 		})
 	}
 	const menuList = getShowMenuList(menu)
-	console.log(',m', menuList)
+	// console.log(',m', menuList)
 
 	return (
 		<>

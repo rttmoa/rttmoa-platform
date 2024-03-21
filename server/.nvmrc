@@ -1,0 +1,12 @@
+v14.20.0
+
+
+FIXME: Nodejs版本：v14.20.0
+  ! 安装 npm i
+  ! 启动 npm start
+  "start": "nvm use 18.18.0 && umi dev",
+
+FIXME: 卸载模块 
+	"scripts": {
+		"rimraf": "rimraf node_modules"
+	}
