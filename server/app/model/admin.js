@@ -25,7 +25,7 @@ module.exports = app => {
 
   const adminUser = {
     userName: 'admin',
-    password: '123456',
+    password: 'Wenc1101',
   };
   helper.genSaltPassword(adminUser.password).then(async hash => {
     // console.log('------> admin 创建');

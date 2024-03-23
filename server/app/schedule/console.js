@@ -8,7 +8,7 @@ module.exports = app => {
       immediate: true,
     },
     async task(ctx) {
-      // console.log("定时任务执行了123");
+      // console.log('定时任务执行了123');
     },
   };
 };

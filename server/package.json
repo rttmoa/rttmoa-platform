@@ -6,6 +6,19 @@
   "egg": {
     "declarations": true
   },
+  "scripts": {
+    "start:server": "egg-scripts start --daemon --title=egg-server-server",
+    "stop": "egg-scripts stop --title=egg-server-server",
+    "start": "egg-bin dev --trace-warnings",
+    "debug": "egg-bin debug",
+    "test": "npm run lint -- --fix && npm run test-local",
+    "test-local": "egg-bin test",
+    "cov": "egg-bin cov",
+    "lint": "eslint .",
+    "ci": "npm run lint && npm run cov",
+    "autod": "autod",
+    "rimraf": "rimraf node_modules"
+  },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "egg": "^2.15.1",
@@ -29,19 +42,6 @@
   },
   "engines": {
     "node": ">=10.0.0"
-  },
-  "scripts": {
-    "start:server": "egg-scripts start --daemon --title=egg-server-server",
-    "stop": "egg-scripts stop --title=egg-server-server",
-    "start": "egg-bin dev --trace-warnings",
-    "debug": "egg-bin debug",
-    "test": "npm run lint -- --fix && npm run test-local",
-    "test-local": "egg-bin test",
-    "cov": "egg-bin cov",
-    "lint": "eslint .",
-    "ci": "npm run lint && npm run cov",
-    "autod": "autod",
-    "rimraf": "rimraf node_modules"
   },
   "ci": {
     "version": "10"

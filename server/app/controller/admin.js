@@ -8,9 +8,9 @@ class AdminController extends Controller {
     this.createRule = {
       userName: {
         type: 'string',
-        min: 5,
+        min: 2,
         max: 20,
-        format: /^[\u4e00-\u9fa5A-Za-z0-9_]{5,20}$/,
+        format: /^[\u4e00-\u9fa5A-Za-z0-9_]{2,20}$/,
       },
       password: {
         type: 'password',
@@ -25,8 +25,6 @@ class AdminController extends Controller {
   // 登陆
   async adminLogin() {
     const { ctx, service } = this;
-    // console.log('this', this); // AdminController { ctx: {}, service: {} }
-    // console.log('service', service.admin.adminLogin); // this中服务都可以 点 出来
 
     const data = ctx.request.body;
     console.log(ctx.request.body); // { userName: 'admin', password: '123456' }

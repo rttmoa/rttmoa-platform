@@ -21,7 +21,9 @@ module.exports = app => {
   //  -->  /api/v1
   const baseRouter = app.config.baseRouter;
 
-  router.resources('category', baseRouter + '/category', jwt, controller.module.category); // 分类管理
+  require('./routerCategory')(app);
+  router.resources('product', baseRouter + '/product', jwt, controller.module.product); // 产品管理
+  router.resources('user1', baseRouter + '/user1', jwt, controller.system.user1); // 产品管理
 
   router.post(baseRouter + '/upload', jwt, controller.utils.uploadFiles); // 上传文件到七牛云
 

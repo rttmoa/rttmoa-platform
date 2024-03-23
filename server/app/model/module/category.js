@@ -39,11 +39,11 @@ module.exports = app => {
       },
       createTime: {
         type: Date,
-        default: Date.now,
+        default: Date.now(),
       },
       updateTime: {
         type: Date,
-        default: 0,
+        default: Date.now(),
       },
     },
     {

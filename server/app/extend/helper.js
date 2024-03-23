@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsdoc/require-param */
 /* eslint-disable jsdoc/require-returns-type */
 /* eslint-disable jsdoc/require-param-description */
@@ -7,8 +8,12 @@ const bcrypt = require('bcrypt');
 
 /** #### 注册到ctx中 ---*/
 module.exports = {
-  // updateTime: ctx.helper.moment().unix()
-  moment,
+  foo(param) {
+    // this 是 helper 对象，在其中可以调用其他 helper 方法
+    // this.ctx => context 对象
+    // this.app => application 对象
+  },
+  moment, // updateTime: ctx.helper.moment().unix(),
   /** #### TODO: 加密：加密密码 生成盐 */
   genSaltPassword(password) {
     return new Promise((resolve, reject) => {

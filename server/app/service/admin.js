@@ -3,35 +3,35 @@ const Service = require('egg').Service;
 
 class AdminService extends Service {
 
-
-  async adminLogin(params) { // ! 登陆
+  // @登陆
+  async adminLogin(params) {
     const { ctx, app } = this;
-    // const oldUser = await ctx.model.Admin.findOne({ userName: 'test_admin' });
-    // console.log(oldUser); // null
-    // console.log(!!oldUser); // false
-    const oldUser = await ctx.model.Admin.findOne({ userName: params.userName });
-    // - oldUser // { _id: 62f6094da6d9f13d94235b0b, userName: 'admin', password: '$2b$10$YB2cpOeL34pPRNT8euymWOmes3pQeJLlSrv3WU7ZKmRDKjFFY/U6K'}
-    // - !!oldUser // false
-    // return
-    if (!oldUser) return { msg: '用户不存在' };
+    const adminOldUser = await ctx.model.Admin.findOne({ userName: params.userName });
+    const user1OldUser = await ctx.model.System.User1.findOne({ userName: params.userName });
+    if (!adminOldUser && !user1OldUser) return { msg: '用户不存在' };
 
+    let oldUser = {};
+    if (adminOldUser) oldUser = adminOldUser;
+    if (user1OldUser) oldUser = user1OldUser;
+    console.log('oldUser', oldUser);
     const isMatch = await ctx.helper.comparePassword(params.password, oldUser.password);
+    console.log('isMatch', isMatch);
     if (!isMatch) return { msg: '用户名或密码错误' };
 
     const token = app.jwt.sign({ ...oldUser }, app.config.jwt.secret, {
       // expiresIn: '3s', // 控制 token 过期时间
       expiresIn: '1y', // 一年
     });
-    console.log('token', token);
+    // console.log('token', token);
 
-    // ! Cookie 设置语法: ctx.cookies.set(key, value, options)
+    // @egg.js cookie: https://blog.csdn.net/u012570307/article/details/117151784
     ctx.cookies.set('token', token, {
-      // maxAge:1000*3600*24,  // cookie存储一天     设置过期时间后关闭浏览器重新打开cookie还存在
-      maxAge: 86400000,
-      // maxAge: 1000 * 3, // 3s
+      // 1000 * 3600 * 24 = 86400000毫秒   cookie存储一天     设置过期时间后关闭浏览器重新打开cookie还存在   1000 * 3 = 3s
+      maxAge: 1000 * 3600 * 24,
       httpOnly: true,
     });
-    // console.log('token: ', ctx.cookies.get('token'));
+
+    // 登陆后返回 token
     return {
       data: {
         token,
@@ -41,8 +41,8 @@ class AdminService extends Service {
     };
   }
 
-
-  async adminLogout() { // ! 退出
+  // @退出时，判断是哪个用户退出，把用户的 cookies 删除掉
+  async adminLogout() {
     const { ctx } = this;
     ctx.cookies.set('token', '', { maxAge: 0 });
     return {

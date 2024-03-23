@@ -13,6 +13,8 @@ module.exports = {
     package: 'egg-view-nunjucks',
   },
 
+  // 开启validate插件（目的为了实现RESTful API） https://www.eggjs.org/zh-CN/tutorials/restful#%E5%BC%80%E5%90%AF-validate-%E6%8F%92%E4%BB%B6
+  // ctx.validate(createRule, ctx.request.body);
   validate: {
     enable: true,
     package: 'egg-validate',
