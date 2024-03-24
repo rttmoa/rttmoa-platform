@@ -10,6 +10,7 @@ import { SelectFilterData, extendFormList, formList } from './config'
 import { DeleteOutlined } from '@ant-design/icons'
 import SelectFilter, { selectdProps } from '@/components/SelectFilter'
 import useExportExcle from '@/hooks/useExportExcle'
+import UserButton from '../../../components/GrainButton'
 
 interface stateConfig {
 	[propName: number]: React.ReactNode
@@ -311,6 +312,7 @@ const UserManage = () => {
 					]}
 				/>
 			</Card>
+			{/* <UserButton /> */}
 			<Card
 				className="mb30"
 				title="用户列表"

@@ -26,29 +26,34 @@ const columns: TableColumnsType<DataType> = [
 	{
 		title: '菜单图标',
 		dataIndex: 'icon',
+		align: 'center',
 		key: 'icon',
 		render: (text, record) => <Icon name={record.icon} />,
 	},
 	{
 		title: '菜单 name',
 		dataIndex: 'key',
+		align: 'center',
 		key: 'key',
 	},
 	{
 		title: '菜单路径',
 		dataIndex: 'path',
+		align: 'center',
 		key: 'path',
 	},
 	{
 		title: '组件路径',
 		dataIndex: 'element',
 		key: 'element',
+		align: 'center',
 		render: (text: string, record: any) => {
 			return record.element ? record.element : '--'
 		},
 	},
 	{
 		title: '操作',
+		align: 'center',
 		render: (text: string, record: any) => {
 			return (
 				<Space size="middle">
@@ -98,6 +103,8 @@ const MenuMange: React.FC = () => {
 					<Button>新增菜单</Button>
 				</div>
 				<Table
+					size="middle"
+					bordered
 					columns={columns}
 					// rowSelection={{ ...rowSelection, checkStrictly }}
 					dataSource={menuList}
