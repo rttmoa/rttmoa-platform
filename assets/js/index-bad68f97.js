@@ -1,1 +1,0 @@
-import{j as r}from"./index-efac5392.js";import s from"./normal-3bc4bd42.js";import o from"./reactCssModules-9d354bb0.js";import{C as m}from"./index-43f24a6c.js";import"./Skeleton-36aa2f79.js";function n(){return r.jsxs(r.Fragment,{children:[r.jsx(m,{className:"mb30",children:r.jsx(s,{})}),r.jsx(m,{className:"mb30",children:r.jsx(o,{})})]})}export{n as default};
