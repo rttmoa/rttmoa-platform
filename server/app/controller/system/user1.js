@@ -3,6 +3,8 @@
 
 const Controller = require('egg').Controller;
 
+// @功能：
+// CURD：增加、修改、删除、查询(有参、无参)
 class User1Controller extends Controller {
   constructor(ctx) {
     super(ctx);
@@ -30,17 +32,8 @@ class User1Controller extends Controller {
   }
 
   // @ 不同用户登陆时，根据Bearer获取用户信息
-  async index() {
+  async new() {
     const { ctx, service } = this;
-    // const data = ctx.request.query;
-    // ctx.validate(this.queryListParamsRules, data);
-    // const res = await service.system.user1.index(data);
-    // ctx.helper.success({
-    //   ctx,
-    //   res,
-    // });
-
-
     const secret = ctx.app.config.jwt.secret;
     const authorization = ctx.request.header.authorization;
     const token = authorization.replace('Bearer ', '');
@@ -52,6 +45,31 @@ class User1Controller extends Controller {
       code: 0,
       msg: '请求成功',
     };
+  }
+
+  // 查询用户列表
+  async index() {
+    const { ctx, service } = this;
+    const data = ctx.request.query;
+    ctx.validate(this.queryListParamsRules, data);
+    // console.log('query', data); // { userName: '张三', marry: '1', page: 1, pageSize: 10 }
+    const res = await service.system.user1.index(data);
+    ctx.helper.success({
+      ctx,
+      res,
+    });
+  }
+
+  // 编辑用户
+  async edit() {
+    const { ctx, service } = this;
+    const data = ctx.params;
+    // console.log('编辑用户：', data);
+    const res = await service.system.user1.edit(data.id);
+    ctx.helper.success({
+      ctx,
+      res,
+    });
   }
 
   // 新建用户 （加密密码）
@@ -66,10 +84,26 @@ class User1Controller extends Controller {
     });
   }
 
+  // 更新用户
+  async update() {
+    const { ctx, service } = this;
+    const id = ctx.params.id;
+    const data = ctx.request.body;
+    // console.log('update', id, data);
+    // ctx.validate(this.createRule, data);
+    const res = await service.system.user1.update({ id, ...data });
+    ctx.helper.success({
+      ctx,
+      res,
+    });
+  }
+
+  // 删除用户
   async destroy() {
     const { ctx, service } = this;
     const id = ctx.params.id;
-    const res = await service.user.destroy(id);
+    // console.log('id', id);
+    const res = await service.system.user1.destroy(id);
     ctx.helper.success({
       ctx,
       res,

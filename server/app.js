@@ -10,7 +10,7 @@ module.exports = app => {
   });
   app.on('error', err => {
     // 上报错误
-    // console.error('error ========> ', err);
+    console.error('error ========> ', err);
   });
   app.on('request', ctx => {
     // 记录收到的请求
@@ -19,7 +19,7 @@ module.exports = app => {
   app.on('response', ctx => {
     if (ctx.response.status === 200) {
       // console.log('response ========> ', ctx.response.header);
-      console.log('response ========> ', ctx.response.body);
+      // console.log('response ========> ', ctx.response.body);
     }
     const used = Date.now() - ctx.starttime;
     // 记录请求总耗时

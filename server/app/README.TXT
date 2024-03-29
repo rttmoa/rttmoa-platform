@@ -6,8 +6,9 @@
   三、service     注册服务    (由controller层传递参数并调用service层)
   四、model       注册模型    (由service层调用CURD来调用数据库) 
  
- 
-@egg.js基本使用: https://blog.csdn.net/Litt_White/article/details/124786509
+@Egg.js -- RESTful		(https://www.eggjs.org/zh-CN/basics/router#restful-%E9%A3%8E%E6%A0%BC%E7%9A%84-url-%E5%AE%9A%E4%B9%89)
+
+@Egg.js基本使用: https://blog.csdn.net/Litt_White/article/details/124786509
 
 @一些参考链接：
 session与cookie：

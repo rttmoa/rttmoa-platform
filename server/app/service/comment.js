@@ -4,7 +4,7 @@ const Service = require('egg').Service;
 
 class CommentService extends Service {
 
-
+  // 查询：page、pageSize、auditStatus、articleTitle
   async index(params) {
     const { ctx } = this;
     const page = params.page * 1;
@@ -41,7 +41,7 @@ class CommentService extends Service {
     };
   }
 
-
+  // 新建：直接存到库中、并处理下文章的数量
   async create(params) {
     const { ctx } = this;
     const data = {
@@ -56,16 +56,18 @@ class CommentService extends Service {
     };
   }
 
-
+  // 更新：是否一键审核、是否根据iD更新
   async update(params) {
     const { ctx } = this;
-    if (params.id == 0) { // 一键审核
-      // TODO: updateMany
+    // 一键审核
+    if (params.id == 0) {
+      // @updateMany
       await ctx.model.Comment.updateMany({}, { auditStatus: params.auditStatus, auditTime: ctx.helper.moment().unix() });
       return {
         msg: `评论一键${params.auditStatus === 1 ? '审核通过' : '驳回'}成功`,
       };
     }
+    // 根据iD更新内容
     const oldComment = await ctx.model.Comment.findOne({ _id: params.id });
     if (!oldComment) {
       return {
@@ -82,7 +84,7 @@ class CommentService extends Service {
     };
   }
 
-
+  // 删除：直接从库中删除、并处理下文章的数量
   async destroy(id) {
     const { ctx } = this;
     const oldComment = await ctx.model.Comment.findOne({ _id: id });
@@ -93,6 +95,7 @@ class CommentService extends Service {
     }
     await ctx.model.Comment.deleteOne({ _id: id });
     const articleId = oldComment.articleId;
+    // 总之，$inc操作符在MongoDB中用于原子性地递增或递减字段的值，可以帮助实现对文档中字段的快速更新操作。
     await ctx.model.Articles.updateOne({ _id: articleId }, { $inc: { comment: -1 } });
     return {
       msg: '评论删除成功',

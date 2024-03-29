@@ -4,8 +4,8 @@ const Service = require('egg').Service;
 
 class AboutService extends Service {
 
-
-  async index() { // 查询
+  // 查询
+  async index() {
     const { ctx } = this;
     const data = await ctx.model.About.findOne();
     // console.log('关于管理about -> 查询', data);
@@ -24,8 +24,8 @@ class AboutService extends Service {
     };
   }
 
-
-  async create(params) { // 新建： params：req.body  参数由controller传递过来
+  // 新建：关于管理
+  async create(params) {
     const { ctx } = this;
     const totalCount = await ctx.model.About.find().countDocuments();
     if (totalCount === 0) {
@@ -45,7 +45,10 @@ class AboutService extends Service {
     };
   }
 
-  async update(params) { // 更新
+
+  // 更新：更新关于管理
+  // findByIdAndUpdate
+  async update(params) {
     const { ctx } = this;
     const oldAbout = await ctx.model.About.findOne({ _id: params.id });
     // console.log('findDocs：', oldAbout); // 查找到的数据
@@ -55,7 +58,7 @@ class AboutService extends Service {
         createTime: oldAbout.createTime,
         updateTime: ctx.helper.moment().unix(),
       };
-      const res = await ctx.model.About.findByIdAndUpdate({ _id: params.id }, updateData, // TODO: findByIdAndUpdate
+      const res = await ctx.model.About.findByIdAndUpdate({ _id: params.id }, updateData, // @ findByIdAndUpdate
         {
           new: true, // 返回修改后的数据
           runValidators: true, // 执行Validaton验证

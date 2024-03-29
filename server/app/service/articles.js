@@ -4,8 +4,8 @@ const Service = require('egg').Service;
 
 class ArticlesService extends Service {
 
-
-  async updateCategoriesActicleNum() { // 更新分类文章数量
+  // 更新分类文章数量
+  async updateCategoriesActicleNum() {
     const { ctx } = this;
     const categories = await ctx.model.Categories.find();
     if (categories && categories.length > 0) {
@@ -20,8 +20,8 @@ class ArticlesService extends Service {
     }
   }
 
-
-  async updateTagsActicleNum() { // 更新标签文章数量
+  // 更新标签文章数量
+  async updateTagsActicleNum() {
     const { ctx } = this;
     const tags = await ctx.model.Tags.find();
     // console.log(tags);
@@ -38,7 +38,8 @@ class ArticlesService extends Service {
   }
 
 
-  async index(params) { // ------------------------->  TODO: 查询文章 (多参数查询)
+  // 查询：参数page、pageSize、categories、status、publishStatus、tags
+  async index(params) { // ------------------------->  TODO:
     const { ctx } = this;
     const page = params.page * 1;
     const pageSize = params.pageSize * 1;
@@ -47,7 +48,7 @@ class ArticlesService extends Service {
 
     const mustCon = {};
     if (params.categories) { mustCon.categories = params.categories; }
-    // FIXME: 严格模式 会查不到
+    // @ 严格模式 会查不到
     if (params.status != 0) { mustCon.status = params.status; }
     if (params.publishStatus != 0) { mustCon.publishStatus = params.publishStatus; }
     if (params.tags) { mustCon.tags = { $all: params.tags.split(',') }; } // [vue, react]
@@ -84,7 +85,8 @@ class ArticlesService extends Service {
     };
   }
 
-  async create(params) { // ------------------------->  添加文章
+  // 添加：先查询再添加 & 更新标签和分类里面的文章数量
+  async create(params) {
     const { ctx } = this;
     const oldArticles = await ctx.model.Articles.findOne({ title: params.title });
     if (oldArticles) return { msg: '该文章已存在' };
@@ -94,7 +96,6 @@ class ArticlesService extends Service {
       createTime: ctx.helper.moment().unix(),
     };
     const res = await ctx.model.Articles.create(data);
-    // TODO: 更新标签和分类里面的文章数量
     await this.updateCategoriesActicleNum();
     await this.updateTagsActicleNum();
     return {
@@ -103,8 +104,8 @@ class ArticlesService extends Service {
     };
   }
 
-
-  async update(params) { // ------------------------->  保存文章
+  // 更新：先查询再更新 & 更新标签和分类里面的文章数量
+  async update(params) {
     const { ctx } = this;
     const oldArticles = await ctx.model.Articles.findOne({ _id: params.id });
     if (!oldArticles) {
@@ -114,11 +115,9 @@ class ArticlesService extends Service {
     }
     const updateData = {
       ...params,
-      // createTime: oldArticles.createTime, // 不传是否会改掉？ 1642774039
       updateTime: ctx.helper.moment().unix(),
     };
     await ctx.model.Articles.updateOne({ _id: params.id }, updateData);
-    // TODO: 更新标签和分类里面的文章数量
     await this.updateCategoriesActicleNum();
     await this.updateTagsActicleNum();
     return {
@@ -126,8 +125,8 @@ class ArticlesService extends Service {
     };
   }
 
-
-  async destroy(id) { // ------------------------->  操作：删除文章
+  // 删除：先查询再删除 & 更新标签和分类里面的文章数量
+  async destroy(id) {
     const { ctx } = this;
     const oldArticles = await ctx.model.Articles.findOne({ _id: id });
     if (!oldArticles) {
@@ -136,7 +135,6 @@ class ArticlesService extends Service {
       };
     }
     await ctx.model.Articles.deleteOne({ _id: id });
-    // TODO: 更新标签和分类里面的文章数量
     await this.updateCategoriesActicleNum();
     await this.updateTagsActicleNum();
     return {
@@ -144,8 +142,8 @@ class ArticlesService extends Service {
     };
   }
 
-
-  async changeStatus(params) { // ------------------------->  文章状态 （开关）
+  // 文章状态：开启 / 停用
+  async changeStatus(params) {
     const { ctx } = this;
     const oldArticles = await ctx.model.Articles.findOne({ _id: params.id });
     if (!oldArticles) return { msg: '文章不存在' };
@@ -155,8 +153,8 @@ class ArticlesService extends Service {
     };
   }
 
-
-  async changePublishStatus(params) { // ------------------------->  操作：发布 / 下线
+  // 文章状态：发布 / 下线
+  async changePublishStatus(params) {
     const { ctx } = this;
     const oldArticles = await ctx.model.Articles.findOne({ _id: params.id });
     if (!oldArticles) {
@@ -170,8 +168,8 @@ class ArticlesService extends Service {
     };
   }
 
-
-  async changeCollectStatus(params) { // ------------------------->  顶部：一键开启 / 一键关闭收藏 （更新全部收藏的内容）
+  // 文章状态：一键开启 / 一键关闭收藏
+  async changeCollectStatus(params) {
     const { ctx } = this;
     await ctx.model.Articles.updateMany({}, { isCollect: params.isCollect });
     return {
@@ -179,8 +177,8 @@ class ArticlesService extends Service {
     };
   }
 
-
-  async edit(id) { // ------------------------->  点击编辑按钮：获取此iD数据返回给前台去渲染
+  // 编辑：根据iD获取文章详情
+  async edit(id) {
     const { ctx } = this;
     const oldArticles = await ctx.model.Articles.findOne({ _id: id });
     if (!oldArticles) return { msg: '文章不存在' };

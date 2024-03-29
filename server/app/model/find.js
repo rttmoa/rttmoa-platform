@@ -28,17 +28,71 @@ module.exports = app => {
     }
   );
   const findModel = mongoose.model('Find', FindSchema);
+  // console.log('find;;;;;;;;;;;;;;;;;;;;;;;;;;');
+
   // findModel.create({
   //   name: 'zhaoliu',
   //   age: 13,
   // });
 
+  // ! CURD
+  //
+  //
+  //
+  //
+
+  // @增加操作
+  // findModel.create({ name: 'zhaoliu', age: 1 }).then(res => console.log(res));
+  // findModel.insert({ name: 'zhaoliu', age: 14 }).then(res => console.log(res));
+  // findModel.insertOne({ name: 'zhaoliu', age: 15 }).then(res => console.log(res));
+
+  // @查询操作
+  // 无条件查询集合中文档
+  // findModel.find().then(res => console.log(res.length));
+  // 带条件查询集合中文档
+  // findModel.find({ name: 'zhaoliu' }).then(res => console.log(res.length));
+  // 查询一个文档
+  // findModel.findOne({ name: 't1' }).then(res => console.log(res));
+  // findModel.findOne(null || {}).then(res => console.log(res));
+
+  // mongodb操作符
+  // findModel.find({}, { name: 'zhaoliu' }).then(res => console.log(res.length)); // “_id”始终会被获取  投影查询
+  // findModel.find({}, { name: 'zhaoliu', _id: 0 }).then(res => console.log(res.length)); // ”_id”不会被获取  投影查询
+  // findModel.find({ $or: [{ name: 'b' }, { name: 'c' }], age: 12 }).then(res => console.log(res.length)); // 复合查询（或者，并且）
+  // findModel.find({ name: { $type: 'string' } }).then(res => console.log(res.length)); // type查询
+  // findModel.find({ name: { $in: [ /^l/, /^z/ ] } }); // 正则查询：https://blog.csdn.net/qq_62178197/article/details/131373646
+  // findModel.find().limit(2).skip(3)
+  //   .then(res => console.log(res)); // 分页查询
+  // findModel.find().sort({ age: 1, name: -1 }).then(res => console.log(res)); // 查询排序
+
+  // @更新
+  // findModel.update({ name: 't1' }, { name: 't2', age: 2 }).then(res => console.log(res));
+  // findModel.update({ name: 'zhang' }, { $set: { name: 'li' } }).then(res => console.log(res)); // set会判断set的字段存在则修改，不存在则添加
+  // findModel.updateOne({ _id: '65fef38e7335aa52d4f8160b' }, { name: 'One' }).then(res => console.log(res));
+  // findModel.updateOne({ _id: '65fef38e7335aa52d4f8160b' }, { $inc: { age: -2 } }).then(res => console.log(res)); // 数量 - 2
+  // findModel.updateMany({}, { updateTime: Date.now() }).then(res => console.log(res));
+  // findModel.findByIdAndUpdate({ _id: '65fef38e7335aa52d4f8160b' }, { name: 'One1' }, { new: true, runValidators: true }).then(res => console.log(res));
+
+  // @删除操作
+  // findModel.remove({ age: 99 }).then(res => console.log('操作结果：', res));
+  // findModel.deleteOne({ age: 99 }).then(res => console.log('操作结果：', res)); // n / deltedCount
+  // findModel.deleteMany({ age: 33 }).then(res => console.log('操作结果：', res)); // deletedCount: 3
+
+
+  // ! 下面为查询语法：聚合查询、正在查询、数据查询、逻辑操作符、元素操作符、评估操作符
+  //
+  // 创建数据便于以下的测试(删除全部文档，再创建)
+  // findModel.create({ name: 'a', age: 11 });
+  // findModel.create({ name: 'b', age: 12 });
+  // findModel.create({ name: 'c', age: 13 });
+  // findModel.create({ name: 'd', age: 14 });
+  // findModel.create({ name: 'e', age: 15 });
+  // findModel.create({ name: 'f', age: 16 });
+
   // findModel.find().then(res => {
   //   console.log('总数量：', res.length);
   // }); // 6
 
-
-  // @下面为查询语法：聚合查询、正在查询、数据查询、逻辑操作符、元素操作符、评估操作符
 
   // @聚合查询
   // 聚合查询是指对数据库中的数据进行分组、计数、求和等操作。在MongoDB中，我们可以使用聚合管道来实现聚合查询。

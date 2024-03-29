@@ -3,7 +3,7 @@ const Service = require('egg').Service;
 
 class TagsService extends Service {
 
-
+  // 查询：参数为page、pageSize、name
   async index(params) {
     const { ctx } = this;
     const page = params.page * 1;
@@ -27,7 +27,7 @@ class TagsService extends Service {
     };
   }
 
-
+  // 新建：标签名不能相同
   async create(params) {
     const { ctx } = this;
     const oldTags = await ctx.model.Tags.findOne({
@@ -49,7 +49,7 @@ class TagsService extends Service {
     };
   }
 
-
+  // 更新：标签名不能相同
   async update(params) {
     const { ctx } = this;
     const oldTags = await ctx.model.Tags.findOne({ _id: params.id });
@@ -62,8 +62,7 @@ class TagsService extends Service {
       }
     }
     const updateData = {
-      // createTime: oldTags.createTime, // 不传是否会改掉？ 1642774039
-      updateTime: ctx.helper.moment().unix(), // ? 倒是会玩
+      updateTime: ctx.helper.moment().unix(),
       name: params.name,
     };
     await ctx.model.Tags.updateOne(
@@ -77,7 +76,7 @@ class TagsService extends Service {
     };
   }
 
-
+  // 删除：先查询再删除
   async destroy(id) {
     const { ctx } = this;
     const oldTags = await ctx.model.Tags.findOne({ _id: id });
@@ -92,7 +91,7 @@ class TagsService extends Service {
     };
   }
 
-
+  // 启用、停用标签
   async updateStatus(params) {
     const { ctx } = this;
     const oldTags = await ctx.model.Tags.findOne({ _id: params.id });

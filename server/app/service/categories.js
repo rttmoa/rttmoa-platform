@@ -3,7 +3,7 @@ const Service = require('egg').Service;
 
 class CategoriesService extends Service {
 
-
+  // 查询：参数为page、pageSize、name
   async index(params) {
     const { ctx } = this;
     const page = params.page * 1;
@@ -19,8 +19,7 @@ class CategoriesService extends Service {
       .sort({ createTime: -1 })
       .skip((page - 1) * pageSize)
       .limit(pageSize);
-    console.log('data', data);
-    // TODO: 返回给控制器
+    // console.log('data', data);
     return {
       data: {
         page,
@@ -31,7 +30,7 @@ class CategoriesService extends Service {
     };
   }
 
-  // 创建分类 （先查询再添加）
+  // 新建：分类名不能相同
   async create(params) {
     const { ctx } = this;
     const oldTags = await ctx.model.Categories.findOne({
@@ -66,7 +65,7 @@ class CategoriesService extends Service {
     // }
   }
 
-
+  // 更新：分类名不能相同
   async update(params) {
     const { ctx } = this;
     const oldTags = await ctx.model.Categories.findOne({ _id: params.id });
@@ -89,7 +88,7 @@ class CategoriesService extends Service {
   }
 
 
-  // 删除分类 （先查询再删除）
+  // 删除：先查询再删除
   async destroy(id) {
     const { ctx } = this;
     const oldTags = await ctx.model.Categories.findOne({ _id: id });

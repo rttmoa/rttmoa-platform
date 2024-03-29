@@ -3,17 +3,45 @@ const Service = require('egg').Service;
 
 class User1Service extends Service {
 
+  // 查询用户列表
   async index(params) {
-    console.log(params);
+    console.log('user1 params:', params);
     const { ctx } = this;
     const page = params.page * 1;
     const pageSize = params.pageSize * 1;
     params = ctx.helper.filterEmptyField(params);
 
-    // 仅根据用户名查询
-    const queryCon = params.userName ? { userName: { $regex: new RegExp(params.userName, 'i') } } : {};
-    const totalCount = await ctx.model.System.User1.find(queryCon).countDocuments();
-    const data = await ctx.model.System.User1.find(queryCon)
+    const queryCon = {};
+    if (params.role) {
+      queryCon.role = params.role;
+    }
+    if (params.status) {
+      queryCon.status = params.status;
+    }
+    if (params.marry) {
+      queryCon.marry = params.marry;
+      // queryCon.marry = { $eleMatch: { $eq: params.marry } };
+    }
+    if (params.hobby) {
+      // 'eat,sleep' > [ 'eat', 'sleep' ]
+      queryCon.hobby = { $all: params.hobby.split(',') };
+      // console.log(queryCon.hobby); // { '$all': [ 'eat', 'sleep' ] }
+    }
+    const timeQuery = ctx.helper.getTimeQueryCon(params);
+    const Query = {
+      $and: [
+        queryCon,
+        timeQuery,
+        {
+          userName: {
+            $regex: params.userName ? new RegExp(params.userName, 'i') : '',
+          },
+        },
+      ],
+    };
+    // console.log('Query', Query);
+    const totalCount = await ctx.model.System.User1.find(Query).countDocuments();
+    const data = await ctx.model.System.User1.find(Query)
       .sort({ loginTime: -1 })
       .skip((page - 1) * pageSize)
       .limit(pageSize);
@@ -27,14 +55,43 @@ class User1Service extends Service {
     };
   }
 
+  // 编辑用户
+  async edit(id) {
+    const { ctx } = this;
+    const oldUser = await ctx.model.System.User1.findOne({ _id: id });
+    if (!oldUser) return { msg: '用户不存在' };
+    return {
+      msg: '用户详情获取成功',
+      data: oldUser,
+    };
+  }
+
+  // 更新用户
+  // controller 中验证后添加的字段后，直接写入到数据库中
+  async update(params) {
+    const { ctx } = this;
+    const oldUser = await ctx.model.System.User1.findOne({ _id: params.id });
+    if (!oldUser) { return { msg: ' 用户不存在' }; }
+    const updateData = {
+      ...params,
+      password: await ctx.helper.genSaltPassword(params.password),
+      updateTime: Date.now(),
+    };
+    await ctx.model.System.User1.updateOne({ _id: params.id }, updateData);
+    return {
+      msg: '用户修改成功！',
+    };
+  }
+
   // 创建用户
+  // controller 中验证后添加的字段后、直接写入到数据库中
   async create(params) {
     const { ctx } = this;
-    // console.log('params', params); // params { userName: '张三', password: 'Wenc1101', sex: '1', status: '开心' }
     const oldUser = await ctx.model.System.User1.findOne({ userName: params.userName });
-    if (oldUser) { return { msg: '该用户已存在' }; }
+    if (oldUser) { return { msg: ' 该用户已存在' }; }
     const data = {
       ...params,
+      hobby: params.hobby.split(','),
       password: await ctx.helper.genSaltPassword(params.password),
       updateTime: Date.now(),
       createTime: Date.now(),
@@ -45,7 +102,6 @@ class User1Service extends Service {
       data: res,
     };
   }
-
 
   // 删除用户
   async destroy(id) {

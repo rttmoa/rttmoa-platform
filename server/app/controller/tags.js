@@ -82,7 +82,7 @@ class TagsController extends Controller {
 
   async destroy() {
     const { ctx, service } = this;
-    const id = ctx.params.id; // TODO: 获取 params
+    const id = ctx.params.id;
     const res = await service.tags.destroy(id);
     ctx.helper.success({
       ctx,
@@ -94,7 +94,7 @@ class TagsController extends Controller {
     const { ctx, service } = this;
     const data = ctx.request.body;
     const id = ctx.params.id;
-    // console.log(ctx.params.id, ctx.request.body); // TODO: 62f60ceba98d7c10accfbfae { id: '62f60ceba98d7c10accfbfae', status: false }
+    // console.log(ctx.params.id, ctx.request.body);
     const res = await service.tags.updateStatus({ id, status: data.status });
     ctx.helper.success({
       ctx,

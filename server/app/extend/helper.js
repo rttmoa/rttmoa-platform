@@ -13,8 +13,9 @@ module.exports = {
     // this.ctx => context 对象
     // this.app => application 对象
   },
-  moment, // updateTime: ctx.helper.moment().unix(),
-  /** #### TODO: 加密：加密密码 生成盐 */
+  // updateTime: ctx.helper.moment().unix()
+  moment,
+  /** #### 加密：加密密码 生成Salt */
   genSaltPassword(password) {
     return new Promise((resolve, reject) => {
       bcrypt.genSalt(10, (err, salt) => {
@@ -28,7 +29,7 @@ module.exports = {
       });
     });
   },
-  /** #### TODO: 解密：与数据库中密码相比较 返回Boolean  */
+  /** #### 解密：与数据库中密码相比较 返回Boolean  */
   comparePassword(_password, password) {
     return new Promise((resolve, reject) => {
       bcrypt.compare(_password, password, (err, isMatch) => {
@@ -38,7 +39,7 @@ module.exports = {
     });
   },
 
-  /** #### TODO: 状态码为200，成功  */
+  /** #### 状态码为200，成功  */
   success({ ctx, res = null }) {
     ctx.status = res.status ? res.status : 200;
     if (res.status) {
@@ -47,12 +48,12 @@ module.exports = {
     ctx.body = {
       ...res,
       data: res.data ? res.data : null,
-      code: res.code ? res.code : 0, // 0代表成功，其他代表失败
+      code: res.code ? res.code : 0, // 0 代表成功，其他代表失败
       msg: res.msg ? res.msg : '请求成功',
     };
   },
 
-  /** #### TODO: 过滤空对象，除了page&pageSize是否有别的属性  */
+  /** #### 过滤参数，除了page&pageSize是否有别的参数  */
   filterEmptyField(params) {
     const pam = {};
     for (const i in params) {
@@ -65,7 +66,7 @@ module.exports = {
     return pam;
   },
 
-  /** #### TODO: 参数中根据时间查询  */
+  /** #### 参数中根据时间查询  */
   getTimeQueryCon(params) {
     const timeQuery = {};
 

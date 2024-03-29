@@ -263,7 +263,7 @@ class ArticlesController extends Controller {
   async edit() {
     const { ctx, service } = this;
     const data = ctx.params;
-    const res = await service.articles.edit(data.id); // TODO: 编辑文章时，根据地址栏iD获取文章详情
+    const res = await service.articles.edit(data.id);
     ctx.helper.success({
       ctx,
       res,
