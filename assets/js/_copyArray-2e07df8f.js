@@ -1,0 +1,1 @@
+import{_ as e,e as i}from"./_baseAssignValue-30031c1b.js";var o=e,t=i,l=Object.prototype,p=l.hasOwnProperty;function g(n,a,r){var s=n[a];(!(p.call(n,a)&&t(s,r))||r===void 0&&!(a in n))&&o(n,a,r)}var f=g;function u(n,a){var r=-1,s=n.length;for(a||(a=Array(s));++r<s;)a[r]=n[r];return a}var h=u;export{f as _,h as a};
