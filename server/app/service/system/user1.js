@@ -1,8 +1,26 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable strict */
 const Service = require('egg').Service;
 
 class User1Service extends Service {
 
+  // 查看this实例
+  async show() {
+    const { ctx } = this;
+    // console.log('this', this.logger.info('日志信息')); // logger 对象
+    // console.log('this', this.logger.warn('日志警告'));
+    // console.log('this', this.logger.error('日志错误'));
+    // console.log('this', this.config); // 应用运行时的 配置项。
+    // console.log('this', this.app.config.env);
+    // console.log('this', this.service); // 应用定义的 Service。通过它，我们可以访问到其他业务层
+    // console.log('this', this.app); // 当前应用 Application 对象实例
+    // console.log('this', this.ctx); // 当前请求的上下文 Context 对象实例
+    return {
+      msg: '查询',
+      data: this.app,
+    };
+
+  }
   // 查询用户列表
   async index(params) {
     console.log('user1 params:', params);
@@ -58,6 +76,7 @@ class User1Service extends Service {
   // 编辑用户
   async edit(id) {
     const { ctx } = this;
+    console.log('findUser', await ctx.model.System.User1.findOne({ userName: '张三' }));
     const oldUser = await ctx.model.System.User1.findOne({ _id: id });
     if (!oldUser) return { msg: '用户不存在' };
     return {
@@ -106,15 +125,23 @@ class User1Service extends Service {
   // 删除用户
   async destroy(id) {
     const { ctx } = this;
+    // console.log('this', this.logger.info('日志信息')); // logger 对象
+    // console.log('this', this.logger.warn('日志警告'));
+    // console.log('this', this.logger.error('日志错误'));
+    // console.log('this', this.config); // 应用运行时的 配置项。
+    // console.log('this', this.app.config.env);
+    // console.log('this', this.service); // 应用定义的 Service。通过它，我们可以访问到其他业务层
+    // console.log('this', this.app); // 当前应用 Application 对象实例
+    // console.log('this', this.ctx); // 当前请求的上下文 Context 对象实例
+
     try {
       const oldUser = await ctx.model.System.User1.findOne({ _id: id });
-      console.log(oldUser);
       if (!oldUser) {
         return {
           msg: '用户不存在',
         };
       }
-      await ctx.model.System.User1.deleteOne({ _id: id });
+      // await ctx.model.System.User1.deleteOne({ _id: id });
       return {
         msg: '用户删除成功',
       };

@@ -5,7 +5,8 @@ const userConfig = require('./config.user');
 /**
  * @param {Egg.EggAppInfo} appInfo app info
  */
-// ! 环境配置：https://www.eggjs.org/zh-CN/basics/config#%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE
+// 环境配置：https://www.eggjs.org/zh-CN/basics/config
+// config.default.js 为默认的配置文件，所有环境都会加载这个配置文件，一般也会作为开发环境的默认配置文件。
 module.exports = appInfo => {
   /**
    * built-in config
@@ -38,15 +39,11 @@ module.exports = appInfo => {
   // config.ipHeaders = 'X-Real-Ip, X-Forwarded-For'; // 开启 proxy 配置后，应用会解析 X-Forwarded-For 请求头来获取客户端的真实 IP
   // config.maxIpsCount = 1; // 限制前置代理的数量。这样在获取请求真实 IP 地址时，会忽略掉用户所传递的伪造 IP 地址
 
-  // 文件
-  // config.multipart = {
-  //   mode: "file",
-  //   fileExtensions: [".md"], // 增加对 md 扩展名的文件支持
-  // };
 
   config.session = {
-    key: 'BLOG_EGG_SESSION_KEY',
+    key: 'BLOG_EGG_SESSION_KEY', // Session Cookie 名称
     encrypt: false,
+    // maxAge: 86400000, // Session 最长有效期
   };
 
   config.mongoose = {
@@ -63,6 +60,22 @@ module.exports = appInfo => {
   config.auth = {
     whiteList: [ userConfig.userName ],
   };
+  // 将 logger 目录放到代码目录下
+  // config.logger = {
+  //   dir: path.join(appInfo.baseDir, 'logs'),
+  // };
+
+  config.bodyParser = {
+    jsonLimit: '1kb',
+    formLimit: '100kb', // 10b, 1kb, 100kb (最大100kb)
+  };
+  config.multipart = {
+    // 注意：当重写了 whitelist 时，fileExtensions 不生效。
+    // mode: "file",
+    // fileExtensions: ['.apk'] // 增加对 '.apk' 扩展名的文件支持
+    // whitelist: [ '.png' ], // 覆盖整个白名单，只允许上传 '.png' 格式
+  };
+
 
   return {
     ...config,

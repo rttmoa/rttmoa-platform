@@ -2,6 +2,12 @@
 // eslint-disable-next-line strict
 const moment = require('moment');
 module.exports = app => {
+  app.beforeStart(async () => {
+    const ctx = app.createAnonymousContext();
+    // 应用启动前预加载
+    // await ctx.service.posts.load();
+    // console.log('预加载');
+  });
   app.once('server', server => {
     // websocket 相关操作
     const time = moment().format('YYYY-MM-DD HH:mm:ss');

@@ -1,29 +1,21 @@
 'use strict';
 /** @param {Egg.Application} app - egg application */
-// TODO: 路由配置：https://www.eggjs.org/zh-CN/basics/router
+// @路由配置：https://www.eggjs.org/zh-CN/basics/router
 module.exports = app => {
   const { router, controller, jwt } = app;
-  // console.log('app', app);
-  // app {
-  //   env: 'local',
-  //   name: 'server',
-  //   baseDir: '\\Project\\\server',
-  //   subdomainOffset: 2,
-  //   config: '<egg config>',
-  //   controller: '<egg controller>',
-  //   httpclient: '<egg httpclient>',
-  //   loggers: '<egg loggers>',
-  //   middlewares: '<egg middlewares>',
-  //   router: '<egg router>',
-  //   serviceClasses: '<egg serviceClasses>'
-  // }
+  // console.log('router:app', app);
+
+  // 路由：重定向		内部重定向、外部重定向
+  // 路由：中间件的使用
+  // 路由：太多路由映射
 
   //  -->  /api/v1
   const baseRouter = app.config.baseRouter;
 
   require('./routerCategory')(app);
   router.resources('product', baseRouter + '/product', jwt, controller.module.product); // 产品管理
-  router.resources('user1', baseRouter + '/user1', jwt, controller.system.user1); // 产品管理
+  router.resources('user1', baseRouter + '/user1', jwt, controller.system.user1); // 用户管理
+  router.resources('menu', baseRouter + '/menu', jwt, controller.system.menu); // 菜单管理
 
   router.post(baseRouter + '/upload', jwt, controller.utils.uploadFiles); // 上传文件到七牛云
 

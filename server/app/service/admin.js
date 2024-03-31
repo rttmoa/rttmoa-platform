@@ -18,17 +18,29 @@ class AdminService extends Service {
     console.log('isMatch', isMatch);
     if (!isMatch) return { msg: '用户名或密码错误' };
 
+    // 设置 Session
+    // ctx.session.user = user;
+    // 勾选 `记住我` 时，设置30天过期时间
+    // if (params.rememberMe) {
+    // 	 ctx.session.maxAge = 1000 * 3600 * 24 * 30;
+    //   ctx.session.maxAge = ms('30d');
+    // }
+
     const token = app.jwt.sign({ ...oldUser }, app.config.jwt.secret, {
       // expiresIn: '3s', // 控制 token 过期时间
       expiresIn: '1y', // 一年
     });
     // console.log('token', token);
 
-    // @egg.js cookie: https://blog.csdn.net/u012570307/article/details/117151784
+    // cookie：https://www.eggjs.org/zh-CN/core/cookie-and-session#cookie
+    // cookie: https://blog.csdn.net/u012570307/article/details/117151784
     ctx.cookies.set('token', token, {
       // 1000 * 3600 * 24 = 86400000毫秒   cookie存储一天     设置过期时间后关闭浏览器重新打开cookie还存在   1000 * 3 = 3s
       maxAge: 1000 * 3600 * 24,
-      httpOnly: true,
+      // Cookie 在浏览器端不能被修改，不能看到明文
+      httpOnly: true, // 禁止前端访问
+      signed: true, // 对cookie签名，防止用户修改cookie
+      encrypt: true, // 加密传输
     });
 
     // 登陆后返回 token
