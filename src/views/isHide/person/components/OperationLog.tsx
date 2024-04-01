@@ -1,6 +1,15 @@
-import { Form, Table, Tag } from 'antd'
+import { Form, Table, TableColumnsType, Tag } from 'antd'
+import { ColumnProps } from 'antd/lib/table'
 import React, { useEffect, useState } from 'react'
 
+interface DataType {
+	title: string
+	icon: string
+	key: string
+	path: string
+	element: string
+	children?: DataType[]
+}
 export default function OperationLog() {
 	const [ip, setIp] = useState('')
 	console.log(navigator.appVersion)
@@ -26,7 +35,7 @@ export default function OperationLog() {
 		},
 	]
 
-	const columns = [
+	const columns: any = [
 		{
 			title: '行为',
 			dataIndex: 'action',
