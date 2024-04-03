@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.8](https://github.com/rttmoa/rttmoa-platform/compare/v2.2.7...v2.2.8) (2024-04-03)
+
+### Bug Fixes
+
+-   🧩 globalization.tsx ([fb9c283](https://github.com/rttmoa/rttmoa-platform/commit/fb9c2835bd6ecdf4c6f7339cfa60bd7edd82adc8))
+
 ### [2.2.7](https://github.com/rttmoa/rttmoa-platform/compare/v2.2.6...v2.2.7) (2024-03-31)
 
 ### Features
