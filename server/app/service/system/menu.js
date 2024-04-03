@@ -34,16 +34,40 @@ class MenuService extends Service {
       .limit(pageSize);
 
     // @ 递归调用树结构
-    function handleMenuChildren(menuList, parentId = 0) {
+    // function handleMenuChildren(menuList, parentId = 0) {
+    //   const newMenuList = JSON.parse(JSON.stringify(menuList));
+    //   return newMenuList.filter(item => item.parentId === parentId).map(item => {
+    //     const children = handleMenuChildren(menuList, item.nodeId);
+    //     if (children.length) {
+    //       item.children = children;
+    //     }
+    //     return item;
+    //   });
+    // }
+    function handleMenuChildren(menuList) {
       const newMenuList = JSON.parse(JSON.stringify(menuList));
-      return newMenuList.filter(item => item.parentId === parentId).map(item => {
-        const children = handleMenuChildren(menuList, item.nodeId);
-        if (children.length) {
-          item.children = children;
-        }
-        return item;
+      const menuDictionary = {};
+
+      // 构建菜单字典
+      newMenuList.forEach(item => {
+        item.children = [];
+        menuDictionary[item.nodeId] = item;
       });
+
+      // 将子菜单添加到父菜单的 children 属性中
+      newMenuList.forEach(item => {
+        if (item.parentId !== 0) {
+          const parentMenu = menuDictionary[item.parentId];
+          if (parentMenu) {
+            parentMenu.children.push(item);
+          }
+        }
+      });
+
+      // 返回根节点
+      return newMenuList.filter(item => item.parentId === 0);
     }
+
     const menu = handleMenuChildren(data);
     console.log('处理后的菜单结构：', menu);
     return {
@@ -89,15 +113,14 @@ class MenuService extends Service {
   }
 
   // @创建菜单：说明
-  // @新增菜单后需要处理数据下有无children、并且处理element、redirect字段
+  // @新增菜单后需要处理数据下有无children、需要处理element、redirect字段
   // 添加一级分类时：pid为0
   // 添加二级分类时：pid为一级分类的nodeId
   // 添加三级分类时：pid为二级分类的nodeId
   async create(params) {
     const { ctx } = this;
     console.log('params', params);
-    const meta = params.meta;
-    console.log('meta', typeof meta);
+    console.log('meta', params.meta);
 
     const pid = +(params.parentId);
     let gte = null;
@@ -138,6 +161,8 @@ class MenuService extends Service {
   }
 
   // 删除菜单
+  // 如果删除一级菜单，如果有子菜单，需要先删除子菜单才能删除一级菜单
+  // 如果删除二级菜单，判断一级菜单下是否有children、需要处理处理element、redirect字段
   async destroy(id) {
     const { ctx } = this;
     try {

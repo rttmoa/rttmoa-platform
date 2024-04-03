@@ -108,6 +108,32 @@
             "isAffix": false
           }
         },
+				{
+          "path": "/assembly/markdown",
+          "element": "/assembly/markdown/index",
+          "meta": {
+            "key": "markdown",
+            "icon": "AppstoreOutlined",
+            "title": "Markdown",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        },
+        {
+          "path": "/assembly/draft",
+          "element": "/assembly/draft/index",
+          "meta": {
+            "key": "draft",
+            "icon": "AppstoreOutlined",
+            "title": "wangeditor",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false
+          }
+        },
         {
           "path": "/assembly/svgIcon",
           "element": "/assembly/svgIcon/index",
@@ -159,46 +185,7 @@
             "isFull": false,
             "isAffix": false
           }
-        },
-        {
-          "path": "/assembly/cssModules",
-          "element": "/assembly/cssModules/index",
-          "meta": {
-            "key": "cssModules",
-            "icon": "AppstoreOutlined",
-            "title": "CSSModules",
-            "isLink": "",
-            "isHide": false,
-            "isFull": false,
-            "isAffix": false
-          }
-        },
-        {
-          "path": "/assembly/markdown",
-          "element": "/assembly/markdown/index",
-          "meta": {
-            "key": "markdown",
-            "icon": "AppstoreOutlined",
-            "title": "Markdown",
-            "isLink": "",
-            "isHide": false,
-            "isFull": false,
-            "isAffix": false
-          }
-        },
-        {
-          "path": "/assembly/draft",
-          "element": "/assembly/draft/index",
-          "meta": {
-            "key": "draft",
-            "icon": "AppstoreOutlined",
-            "title": "富文本",
-            "isLink": "",
-            "isHide": false,
-            "isFull": false,
-            "isAffix": false
-          }
-        }
+        } 
       ]
     },
     {

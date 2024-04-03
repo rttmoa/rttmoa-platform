@@ -15,11 +15,24 @@ class User1Service extends Service {
     // console.log('this', this.service); // 应用定义的 Service。通过它，我们可以访问到其他业务层
     // console.log('this', this.app); // 当前应用 Application 对象实例
     // console.log('this', this.ctx); // 当前请求的上下文 Context 对象实例
+
+    const userAgent = this.ctx.request.header['user-agent'];
+    // 使用正则表达式匹配浏览器版本
+    const browserInfo = {
+      browser: 'Unknown',
+      version: 'Unknown',
+    };
+    const browserMatch = userAgent.match(/(Chrome|Firefox|Safari|Edge)\/([\d.]+)/i);
+    if (browserMatch && browserMatch.length >= 3) {
+      browserInfo.browser = browserMatch[1];
+      browserInfo.version = browserMatch[2];
+    }
+    console.log('浏览器：', browserInfo); // 浏览器： { browser: 'Chrome', version: '123.0.0.0' }
+
     return {
       msg: '查询',
       data: this.app,
     };
-
   }
   // 查询用户列表
   async index(params) {
