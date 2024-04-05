@@ -1,44 +1,42 @@
-import { Button, Input, Space, Alert, Divider, Typography, Card } from "antd";
-import useEyeDropper from "@/hooks/useEyeDropper";
+import { Button, Input, Space, Alert, Divider, Typography, Card } from 'antd'
+import useEyeDropper from '@/hooks/useEyeDropper'
 
-const { Link } = Typography;
+const { Link } = Typography
 
 const ColorPicker: React.FC = () => {
-  const { color, isEnabled, openEyeDropper } = useEyeDropper();
+	let { color, isEnabled, openEyeDropper } = useEyeDropper()
+	// color = "#90afe0"
+	const message = (
+		<span>
+			通过 EyeDropper API 实现，MDN 官方文档请查看 ：
+			<Link href="https://developer.mozilla.org/zh-CN/docs/Web/API/EyeDropper" target="_blank">
+				https://developer.mozilla.org/zh-CN/docs/Web/API/EyeDropper
+			</Link>
+		</span>
+	)
 
-  const message = (
-    <span>
-      通过 EyeDropper API 实现，官方文档请查看 ：
-      <Link href="https://developer.mozilla.org/zh-CN/docs/Web/API/EyeDropper" target="_blank">
-        https://developer.mozilla.org/zh-CN/docs/Web/API/EyeDropper
-      </Link>
-    </span>
-  );
+	return (
+		<Card className="w-[900px] mx-auto">
+			<Alert message={message} type="success" showIcon />
+			<Divider />
+			{isEnabled ? (
+				<>
+					<Space.Compact className="w-[350px]">
+						<Input placeholder="The color picked up by the color picker" value={color} />
+						<Button type="primary" onClick={openEyeDropper}>
+							Open
+						</Button>
+					</Space.Compact>
+					<Divider />
+					<div style={{ width: 200, height: 200, backgroundColor: color }}></div>
+				</>
+			) : (
+				<Button type="default" disabled>
+					当前浏览器不支持 EyeDropper API，请切换到 Chrome / Edge
+				</Button>
+			)}
+		</Card>
+	)
+}
 
-  return (
-    <Card>
-      <Alert message={message} type="success" showIcon />
-
-      <Divider />
-
-      {isEnabled ? (
-        <>
-          <Space.Compact style={{ width: "350px" }}>
-            <Input placeholder="The color picked up by the color picker" value={color} />
-            <Button type="primary" onClick={openEyeDropper}>
-              Open
-            </Button>
-          </Space.Compact>
-          <br />
-          <div style={{ width: 200, height: 200, backgroundColor: color, margin: "0 auto" }}></div>
-        </>
-      ) : (
-        <Button type="primary" disabled>
-          当前浏览器不支持 EyeDropper API，请切换到 Chrome / Edge
-        </Button>
-      )}
-    </Card>
-  );
-};
-
-export default ColorPicker;
+export default ColorPicker

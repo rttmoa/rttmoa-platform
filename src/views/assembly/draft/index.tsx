@@ -1,24 +1,22 @@
-import { Card, Col, Row } from "antd";
-import MyEditor from "./component";
+import { Alert, Card, Col, Row } from 'antd'
+import MyEditor from './component'
+import Link from 'antd/lib/typography/Link'
 
 export default function Draft() {
+	const message = (
+		<span>
+			富文本使用 wangEditor 5 插件完成，官方文档请查看 ：
+			<Link href="https://www.wangeditor.com/" target="_blank">
+				wangEditor 5
+			</Link>
+		</span>
+	)
 	return (
 		<div>
 			<Card>
-				<Row gutter={16}>
-					<Col span={24}>
-						<Card>
-							<MyEditor />
-						</Card>
-					</Col>
-					<Col span={12}>
-						<Card title="同步转换Markdown" bordered></Card>
-					</Col>
-					<Col span={12}>
-						<Card title="同步转换Html" bordered></Card>
-					</Col>
-				</Row>
+				<Alert className="mb-4" message={message} type="info" showIcon />
+				<MyEditor />
 			</Card>
 		</div>
-	);
+	)
 }

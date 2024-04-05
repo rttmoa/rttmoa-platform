@@ -57,12 +57,15 @@ export const option1Fn = (isDark: boolean): ECOption => {
 export const option2Fn = (isDark: boolean): ECOption => {
 	return {
 		// 标题组件，包含主标题和副标题。
-		title: {
-			text: 'Stacked Line',
-		},
+		// title: {
+		// 	text: 'Stacked Line',
+		// },
 		// 提示框组件。
 		tooltip: {
 			trigger: 'axis',
+		},
+		legend: {
+			data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine'],
 		},
 		grid: {
 			left: '3%',

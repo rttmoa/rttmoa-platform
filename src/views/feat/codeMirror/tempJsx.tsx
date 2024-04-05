@@ -1,4 +1,4 @@
-import React from 'react'
+export const tempJsx = `import React from 'react'
 import type { RadioChangeEvent, TableColumnsType } from 'antd'
 import { Card, DatePicker, Divider, Pagination, Radio, Space, Table, TimePicker, Transfer, Typography } from 'antd'
 import { RootState, useDispatch, useSelector } from '@/redux'
@@ -15,8 +15,7 @@ interface DataType {
 const columns: any = [
 	{ title: 'Name', dataIndex: 'name' },
 	{ title: 'Age', dataIndex: 'age' },
-]
-
+] 
 const Globalization: React.FC = () => {
 	const { t } = useTranslation()
 
@@ -61,3 +60,4 @@ const Globalization: React.FC = () => {
 }
 
 export default Globalization
+`

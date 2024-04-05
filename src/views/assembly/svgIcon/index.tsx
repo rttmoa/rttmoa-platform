@@ -18,8 +18,7 @@ const SvgIconPage = () => {
 	return (
 		<>
 			<Card className="svg-content mb-6">
-				<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-				<Alert message={message} type="success" showIcon />
+				<Alert message={message} type="info" showIcon />
 				<div className="icon-list">
 					<SvgIcon name="1" iconStyle={{ width: '180px' }} />
 					<SvgIcon name="2" iconStyle={{ width: '180px' }} />
@@ -51,12 +50,12 @@ const SvgIconPage = () => {
 							type="info"
 							message={<b>github svg</b>}
 							description={
-								<div className="flex">
+								<Space size="large">
 									<GithubIcon size={100} />
 									<GithubIcon style={{ color: 'yellow' }} />
 									<GithubIcon style={{ color: 'blue' }} />
 									<GithubIcon style={{ fill: 'blue', color: '#fff' }} />
-								</div>
+								</Space>
 							}
 						/>
 					</Col>

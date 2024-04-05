@@ -1,16 +1,20 @@
 import { Card, Col, Descriptions, Row, Typography } from 'antd'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { RootState, useSelector } from '@/redux'
 import { option1Fn, option2Fn, option3Fn, option4Fn, option5Fn, option6Fn, option7Fn, option8Fn, option9Fn } from './config'
-import ECharts from '@/components/Echarts'
+import ECharts, { EChartsRef } from '@/components/Echarts'
 import './index.less'
 
 const { Link } = Typography
 
 const EChartsPage: React.FC = () => {
 	const isDark = useSelector((state: RootState) => state.global.isDark)
-	const e1Ref = useRef(null)
-	// console.log("Eref", e1Ref.current);
+	const e1Ref = useRef<EChartsRef | null>(null)
+	const e7Ref = useRef<EChartsRef | null>(null)
+	useEffect(() => {
+		// console.log(e1Ref.current && e1Ref.current?.instance())
+		// console.log(e7Ref.current?.instance()?.getOption());
+	}, [])
 
 	return (
 		<Row gutter={[12, 10]}>
@@ -46,7 +50,7 @@ const EChartsPage: React.FC = () => {
 			</Col>
 			<Col xl={8} lg={12} md={12} sm={24} xs={24}>
 				<Card hoverable title="仪表图">
-					<ECharts height={284} option={option7Fn()} />
+					<ECharts height={284} ref={e7Ref} option={option7Fn()} />
 				</Card>
 			</Col>
 			<Col xl={8} lg={12} md={12} sm={24} xs={24}>
