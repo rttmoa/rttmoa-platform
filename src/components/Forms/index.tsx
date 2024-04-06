@@ -1,169 +1,143 @@
-import { Button, Checkbox, Col, DatePicker, Form, Input, Row, Select } from "antd";
-import React, { useState } from "react";
+import { Button, Checkbox, Col, DatePicker, Form, Input, Row, Select, Space } from 'antd'
+import React, { useCallback, useState } from 'react'
 
 const initFilter = (arr: any[]) => {
-	const obj: any = {};
+	const obj: any = {}
 	arr.forEach((item: any) => {
 		switch (item.type) {
-			case "inputString":
-				obj[item.name] = item.initValue || "";
-				break;
-			case "select":
-				obj[item.name] = item.initValue || 0;
-				break;
-			case "dateRange":
+			case 'inputString':
+				obj[item.name] = item.initValue || ''
+				break
+			case 'select':
+				obj[item.name] = item.initValue || 0
+				break
+			case 'dateRange':
 				item.name.forEach((name: string | number) => {
-					obj[name] = "";
-				});
-				break;
+					obj[name] = ''
+				})
+				break
 			default:
-				break;
+				break
 		}
-	});
-	return obj;
-};
+	})
+	return obj
+}
 
 function getOptionList(data = []) {
 	if (!data) {
-		return [];
+		return []
 	}
-	let options: any = []; //[<Option value="0" key="all_key">全部</Option>];
+	let options: any = [] //[<Option value="0" key="all_key">全部</Option>];
 	data.forEach((item: any) => {
 		options.push(
 			<Select.Option value={item.id} key={item.id}>
 				{item.name}
 			</Select.Option>
-		);
-	});
-	return options;
+		)
+	})
+	return options
 }
 function formateDate(time: string | number) {
-	if (!time) return "";
-	const date = new Date(time);
-	const month = date.getMonth() < 9 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
-	const data = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
-	return `${date.getFullYear()}-${month}-${data}`;
+	if (!time) return ''
+	const date = new Date(time)
+	const month = date.getMonth() < 9 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
+	const data = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
+	return `${date.getFullYear()}-${month}-${data}`
 }
+
+function renderFormItem(item: any) {
+	const { label, field, type, placeholder, width, list, style } = item
+	switch (type) {
+		case 'TIME':
+			return (
+				<Form.Item>
+					<Form.Item name={'startTime'} label={'开始时间'} key={'startTime'}>
+						<DatePicker style={width} showTime={true} placeholder={placeholder} format="YYYY-MM-DD hh:mm:ss" />
+					</Form.Item>
+					<Form.Item label="结束时间" name={'endTime'} key={'endTime'}>
+						<DatePicker style={width} showTime={true} placeholder={placeholder} format="YYYY-MM-DD hh:mm:ss" />
+					</Form.Item>
+				</Form.Item>
+			)
+		case 'INPUT':
+			return (
+				<Form.Item name={field} label={label} key={field} style={style}>
+					<Input type="text" placeholder={placeholder} style={{ width }} />
+				</Form.Item>
+			)
+		case 'SELECT':
+			return (
+				<Form.Item name={field} label={label} key={field} style={style}>
+					<Select style={{ width }} placeholder={placeholder}>
+						{getOptionList(list)}
+					</Select>
+				</Form.Item>
+			)
+		case 'CHECKBOX':
+			return (
+				<Form.Item name={field} label={label} key={field}>
+					<Checkbox>{label}</Checkbox>
+				</Form.Item>
+			)
+		default:
+			return null
+	}
+}
+
 /**
  * 封装 Form 表格查询条件条件
  * @param props
  * @returns
  */
 export default function MultiForm(props: any) {
-	const { filterSubmit, multiForm } = props;
+	const { filterSubmit, multiForm } = props
+	const [expand, setexpand] = useState(false)
 
-	// 展开，收起按钮
-	const [expand, setexpand] = useState(false);
-
-	// 表单提交按钮
-	const Submit = () => {
-		let filterValue = multiForm.getFieldsValue();
-		console.log("filterValue", filterValue);
+	const Submit = useCallback(() => {
+		let filterValue = multiForm.getFieldsValue()
 		if (filterValue.startTime) {
-			filterValue.startTime = formateDate(filterValue.startTime);
+			filterValue.startTime = formateDate(filterValue.startTime)
 		}
 		if (filterValue.endTime) {
-			filterValue.endTime = formateDate(filterValue.endTime);
+			filterValue.endTime = formateDate(filterValue.endTime)
 		}
-		filterSubmit && filterSubmit(filterValue);
-	};
+		filterSubmit && filterSubmit(filterValue)
+	}, [filterSubmit, multiForm])
 
-	// 重置按钮
-	const reset = () => {
-		console.log("重置按钮");
-		multiForm.resetFields();
-	};
+	const reset = useCallback(() => {
+		multiForm.resetFields()
+	}, [multiForm])
 
-	const initFormList = (): React.ReactNode[] => {
-		const { formList, extendFormList } = props;
-		let formItemList: any[] = [];
+	const initFormList = () => {
+		const { formList, extendFormList } = props
+		let formItemList = []
 		if (formList && formList.length > 0) {
-			formList.forEach((item: any, index: number) => {
-				const { label, field, tree, type, initialValue, placeholder, width, name } = item;
-				switch (type) {
-					case "TIME":
-						formItemList.push(
-							<Form.Item name={"startTime"} label={"开始时间"} key={"startTime"}>
-								<DatePicker style={width} showTime={true} placeholder={placeholder} format="YYYY-MM-DD hh:mm:ss" />
-							</Form.Item>,
-							<Form.Item label="结束时间" name={"endTime"} key={"endTime"}>
-								<DatePicker style={width} showTime={true} placeholder={placeholder} format="YYYY-MM-DD hh:mm:ss" />
-							</Form.Item>
-						);
-						break;
-					case "INPUT":
-						formItemList.push(
-							<Form.Item name={field} label={label} key={field}>
-								<Input type="text" style={{ width }} placeholder={placeholder} />
-							</Form.Item>
-						);
-						break;
-					case "SELECT":
-						formItemList.push(
-							<Form.Item name={field} label={label} key={field}>
-								<Select style={{ width }} placeholder={placeholder}>
-									{getOptionList(item.list)}
-								</Select>
-							</Form.Item>
-						);
-						break;
-					case "CHECKBOX":
-						formItemList.push(
-							<Form.Item name={field} label={label} key={field}>
-								<Checkbox>{label}</Checkbox>
-							</Form.Item>
-						);
-						break;
-					default:
-						break;
-				}
-			});
+			formItemList = formList.map(renderFormItem)
 		}
 
-		// 展开的表单
 		if (extendFormList && extendFormList.length > 0) {
-			extendFormList.forEach((item: any) => {
-				const { label, field, tree, type, initialValue, placeholder, width, name, style } = item;
-				if (type === "INPUT") {
-					const INPUT = (
-						<Form.Item name={field} label={label} key={field} style={style}>
-							<Input type="text" placeholder={placeholder} style={{ width }} />
-						</Form.Item>
-					);
-					if (expand === true) {
-						formItemList.push(INPUT);
-					} else {
-						formItemList.push([]);
-					}
-				} else if (type === "SELECT") {
-					const SELECT = (
-						<Form.Item name={field} label={label} key={field} style={style}>
-							<Select style={{ width }} placeholder={placeholder}>
-								{getOptionList(item.list)}
-							</Select>
-						</Form.Item>
-					);
-					if (expand === true) {
-						formItemList.push(SELECT);
-					} else {
-						formItemList.push([]);
-					}
-				}
-			});
+			const extraItems = expand ? extendFormList.map(renderFormItem) : []
+			formItemList = [...formItemList, ...extraItems]
 		}
-		return formItemList;
-	};
-
+		return formItemList
+	}
+	const toggleExpand = useCallback(() => {
+		setexpand(prevExpand => !prevExpand)
+	}, [])
 	return (
 		<div>
-			<Form layout="inline" form={multiForm}>
-				<div style={{ display: "flex" }}>
-					<Row style={{ width: "calc(100% - 300px)" }} gutter={[32, 24]}>
-						{initFormList().map((value, index) => {
-							return <Col span={8}>{value}</Col>;
+			<Form layout="horizontal" form={multiForm}>
+				<div style={{ display: 'flex' }}>
+					<Row style={{ width: 'calc(100% - 250px)' }}>
+						{initFormList().map((value: any, index: number) => {
+							return (
+								<Col xs={24} sm={24} md={24} lg={12} xl={8}>
+									{value}
+								</Col>
+							)
 						})}
 					</Row>
-					<div style={{ width: 300, position: "fixed", right: 0 }}>
+					<div style={{ width: 200 }}>
 						<Form.Item>
 							<Button type="primary" onClick={Submit}>
 								查询
@@ -171,17 +145,15 @@ export default function MultiForm(props: any) {
 							<Button className="mx-3" onClick={reset}>
 								重置
 							</Button>
-							<a
-								href="javascript:;"
-								onClick={() => {
-									setexpand(!expand);
-								}}>
-								{props && props.extendFormList && props.extendFormList.length > 0 ? (expand === false ? "展开" : "收起") : ""}
-							</a>
+							{props.extendFormList?.length > 0 && (
+								<button type="button" onClick={toggleExpand}>
+									{expand ? '收起' : '展开'}
+								</button>
+							)}
 						</Form.Item>
 					</div>
 				</div>
 			</Form>
 		</div>
-	);
+	)
 }

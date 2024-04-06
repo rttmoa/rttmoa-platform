@@ -1,12 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Button, Input, Space, Table, Tag, Tooltip } from 'antd'
 import { DeleteOutlined, DownloadOutlined, EditOutlined, EyeOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons'
-import type { GetProp, GetRef, InputRef, TableColumnsType, TableProps } from 'antd'
-import Highlighter from 'react-highlight-words'
-import type { FilterDropdownProps } from 'antd/es/table/interface'
-import { TableColumnType } from 'antd/lib'
+import type { GetProp, TableProps } from 'antd'
 import qs from 'qs'
-import './index.less'
 
 type TableRowSelection<T> = TableProps<T>['rowSelection']
 type TablePaginationConfig = Exclude<GetProp<TableProps, 'pagination'>, boolean>
@@ -74,7 +70,6 @@ interface DataType {
 	}
 	nat: string
 }
-type DataIndex = keyof DataType
 
 interface TableParams {
 	pagination?: TablePaginationConfig
@@ -93,12 +88,9 @@ const App: any = ({ isShow }: any) => {
 			pageSize: 10,
 		},
 	})
-	console.log('tableParams', tableParams)
+	console.log(data)
+	// console.log('tableParams', tableParams)
 	const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
-
-	const [searchText, setSearchText] = useState('')
-	const [searchedColumn, setSearchedColumn] = useState('')
-	const searchInput = useRef<InputRef>(null)
 
 	const getRandomuserParams = (params: TableParams) => ({
 		results: params.pagination?.pageSize,
@@ -127,74 +119,6 @@ const App: any = ({ isShow }: any) => {
 		fetchData()
 	}, [JSON.stringify(tableParams)])
 
-	const handleSearch = (selectedKeys: string[], confirm: FilterDropdownProps['confirm'], dataIndex: DataIndex) => {
-		confirm()
-		setSearchText(selectedKeys[0])
-		setSearchedColumn(dataIndex)
-	}
-	const handleReset = (clearFilters: () => void) => {
-		clearFilters()
-		setSearchText('')
-	}
-	// 每个列的搜索
-	const getColumnSearchProps = (dataIndex: DataIndex): TableColumnType<DataType> => ({
-		filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
-			<div style={{ padding: 8 }} onKeyDown={e => e.stopPropagation()}>
-				<Input
-					ref={searchInput}
-					placeholder={`Search ${dataIndex}`}
-					value={selectedKeys[0]}
-					onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-					onPressEnter={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
-					style={{ marginBottom: 8, display: 'block' }}
-				/>
-				<Space>
-					<Button type="primary" onClick={() => handleSearch(selectedKeys as string[], confirm, dataIndex)} icon={<SearchOutlined />} size="small" style={{ width: 90 }}>
-						Search
-					</Button>
-					<Button onClick={() => clearFilters && handleReset(clearFilters)} size="small" style={{ width: 90 }}>
-						Reset
-					</Button>
-					<Button
-						type="link"
-						size="small"
-						onClick={() => {
-							confirm({ closeDropdown: false })
-							setSearchText((selectedKeys as string[])[0])
-							setSearchedColumn(dataIndex)
-						}}>
-						Filter
-					</Button>
-					<Button
-						type="link"
-						size="small"
-						onClick={() => {
-							close()
-						}}>
-						close
-					</Button>
-				</Space>
-			</div>
-		),
-		filterIcon: (filtered: boolean) => <SearchOutlined style={{ color: filtered ? '#1677ff' : undefined }} />,
-		onFilter: (value, record: any) =>
-			record[dataIndex]
-				.toString()
-				.toLowerCase()
-				.includes((value as string).toLowerCase()),
-		onFilterDropdownOpenChange: visible => {
-			if (visible) {
-				setTimeout(() => searchInput.current?.select(), 100)
-			}
-		},
-		render: text =>
-			searchedColumn === dataIndex ? (
-				<Highlighter highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }} searchWords={[searchText]} autoEscape textToHighlight={text ? text.toString() : ''} />
-			) : (
-				text
-			),
-	})
-
 	const columns: TableProps<DataType>['columns'] = [
 		{
 			title: 'Name',
@@ -204,7 +128,6 @@ const App: any = ({ isShow }: any) => {
 			width: 100,
 			fixed: 'left',
 			render: text => <a>{text}</a>,
-			...getColumnSearchProps('name'),
 		},
 		{
 			title: 'Age',
@@ -214,8 +137,31 @@ const App: any = ({ isShow }: any) => {
 			width: 200,
 			defaultSortOrder: 'descend',
 			sorter: (a, b) => a.dob.age - b.dob.age,
-			...getColumnSearchProps('dob'),
 			responsive: ['lg'],
+		},
+		{
+			title: 'Email',
+			dataIndex: 'email',
+			key: 'email',
+			align: 'center',
+		},
+		{
+			title: 'Phone',
+			dataIndex: 'phone',
+			key: 'phone',
+			align: 'center',
+		},
+		{
+			title: 'Cell',
+			dataIndex: 'cell',
+			key: 'cell',
+			align: 'center',
+		},
+		{
+			title: 'Nat',
+			dataIndex: 'nat',
+			key: 'nat',
+			align: 'center',
 		},
 		{
 			title: 'Address',
@@ -231,27 +177,6 @@ const App: any = ({ isShow }: any) => {
 				</Tooltip>
 			),
 		},
-		// {
-		// 	title: 'Tags',
-		// 	key: 'tags',
-		// 	dataIndex: 'tags',
-		// 	align: 'center',
-		// 	render: (_, { tags }) => (
-		// 		<>
-		// 			{tags.map(tag => {
-		// 				let color = tag.length > 5 ? 'geekblue' : 'green'
-		// 				if (tag === 'loser') {
-		// 					color = 'volcano'
-		// 				}
-		// 				return (
-		// 					<Tag color={color} key={tag}>
-		// 						{tag.toUpperCase()}
-		// 					</Tag>
-		// 				)
-		// 			})}
-		// 		</>
-		// 	),
-		// },
 		{
 			title: 'Action',
 			key: 'action',
@@ -274,46 +199,6 @@ const App: any = ({ isShow }: any) => {
 		},
 	]
 
-	const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-		setSelectedRowKeys(newSelectedRowKeys)
-	}
-	const rowSelection: TableRowSelection<DataType> = {
-		selectedRowKeys,
-		onChange: onSelectChange,
-		// selections: [
-		// 	Table.SELECTION_ALL,
-		// 	Table.SELECTION_INVERT,
-		// 	Table.SELECTION_NONE,
-		// 	{
-		// 		key: 'odd',
-		// 		text: 'Select Odd Row',
-		// 		onSelect: changeableRowKeys => {
-		// 			let newSelectedRowKeys = []
-		// 			newSelectedRowKeys = changeableRowKeys.filter((_, index) => {
-		// 				if (index % 2 !== 0) {
-		// 					return false
-		// 				}
-		// 				return true
-		// 			})
-		// 			setSelectedRowKeys(newSelectedRowKeys)
-		// 		},
-		// 	},
-		// 	{
-		// 		key: 'even',
-		// 		text: 'Select Even Row',
-		// 		onSelect: changeableRowKeys => {
-		// 			let newSelectedRowKeys = []
-		// 			newSelectedRowKeys = changeableRowKeys.filter((_, index) => {
-		// 				if (index % 2 !== 0) {
-		// 					return true
-		// 				}
-		// 				return false
-		// 			})
-		// 			setSelectedRowKeys(newSelectedRowKeys)
-		// 		},
-		// 	},
-		// ],
-	}
 	const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
 		console.log('分页、过滤、排序、额外：', pagination, filters, sorter, extra)
 		setTableParams({
@@ -325,6 +210,13 @@ const App: any = ({ isShow }: any) => {
 		if (pagination.pageSize !== tableParams.pagination?.pageSize) {
 			setData([])
 		}
+	}
+
+	const rowSelection: TableRowSelection<DataType> = {
+		selectedRowKeys,
+		onChange: (newSelectedRowKeys: React.Key[]) => {
+			setSelectedRowKeys(newSelectedRowKeys)
+		},
 	}
 
 	// 头部
@@ -344,21 +236,13 @@ const App: any = ({ isShow }: any) => {
 		</div>
 	)
 
-	// 可添加：隐藏列	 onChange事件隐藏
-	// 可添加：表头分组 column.children
-	// 可添加：可编辑单元格
-	// 可添加：可编辑行
-	// 可添加：嵌套子表格
-	// 可添加：虚拟列表 Virtual
 	return (
 		isShow && (
 			<div>
 				<Table
-					className="table-props"
 					size="middle"
 					bordered
 					title={() => Header}
-					// footer={() => 'Footer'}
 					rowKey={record => record.login.uuid}
 					columns={columns}
 					loading={loading}
@@ -369,6 +253,7 @@ const App: any = ({ isShow }: any) => {
 						expandedRowRender: record => (
 							<p style={{ margin: 0 }}>{record?.location.timezone.description || 'My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.'}</p>
 						),
+						// 展开条件
 						rowExpandable: record => record?.name.title != '',
 					}}
 					rowSelection={rowSelection}

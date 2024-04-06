@@ -465,7 +465,7 @@
 					"meta": {
 						"key": "basicTable",
 						"icon": "AppstoreOutlined",
-						"title": "基本表格",
+						"title": "使用 Table",
 						"isLink": "",
 						"isHide": false,
 						"isFull": false,
