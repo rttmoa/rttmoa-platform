@@ -288,7 +288,7 @@ const UserManage = () => {
 			<Card className="mb20" style={{}}>
 				<Tabs
 					defaultActiveKey="1"
-					centered
+					// centered
 					items={[
 						{
 							label: `输入框查询`,
@@ -304,11 +304,11 @@ const UserManage = () => {
 								/>
 							),
 						},
-						{
-							label: `选择框查询`,
-							key: '2',
-							children: <SelectFilter data={SelectFilterData} defaultValue={filterResult} selectChange={selectChange} />,
-						},
+						// {
+						// 	label: `选择框查询`,
+						// 	key: '2',
+						// 	children: <SelectFilter data={SelectFilterData} defaultValue={filterResult} selectChange={selectChange} />,
+						// },
 					]}
 				/>
 			</Card>

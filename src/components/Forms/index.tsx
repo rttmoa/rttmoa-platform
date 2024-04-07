@@ -49,35 +49,43 @@ function renderFormItem(item: any) {
 	const { label, field, type, placeholder, width, list, style } = item
 	switch (type) {
 		case 'TIME':
-			return (
-				<Form.Item>
-					<Form.Item name={'startTime'} label={'开始时间'} key={'startTime'}>
+			return [
+				<Col xs={24} sm={24} md={24} lg={12} xl={8}>
+					<Form.Item name={'startTime'} label="开始时间" key={'startTime'}>
 						<DatePicker style={width} showTime={true} placeholder={placeholder} format="YYYY-MM-DD hh:mm:ss" />
 					</Form.Item>
-					<Form.Item label="结束时间" name={'endTime'} key={'endTime'}>
+				</Col>,
+				<Col xs={24} sm={24} md={24} lg={12} xl={8}>
+					<Form.Item name={'endTime'} label="结束时间" key={'endTime'}>
 						<DatePicker style={width} showTime={true} placeholder={placeholder} format="YYYY-MM-DD hh:mm:ss" />
 					</Form.Item>
-				</Form.Item>
-			)
+				</Col>,
+			]
 		case 'INPUT':
 			return (
-				<Form.Item name={field} label={label} key={field} style={style}>
-					<Input type="text" placeholder={placeholder} style={{ width }} />
-				</Form.Item>
+				<Col xs={24} sm={24} md={24} lg={12} xl={8}>
+					<Form.Item name={field} label={label} key={field} style={style}>
+						<Input type="text" placeholder={placeholder} style={{ width }} />
+					</Form.Item>
+				</Col>
 			)
 		case 'SELECT':
 			return (
-				<Form.Item name={field} label={label} key={field} style={style}>
-					<Select style={{ width }} placeholder={placeholder}>
-						{getOptionList(list)}
-					</Select>
-				</Form.Item>
+				<Col xs={24} sm={24} md={24} lg={12} xl={8}>
+					<Form.Item name={field} label={label} key={field} style={style}>
+						<Select style={{ width }} placeholder={placeholder}>
+							{getOptionList(list)}
+						</Select>
+					</Form.Item>
+				</Col>
 			)
 		case 'CHECKBOX':
 			return (
-				<Form.Item name={field} label={label} key={field}>
-					<Checkbox>{label}</Checkbox>
-				</Form.Item>
+				<Col xs={24} sm={24} md={24} lg={12} xl={8}>
+					<Form.Item name={field} label={label} key={field}>
+						<Checkbox>{label}</Checkbox>
+					</Form.Item>
+				</Col>
 			)
 		default:
 			return null
@@ -114,29 +122,22 @@ export default function MultiForm(props: any) {
 		if (formList && formList.length > 0) {
 			formItemList = formList.map(renderFormItem)
 		}
-
 		if (extendFormList && extendFormList.length > 0) {
 			const extraItems = expand ? extendFormList.map(renderFormItem) : []
 			formItemList = [...formItemList, ...extraItems]
 		}
+		console.log(formItemList)
 		return formItemList
 	}
 	const toggleExpand = useCallback(() => {
 		setexpand(prevExpand => !prevExpand)
 	}, [])
+	const formList = initFormList()
 	return (
 		<div>
 			<Form layout="horizontal" form={multiForm}>
 				<div style={{ display: 'flex' }}>
-					<Row style={{ width: 'calc(100% - 250px)' }}>
-						{initFormList().map((value: any, index: number) => {
-							return (
-								<Col xs={24} sm={24} md={24} lg={12} xl={8}>
-									{value}
-								</Col>
-							)
-						})}
-					</Row>
+					<Row style={{ width: 'calc(100% - 250px)' }}>{formList.map((value: any, index: number) => value)}</Row>
 					<div style={{ width: 200 }}>
 						<Form.Item>
 							<Button type="primary" onClick={Submit}>

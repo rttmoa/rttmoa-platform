@@ -1,23 +1,21 @@
-import { Col, Row, Statistic, Tabs, Table } from "antd";
-import { ArrowUpOutlined } from "@ant-design/icons";
-import { RootState, useSelector } from "@/redux";
-import { columns, data } from "./config/table";
-import { trendOptionsFn } from "./config/trend";
-import { pieOptionsFn } from "./config/proportion";
-import { overviewTabs, overviewOptionsFn } from "./config/overview";
-import ECharts from "@/components/Echarts";
-import CountUp from "react-countup";
-import "./index.less";
+import { Col, Row, Statistic, Tabs, Table } from 'antd'
+import { ArrowUpOutlined } from '@ant-design/icons'
+import { RootState, useSelector } from '@/redux'
+import { columns, data } from './config/table'
+import { trendOptionsFn } from './config/trend'
+import { pieOptionsFn } from './config/proportion'
+import { overviewTabs, overviewOptionsFn } from './config/overview'
+import ECharts from '@/components/Echarts'
+import CountUp from 'react-countup'
+import './index.less'
 
-const formatter = (value: number | string) => <CountUp end={Number(value)} duration={2} separator="," />;
+const formatter = (value: number | string) => <CountUp end={Number(value)} duration={2} separator="," />
 
 const Analysis: React.FC = () => {
-	const isDark = useSelector((state: RootState) => state.global.isDark);
+	const isDark = useSelector((state: RootState) => state.global.isDark)
 
-	// ia
 	return (
 		<Row gutter={[15, 15]} className="analysis">
-			{/* analysis-count */}
 			<Col span={24}>
 				<Row gutter={[20, 20]} className="analysis-count">
 					<Col xxl={6} xl={12} lg={12} md={24} sm={24} xs={24}>
@@ -67,7 +65,6 @@ const Analysis: React.FC = () => {
 				</Row>
 			</Col>
 
-			{/* analysis-overview */}
 			<Col span={24}>
 				<Row gutter={[15, 15]} className="analysis-overview">
 					<Col xl={24} lg={24} md={24} sm={24} xs={24}>
@@ -86,7 +83,6 @@ const Analysis: React.FC = () => {
 				</Row>
 			</Col>
 
-			{/* analysis-record */}
 			<Col span={24}>
 				<Row gutter={[15, 15]} className="analysis-record">
 					<Col xl={16} lg={24} md={24} sm={24} xs={24}>
@@ -102,7 +98,7 @@ const Analysis: React.FC = () => {
 				</Row>
 			</Col>
 		</Row>
-	);
-};
+	)
+}
 
-export default Analysis;
+export default Analysis
