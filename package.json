@@ -51,7 +51,7 @@
 		"predeploy": "npm run build:production",
 		"deploy": "gh-pages -d dist -b gh-pages",
 		"push:tags": "git push --follow-tags origin pre-gh-pages",
-		"releasepatch": "standard-version --release-as patch",
+		"releasePatch": "standard-version --release-as patch",
 		"release": "standard-version",
 		"release:minor": "standard-version --release-as minor",
 		"release:major": "standard-version --release-as major",
