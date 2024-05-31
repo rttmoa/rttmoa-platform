@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.1](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.0...v2.3.1) (2024-05-31)
+
+### Bug Fixes
+
+-   🧩 .。 ([45979c1](https://github.com/rttmoa/rttmoa-platform/commit/45979c1cb04968767046d8cd4a3a29e1fdd3cb4a))
+
 ## [2.3.0](https://github.com/rttmoa/rttmoa-platform/compare/v2.2.12...v2.3.0) (2024-05-31)
 
 ### Features
