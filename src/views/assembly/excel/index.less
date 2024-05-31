@@ -1,0 +1,27 @@
+.TableDataImport {
+	font-size: 16px;
+	.ant-upload-list.ant-upload-list-text {
+		display: none;
+	}
+	.fileUpDiv,
+	.sheetNames,
+	.inputDiv {
+		display: flex;
+		height: 30px;
+		align-items: center;
+		justify-content: flex-start;
+		margin-bottom: 10px;
+		span.fileName {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			width: 200px;
+			border: 1px solid #eeeeee;
+			line-height: 30px;
+			height: 100%;
+		}
+		> span {
+			margin-right: 10px;
+		}
+	}
+}

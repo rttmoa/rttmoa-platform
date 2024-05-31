@@ -185,6 +185,19 @@
 						"isFull": false,
 						"isAffix": false
 					}
+				},
+				{
+					"path": "/assembly/excel",
+					"element": "/assembly/excel/index",
+					"meta": {
+						"key": "Excel",
+						"icon": "AppstoreOutlined",
+						"title": "Excel",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false
+					}
 				}
 			]
 		},
