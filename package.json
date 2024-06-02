@@ -51,11 +51,14 @@
 		"predeploy": "npm run build:production",
 		"deploy": "gh-pages -d dist -b gh-pages",
 		"push:tags": "git push --follow-tags origin pre-gh-pages",
-		"releasePatch": "standard-version --release-as patch",
 		"release": "standard-version",
+		"release:patch": "standard-version --release-as patch",
 		"release:minor": "standard-version --release-as minor",
 		"release:major": "standard-version --release-as major",
-		"rimraf": "rimraf node_modules"
+		"rimraf": "rimraf node_modules",
+		"c": "git add -A && czg && git push",
+		"r": "standard-version --release-as patch",
+		"d": "gh-pages -d dist -b gh-pages"
 	},
 	"dependencies": {
 		"@ant-design/icons": "^5.2.5",
