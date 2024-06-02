@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Typography, Button, Form, Input, Space, DatePicker, InputNumber, Radio, Select, Slider, ColorPicker, Cascader, TreeSelect } from 'antd'
 import { message } from '@/hooks/useMessage'
-import { CompoundedComponent } from 'antd/lib/float-button/interface'
+// import { CompoundedComponent } from 'antd/lib/float-button/interface'
 
 const { RangePicker } = DatePicker
 
@@ -33,7 +33,7 @@ const FormCollectUser: React.FC<{ value: string }> = ({ value }) => {
 	}
 
 	// get Form Value
-	const onFinish = (values: CompoundedComponent) => {
+	const onFinish = (values: any) => {
 		message.success('提交的数据为 : ' + JSON.stringify(values))
 		console.log('表单结果：', values)
 	}
@@ -49,7 +49,7 @@ const FormCollectUser: React.FC<{ value: string }> = ({ value }) => {
 	return (
 		<>
 			{value == 'FromCollectUser' && (
-				<Form<CompoundedComponent>
+				<Form<any>
 					{...formItemLayout}
 					name="basic"
 					form={form}
