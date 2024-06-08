@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.3](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.2...v2.3.3) (2024-06-08)
+
+### Features
+
+-   🚀 package ([4dd9ff2](https://github.com/rttmoa/rttmoa-platform/commit/4dd9ff259fdbddf16d24123367b15cef2deff907))
+
+### Bug Fixes
+
+-   🧩 component ([241504c](https://github.com/rttmoa/rttmoa-platform/commit/241504ce384a13c78db4286a0a1def58b2b8c69c))
+-   🧩 mock ([37e9e98](https://github.com/rttmoa/rttmoa-platform/commit/37e9e98ecc13802bc9f717a5a5acf1fab7d2bef3))
+
 ### [2.3.2](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.1...v2.3.2) (2024-06-01)
 
 ### Features
