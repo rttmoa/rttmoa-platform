@@ -1,0 +1,1 @@
+import{j as r}from"./index-1b257d2f.js";import m from"./fileUpload-00e929dd.js";import o from"./userList-7dd96663.js";import{C as s}from"./index-72919ef7.js";import"./index-f803ae68.js";import"./Skeleton-82688fa7.js";const x=()=>r.jsxs(r.Fragment,{children:[r.jsx(s,{className:"mb20",children:r.jsx(m,{})}),r.jsx(s,{className:"mb20",children:r.jsx(o,{})})]});export{x as default};
