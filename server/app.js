@@ -1,12 +1,14 @@
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line strict
 const moment = require('moment');
+const path = require('path');
+const fs = require('fs');
+
 module.exports = app => {
   app.beforeStart(async () => {
     const ctx = app.createAnonymousContext();
     // 应用启动前预加载
     // await ctx.service.posts.load();
-    // console.log('预加载');
   });
   app.once('server', server => {
     // websocket 相关操作
@@ -15,20 +17,16 @@ module.exports = app => {
     // console.log('server ==> ', server);
   });
   app.on('error', err => {
-    // 上报错误
     console.error('error ========> ', err);
   });
   app.on('request', ctx => {
-    // 记录收到的请求
-    // console.log('request ========> ', ctx);
+    // console.log('request ========> ', ctx.request);
   });
   app.on('response', ctx => {
     if (ctx.response.status === 200) {
       // console.log('response ========> ', ctx.response.header);
       // console.log('response ========> ', ctx.response.body);
     }
-    const used = Date.now() - ctx.starttime;
-    // 记录请求总耗时
-    console.log('总耗时：', used + 'ms');
+    console.log('总耗时：', Date.now() - ctx.starttime + 'ms');
   });
 };

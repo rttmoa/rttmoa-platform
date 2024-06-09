@@ -1,15 +1,16 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "博客后台服务",
+  "description": "server",
   "private": true,
   "egg": {
     "declarations": true
   },
   "scripts": {
+    "start": "egg-scripts start --daemon --env prod",
     "start:server": "egg-scripts start --daemon --title=egg-server-server",
     "stop": "egg-scripts stop --title=egg-server-server",
-    "start": "egg-bin dev --trace-warnings",
+    "dev": "egg-bin dev --trace-warnings",
     "debug": "egg-bin debug",
     "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",
@@ -26,10 +27,14 @@
     "egg-mongoose": "^3.3.1",
     "egg-scripts": "^2.11.0",
     "egg-validate": "^2.0.2",
+    "egg-view-assets": "^1.9.0",
     "egg-view-nunjucks": "^2.3.0",
+    "fs": "^0.0.1-security",
     "md5": "^2.3.0",
     "moment": "^2.29.1",
-    "qiniu": "^7.4.0"
+    "path": "^0.12.7",
+    "qiniu": "^7.4.0",
+    "roadhog": "^0.6.1"
   },
   "devDependencies": {
     "autod": "^3.0.1",

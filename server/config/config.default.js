@@ -6,12 +6,11 @@ const userConfig = require('./config.user');
  * @param {Egg.EggAppInfo} appInfo app info
  */
 // 环境配置：https://www.eggjs.org/zh-CN/basics/config
-// config.default.js 为默认的配置文件，所有环境都会加载这个配置文件，一般也会作为开发环境的默认配置文件。
 module.exports = appInfo => {
   /**
-   * built-in config
-   * @type {Egg.EggAppConfig}
-   **/
+	 * built-in config
+	 * @type {Egg.EggAppConfig}
+	 **/
   const config = (exports = {});
 
   // 用于cookie签名密钥 (cookie安全字符串)
@@ -20,11 +19,29 @@ module.exports = appInfo => {
   // 中间件配置
   config.middleware = [ 'errorHandler', 'auth' ];
 
+  // 将public下的静态资源重定向到根目录下
+  config.static = {
+    prefix: '/',
+  };
   // 模板
   config.view = {
     defaultViewEngine: 'nunjucks',
     mapping: {
       '.tpl': 'nunjucks',
+    },
+  };
+  config.assets = {
+    publicPath: '/public',
+    devServer: {
+      debug: false,
+      command: 'roadhog dev',
+      port: 7001,
+      env: {
+        BROWSER: 'none',
+        ESLINT: 'none',
+        SOCKET_SERVER: 'http://127.0.0.1:7001',
+        PUBLIC_PATH: 'http://127.0.0.1:7001',
+      },
     },
   };
 
@@ -38,7 +55,6 @@ module.exports = appInfo => {
   // config.proxy = true; // 注意，开启此模式后，应用就默认处于反向代理之后。它会支持通过解析约定的请求头来获取用户真实的 IP、协议和域名
   // config.ipHeaders = 'X-Real-Ip, X-Forwarded-For'; // 开启 proxy 配置后，应用会解析 X-Forwarded-For 请求头来获取客户端的真实 IP
   // config.maxIpsCount = 1; // 限制前置代理的数量。这样在获取请求真实 IP 地址时，会忽略掉用户所传递的伪造 IP 地址
-
 
   config.session = {
     key: 'BLOG_EGG_SESSION_KEY', // Session Cookie 名称
@@ -75,7 +91,6 @@ module.exports = appInfo => {
     // fileExtensions: ['.apk'] // 增加对 '.apk' 扩展名的文件支持
     // whitelist: [ '.png' ], // 覆盖整个白名单，只允许上传 '.png' 格式
   };
-
 
   return {
     ...config,
