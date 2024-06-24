@@ -58,7 +58,7 @@
 		"rimraf": "rimraf node_modules",
 		"c": "git add -A && czg && git push",
 		"r": "standard-version --release-as patch",
-		"d": "gh-pages -d dist -b gh-pages"
+		"gg": "gh-pages -d dist -b gh-pages"
 	},
 	"dependencies": {
 		"@ant-design/icons": "^5.2.5",

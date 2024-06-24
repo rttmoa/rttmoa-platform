@@ -4,7 +4,7 @@
 // component-size: https://github.com/rehooks/component-size/blob/master/index.js
 
 import React, { MutableRefObject, useCallback, useLayoutEffect, useRef, useState } from 'react'
-function getSize(el) {
+function getSize(el: any) {
 	if (!el) {
 		return {
 			width: 0,
@@ -45,8 +45,8 @@ function useComponentSize(ref: MutableRefObject<any>) {
 				resizeObserver.observe(ref.current)
 
 				return function () {
-					resizeObserver.disconnect(ref.current)
-					// resizeObserver = null
+					// resizeObserver.disconnect(ref.current)
+					resizeObserver.disconnect = null as any
 				}
 			} else {
 				window.addEventListener('resize', handleResize)
