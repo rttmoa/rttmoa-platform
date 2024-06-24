@@ -12,6 +12,12 @@ module.exports = appInfo => {
 	 * @type {Egg.EggAppConfig}
 	 **/
   const config = (exports = {});
+  // config.cluster = {
+  //   listen: {
+  //     port: 5000,
+  //     hostname: '127.0.0.1',
+  //   },
+  // };
 
   // 用于cookie签名密钥 (cookie安全字符串)
   config.keys = appInfo.name + '_1640431712552_1460';
