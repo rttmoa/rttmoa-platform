@@ -91,7 +91,8 @@ const App: React.FC<MyComponentProps> = ({ isShow }) => {
 		fetchData()
 	}, [JSON.stringify(tableParams)])
 
-	const handleTableChange: TableProps['onChange'] = (pagination, filters, sorter) => {
+	// TableProps['onChange'] -> any
+	const handleTableChange: any = (pagination: { pageSize: number | undefined }, filters: any, sorter: React.SetStateAction<TableParams>) => {
 		setTableParams({
 			pagination,
 			filters,
