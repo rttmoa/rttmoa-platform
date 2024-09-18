@@ -1,1 +1,0 @@
-import{r as a,H as e,J as r}from"./.pnpm-e6eae8df.js";const o=()=>{const[s,t]=a.useState(e().format("YYYY年MM月DD HH:mm:ss"));return r(()=>{t(e().format("YYYY年MM月DD HH:mm:ss"))},1e3),s};export{o as default};

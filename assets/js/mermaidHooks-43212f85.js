@@ -1,1 +1,0 @@
-import{aa as a,r as o,j as t}from"./.pnpm-e6eae8df.js";a.initialize({startOnLoad:!0,theme:"light",securityLevel:"loose",fontFamily:"monospace"});const i=({chart:e})=>(o.useEffect(()=>{a.contentLoaded()},[e]),t.jsx("div",{children:t.jsx("div",{className:"mermaid",style:{width:800,height:"100%",backgroundColor:"#fff"},children:e})}));export{i as default};

@@ -1,1 +1,0 @@
-import{E as e,j as a,C as s,B as l,O as r,T as i}from"./.pnpm-e6eae8df.js";const{Title:n}=i,o=()=>{const t=e();return a.jsxs(s,{children:[a.jsxs(n,{level:4,className:"mb15",children:["平级模式：/flat ","->"," /flatDetail"]}),a.jsx(l,{type:"primary",icon:a.jsx(r,{}),onClick:()=>t("/feat/breadcrumb/flatDetail"),children:"打开详情页"})]})};export{o as default};

@@ -1,1 +1,0 @@
-import{j as t,C as e,al as r}from"./.pnpm-e6eae8df.js";const a=()=>t.jsx(e,{children:t.jsx(r,{url:"https://www.youtube.com/watch?v=LXb3EKWsInQ",playing:!0,controls:!0,loop:!0,light:!1,volume:.5})});export{a as default};

@@ -1,1 +1,0 @@
-import{j as s,C as r}from"./.pnpm-e6eae8df.js";import m from"./fileUpload-e3109313.js";import e from"./userList-a42b66a6.js";import"./index-479552fe.js";const l=()=>s.jsxs(s.Fragment,{children:[s.jsx(r,{className:"mb20",children:s.jsx(m,{})}),s.jsx(r,{className:"mb20",children:s.jsx(e,{})})]});export{l as default};

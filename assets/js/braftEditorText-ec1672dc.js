@@ -1,1 +1,0 @@
-import{r,b0 as a,j as t}from"./.pnpm-e6eae8df.js";function d(){const[o,e]=r.useState("");r.useEffect(()=>{e(a.createEditorState("富文本初值"))},[]);const s=n=>{e(n)};return t.jsx(t.Fragment,{children:t.jsx(a,{value:o,onChange:s})})}export{d as default};
