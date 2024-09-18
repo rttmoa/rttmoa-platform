@@ -17,7 +17,7 @@ export default function OperationLog() {
 	// 行为 action、IP ip、IP来源 ipSource、浏览器 browser、请求耗时 reqTime、创建时间 createTime
 	const data = [
 		{
-			action: '用户登陆' || '修改用户',
+			action: '用户登陆', // || '修改用户'
 			ip: ip, // ip
 			ipSource: '中国上海上海市', // IP来源  使用react实现通过经纬度获取地址（地理/逆地理编码）: https://developer.aliyun.com/article/1420986
 			browser: 'Chrome/122.0.0.0', // 浏览器版本

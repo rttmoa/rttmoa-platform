@@ -175,7 +175,7 @@ const ThemeDrawer: React.FC = () => {
 					defaultValue={borderRadius}
 					formatter={(value: any) => `${value}px`}
 					parser={(value: any) => (value ? value!.replace('px', '') : 6) as number}
-					onChange={(value: number) => {
+					onChange={(value: any) => {
 						const newValue = value || 6
 						dispatch(setGlobalState({ key: 'borderRadius', value: newValue }))
 					}}

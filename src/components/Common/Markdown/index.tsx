@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 import React from 'react'
-import marked from 'marked'
+import { marked } from 'marked'
 import highlightJs from 'highlight.js'
 import IconSvg from '../../SvgIcon'
 import './index.less'

@@ -116,7 +116,7 @@ const FileUpload: React.FC = () => {
 		},
 		multiple: true,
 		maxCount: 15,
-		listType: 'picture-card' || 'picture-circle',
+		listType: 'picture-card', // 'picture-circle'
 		// 自定义交互图标, 使用 showUploadList 设置列表交互图标。
 		showUploadList: {
 			// showDownloadIcon: true,
