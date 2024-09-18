@@ -40,18 +40,18 @@
  * @return {Array}
  */
 function sort(arr: any, type = 1) {
-  return arr.sort((a: number, b: number) => {
-    switch (type) {
-      case 1:
-        return a - b;
-      case 2:
-        return b - a;
-      case 3:
-        return Math.random() - 0.5;
-      default:
-        return arr;
-    }
-  });
+	return arr.sort((a: number, b: number) => {
+		switch (type) {
+			case 1:
+				return a - b
+			case 2:
+				return b - a
+			case 3:
+				return Math.random() - 0.5
+			default:
+				return arr
+		}
+	})
 }
 
 // /*去重*/

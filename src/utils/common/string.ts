@@ -5,18 +5,18 @@
  * @return {String}
  */
 export function trim(str: string, type: number) {
-	type = type || 1;
+	type = type || 1
 	switch (type) {
 		case 1:
-			return str.replace(/\s+/g, "");
+			return str.replace(/\s+/g, '')
 		case 2:
-			return str.replace(/(^\s*)|(\s*$)/g, "");
+			return str.replace(/(^\s*)|(\s*$)/g, '')
 		case 3:
-			return str.replace(/(^\s*)/g, "");
+			return str.replace(/(^\s*)/g, '')
 		case 4:
-			return str.replace(/(\s*$)/g, "");
+			return str.replace(/(\s*$)/g, '')
 		default:
-			return str;
+			return str
 		// trim(" s   ss 123 1   ", 1) // "sss1231"
 		// trim(" s   ss 123 1   ", 2) // "s   ss 123 1"
 		// trim(" s   ss 123 1   ", 3) // "s   ss 123 1   "
@@ -31,33 +31,33 @@ export function trim(str: string, type: number) {
  * @return {String}
  */
 export function changeCase(str: string, type: number) {
-	type = type || 4;
+	type = type || 4
 	switch (type) {
 		case 1:
 			return str.replace(/\b\w+\b/g, function (word: string) {
-				return word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase();
-			});
+				return word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase()
+			})
 		case 2:
 			return str.replace(/\b\w+\b/g, function (word: string) {
-				return word.substring(0, 1).toLowerCase() + word.substring(1).toUpperCase();
-			});
+				return word.substring(0, 1).toLowerCase() + word.substring(1).toUpperCase()
+			})
 		case 3:
 			return str
-				.split("")
+				.split('')
 				.map(function (word: string) {
 					if (/[a-z]/.test(word)) {
-						return word.toUpperCase();
+						return word.toUpperCase()
 					} else {
-						return word.toLowerCase();
+						return word.toLowerCase()
 					}
 				})
-				.join("");
+				.join('')
 		case 4:
-			return str.toUpperCase();
+			return str.toUpperCase()
 		case 5:
-			return str.toLowerCase();
+			return str.toLowerCase()
 		default:
-			return str;
+			return str
 	}
 	// changeCase("abcd", 1) // Abcd
 	// changeCase("abcd", 2) // aBCD
@@ -71,22 +71,22 @@ export function changeCase(str: string, type: number) {
  * @param str
  */
 export function checkPwd(str: any) {
-	var Lv = 0;
+	var Lv = 0
 	if (str.length < 6) {
-		return Lv;
+		return Lv
 	}
 	if (/[0-9]/.test(str)) {
-		Lv++;
+		Lv++
 	}
 	if (/[a-z]/.test(str)) {
-		Lv++;
+		Lv++
 	}
 	if (/[A-Z]/.test(str)) {
-		Lv++;
+		Lv++
 	}
 	if (/[.|-|_]/.test(str)) {
-		Lv++;
+		Lv++
 	}
-	return Lv;
+	return Lv
 	// checkPwd("xxAbc123.") // 4
 }

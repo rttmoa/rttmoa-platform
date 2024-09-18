@@ -65,7 +65,7 @@ export const AnimateFadeHtml = `
 	    }
 	}
 	</code></pre>
-`;
+`
 
 export const AnimateGroupFade = `
 	<h3 id="react-transition-group"><strong><a href="http://reactcommunity.org/react-transition-group/">react-transition-group</a></strong></h3>
@@ -166,7 +166,7 @@ export const AnimateGroupFade = `
 	}
 
 	</code></pre>
-`;
+`
 
 export const componentSvg = `
 	<h2 id="-"><a href="http://www.iconfont.cn">阿里巴巴矢量图</a></h2>
@@ -198,4 +198,4 @@ export const componentSvg = `
 	&lt;<span class="hljs-regexp">/svg&gt;</span>
 	</code></pre></li>
 	</ol>
-`;
+`

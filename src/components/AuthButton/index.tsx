@@ -1,30 +1,30 @@
-import React from "react";
-import { useSelector } from "@/redux";
-import { getMenuByPath } from "@/utils";
+import React from 'react'
+import { useSelector } from '@/redux'
+import { getMenuByPath } from '@/utils'
 
-type authStr = "add" | "edit" | "delete" | "import" | "export";
-type authArr = ["add", "edit", "delete", "import", "export"];
+type authStr = 'add' | 'edit' | 'delete' | 'import' | 'export'
+type authArr = ['add', 'edit', 'delete', 'import', 'export']
 type AuthButtonProps = {
-  authority: string | string[];
-  children: React.ReactNode;
-};
+	authority: string | string[]
+	children: React.ReactNode
+}
 
 const AuthButton: React.FC<AuthButtonProps> = ({ authority, children }) => {
-  const authButtonList = useSelector(state => state.auth.authButtonList) ?? [];
+	const authButtonList = useSelector(state => state.auth.authButtonList) ?? []
 
-  const meta = getMenuByPath()?.meta ?? {};
+	const meta = getMenuByPath()?.meta ?? {}
 
-  let isAuth = false;
+	let isAuth = false
 
-  if (typeof authority === "string") {
-    authButtonList[meta.key!]?.includes(authority) && (isAuth = true);
-  }
-  if (authority instanceof Array && authority.length) {
-    const hasPermission = authority.every(item => authButtonList[meta.key!]?.includes(item));
-    hasPermission && (isAuth = true);
-  }
+	if (typeof authority === 'string') {
+		authButtonList[meta.key!]?.includes(authority) && (isAuth = true)
+	}
+	if (authority instanceof Array && authority.length) {
+		const hasPermission = authority.every(item => authButtonList[meta.key!]?.includes(item))
+		hasPermission && (isAuth = true)
+	}
 
-  return <React.Fragment>{isAuth && children}</React.Fragment>;
-};
+	return <React.Fragment>{isAuth && children}</React.Fragment>
+}
 
-export default React.memo(AuthButton);
+export default React.memo(AuthButton)

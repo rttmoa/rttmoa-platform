@@ -1,24 +1,24 @@
 {
-  "code": 200,
-  "msg": "成功",
-  "data": {
-    "list|50": [
-      {
-        "id|+1": 1,
-        "username": "@cname",
-        "sex|1-2": 1,
-        "state|1-5": 1,
-        "interest|1-8": 1,
-        "isMarried|0-1": 1,
-        "role_id|0-5": 1,
-        "birthday": "@date('yyyy-MM-dd')",
-        "address": "@county(true)",
-        "time": "@time('HH:mm:ss')",
-        "email": "@email"
-      }
-    ],
-    "page": 1,
-    "page_size": 10,
-    "total_count": 30
-  }
+	"code": 200,
+	"msg": "成功",
+	"data": {
+		"list|50": [
+			{
+				"id|+1": 1,
+				"username": "@cname",
+				"sex|1-2": 1,
+				"state|1-5": 1,
+				"interest|1-8": 1,
+				"isMarried|0-1": 1,
+				"role_id|0-5": 1,
+				"birthday": "@date('yyyy-MM-dd')",
+				"address": "@county(true)",
+				"time": "@time('HH:mm:ss')",
+				"email": "@email"
+			}
+		],
+		"page": 1,
+		"page_size": 10,
+		"total_count": 30
+	}
 }

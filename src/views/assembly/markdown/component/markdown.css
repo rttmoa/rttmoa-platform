@@ -1,34 +1,34 @@
 .fmt {
-  line-height: 1.6;
-  word-wrap: break-word;
+	line-height: 1.6;
+	word-wrap: break-word;
 }
 .fmt ul li {
-  list-style: disc;
+	list-style: disc;
 }
 .fmt ol li {
-  list-style: decimal;
+	list-style: decimal;
 }
 .fmt a {
-  color: #009a61;
-  text-decoration: none;
+	color: #009a61;
+	text-decoration: none;
 }
 .fmt h1 {
-  font-size: 2.25em;
+	font-size: 2.25em;
 }
 .fmt h2 {
-  font-size: 1.75em;
+	font-size: 1.75em;
 }
 .fmt h3 {
-  font-size: 1.5em;
+	font-size: 1.5em;
 }
 .fmt h4 {
-  font-size: 1.25em;
+	font-size: 1.25em;
 }
 .fmt h5 {
-  font-size: 1em;
+	font-size: 1em;
 }
 .fmt h6 {
-  font-size: 0.86em;
+	font-size: 0.86em;
 }
 .fmt h4,
 .fmt h5,
@@ -38,22 +38,22 @@
 .fmt pre,
 .fmt blockquote,
 .fmt table {
-  margin: 1.5em 0;
+	margin: 1.5em 0;
 }
 .fmt h1,
 .fmt h2,
 .fmt h3 {
-  margin: 1.5em 0 0;
+	margin: 1.5em 0 0;
 }
 .fmt h1 + .widget-codetool + pre,
 .fmt h2 + .widget-codetool + pre,
 .fmt h3 + .widget-codetool + pre {
-  margin-top: 1.5em !important;
+	margin-top: 1.5em !important;
 }
 .fmt h1,
 .fmt h2 {
-  border-bottom: 1px solid #eeeeee;
-  padding-bottom: 10px;
+	border-bottom: 1px solid #eeeeee;
+	padding-bottom: 10px;
 }
 .fmt > h1:first-child,
 .fmt h2:first-child,
@@ -64,30 +64,30 @@
 .fmt ol:first-child,
 .fmt pre:first-child,
 .fmt blockquote:first-child {
-  margin-top: 0;
+	margin-top: 0;
 }
 .fmt ul,
 .fmt ol {
-  margin-left: 3em;
-  padding-left: 0;
+	margin-left: 3em;
+	padding-left: 0;
 }
 .fmt ul li,
 .fmt ol li {
-  margin: 0.3em 0;
+	margin: 0.3em 0;
 }
 .fmt ul ul,
 .fmt ul ol,
 .fmt ol ul,
 .fmt ol ol {
-  margin-top: 0;
-  margin-bottom: 0;
+	margin-top: 0;
+	margin-bottom: 0;
 }
 .fmt ul p,
 .fmt ol p {
-  margin: 0;
+	margin: 0;
 }
 .fmt p:last-child {
-  margin-bottom: 0;
+	margin-bottom: 0;
 }
 .fmt p > p:empty,
 .fmt div > p:empty,
@@ -96,80 +96,80 @@
 .fmt div > br:only-child,
 .fmt p + br,
 .fmt img + br {
-  display: none;
+	display: none;
 }
 .fmt img,
 .fmt video,
 .fmt audio {
-  position: static !important;
-  max-width: 100%;
+	position: static !important;
+	max-width: 100%;
 }
 .fmt img {
-  padding: 3px;
-  border: 1px solid #dddddd;
+	padding: 3px;
+	border: 1px solid #dddddd;
 }
 .fmt img.emoji {
-  padding: 0;
-  border: none;
+	padding: 0;
+	border: none;
 }
 .fmt blockquote {
-  border-left: 2px solid #009a61;
-  background: #f6f6f6;
-  color: #555555;
-  font-size: 1em;
+	border-left: 2px solid #009a61;
+	background: #f6f6f6;
+	color: #555555;
+	font-size: 1em;
 }
 .fmt pre,
 .fmt code {
-  font-size: 0.93em;
+	font-size: 0.93em;
 }
 .fmt pre {
-  padding: 1em;
-  border: none;
-  overflow: auto;
-  line-height: 1.45;
-  max-height: 35em;
-  position: relative;
-  background: url("./blueprint.png") #f6f6f6;
-  background-size: 30px, 30px;
+	padding: 1em;
+	border: none;
+	overflow: auto;
+	line-height: 1.45;
+	max-height: 35em;
+	position: relative;
+	background: url('./blueprint.png') #f6f6f6;
+	background-size: 30px, 30px;
 }
 .fmt pre code {
-  background: none;
-  font-size: 1em;
-  overflow-wrap: normal;
-  white-space: inherit;
+	background: none;
+	font-size: 1em;
+	overflow-wrap: normal;
+	white-space: inherit;
 }
 .fmt hr {
-  margin: 1.5em auto;
-  border-top: 2px dotted #eeeeee;
+	margin: 1.5em auto;
+	border-top: 2px dotted #eeeeee;
 }
 .fmt kbd {
-  margin: 0 4px;
-  padding: 3px 4px;
-  background: #eeeeee;
-  color: #555555;
+	margin: 0 4px;
+	padding: 3px 4px;
+	background: #eeeeee;
+	color: #555555;
 }
 .fmt .x-scroll {
-  overflow-x: auto;
+	overflow-x: auto;
 }
 .fmt table {
-  width: 100%;
+	width: 100%;
 }
 .fmt table th,
 .fmt table td {
-  border: 1px solid #e6e6e6;
-  padding: 5px 8px;
-  word-break: normal;
+	border: 1px solid #e6e6e6;
+	padding: 5px 8px;
+	word-break: normal;
 }
 .fmt table th {
-  background: #f3f3f3;
+	background: #f3f3f3;
 }
 .fmt a:not(.btn) {
-  border-bottom: 1px solid rgb(0 154 97 / 25%);
-  padding-bottom: 1px;
+	border-bottom: 1px solid rgb(0 154 97 / 25%);
+	padding-bottom: 1px;
 }
 .fmt a:not(.btn):hover {
-  border-bottom: 1px solid #009a61;
-  text-decoration: none;
+	border-bottom: 1px solid #009a61;
+	text-decoration: none;
 }
 
 /*
@@ -178,79 +178,79 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
 */
 .hljs {
-  display: block;
-  overflow-x: auto;
-  padding: 0.5em;
-  color: #333333;
-  background: #f8f8f8;
+	display: block;
+	overflow-x: auto;
+	padding: 0.5em;
+	color: #333333;
+	background: #f8f8f8;
 }
 .hljs-comment,
 .hljs-quote {
-  color: #999988;
-  font-style: italic;
+	color: #999988;
+	font-style: italic;
 }
 .hljs-keyword,
 .hljs-selector-tag,
 .hljs-subst {
-  color: #333333;
-  font-weight: bold;
+	color: #333333;
+	font-weight: bold;
 }
 .hljs-number,
 .hljs-literal,
 .hljs-variable,
 .hljs-template-variable,
 .hljs-tag .hljs-attr {
-  color: #008080;
+	color: #008080;
 }
 .hljs-string,
 .hljs-doctag {
-  color: #dd1144;
+	color: #dd1144;
 }
 .hljs-title,
 .hljs-section,
 .hljs-selector-id {
-  color: #990000;
-  font-weight: bold;
+	color: #990000;
+	font-weight: bold;
 }
 .hljs-subst {
-  font-weight: normal;
+	font-weight: normal;
 }
 .hljs-type,
 .hljs-class .hljs-title {
-  color: #445588;
-  font-weight: bold;
+	color: #445588;
+	font-weight: bold;
 }
 .hljs-tag,
 .hljs-name,
 .hljs-attribute {
-  color: #000080;
-  font-weight: normal;
+	color: #000080;
+	font-weight: normal;
 }
 .hljs-regexp,
 .hljs-link {
-  color: #009926;
+	color: #009926;
 }
 .hljs-symbol,
 .hljs-bullet {
-  color: #990073;
+	color: #990073;
 }
 .hljs-built_in,
 .hljs-builtin-name {
-  color: #0086b3;
+	color: #0086b3;
 }
 .hljs-meta {
-  color: #999999;
-  font-weight: bold;
+	color: #999999;
+	font-weight: bold;
 }
 .hljs-deletion {
-  background: #ffdddd;
+	background: #ffdddd;
 }
 .hljs-addition {
-  background: #ddffdd;
+	background: #ddffdd;
 }
 .hljs-emphasis {
-  font-style: italic;
+	font-style: italic;
 }
 .hljs-strong {
-  font-weight: bold;
+	font-weight: bold;
 }

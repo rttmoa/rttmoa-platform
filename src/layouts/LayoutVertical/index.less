@@ -1,63 +1,63 @@
 // TODO: 一、纵向布局
 .layout-vertical {
-  display: flex; // 横向布局：Sider + Layout
-  height: 100%; // 不允许整张页面滚动
+	display: flex; // 横向布局：Sider + Layout
+	height: 100%; // 不允许整张页面滚动
 
-  // ? 左侧 Logo + Sider
-  .ant-layout-sider {
-    background-color: var(--hooks-colorBgSider);
-    transition: all 1s cubic-bezier(0.2, 0, 0, 1) 0s;
+	// ? 左侧 Logo + Sider
+	.ant-layout-sider {
+		background-color: var(--hooks-colorBgSider);
+		transition: all 1s cubic-bezier(0.2, 0, 0, 1) 0s;
 
-    // 侧边栏：Logo + Menu
-    .ant-layout-sider-children {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      border-right: 1px solid var(--hooks-colorBorderSider);
-      .logo {
-        display: flex;
-        flex-shrink: 0;
-        align-items: center;
-        // justify-content: center;
-        padding-left: 25px;
-        height: 55px;
-        .logo-img {
-          width: 30px;
-          height: 30px;
-        }
-        .logo-text {
-          margin: 0 0 0 6px; /* 原有buttom=12，此重置margin */
-          font-family: aLiFonts;
-          font-size: 23.5px;
-          font-weight: bold;
-          line-height: 23.5px;
-          color: var(--hooks-colorTextSider);
-          white-space: nowrap;
-        }
-      }
-      .ant-menu-root {
-        flex: 1;
-        width: 100%;
-        overflow-y: auto; // ? 是否有滚动条
-        background-color: var(--hooks-colorBgSider);
-        border-right: none;
-      }
-    }
-  }
+		// 侧边栏：Logo + Menu
+		.ant-layout-sider-children {
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+			border-right: 1px solid var(--hooks-colorBorderSider);
+			.logo {
+				display: flex;
+				flex-shrink: 0;
+				align-items: center;
+				// justify-content: center;
+				padding-left: 25px;
+				height: 55px;
+				.logo-img {
+					width: 30px;
+					height: 30px;
+				}
+				.logo-text {
+					margin: 0 0 0 6px; /* 原有buttom=12，此重置margin */
+					font-family: aLiFonts;
+					font-size: 23.5px;
+					font-weight: bold;
+					line-height: 23.5px;
+					color: var(--hooks-colorTextSider);
+					white-space: nowrap;
+				}
+			}
+			.ant-menu-root {
+				flex: 1;
+				width: 100%;
+				overflow-y: auto; // ? 是否有滚动条
+				background-color: var(--hooks-colorBgSider);
+				border-right: none;
+			}
+		}
+	}
 
-  // ? 右侧头部 + 内容区域
-  .ant-layout {
-    overflow-x: hidden; // ? 解决选项卡收缩不超过极限的问题
-    .ant-layout-header {
-      // ? 头部两侧分布
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 55px;
-      line-height: 55px;
-      padding: 0 40px 0 17px;
-      background-color: var(--hooks-colorBgHeader);
-      border-bottom: 1px solid var(--hooks-colorBorderHeader);
-    }
-  }
+	// ? 右侧头部 + 内容区域
+	.ant-layout {
+		overflow-x: hidden; // ? 解决选项卡收缩不超过极限的问题
+		.ant-layout-header {
+			// ? 头部两侧分布
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			height: 55px;
+			line-height: 55px;
+			padding: 0 40px 0 17px;
+			background-color: var(--hooks-colorBgHeader);
+			border-bottom: 1px solid var(--hooks-colorBorderHeader);
+		}
+	}
 }

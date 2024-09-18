@@ -1,11 +1,11 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const ContainerStyled = styled.main`
 	/* position: relative; */
 	/* min-height: 100vh; */
 	width: 100%;
 	/* background-color: red;/ */
-`;
+`
 
 export const MasonicStyled = styled.div`
 	padding: 8px;
@@ -13,7 +13,7 @@ export const MasonicStyled = styled.div`
 	max-width: 960px;
 	margin: 30px auto 0;
 	box-sizing: border-box;
-`;
+`
 
 export const HeaderStyled: any = styled.h1`
 	font-family: Quantico, sans-serif;
@@ -34,10 +34,10 @@ export const HeaderStyled: any = styled.h1`
 		background-color 200ms 200ms linear;
 
 	/* minify */
-	padding: ${(props: any) => (props.minify ? "0.5rem" : null)};
-	color: ${(props: any) => (props.minify ? "#f2fafe" : null)};
-	background-color: ${(props: any) => (props.minify ? "#1d2326" : null)};
-`;
+	padding: ${(props: any) => (props.minify ? '0.5rem' : null)};
+	color: ${(props: any) => (props.minify ? '#f2fafe' : null)};
+	background-color: ${(props: any) => (props.minify ? '#1d2326' : null)};
+`
 
 export const CardStyled = styled.div`
 	display: flex;
@@ -68,4 +68,4 @@ export const CardStyled = styled.div`
 			padding: 0.5rem;
 		}
 	}
-`;
+`

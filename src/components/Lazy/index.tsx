@@ -1,5 +1,5 @@
-import React, { Suspense } from "react";
-import { PageLoader } from "../Loading";
+import React, { Suspense } from 'react'
+import { PageLoader } from '../Loading'
 
 /**
  * @description Routing lazy loading
@@ -7,11 +7,11 @@ import { PageLoader } from "../Loading";
  * @returns React.ReactNode
  */
 const LazyComponent = (Comp: React.LazyExoticComponent<React.ComponentType>) => {
-  return (
-    <Suspense fallback={<PageLoader />}>
-      <Comp />
-    </Suspense>
-  );
-};
+	return (
+		<Suspense fallback={<PageLoader />}>
+			<Comp />
+		</Suspense>
+	)
+}
 
-export default LazyComponent;
+export default LazyComponent

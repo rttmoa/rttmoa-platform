@@ -1,32 +1,32 @@
-import React from "react";
-import NProgress from "@/config/nprogress";
+import React from 'react'
+import NProgress from '@/config/nprogress'
 
 // 菜单配置：路由懒加载组件
 export default (loadComponent: any) =>
-  class AsyncComponent extends React.Component {
-    state: {
-      Component: null | any;
-    } = {
-      Component: null
-    };
-    async componentDidMount() {
-      if (this.state.Component !== null) return;
+	class AsyncComponent extends React.Component {
+		state: {
+			Component: null | any
+		} = {
+			Component: null,
+		}
+		async componentDidMount() {
+			if (this.state.Component !== null) return
 
-      try {
-        const { default: Component } = await loadComponent();
-        this.setState({ Component });
-      } catch (err) {
-        console.error(`Cannot load component in <AsyncComponent />`);
-        throw err;
-      }
-      NProgress.done();
-    }
+			try {
+				const { default: Component } = await loadComponent()
+				this.setState({ Component })
+			} catch (err) {
+				console.error(`Cannot load component in <AsyncComponent />`)
+				throw err
+			}
+			NProgress.done()
+		}
 
-    render() {
-      const { Component } = this.state;
-      return Component ? <Component {...this.props} /> : null;
-    }
-  };
+		render() {
+			const { Component } = this.state
+			return Component ? <Component {...this.props} /> : null
+		}
+	}
 
 // import asyncComponent from "asyncComponent";
 // const _import_components = (dirName: string) => asyncComponent(() => import(`components/${dirName}`));

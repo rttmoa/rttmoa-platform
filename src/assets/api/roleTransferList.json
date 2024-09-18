@@ -1,106 +1,106 @@
 {
-  "code": 200,
-  "msg": "成功",
-  "data": [
-    {
-      "status": 0,
-      "user_id": 1,
-      "user_name": "马静"
-    },
-    {
-      "status": 1,
-      "user_id": 2,
-      "user_name": "林敏"
-    },
-    {
-      "status": 1,
-      "user_id": 3,
-      "user_name": "史洋"
-    },
-    {
-      "status": 1,
-      "user_id": 4,
-      "user_name": "郭秀兰"
-    },
-    {
-      "status": 0,
-      "user_id": 5,
-      "user_name": "龚秀兰"
-    },
-    {
-      "status": 0,
-      "user_id": 6,
-      "user_name": "傅艳"
-    },
-    {
-      "status": 0,
-      "user_id": 7,
-      "user_name": "袁明"
-    },
-    {
-      "status": 1,
-      "user_id": 8,
-      "user_name": "萧超"
-    },
-    {
-      "status": 0,
-      "user_id": 9,
-      "user_name": "康伟"
-    },
-    {
-      "status": 0,
-      "user_id": 10,
-      "user_name": "孟军"
-    },
-    {
-      "status": 0,
-      "user_id": 11,
-      "user_name": "康艳"
-    },
-    {
-      "status": 1,
-      "user_id": 12,
-      "user_name": "顾丽"
-    },
-    {
-      "status": 0,
-      "user_id": 13,
-      "user_name": "傅秀兰"
-    },
-    {
-      "status": 1,
-      "user_id": 14,
-      "user_name": "韩秀英"
-    },
-    {
-      "status": 1,
-      "user_id": 15,
-      "user_name": "范强"
-    },
-    {
-      "status": 1,
-      "user_id": 16,
-      "user_name": "韩涛"
-    },
-    {
-      "status": 0,
-      "user_id": 17,
-      "user_name": "邹军"
-    },
-    {
-      "status": 0,
-      "user_id": 18,
-      "user_name": "尹娟"
-    },
-    {
-      "status": 1,
-      "user_id": 19,
-      "user_name": "萧平"
-    },
-    {
-      "status": 0,
-      "user_id": 20,
-      "user_name": "魏秀英"
-    }
-  ]
+	"code": 200,
+	"msg": "成功",
+	"data": [
+		{
+			"status": 0,
+			"user_id": 1,
+			"user_name": "马静"
+		},
+		{
+			"status": 1,
+			"user_id": 2,
+			"user_name": "林敏"
+		},
+		{
+			"status": 1,
+			"user_id": 3,
+			"user_name": "史洋"
+		},
+		{
+			"status": 1,
+			"user_id": 4,
+			"user_name": "郭秀兰"
+		},
+		{
+			"status": 0,
+			"user_id": 5,
+			"user_name": "龚秀兰"
+		},
+		{
+			"status": 0,
+			"user_id": 6,
+			"user_name": "傅艳"
+		},
+		{
+			"status": 0,
+			"user_id": 7,
+			"user_name": "袁明"
+		},
+		{
+			"status": 1,
+			"user_id": 8,
+			"user_name": "萧超"
+		},
+		{
+			"status": 0,
+			"user_id": 9,
+			"user_name": "康伟"
+		},
+		{
+			"status": 0,
+			"user_id": 10,
+			"user_name": "孟军"
+		},
+		{
+			"status": 0,
+			"user_id": 11,
+			"user_name": "康艳"
+		},
+		{
+			"status": 1,
+			"user_id": 12,
+			"user_name": "顾丽"
+		},
+		{
+			"status": 0,
+			"user_id": 13,
+			"user_name": "傅秀兰"
+		},
+		{
+			"status": 1,
+			"user_id": 14,
+			"user_name": "韩秀英"
+		},
+		{
+			"status": 1,
+			"user_id": 15,
+			"user_name": "范强"
+		},
+		{
+			"status": 1,
+			"user_id": 16,
+			"user_name": "韩涛"
+		},
+		{
+			"status": 0,
+			"user_id": 17,
+			"user_name": "邹军"
+		},
+		{
+			"status": 0,
+			"user_id": 18,
+			"user_name": "尹娟"
+		},
+		{
+			"status": 1,
+			"user_id": 19,
+			"user_name": "萧平"
+		},
+		{
+			"status": 0,
+			"user_id": 20,
+			"user_name": "魏秀英"
+		}
+	]
 }

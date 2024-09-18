@@ -3,7 +3,7 @@ A[Square Rect] -- Link text --> B((Circle))
 A --> C(Round Rect)
 B --> D{Rhombus}
 C --> D
-`;
+`
 
 export const MermaidConfig2 = `sequenceDiagram
 Alice ->> Bob: Hello Bob, how are you?
@@ -13,7 +13,7 @@ Bob-x John: I am good thanks!
 Note right of John: Bob thinks a long<br/>long time, so long<br/>that the text does<br/>not fit on a row.
 
 Bob-->Alice: Checking with John...
-Alice->John: Yes... John, how are you?`;
+Alice->John: Yes... John, how are you?`
 
 export const MermaidConfig3 = `---
 title: Example Git diagram
@@ -31,7 +31,7 @@ gitGraph
   merge develop
   commit
   commit
-`;
+`
 
 export const MermaidConfig4 = `quadrantChart
 title Reach and engagement of campaigns
@@ -47,7 +47,7 @@ Campaign C: [0.57, 0.69]
 Campaign D: [0.78, 0.34]
 Campaign E: [0.40, 0.34]
 Campaign F: [0.35, 0.78]
-`;
+`
 
 export const InitMarkup = `# 登录注册模块功能页面结构图
 
@@ -77,4 +77,4 @@ export const InitMarkup = `# 登录注册模块功能页面结构图
   - 重置密码按钮
   - 返回登录链接
 
-`;
+`

@@ -1,8 +1,8 @@
 {
-  "code": 200,
-  "data": {
-    "authButton": ["add", "edit", "delete", "import", "export"],
-    "useProTable": ["add", "batchAdd", "export", "batchDelete", "status"]
-  },
-  "msg": "成功"
+	"code": 200,
+	"data": {
+		"authButton": ["add", "edit", "delete", "import", "export"],
+		"useProTable": ["add", "batchAdd", "export", "batchDelete", "status"]
+	},
+	"msg": "成功"
 }

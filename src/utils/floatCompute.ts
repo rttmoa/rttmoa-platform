@@ -5,14 +5,14 @@
  */
 
 interface ComputeParams {
-	(a: number, b: number, digits: number, op?: string): number | undefined;
+	(a: number, b: number, digits: number, op?: string): number | undefined
 }
 
 /*
  * 判断obj是否为一个整数
  */
 function isInteger(obj: any) {
-	return Math.floor(obj) === obj;
+	return Math.floor(obj) === obj
 }
 
 /*
@@ -21,19 +21,19 @@ function isInteger(obj: any) {
  * @return {object} result: {times:100, num: 314}
  */
 function toInteger(floatNum: number) {
-	var ret = { times: 1, num: 0 };
+	var ret = { times: 1, num: 0 }
 	if (isInteger(floatNum)) {
-		ret.num = floatNum;
-		return ret;
+		ret.num = floatNum
+		return ret
 	}
-	var strfi = floatNum + "";
-	var dotPos = strfi.indexOf(".");
-	var len = strfi.substr(dotPos + 1).length;
-	var times = Math.pow(10, len);
-	var intNum = Number(floatNum.toString().replace(".", ""));
-	ret.times = times;
-	ret.num = intNum;
-	return ret;
+	var strfi = floatNum + ''
+	var dotPos = strfi.indexOf('.')
+	var len = strfi.substr(dotPos + 1).length
+	var times = Math.pow(10, len)
+	var intNum = Number(floatNum.toString().replace('.', ''))
+	ret.times = times
+	ret.num = intNum
+	return ret
 }
 
 /*
@@ -47,67 +47,67 @@ function toInteger(floatNum: number) {
  *
  */
 let operation: ComputeParams = (a, b, digits, op) => {
-	var o1 = toInteger(a);
-	var o2 = toInteger(b);
-	var n1 = o1.num;
-	var n2 = o2.num;
-	var t1 = o1.times;
-	var t2 = o2.times;
-	var max = t1 > t2 ? t1 : t2;
-	var result = null;
+	var o1 = toInteger(a)
+	var o2 = toInteger(b)
+	var n1 = o1.num
+	var n2 = o2.num
+	var t1 = o1.times
+	var t2 = o2.times
+	var max = t1 > t2 ? t1 : t2
+	var result = null
 	switch (op) {
-		case "add":
+		case 'add':
 			if (t1 === t2) {
 				// 两个小数位数相同
-				result = n1 + n2;
+				result = n1 + n2
 			} else if (t1 > t2) {
 				// o1 小数位 大于 o2
-				result = n1 + n2 * (t1 / t2);
+				result = n1 + n2 * (t1 / t2)
 			} else {
 				// o1 小数位 小于 o2
-				result = n1 * (t2 / t1) + n2;
+				result = n1 * (t2 / t1) + n2
 			}
-			return result / max;
-		case "subtract":
+			return result / max
+		case 'subtract':
 			if (t1 === t2) {
-				result = n1 - n2;
+				result = n1 - n2
 			} else if (t1 > t2) {
-				result = n1 - n2 * (t1 / t2);
+				result = n1 - n2 * (t1 / t2)
 			} else {
-				result = n1 * (t2 / t1) - n2;
+				result = n1 * (t2 / t1) - n2
 			}
-			return result / max;
-		case "multiply":
-			result = (n1 * n2) / (t1 * t2);
-			return result;
-		case "divide":
-			result = (n1 / n2) * (t2 / t1);
-			return result;
+			return result / max
+		case 'multiply':
+			result = (n1 * n2) / (t1 * t2)
+			return result
+		case 'divide':
+			result = (n1 / n2) * (t2 / t1)
+			return result
 	}
-};
+}
 
 // 加减乘除的四个接口
 let add: ComputeParams = (a, b, digits) => {
-	return operation(a, b, digits, "add");
-};
+	return operation(a, b, digits, 'add')
+}
 let subtract: ComputeParams = (a, b, digits) => {
-	return operation(a, b, digits, "subtract");
-};
+	return operation(a, b, digits, 'subtract')
+}
 let multiply: ComputeParams = (a, b, digits) => {
-	return operation(a, b, digits, "multiply");
-};
+	return operation(a, b, digits, 'multiply')
+}
 let divide: ComputeParams = (a, b, digits) => {
-	return operation(a, b, digits, "divide");
-};
+	return operation(a, b, digits, 'divide')
+}
 
 let floatCompute = {
 	add: add,
 	subtract: subtract,
 	multiply: multiply,
-	divide: divide
-};
+	divide: divide,
+}
 
-export { floatCompute };
+export { floatCompute }
 
 //* 计算结果
 // 加法

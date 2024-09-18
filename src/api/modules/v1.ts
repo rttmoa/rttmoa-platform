@@ -1,12 +1,12 @@
-import http from "@/api";
-import { PORT3 } from "@/api/config/servicePort";
+import http from '@/api'
+import { PORT3 } from '@/api/config/servicePort'
 
 /**
  * 获取列表
  * @param {*} page
  */
 export function listApi(page = 1) {
-  return http.get(`${PORT3}/products`, { page, per: 5 });
+	return http.get(`${PORT3}/products`, { page, per: 5 })
 }
 
 /**
@@ -14,7 +14,7 @@ export function listApi(page = 1) {
  * @param {*} data
  */
 export function createApi(data: any) {
-  return http.post(`${PORT3}/products`, data);
+	return http.post(`${PORT3}/products`, data)
 }
 
 /**
@@ -22,7 +22,7 @@ export function createApi(data: any) {
  * @param {*} id
  */
 export function getOneById(id: number) {
-  return http.get(`${PORT3}/products/${id}`);
+	return http.get(`${PORT3}/products/${id}`)
 }
 
 /**
@@ -31,7 +31,7 @@ export function getOneById(id: number) {
  * @param {*} data
  */
 export function modifyOne(id: number, data: any) {
-  return http.put(`${PORT3}/products/${id}`, data);
+	return http.put(`${PORT3}/products/${id}`, data)
 }
 
 /**
@@ -40,5 +40,5 @@ export function modifyOne(id: number, data: any) {
  * @param {*} data
  */
 export function delOne(id: number, data: any) {
-  return http.delete(`${PORT3}/products/${id}`);
+	return http.delete(`${PORT3}/products/${id}`)
 }

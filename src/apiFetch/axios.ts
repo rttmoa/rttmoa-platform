@@ -1,38 +1,38 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 
 // https://axios-http.com/zh/docs/intro
 const useFetcher: React.FC<{ url: string }> = ({ url }): any => {
-	const [state, setState] = useState({ data: null, error: null, status: "idle" });
+	const [state, setState] = useState({ data: null, error: null, status: 'idle' })
 
 	// #region
 	useEffect(() => {
 		// AbortController 中断请求：https://www.jianshu.com/p/2f23c33e1922
-		let controller = new AbortController();
-		let shouldSetData = true;
-		setState({ data: null, error: null, status: "loading" });
-		(async () => {
+		let controller = new AbortController()
+		let shouldSetData = true
+		setState({ data: null, error: null, status: 'loading' })
+		;(async () => {
 			try {
-				const response: any = await axios.get(url, { signal: controller.signal });
+				const response: any = await axios.get(url, { signal: controller.signal })
 				if (shouldSetData) {
-					setState({ data: response, error: null, status: "resolved" });
+					setState({ data: response, error: null, status: 'resolved' })
 				}
 			} catch (error: any) {
 				if (shouldSetData) {
-					setState({ data: null, error, status: "errored" });
+					setState({ data: null, error, status: 'errored' })
 				}
 			}
-		})();
+		})()
 		return () => {
-			shouldSetData = false;
-			controller.abort();
-		};
-	}, [url]);
+			shouldSetData = false
+			controller.abort()
+		}
+	}, [url])
 	// #endregion
 
-	return state;
-};
-export default useFetcher;
+	return state
+}
+export default useFetcher
 
 // useEffect和useLayoutEffect区别:
 // 1、简单来说就是调用时机不同，useLayoutEffect和原来的componentDidMount & componentDidUpdate一致，

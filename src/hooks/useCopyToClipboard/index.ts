@@ -1,24 +1,24 @@
-import React, { useState } from "react";
+import React, { useState } from 'react'
 
-type stateType = null | { state: "success" } | { state: "error"; message: string };
+type stateType = null | { state: 'success' } | { state: 'error'; message: string }
 
 export default function useCopyToClipboard() {
-  const [result, setResult] = useState<stateType>(null);
-  const copy = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setResult({ state: "success" });
-    } catch (Error: any) {
-      setResult({ state: "error", message: Error.message });
-      throw Error;
-    } finally {
-      // 👇 Show the result feedback for 2 seconds
-      setTimeout(() => {
-        setResult(null);
-      }, 2000);
-    }
-  };
-  return [copy, result] as const;
+	const [result, setResult] = useState<stateType>(null)
+	const copy = async (text: string) => {
+		try {
+			await navigator.clipboard.writeText(text)
+			setResult({ state: 'success' })
+		} catch (Error: any) {
+			setResult({ state: 'error', message: Error.message })
+			throw Error
+		} finally {
+			// 👇 Show the result feedback for 2 seconds
+			setTimeout(() => {
+				setResult(null)
+			}, 2000)
+		}
+	}
+	return [copy, result] as const
 }
 
 // export function Example() {

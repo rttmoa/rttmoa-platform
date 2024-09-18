@@ -1,36 +1,36 @@
-import { changeToChinese } from "@/utils/common/Others";
-import { clipboardObj, connectInfo, getGeolocation, mediaDevicesObj, navigatorAttr, queryPermissions } from "@/utils/common/navigator";
-import { changeCase, checkPwd, trim } from "@/utils/common/string";
-import { floatCompute } from "@/utils/floatCompute";
-import React from "react";
-import { useState, useEffect } from "react";
+import { changeToChinese } from '@/utils/common/Others'
+import { clipboardObj, connectInfo, getGeolocation, mediaDevicesObj, navigatorAttr, queryPermissions } from '@/utils/common/navigator'
+import { changeCase, checkPwd, trim } from '@/utils/common/string'
+import { floatCompute } from '@/utils/floatCompute'
+import React from 'react'
+import { useState, useEffect } from 'react'
 
 export default () => {
 	function getStorageValue(key: any, defaultValue: any) {
-		if (typeof window !== "undefined") {
-			return defaultValue;
+		if (typeof window !== 'undefined') {
+			return defaultValue
 		}
 	}
 
 	const useLocalStorage = (key: any, defaultValue: any) => {
-		const [value, setValue] = useState(() => getStorageValue(key, defaultValue));
+		const [value, setValue] = useState(() => getStorageValue(key, defaultValue))
 
 		useEffect(() => {
 			// localStorage.setItem(key, JSON.stringify(value));
-		}, [key, value]);
+		}, [key, value])
 
-		return [value, setValue];
-	};
+		return [value, setValue]
+	}
 
-	const [value, setValue] = useLocalStorage("zs", 33);
+	const [value, setValue] = useLocalStorage('zs', 33)
 	// console.log(value);
 
 	const onChange = () => {
-		setValue((value: number) => value + 1);
-	};
+		setValue((value: number) => value + 1)
+	}
 
 	// console.log(checkPwd("xxAbc123."));
-	console.log(123);
+	console.log(123)
 
 	// ! 测试 navigator 属性方法
 	// navigatorAttr()
@@ -67,5 +67,5 @@ export default () => {
 	// console.log(0.69 / 10); // 0.06899999999999999
 	// console.log(floatCompute.divide(0.69, 10, 0)); // 0.069
 
-	return null;
-};
+	return null
+}

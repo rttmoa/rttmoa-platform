@@ -1,21 +1,21 @@
 {
-  "code": 200,
-  "msg": "成功",
-  "data": [
-    {
-      "parentId": "0",
-      "_id": "5e12b8bce31bb727e4b0e348",
-      "name": "家用电器"
-    },
-    {
-      "parentId": "0",
-      "_id": "5e130ec7e31bb727e4b0e34c",
-      "name": "手机"
-    },
-    {
-      "parentId": "0",
-      "_id": "5e1346533ed02518b4db0cd7",
-      "name": "图书"
-    }
-  ]
+	"code": 200,
+	"msg": "成功",
+	"data": [
+		{
+			"parentId": "0",
+			"_id": "5e12b8bce31bb727e4b0e348",
+			"name": "家用电器"
+		},
+		{
+			"parentId": "0",
+			"_id": "5e130ec7e31bb727e4b0e34c",
+			"name": "手机"
+		},
+		{
+			"parentId": "0",
+			"_id": "5e1346533ed02518b4db0cd7",
+			"name": "图书"
+		}
+	]
 }

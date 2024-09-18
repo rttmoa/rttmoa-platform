@@ -1,5 +1,5 @@
-import React from "react";
-import { QqOutlined, WechatOutlined } from "@ant-design/icons";
+import React from 'react'
+import { QqOutlined, WechatOutlined } from '@ant-design/icons'
 
 const LoginLogo = () => {
 	return (
@@ -11,7 +11,7 @@ const LoginLogo = () => {
 				<a href="#">{<WechatOutlined />}</a>
 			</span>
 		</div>
-	);
-};
+	)
+}
 
-export default LoginLogo;
+export default LoginLogo

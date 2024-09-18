@@ -1,261 +1,261 @@
 .usn {
-  /* 禁止选中文本 */
-  user-select: none;
+	/* 禁止选中文本 */
+	user-select: none;
 }
 
 /* 浮动 */
 .fl {
-  float: left;
+	float: left;
 }
 .fr {
-  float: right;
+	float: right;
 }
 .cf {
-  zoom: 1;
+	zoom: 1;
 }
 .cf::after {
-  content: ".";
-  display: block;
-  clear: both;
-  visibility: hidden;
-  height: 0;
-  overflow: hidden;
+	content: '.';
+	display: block;
+	clear: both;
+	visibility: hidden;
+	height: 0;
+	overflow: hidden;
 }
 
 /* 元素类型 */
 .db {
-  display: block;
+	display: block;
 }
 .dn {
-  display: none;
+	display: none;
 }
 .di {
-  display: inline;
+	display: inline;
 }
 .dib {
-  display: inline-block;
+	display: inline-block;
 }
 .transparent {
-  opacity: 0;
+	opacity: 0;
 }
 
 /* 文字排版、颜色 */
 .f12 {
-  font-size: 12px;
+	font-size: 12px;
 }
 .f14 {
-  font-size: 14px;
+	font-size: 14px;
 }
 .f16 {
-  font-size: 16px;
+	font-size: 16px;
 }
 .f18 {
-  font-size: 18px;
+	font-size: 18px;
 }
 .f20 {
-  font-size: 20px;
+	font-size: 20px;
 }
 .fb {
-  font-weight: bold;
+	font-weight: bold;
 }
 .fn {
-  font-weight: normal;
+	font-weight: normal;
 }
 .t2 {
-  text-indent: 2em;
+	text-indent: 2em;
 }
 .red,
 a.red {
-  color: #cc0031;
+	color: #cc0031;
 }
 .darkblue,
 a.darkblue {
-  color: #003399;
+	color: #003399;
 }
 .gray,
 a.gray {
-  color: #878787;
+	color: #878787;
 }
 .lh150 {
-  line-height: 150%;
+	line-height: 150%;
 }
 .lh180 {
-  line-height: 180%;
+	line-height: 180%;
 }
 .lh200 {
-  line-height: 200%;
+	line-height: 200%;
 }
 .unl {
-  text-decoration: underline;
+	text-decoration: underline;
 }
 .no_unl {
-  text-decoration: none;
+	text-decoration: none;
 }
 .tl {
-  text-align: left;
+	text-align: left;
 }
 .tc {
-  text-align: center;
+	text-align: center;
 }
 .tr {
-  text-align: right;
+	text-align: right;
 }
 .tj {
-  text-align: justify;
-  text-justify: inter-ideograph;
+	text-align: justify;
+	text-justify: inter-ideograph;
 }
 .wn {
-  /* 强制不换行 */
-  word-wrap: normal;
-  white-space: nowrap;
+	/* 强制不换行 */
+	word-wrap: normal;
+	white-space: nowrap;
 }
 .wb {
-  /* 强制换行 */
-  white-space: normal;
-  word-wrap: break-word;
-  word-break: break-all;
+	/* 强制换行 */
+	white-space: normal;
+	word-wrap: break-word;
+	word-break: break-all;
 }
 .wp {
-  /* 保持空白序列 */
-  overflow: hidden;
-  text-align: left;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  word-break: break-all;
+	/* 保持空白序列 */
+	overflow: hidden;
+	text-align: left;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	word-break: break-all;
 }
 .wes {
-  /* 多出部分用省略号表示 , 用于一行 */
-  overflow: hidden;
-  word-wrap: normal;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+	/* 多出部分用省略号表示 , 用于一行 */
+	overflow: hidden;
+	word-wrap: normal;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 .wes-2 {
-  /* 适用于webkit内核和移动端 */
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
+	/* 适用于webkit内核和移动端 */
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
 }
 .wes-3 {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
 }
 .wes-4 {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-  overflow: hidden;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 4;
+	overflow: hidden;
 }
 
 /* 溢出样式 */
 .ofh {
-  overflow: hidden;
+	overflow: hidden;
 }
 .ofs {
-  overflow: scroll;
+	overflow: scroll;
 }
 .ofa {
-  overflow: auto;
+	overflow: auto;
 }
 .ofv {
-  overflow: visible;
+	overflow: visible;
 }
 
 /* 定位方式 */
 .ps {
-  position: static;
+	position: static;
 }
 .pr {
-  position: relative;
-  zoom: 1;
+	position: relative;
+	zoom: 1;
 }
 .pa {
-  position: absolute;
+	position: absolute;
 }
 .pf {
-  position: fixed;
+	position: fixed;
 }
 
 /* 垂直对齐方式 */
 .vt {
-  vertical-align: top;
+	vertical-align: top;
 }
 .vm {
-  vertical-align: middle;
+	vertical-align: middle;
 }
 .vb {
-  vertical-align: bottom;
+	vertical-align: bottom;
 }
 
 /* 鼠标样式 */
 .csd {
-  cursor: default;
+	cursor: default;
 }
 .csp {
-  cursor: pointer;
+	cursor: pointer;
 }
 .csh {
-  cursor: help;
+	cursor: help;
 }
 .csm {
-  cursor: move;
+	cursor: move;
 }
 
 /* flex布局 */
 .df-sb {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 .df-sa {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
 }
 
 /* 垂直居中 */
 .df-c {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 .tb-c {
-  text-align: center;
-  display: table-cell;
-  vertical-align: middle;
+	text-align: center;
+	display: table-cell;
+	vertical-align: middle;
 }
 .ts-c {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
 }
 .ts-mc {
-  position: absolute;
-  inset: 0;
-  margin: auto;
+	position: absolute;
+	inset: 0;
+	margin: auto;
 }
 
 /* 辅助 */
 .mask-fixed-wrapper {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  left: 0;
-  top: 0;
-  background: rgb(0 0 0 / 65%);
-  z-index: 999;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	top: 0;
+	background: rgb(0 0 0 / 65%);
+	z-index: 999;
 }
 .bg-cover {
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
 }
 .bg-cover-all {
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-position: center center;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	background-position: center center;
 }

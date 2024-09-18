@@ -1,82 +1,82 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Form, Button, Popconfirm, Modal, message, DatePicker, Input, Select } from "antd";
-import { SearchOutlined, ReloadOutlined, DeleteOutlined } from "@ant-design/icons";
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { Form, Button, Popconfirm, Modal, message, DatePicker, Input, Select } from 'antd'
+import { SearchOutlined, ReloadOutlined, DeleteOutlined } from '@ant-design/icons'
 
-const { RangePicker } = DatePicker;
+const { RangePicker } = DatePicker
 
 const initFilter = (arr: any) => {
-	const obj: any = {};
+	const obj: any = {}
 	arr.forEach((item: any) => {
 		switch (item.type) {
-			case "inputString":
-				obj[item.name] = item.initValue || "";
-				break;
-			case "select":
-				obj[item.name] = item.initValue || 0;
-				break;
-			case "dateRange":
+			case 'inputString':
+				obj[item.name] = item.initValue || ''
+				break
+			case 'select':
+				obj[item.name] = item.initValue || 0
+				break
+			case 'dateRange':
 				item.name.forEach((name: string) => {
-					obj[name] = "";
-				});
-				break;
+					obj[name] = ''
+				})
+				break
 			default:
-				break;
+				break
 		}
-	});
+	})
 
-	return obj;
-};
+	return obj
+}
 const getFormItem = (arr: any, { filter, handleInputChange, handleSelectChange, handleDateChange }: any) => {
-	const Eles: React.ReactNode[] = [];
+	const Eles: React.ReactNode[] = []
 	arr.forEach((item: any) => {
-		const name = item.name;
-		const label = item.label;
-		const value = filter[name];
+		const name = item.name
+		const label = item.label
+		const value = filter[name]
 		switch (item.type) {
-			case "inputString":
+			case 'inputString':
 				Eles.push(
 					<Form.Item>
 						<Input size="small" placeholder={label} name={name} value={value} onChange={handleInputChange} />
 					</Form.Item>
-				);
-				break;
-			case "select":
+				)
+				break
+			case 'select':
 				Eles.push(
 					<Form.Item>
 						<Select
 							size="small"
 							style={{ width: 120 }}
 							onChange={v => {
-								handleSelectChange(name, v);
+								handleSelectChange(name, v)
 							}}
 							value={value}
 							options={item.options}
 						/>
 					</Form.Item>
-				);
-				break;
-			case "dateRange":
+				)
+				break
+			case 'dateRange':
 				Eles.push(
 					<Form.Item>
 						<RangePicker
 							onChange={dates => {
-								handleDateChange(name, dates);
+								handleDateChange(name, dates)
 							}}
 							value={[filter[name[0]], filter[name[1]]]}
 							placeholder={label}
 							size="small"
 						/>
 					</Form.Item>
-				);
-				break;
+				)
+				break
 			default:
-				break;
+				break
 		}
-	});
+	})
 
-	return Eles;
-};
+	return Eles
+}
 
 /**
  * const [DeleteEle] = useDelete({
@@ -95,13 +95,13 @@ const getFormItem = (arr: any, { filter, handleInputChange, handleSelectChange, 
 		{FilterEles}
 	</Form>
 	*/
-const useDelete = ({ url = "", data = {}, success = Function, keys = [] }) => {
-	const OPER = { isDelete: true };
+const useDelete = ({ url = '', data = {}, success = Function, keys = [] }) => {
+	const OPER = { isDelete: true }
 	const handleDel = () => {
 		// 请求..
-		message.success("删除成功");
-		success && success();
-	};
+		message.success('删除成功')
+		success && success()
+	}
 
 	const DeleteEle = (
 		<React.Fragment>
@@ -121,10 +121,10 @@ const useDelete = ({ url = "", data = {}, success = Function, keys = [] }) => {
 				</Form.Item>
 			)}
 		</React.Fragment>
-	);
+	)
 
-	return [DeleteEle];
-};
+	return [DeleteEle]
+}
 
 /**
  * const { FilterEles, filterRefresh } = useFilter([
@@ -156,36 +156,36 @@ const useDelete = ({ url = "", data = {}, success = Function, keys = [] }) => {
 		</Form>
  */
 const useFilter = (config = []) => {
-	const [filter, setFilter] = useState(initFilter(config));
-	const [refresh, setRefresh] = useState(false);
+	const [filter, setFilter] = useState(initFilter(config))
+	const [refresh, setRefresh] = useState(false)
 
 	const handleResetFilter = () => {
-		setFilter(initFilter(config));
-		setRefresh(!refresh);
-	};
+		setFilter(initFilter(config))
+		setRefresh(!refresh)
+	}
 
 	const handleDateChange = ([startField, endField]: any, [startTime, endTime]: any) => {
-		setFilter({ ...filter, [startField]: startTime, [endField]: endTime });
-	};
+		setFilter({ ...filter, [startField]: startTime, [endField]: endTime })
+	}
 
 	const handleInputChange = (e: any) => {
-		const { name, value } = e.target;
-		setFilter({ ...filter, [name]: value });
-	};
+		const { name, value } = e.target
+		setFilter({ ...filter, [name]: value })
+	}
 
 	const handleSelectChange = (name: any, value: any) => {
-		setFilter({ ...filter, [name]: value });
-	};
+		setFilter({ ...filter, [name]: value })
+	}
 
 	const FormItemEles = getFormItem(config, {
 		filter,
 		handleInputChange,
 		handleSelectChange,
-		handleDateChange
-	});
+		handleDateChange,
+	})
 	const handleSearch = () => {
-		setRefresh(!refresh); // 通知查询
-	};
+		setRefresh(!refresh) // 通知查询
+	}
 
 	const HandlerEles = [
 		<Form.Item>
@@ -197,15 +197,15 @@ const useFilter = (config = []) => {
 			<Button type="primary" size="small" onClick={handleResetFilter} icon={<ReloadOutlined />}>
 				重置
 			</Button>
-		</Form.Item>
-	];
+		</Form.Item>,
+	]
 
 	return {
 		filter,
 		FilterEles: [...FormItemEles, ...HandlerEles], // DOM
-		filterRefresh: refresh
-	};
-};
+		filterRefresh: refresh,
+	}
+}
 
 /**
  *  const { pagination, pageRefresh, paginationConfig, setPagination } =
@@ -215,12 +215,12 @@ const usePagination = () => {
 	const [pagination, setPagination] = useState<any>({
 		page: 1,
 		pageSize: 10,
-		total: 0
-	});
-	const [pageRefresh, setPageRefresh] = useState(false);
+		total: 0,
+	})
+	const [pageRefresh, setPageRefresh] = useState(false)
 
 	const config = {
-		size: "small",
+		size: 'small',
 		showQuickJumper: false,
 		total: pagination.total,
 		current: pagination.page,
@@ -228,39 +228,39 @@ const usePagination = () => {
 		onChange: (current: number) => {
 			setPagination({
 				...pagination,
-				page: current
-			});
-			setPageRefresh(() => !pageRefresh);
+				page: current,
+			})
+			setPageRefresh(() => !pageRefresh)
 		},
 		pageSize: pagination.pageSize,
 		onShowSizeChange: (page: number, pageSize: number) => {
 			setPagination({
 				page,
-				pageSize
-			});
-			setPageRefresh(() => !pageRefresh);
-		}
-	};
+				pageSize,
+			})
+			setPageRefresh(() => !pageRefresh)
+		},
+	}
 
 	return {
 		pagination,
 		pageRefresh,
 		setPagination,
-		paginationConfig: config
-	};
-};
+		paginationConfig: config,
+	}
+}
 
 // const { selectedKeys, rowSelection, setSelectedKeys } = useSelect();
 const useSelect = () => {
-	const [selectedKeys, setSelectedKeys] = useState([]);
+	const [selectedKeys, setSelectedKeys] = useState([])
 	const rowSelection = {
 		onChange: (selectedKeys = []) => {
-			setSelectedKeys(selectedKeys);
+			setSelectedKeys(selectedKeys)
 		},
-		selectedRowKeys: selectedKeys
-	};
-	return { selectedKeys, rowSelection, setSelectedKeys };
-};
+		selectedRowKeys: selectedKeys,
+	}
+	return { selectedKeys, rowSelection, setSelectedKeys }
+}
 
 /**
  * const { ModalEle, setModal } = useModal([
@@ -275,79 +275,79 @@ const useSelect = () => {
 const useModal = (
 	config = [
 		{
-			title: "详情",
-			action: "detail",
-			getComponent: <div>详情</div>
-		}
+			title: '详情',
+			action: 'detail',
+			getComponent: <div>详情</div>,
+		},
 	]
 ) => {
 	const [modal, setModal] = useState({
 		isShow: false,
 		record: null,
-		action: ""
-	});
+		action: '',
+	})
 	const handleCancel = () => {
 		setModal({
 			isShow: false,
 			record: null,
-			action: ""
-		});
-	};
+			action: '',
+		})
+	}
 
 	//对话框信息
 	let modalProps = {
 		open: modal.isShow,
 		onCancel: handleCancel,
 		maskClosable: false,
-		footer: null
-	};
+		footer: null,
+	}
 
-	const currentModal: any = config.find(item => item.action === modal.action);
+	const currentModal: any = config.find(item => item.action === modal.action)
 	if (currentModal) {
-		const { action, getComponent, ...other } = currentModal;
+		const { action, getComponent, ...other } = currentModal
 		modalProps = {
 			...modalProps,
-			...other
-		};
+			...other,
+		}
 	}
 
 	let ModalEle: any = (
 		<Modal width="80%" {...modalProps}>
 			{currentModal && currentModal.getComponent(modal.record)}
 		</Modal>
-	);
-	return { ModalEle, modal, setModal };
-};
+	)
+	return { ModalEle, modal, setModal }
+}
 
 const useTimer = (interval: number, handler: any) => {
-	const [isTimerOpen, setTimerOpen] = useState(false);
+	const [isTimerOpen, setTimerOpen] = useState(false)
 
 	useEffect(() => {
-		let timer: any;
+		let timer: any
 
 		// 启动定时器
 		if (isTimerOpen) {
 			timer = setInterval(() => {
-				handler();
-			}, interval);
+				handler()
+			}, interval)
 
 			// 第一次加载时手动触发一次请求
-			handler();
+			handler()
 		} else {
 			// 清除定时器
-			clearInterval(timer);
+			clearInterval(timer)
 		}
 
 		// 在组件卸载时清除定时器，防止内存泄漏
 		return () => {
-			clearInterval(timer);
-		};
-	}, [isTimerOpen]); // 当 isTimerOpen 改变时重新运行 useEffect
+			clearInterval(timer)
+		}
+	}, [isTimerOpen]) // 当 isTimerOpen 改变时重新运行 useEffect
 
 	return {
-		setTimerOpen
-	};
-};
+		setTimerOpen,
+	}
+}
 
 export default {
 	useModal,
@@ -355,5 +355,5 @@ export default {
 	useSelect,
 	usePagination,
 	useFilter,
-	useTimer
-};
+	useTimer,
+}
