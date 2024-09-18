@@ -1,0 +1,1 @@
+import{j as e,D as r}from"./.pnpm-e6eae8df.js";const n=({user:s})=>{const a=[{key:"1",label:"name",children:s.name},{key:"2",label:"age",children:s.age},{key:"3",label:"address",children:s.address}];return e.jsx(e.Fragment,{children:e.jsx(r,{title:"USERINFO",items:a})})},i=()=>e.jsx(n,{user:{name:"Dail",age:16,address:"Shanghai"}});export{i as default};
