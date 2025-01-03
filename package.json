@@ -18,7 +18,7 @@
 		"url": "https://github.com/rttmoa/rttmoa-platform/issues"
 	},
 	"scripts": {
-		"start": "nvm use 18.18.0 && vite",
+		"start": "vite",
 		"serve": "serve -s dist -l 9889",
 		"preview_Dev": "npm run build:dev && vite preview",
 		"preview_Prod": "npm run build:production && vite preview",
