@@ -5,12 +5,6 @@ dist-ssr
 stats.html
 *.local
 
-
-# Editor directories and files
-# .vscode/*
-# .vscode/extensions.json
-# .vscode/settings.json
-
 .idea
 .DS_Store
 *.suo
@@ -18,6 +12,12 @@ stats.html
 *.njsproj
 *.sln
 *.sw? 
+
+# Editor directories and files
+# .vscode/*
+# .vscode/extensions.json
+# .vscode/settings.json
+
 
 
 # Logs
@@ -27,7 +27,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
-yarn.lock
+
+# ! 需要 yarn.lock
 
 # pnpm
 pnpm-lock.yaml
