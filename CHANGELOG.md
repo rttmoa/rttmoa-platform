@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.15](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.14...v2.3.15) (2025-02-22)
+
+### Features
+
+- 🚀 wmsEnum ([bdfb369](https://github.com/rttmoa/rttmoa-platform/commit/bdfb369d6c0eb58ebef3482b1783c740aad372a4))
+
+### Bug Fixes
+
+- 🧩 change ([12ffc9c](https://github.com/rttmoa/rttmoa-platform/commit/12ffc9cb185b41a729d34c5507aaabd19f8c5379))
+
 ### [2.3.14](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.13...v2.3.14) (2025-02-19)
 
 ### [2.3.13](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.12...v2.3.13) (2024-09-18)
