@@ -54,7 +54,8 @@
 		"release:major": "standard-version --release-as major",
 		"rimraf": "rimraf node_modules",
 		"commit": "git add -A && czg && git push",
-		"r": "standard-version --release-as patch",
+		"releasePatch": "standard-version --release-as patch",
+		"push": "git push --follow-tags origin main",
 		"predeploy": "npm run build:production",
 		"deploy": "gh-pages -d dist -b gh-pages"
 	},
