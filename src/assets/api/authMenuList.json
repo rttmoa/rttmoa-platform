@@ -812,6 +812,19 @@
 						"isFull": false,
 						"isAffix": false
 					}
+				},
+				{
+					"path": "/module/scada",
+					"element": "/module/scada/index",
+					"meta": {
+						"key": "scada",
+						"icon": "AppstoreOutlined",
+						"title": "Scada",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false
+					}
 				}
 			]
 		},
