@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.18](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.17...v2.3.18) (2025-02-28)
+
+### Features
+
+- 🚀 scada ([b867e85](https://github.com/rttmoa/rttmoa-platform/commit/b867e8524047b1ad6488537a39bac4f1e1c94fe6))
+
 ### [2.3.17](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.16...v2.3.17) (2025-02-23)
 
 ### Bug Fixes
