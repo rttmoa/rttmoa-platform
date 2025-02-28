@@ -1,0 +1,1 @@
+import{j as s}from"./index-487798a4.js";import{C as a}from"./index-3fed22b8.js";const r=""+new URL("../png/Scada-6d7056b5.png",import.meta.url).href;const n=()=>s.jsx("div",{className:"scada-container",children:s.jsxs(a,{className:"sc-card",children:[s.jsx("img",{src:r,alt:""}),s.jsx("div",{className:"sc-1",children:"123"})]})});export{n as default};
