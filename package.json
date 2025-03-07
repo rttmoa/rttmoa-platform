@@ -17,8 +17,11 @@
 	"bugs": {
 		"url": "https://github.com/rttmoa/rttmoa-platform/issues"
 	},
+	"engines": {
+		"node": "v18.18.0"
+	},
 	"scripts": {
-		"start": "vite",
+		"start": "nvm use && vite",
 		"serve": "serve -s dist -l 9889",
 		"preview_Dev": "npm run build:dev && vite preview",
 		"preview_Prod": "npm run build:production && vite preview",
@@ -186,9 +189,6 @@
 		"vite-plugin-pwa": "^0.16.4",
 		"vite-plugin-require-transform": "^1.0.21",
 		"vite-plugin-svg-icons": "^2.0.1"
-	},
-	"engines": {
-		"node": ">=18.0.0"
 	},
 	"browserslist": {
 		"production": [
