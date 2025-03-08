@@ -21,7 +21,7 @@
 		"node": "v18.18.0"
 	},
 	"scripts": {
-		"start": "nvm use && vite",
+		"start": "vite",
 		"serve": "serve -s dist -l 9889",
 		"preview_Dev": "npm run build:dev && vite preview",
 		"preview_Prod": "npm run build:production && vite preview",
