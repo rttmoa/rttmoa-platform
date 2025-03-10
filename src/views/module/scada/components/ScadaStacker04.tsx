@@ -1,5 +1,6 @@
 import Shusongxian1 from '../icons/shusongxian1.png'
 import Huojia from '../icons/huojiaxinxi.png'
+import Stacker from '../icons/a-dangongweiduiduoji-youmantuo.png'
 
 const ScadaMapStarcker04 = () => {
 	const coverLines = [
@@ -54,8 +55,11 @@ const ScadaMapStarcker04 = () => {
 						</div>
 					))}
 				</div>
-				<div className="mt-5 ml-6">堆垛机</div>
-				<div className="flex ml-4 mt-[45px]">
+				{/* <div className="mt-5 ml-6">堆垛机</div> */}
+				<div className="mt-[10px] ml-[14px] w-[45px] h-[45px]">
+					<img src={Stacker} alt="" />
+				</div>
+				<div className="flex ml-4 mt-[25px]">
 					{shelves.map((square, index) => (
 						<div key={index} className={`w-[30px] h-[30px]   ml-[2px] -mt-[15px]`}>
 							<img src={Huojia} alt="" />
