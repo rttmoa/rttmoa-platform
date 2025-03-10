@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.20](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.19...v2.3.20) (2025-03-10)
+
+
+### Features
+
+* 🚀 scada ([ba90bd6](https://github.com/rttmoa/rttmoa-platform/commit/ba90bd6ca09fae381671d0ac3b42fd34c1fd7930))
+
+
+### Bug Fixes
+
+* 🧩 index ([512c595](https://github.com/rttmoa/rttmoa-platform/commit/512c595aacccb7188cb5dd186b78865bc0872864))
+* **file:** 🧩 file ([99d0b79](https://github.com/rttmoa/rttmoa-platform/commit/99d0b792ee824f932cec119ab9a69ee716c47a52))
+
 ### [2.3.19](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.18...v2.3.19) (2025-03-02)
 
 
