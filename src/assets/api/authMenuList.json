@@ -825,6 +825,19 @@
 						"isFull": false,
 						"isAffix": false
 					}
+				},
+				{
+					"path": "/module/storage",
+					"element": "/module/storage/index",
+					"meta": {
+						"key": "storage",
+						"icon": "AppstoreOutlined",
+						"title": "库位装饰报表",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false
+					}
 				}
 			]
 		},

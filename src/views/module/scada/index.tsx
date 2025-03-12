@@ -1,7 +1,8 @@
 import { Card } from 'antd'
 import ScadaImage from './Scada.png'
-import Shusongxian1 from './icons/shusongxian1.png'
+import Shusongxian_None from './icons/shusongxian1.png'
 import Huojia from './icons/huojiaxinxi.png'
+import Shusongxian_Yes from './icons/shusongxian-yes1.png'
 
 import React from 'react'
 import './index.less'
@@ -16,13 +17,10 @@ const Scada: React.FC = () => {
 	return (
 		<div className="scada-container flex ">
 			<Card className="sc-card  w-full h-screen bg-slate-200">
-				{/* <div
-					className="mx-auto w-[600px] h-[48px] bg-gradient-to-r from-orange-500 via-pink-500 to-blue-500 
-                flex items-center justify-center  text-white text-2xl font-bold uppercase shadow-lg z-50 rounded-2xl">
-					<span className="font-mono drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">Scada 平台</span>
-				</div> */}
-
-				<span className="flex justify-center mt-[15px] font-sans text-3xl font-bold text-slate-600">SCADA</span>
+				<div className="relative bg-[#0F1D38] w-[600px] py-[6px] mt-[15px] mx-auto rounded-3xl">
+					<SvgIcon name="scada-title-01" iconStyle={{ position: 'absolute', left: 30, top: 9, width: '30px', height: '30px' }} />
+					<span className="flex justify-center font-serif text-3xl font-bold text-slate-100">SCADA</span>
+				</div>
 
 				{/* <img className="sc-img " src={ScadaImage} alt="" /> */}
 				{/* <div className="sc-1">123</div> */}
@@ -58,11 +56,11 @@ type ScadaParams1 = {
 }
 const ScadaMap1019: React.FC<ScadaParams1> = ({ uname }) => {
 	const coverLines = [
-		{ x: 100, y: 200 },
-		{ x: 300, y: 400 },
-		{ x: 500, y: 600 },
-		{ x: 500, y: 600 },
-		{ x: 500, y: 600 },
+		{ pallet: 100, isAuto: 3, isHasPallet: 1 },
+		{ pallet: 100, isAuto: 3, isHasPallet: 0 },
+		{ pallet: 100, isAuto: 3, isHasPallet: 0 },
+		{ pallet: 100, isAuto: 3, isHasPallet: 0 },
+		{ pallet: 100, isAuto: 3, isHasPallet: 1 },
 	]
 	return (
 		<div className="relative">
@@ -70,9 +68,9 @@ const ScadaMap1019: React.FC<ScadaParams1> = ({ uname }) => {
 			<SvgIcon name="scada-blue-jiantou-zuo" iconStyle={{ width: '30px', height: '30px', position: 'absolute', right: 55 }} />
 			<span className="font-mono absolute top-[-30px] left-[70px]">1019</span>
 			<div className="w-[300px]  flex mt-[100px] ml-[60px]">
-				{coverLines.map((square, index) => (
+				{coverLines.map((element, index) => (
 					<div key={index} className={`w-[30px] h-[30px]   ml-3`}>
-						<img src={Shusongxian1} alt="" />
+						<img src={element.isHasPallet == 0 ? Shusongxian_None : Shusongxian_Yes} alt="" />
 					</div>
 				))}
 			</div>
@@ -82,11 +80,11 @@ const ScadaMap1019: React.FC<ScadaParams1> = ({ uname }) => {
 
 const ScadaMap1022 = () => {
 	const coverLines = [
-		{ x: 100, y: 200 },
-		{ x: 300, y: 400 },
-		{ x: 500, y: 600 },
-		{ x: 500, y: 600 },
-		{ x: 500, y: 600 },
+		{ pallet: 100, isAuto: 3, isHasPallet: 0 },
+		{ pallet: 100, isAuto: 3, isHasPallet: 0 },
+		{ pallet: 100, isAuto: 3, isHasPallet: 0 },
+		{ pallet: 100, isAuto: 3, isHasPallet: 0 },
+		{ pallet: 100, isAuto: 3, isHasPallet: 1 },
 	]
 	return (
 		<div className="relative">
@@ -94,9 +92,9 @@ const ScadaMap1022 = () => {
 			<SvgIcon name="scada-blue-jiantou-you" iconStyle={{ width: '30px', height: '30px', position: 'absolute', right: 55 }} />
 			<span className="font-mono absolute top-[35px] left-[240px]">1022</span>
 			<div className="w-[300px] flex ml-[60px] mt-[25px]">
-				{coverLines.map((square, index) => (
+				{coverLines.map((element, index) => (
 					<div key={index} className={`w-[30px] h-[30px]   ml-3`}>
-						<img src={Shusongxian1} alt="" />
+						<img src={element.isHasPallet == 0 ? Shusongxian_None : Shusongxian_Yes} alt="" />
 					</div>
 				))}
 			</div>
@@ -105,17 +103,17 @@ const ScadaMap1022 = () => {
 }
 const ScadaMap1032 = () => {
 	const coverLines = [
-		{ x: 100, y: 200 },
-		{ x: 300, y: 400 },
-		{ x: 500, y: 600 },
-		{ x: 500, y: 600 },
-		{ x: 500, y: 600 },
+		{ pallet: 100, isAuto: 3, isHasPallet: 0 },
+		{ pallet: 100, isAuto: 3, isHasPallet: 0 },
+		{ pallet: 100, isAuto: 3, isHasPallet: 0 },
+		{ pallet: 100, isAuto: 3, isHasPallet: 0 },
+		{ pallet: 100, isAuto: 3, isHasPallet: 1 },
 	]
 	return (
 		<div className="w-[300px]  flex mt-[225px] ml-[60px]">
-			{coverLines.map((square, index) => (
+			{coverLines.map((element, index) => (
 				<div key={index} className={`w-[30px] h-[30px]   ml-3`}>
-					<img src={Shusongxian1} alt="" />
+					<img src={element.isHasPallet == 0 ? Shusongxian_None : Shusongxian_Yes} alt="" />
 				</div>
 			))}
 		</div>
@@ -123,17 +121,17 @@ const ScadaMap1032 = () => {
 }
 const ScadaMap1037 = () => {
 	const coverLines = [
-		{ x: 100, y: 200 },
-		{ x: 300, y: 400 },
-		{ x: 500, y: 600 },
-		{ x: 500, y: 600 },
-		{ x: 500, y: 600 },
+		{ pallet: 100, isAuto: 3, isHasPallet: 0 },
+		{ pallet: 100, isAuto: 3, isHasPallet: 0 },
+		{ pallet: 100, isAuto: 3, isHasPallet: 0 },
+		{ pallet: 100, isAuto: 3, isHasPallet: 0 },
+		{ pallet: 100, isAuto: 3, isHasPallet: 1 },
 	]
 	return (
 		<div className="w-[300px]  flex mt-[25px] ml-[60px]">
-			{coverLines.map((square, index) => (
+			{coverLines.map((element, index) => (
 				<div key={index} className={`w-[30px] h-[30px]   ml-3`}>
-					<img src={Shusongxian1} alt="" />
+					<img src={element.isHasPallet == 0 ? Shusongxian_None : Shusongxian_Yes} alt="" />
 				</div>
 			))}
 		</div>
