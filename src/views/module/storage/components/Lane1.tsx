@@ -12,6 +12,13 @@ interface DataType {
 	column2: number
 	column3: number
 	column4: number
+	column5: number
+	column6: number
+	column7: number
+	column8: number
+	column9: number
+	column10: number
+	column11: number
 }
 
 const columns: TableProps<DataType>['columns'] = [
@@ -160,11 +167,13 @@ const columns: TableProps<DataType>['columns'] = [
 		title: '第7列',
 		dataIndex: 'column7',
 		key: 'column7',
+		width: 1200,
 	},
 	{
 		title: '第8列',
 		dataIndex: 'column8',
 		key: 'column8',
+		width: 500,
 	},
 	{
 		title: '第9列',
@@ -173,129 +182,26 @@ const columns: TableProps<DataType>['columns'] = [
 	},
 ]
 
-const data: DataType[] = [
-	{
-		key: '1',
-		lane: 1,
-		row: 32,
-		layer: 234,
-		column1: 2,
-		column2: 3,
-		column3: 13,
-		column4: 23,
-	},
-	{
-		key: '2',
-		lane: 1,
-		row: 32,
-		layer: 234,
-		column1: 2,
-		column2: 13,
-		column3: 3,
-		column4: 33,
-	},
-	{
-		key: '3',
-		lane: 1,
-		row: 32,
-		layer: 234,
-		column1: 2,
-		column2: 3,
-		column3: 23,
-		column4: 15,
-	},
-	{
-		key: '3',
-		lane: 1,
-		row: 32,
-		layer: 234,
-		column1: 2,
-		column2: 3,
-		column3: 23,
-		column4: 15,
-	},
-	{
-		key: '3',
-		lane: 1,
-		row: 32,
-		layer: 234,
-		column1: 2,
-		column2: 3,
-		column3: 23,
-		column4: 15,
-	},
-	{
-		key: '3',
-		lane: 1,
-		row: 32,
-		layer: 234,
-		column1: 2,
-		column2: 3,
-		column3: 23,
-		column4: 15,
-	},
-	{
-		key: '3',
-		lane: 1,
-		row: 32,
-		layer: 234,
-		column1: 2,
-		column2: 3,
-		column3: 23,
-		column4: 15,
-	},
-	{
-		key: '3',
-		lane: 1,
-		row: 32,
-		layer: 234,
-		column1: 2,
-		column2: 3,
-		column3: 23,
-		column4: 15,
-	},
-
-	{
-		key: '3',
-		lane: 1,
-		row: 32,
-		layer: 234,
-		column1: 2,
-		column2: 3,
-		column3: 23,
-		column4: 15,
-	},
-	{
-		key: '3',
-		lane: 1,
-		row: 32,
-		layer: 234,
-		column1: 2,
-		column2: 3,
-		column3: 23,
-		column4: 15,
-	},
-	{
-		key: '3',
-		lane: 1,
-		row: 32,
-		layer: 234,
-		column1: 2,
-		column2: 3,
-		column3: 23,
-		column4: 15,
-	},
-	{
-		key: '3',
-		lane: 1,
-		row: 32,
-		layer: 234,
-		column1: 2,
-		column2: 3,
-		column3: 23,
-		column4: 15,
-	},
-]
+let data: DataType[] = []
+for (let index = 1; index < 20; index++) {
+	data.push({
+		key: String(index),
+		lane: index,
+		row: index,
+		layer: index,
+		column1: index,
+		column2: index,
+		column3: index,
+		column4: index,
+		column5: index,
+		column6: index,
+		column7: index,
+		column8: index,
+		column9: index,
+		column10: index,
+		column11: index,
+	})
+}
 
 const Lane: React.FC = () => {
 	console.log('巷道一')

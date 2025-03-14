@@ -10,8 +10,8 @@ export const ContainerStyled = styled.main`
 export const MasonicStyled = styled.div`
 	padding: 8px;
 	width: 100%;
-	max-width: 960px;
-	margin: 30px auto 0;
+	// max-width: 960px;
+	margin: 0 auto;
 	box-sizing: border-box;
 `
 
@@ -20,7 +20,7 @@ export const HeaderStyled: any = styled.h1`
 	font-size: 1.5rem;
 	font-weight: 900;
 	letter-spacing: -0.075em;
-	/* color: ; */
+	/* color: #fff; */
 	/* position: fixed; */
 	/* left: 0; */
 	/* right: 0; */

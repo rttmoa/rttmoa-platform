@@ -6,11 +6,12 @@ import { Masonry } from 'masonic'
 import catName from 'cat-names'
 import catArr from './cat'
 import UseLazyLoadImage from '@/hooks/useLazyloadImage'
+import './index.less'
 
 const CatDetail: React.FC = () => {
 	const [item, setItem] = useState(() => {
 		let id = 0
-		return Array.from(Array(100), () => ({
+		return Array.from(Array(120), () => ({
 			id: id++,
 			name: catName.random(),
 			src: catArr[Math.floor(Math.random() * catArr.length)],
@@ -19,8 +20,8 @@ const CatDetail: React.FC = () => {
 
 	return (
 		<>
-			<Card className="max-w-full relative">
-				<HeaderStyled minify={'false'}>
+			<Card className="rootCard max-w-full relative">
+				<HeaderStyled className="m-0" minify={'false'}>
 					<span role="img" aria-hidden="true">
 						🧱
 					</span>
@@ -28,7 +29,7 @@ const CatDetail: React.FC = () => {
 				</HeaderStyled>
 				<ContainerStyled>
 					<MasonicStyled>
-						<Masonry items={item} columnGutter={8} columnWidth={172} overscanBy={5} render={FakeCard} />
+						<Masonry items={item} columnGutter={6} columnWidth={272} overscanBy={5} render={FakeCard} />
 					</MasonicStyled>
 				</ContainerStyled>
 			</Card>
