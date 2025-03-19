@@ -3,6 +3,8 @@ import { Space, Table, Tag, Tooltip } from 'antd'
 import type { TableProps } from 'antd'
 import './index.less'
 
+// ! http://localhost:9527/#/module/storage
+
 interface DataType {
 	key?: string
 	lane: number
@@ -21,167 +23,163 @@ interface DataType {
 	column11: number
 }
 
-let title = (
-	<table className="w-full border-collapse  text-slate-700 ">
-		<tr>
-			<th className="w-[250px] text-[12px] text-center">货品名词</th>
-			<th className="w-[150px] text-[12px] text-center">生产日期</th>
-			<th className="w-[350px] text-[12px] text-center">在库整数总数</th>
-		</tr>
-		<tr>
-			<td className="  text-[12px] text-center">食品火腿肠</td>
-			<td className="  text-[12px] text-center">2020-11-19 12:32:00</td>
-			<td className="w-[350px] text-[12px] text-center">500箱0根</td>
-		</tr>
-	</table>
-)
+function titleFN(data: string, record?: any, index?: number) {
+	// console.log('titleFN', data, record, index)
+	if (!data) return null
+	const lane = record?.lane ?? ''
+	const row = record?.row ?? ''
+	const layer = record?.layer ?? ''
+	const str = `${row}排 - ${layer}层 - ${data}列`
 
-let data: any[] = []
-// 巷道
+	return (
+		<Tooltip
+			placement="top"
+			color="#fff"
+			title={
+				<table className="w-full border-collapse  text-slate-700 ">
+					<tr>
+						<th className="w-[250px] text-[12px] text-center">货品名词</th>
+						<th className="w-[150px] text-[12px] text-center">生产日期</th>
+						<th className="w-[350px] text-[12px] text-center">在库整数总数</th>
+					</tr>
+					<tr>
+						<td className="  text-[12px] text-center">食品火腿肠</td>
+						<td className="  text-[12px] text-center">2020-11-19 12:32:00</td>
+						<td className="w-[350px] text-[12px] text-center">500箱0根</td>
+					</tr>
+				</table>
+			}>
+			{str}
+		</Tooltip>
+	)
+}
+
+let rawData: any[] = []
 for (let w = 1; w < 2; w++) {
-	// 排 【2】
+	// 巷道
 	for (let i = 1; i < 3; i++) {
-		// 列
+		// 排
 		for (let j = 1; j < 4; j++) {
-			// 层  【3】
+			// 列
 			for (let k = 1; k < 5; k++) {
-				const res = '第' + i + '排' + j + '列' + k + '层'
+				// 层
+				const res = `第${i}排 ${j}列 ${k}层`
 				console.log(res)
-				let obj = {
-					column1: k == 1 ? 1 : null,
-					column2: k == 2 ? 2 : null,
-					column3: k == 3 ? 3 : null,
-					column4: k == 4 ? 4 : null,
-					column5: k == 5 ? 5 : null,
-				}
-				data.push({
+				let obj = {}
+				if (j == 1) Object.assign(obj, { column1: j })
+				if (j == 2) Object.assign(obj, { column2: j })
+				if (j == 3) Object.assign(obj, { column3: j })
+				rawData.push({
 					key: res,
 					lane: w, // 巷道
 					row: i, // 排
-					layer: j, // 层
+					column: j, // 列
+					layer: k, // 层
 					...obj,
-					// column1: k,
-					// column2: k,
-					// column3: k,
-					// column4: k,
-					// column5: k,
-					// column6: k,
-					// column7: k,
-					// column8: k,
-					// column9: k,
-					// column10: k,
-					// column11: 11,
 				})
 			}
 		}
 	}
 }
-console.log(data)
-
+// console.log('货位 rawData：', rawData)
 // !  这个数组，lane相同合并行，row一样合并行，该如何处理这个数组？
-// 计算合并行
-const getRowSpan = (data: any) => {
-	let laneRowCount: any = {} // 记录 (lane, row) 组合出现次数
-	let laneCount: any = {} // 记录 lane 出现次数
-	let rowSpans: any = new Array(data.length).fill(0)
 
-	data.forEach((item: any, index: string | number) => {
-		const laneKey = item.lane
-		const rowKey = `${item.lane}-${item.row}`
+// 📌 1️⃣ 处理数据，把 column1 ~ columnN 结构整理好
+const groupedData: any[] = []
 
-		// 统计相同 lane 出现的次数
-		if (!laneCount[laneKey]) laneCount[laneKey] = 0
-		laneCount[laneKey] += 1
+rawData.forEach(item => {
+	const { lane, row, layer, column } = item
+	const key = `第${lane}巷道 - ${row}排 - ${layer}层`
 
-		// 统计相同 (lane, row) 出现的次数
-		if (!laneRowCount[rowKey]) laneRowCount[rowKey] = 0
-		laneRowCount[rowKey] += 1
-
-		// 如果是该 (lane, row) 组合的第一行，则设置 rowSpan
-		if (laneRowCount[rowKey] === 1) {
-			rowSpans[index] = data.filter((d: any) => d.lane === item.lane && d.row === item.row).length
+	let existing = groupedData.find(d => d.key === key)
+	if (!existing) {
+		existing = {
+			key,
+			lane,
+			row,
+			layer,
+			column1: null,
+			column2: null,
+			column3: null,
+			// ...item,
 		}
-		// console.log('巷道 相同数', laneCount) // 24
-		// console.log('排 相同数', laneRowCount) // {1-1: 12, 1-2: 12}
-	})
-	console.log('rowSpans', rowSpans)
-	return rowSpans
-}
-// 计算行合并
-const rowSpans = getRowSpan(data)
+		groupedData.push(existing)
+	}
+
+	// 按列号填充 column1 ~ columnN
+	existing[`column${column}`] = column
+	// console.log(existing)
+})
+
+console.log('货位 rawData：', rawData)
+
+console.log('初始 groupedData', groupedData)
+
+// 📌 2️⃣ 处理 rowSpan，合并相同行
+const rowSpanMap = new Map<string, number>()
+groupedData.forEach((item, index) => {
+	const key = `${item.lane}-${item.row}-${item.layer}`
+	if (!rowSpanMap.has(key)) {
+		rowSpanMap.set(key, groupedData.filter(d => d.lane === item.lane && d.row === item.row && d.layer === item.layer).length)
+	}
+})
+console.log('合并行 rowSpanMap', rowSpanMap)
+
+// http://localhost:9527/#/module/storage
 const columns: TableProps<DataType>['columns'] = [
+	{
+		title: 'RowHead',
+		dataIndex: 'key',
+		// rowScope: 'row', //* title
+		width: 120,
+		fixed: 'left',
+	},
 	{
 		title: '巷道',
 		dataIndex: 'lane',
 		key: 'lane',
-		// onCell: (_, index) => ({
-		// 	rowSpan: rowSpans[index], // 相同 lane 合并
-		// }),
+		width: 50,
+		// onCell: (record, index) => {
+		// 	return {
+		// 		rowSpan: index === 0 || groupedData[index as any]?.lane !== record.lane ? rowSpanMap.get(`${record.lane}-${record.row}-${record.layer}`) : 0,
+		// 	}
+		// },
 	},
 	{
 		title: '排',
 		dataIndex: 'row',
 		key: 'row',
-		// onCell: (_, index) => ({
-		// 	rowSpan: rowSpans[index], // 相同 row 合并
-		// }),
+		width: 50,
 	},
 	{
 		title: '层',
 		dataIndex: 'layer',
 		key: 'layer',
+		width: 50,
 	},
 	{
 		title: '第1列',
 		dataIndex: 'column1',
 		key: 'column1',
-		render: (value, record, index) => {
-			// console.log('record', record.column1, record.lane)
-			return (
-				<Tooltip placement="top" color="#fff" title={title}>
-					{value}
-				</Tooltip>
-			)
-		},
+		render: (value, record, index) => titleFN(value, record, index),
 	},
 	{
 		title: '第2列',
 		dataIndex: 'column2',
 		key: 'column2',
-		render: (value, record, index) => {
-			// console.log('record', record.column1, record.lane)
-			return (
-				<Tooltip placement="top" color="#fff" title={title}>
-					{value}
-				</Tooltip>
-			)
-		},
+		render: (value, record, index) => titleFN(value, record, index),
 	},
 	{
 		title: '第3列',
 		dataIndex: 'column3',
 		key: 'column3',
-		render: (value, record, index) => {
-			// console.log('record', record.column1, record.lane)
-			return (
-				<Tooltip placement="top" color="#fff" title={title}>
-					{value}
-				</Tooltip>
-			)
-		},
+		render: (value, record, index) => titleFN(value, record, index),
 	},
 	{
 		title: '第4列',
 		dataIndex: 'column4',
 		key: 'column4',
-		render: (value, record, index) => {
-			// console.log('record', record.column1, record.lane)
-			return (
-				<Tooltip placement="top" color="#fff" title={title}>
-					{value}
-				</Tooltip>
-			)
-		},
+		render: (value, record, index) => titleFN(value, record, index),
 	},
 	{
 		title: '第5列',
@@ -192,23 +190,6 @@ const columns: TableProps<DataType>['columns'] = [
 		title: '第6列',
 		dataIndex: 'column6',
 		key: 'column6',
-	},
-	{
-		title: '第7列',
-		dataIndex: 'column7',
-		key: 'column7',
-		// width: 1200,
-	},
-	{
-		title: '第8列',
-		dataIndex: 'column8',
-		key: 'column8',
-		// width: 500,
-	},
-	{
-		title: '第9列',
-		dataIndex: 'column9',
-		key: 'column9',
 	},
 ]
 console.log('columns length', columns.length)
@@ -228,7 +209,7 @@ const Lane: React.FC = () => {
 			className="cusTable"
 			title={() => Header}
 			columns={columns}
-			dataSource={data}
+			dataSource={groupedData}
 			// scroll={{ x: "max-content" }}
 			scroll={{ x: columns.length * 150 }}
 			pagination={false}
