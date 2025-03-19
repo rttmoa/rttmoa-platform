@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.22](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.21...v2.3.22) (2025-03-19)
+
+
+### Features
+
+* 🚀 aa ([b8d824e](https://github.com/rttmoa/rttmoa-platform/commit/b8d824ef5e4a2f2c0d92e0f1ad1b203a34ea92c2))
+* 🚀 lane ([4adf72e](https://github.com/rttmoa/rttmoa-platform/commit/4adf72e9fa3ea4af8251576731cf0a7715844984))
+
 ### [2.3.21](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.20...v2.3.21) (2025-03-14)
 
 
