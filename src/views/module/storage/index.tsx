@@ -11,17 +11,17 @@ const onChange = (key: string) => {
 const items: TabsProps['items'] = [
 	{
 		key: '1',
-		label: '巷道-1',
+		label: '第一巷道',
 		children: <Lane1 />,
 	},
 	{
 		key: '2',
-		label: '巷道-2',
+		label: '第二巷道',
 		children: <Lane2 />,
 	},
 	{
 		key: '3',
-		label: '巷道-3',
+		label: '第三巷道',
 		children: <Lane3 />,
 	},
 ]

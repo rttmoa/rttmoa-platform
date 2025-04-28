@@ -814,25 +814,39 @@
 					}
 				},
 				{
-					"path": "/module/scada",
-					"element": "/module/scada/index",
+					"path": "/module/scadaHarbin",
+					"element": "/module/scadaHarbin/index",
 					"meta": {
-						"key": "scada",
+						"key": "scadaHarbin",
 						"icon": "AppstoreOutlined",
-						"title": "Scada",
+						"title": "Scada Harbin",
 						"isLink": "",
 						"isHide": false,
 						"isFull": false,
 						"isAffix": false
 					}
 				},
+				
+				{
+					"path": "/module/scadaNb",
+					"element": "/module/scadaNb/index",
+					"meta": {
+						"key": "scadaNb",
+						"icon": "AppstoreOutlined",
+						"title": "Scada Ningbo",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false
+					}
+				}, 
 				{
 					"path": "/module/storage",
 					"element": "/module/storage/index",
 					"meta": {
 						"key": "storage",
 						"icon": "AppstoreOutlined",
-						"title": "库位装饰报表",
+						"title": "库位库存报表",
 						"isLink": "",
 						"isHide": false,
 						"isFull": false,
