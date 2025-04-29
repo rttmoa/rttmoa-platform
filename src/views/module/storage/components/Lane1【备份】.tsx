@@ -63,36 +63,36 @@ const statuses = ['空闲', '占用']
 const randomStatus = statuses[Math.floor(Math.random() * statuses.length)]
 console.log(randomStatus) // 随机输出：空闲 或 占用
 let rawData: any[] = []
-// for (let w = 1; w < 2; w++) {
-// 巷道
-for (let i = 1; i < 3; i++) {
-	// 排
-	for (let j = 1; j < 7; j++) {
-		// 列
-		for (let k = 1; k < 5; k++) {
-			// 层
-			const res = `第${i}排 ${j}列 ${k}层`
-			console.log(res)
-			let obj = {}
-			if (j == 1) Object.assign(obj, { column1: j })
-			if (j == 2) Object.assign(obj, { column2: j })
-			if (j == 3) Object.assign(obj, { column3: j })
-			if (j == 4) Object.assign(obj, { column4: j })
-			if (j == 5) Object.assign(obj, { column5: j })
-			if (j == 6) Object.assign(obj, { column6: j })
-			rawData.push({
-				key: res,
-				// lane: w, // 巷道
-				row: i, // 排
-				column: j, // 列
-				layer: k, // 层
-				status: randomStatus,
-				...obj,
-			})
+for (let w = 1; w < 2; w++) {
+	// 巷道
+	for (let i = 1; i < 3; i++) {
+		// 排
+		for (let j = 1; j < 7; j++) {
+			// 列
+			for (let k = 1; k < 5; k++) {
+				// 层
+				const res = `第${i}排 ${j}列 ${k}层`
+				console.log(res)
+				let obj = {}
+				if (j == 1) Object.assign(obj, { column1: j })
+				if (j == 2) Object.assign(obj, { column2: j })
+				if (j == 3) Object.assign(obj, { column3: j })
+				if (j == 4) Object.assign(obj, { column4: j })
+				if (j == 5) Object.assign(obj, { column5: j })
+				if (j == 6) Object.assign(obj, { column6: j })
+				rawData.push({
+					key: res,
+					lane: w, // 巷道
+					row: i, // 排
+					column: j, // 列
+					layer: k, // 层
+					status: randomStatus,
+					...obj,
+				})
+			}
 		}
 	}
 }
-// }
 // console.log('货位 rawData：', rawData)
 // !  这个数组，lane相同合并行，row一样合并行，该如何处理这个数组？
 
@@ -101,13 +101,13 @@ const groupedData: any[] = []
 
 rawData.forEach(item => {
 	const { lane, row, layer, column } = item
-	const key = `${row}排 - ${layer}层`
+	const key = `第${lane}巷道 - ${row}排 - ${layer}层`
 
 	let existing = groupedData.find(d => d.key === key)
 	if (!existing) {
 		existing = {
 			key,
-			// lane,
+			lane,
 			row,
 			layer,
 			column1: null,
@@ -124,22 +124,23 @@ rawData.forEach(item => {
 	// 按列号填充 column1 ~ columnN
 	existing[`column${column}`] = column
 })
+
 console.log('货位 rawData：', rawData) //* 总共24条
 console.log('初始 groupedData', groupedData) //* 总共8条
 
 // 📌 2️⃣ 处理 rowSpan，合并相同行
 const rowSpanMap = new Map<string, number>()
 groupedData.forEach((item, index) => {
-	const key = `${item.row}-${item.layer}`
+	const key = `${item.lane}-${item.row}-${item.layer}`
 	if (!rowSpanMap.has(key)) {
-		rowSpanMap.set(key, groupedData.filter(d => d.row === item.row && d.layer === item.layer).length)
+		rowSpanMap.set(key, groupedData.filter(d => d.lane === item.lane && d.row === item.row && d.layer === item.layer).length)
 	}
 })
 console.log('处理后 groupedData', groupedData)
-
-// * 这里排序是因为按照货架的样子、从一层到四层
 groupedData.sort((a, b) => {
-	if (a.row != b.row) return a.row - b.row // 按 row 升序
+	if (a.row != b.row) {
+		return a.row - b.row // 按 row 升序
+	}
 	return b.layer - a.layer // 按 layer 降序
 })
 console.log('排序 groupedData', groupedData)
@@ -150,11 +151,8 @@ const columns: TableProps<DataType>['columns'] = [
 		title: 'RowHead',
 		dataIndex: 'key',
 		// rowScope: 'row', //* title  以身入局
-		width: 80,
+		width: 120,
 		fixed: 'left',
-		render: (value, record, index) => {
-			return <b>{value}</b>
-		},
 	},
 	// {
 	// 	title: '巷道',
@@ -223,7 +221,7 @@ const columns: TableProps<DataType>['columns'] = [
 			}
 
 			return {
-				children: <b>{value}</b>,
+				children: value,
 				props: { rowSpan },
 			}
 		},
@@ -233,9 +231,6 @@ const columns: TableProps<DataType>['columns'] = [
 		dataIndex: 'layer',
 		key: 'layer',
 		width: 50,
-		render: (value, record, index) => {
-			return <b>{value}</b>
-		},
 	},
 	{
 		title: '第1列',
