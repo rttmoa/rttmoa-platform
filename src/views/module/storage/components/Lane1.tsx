@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Space, Table, Tag, Tooltip } from 'antd'
 import type { TableProps } from 'antd'
 import './index.less'
+import axios from 'axios'
 
 // ! http://localhost:9527/#/module/storage
 
@@ -20,16 +21,43 @@ interface DataType {
 	column8: number
 	column9: number
 	column10: number
-	column11: number
+	column12: number
+	column13: number
+	column14: number
+	column15: number
+	column16: number
+	column17: number
+	column18: number
+	column19: number
+	column20: number
+	column21: number
+	column22: number
+	column23: number
+	column24: number
+	column25: number
+	column26: number
+	column27: number
+	column28: number
+	column29: number
+	column30: number
+	column31: number
+	column32: number
+	column33: number
+	column34: number
+	column35: number
+	column36: number
+	column37: number
+	column38: number
 }
 
 //* 表格提示框，鼠标悬停时显示的内容  ——  货位信息：货品名词、生产日期、在库整数总数
-function titleFN(data: string, record?: any, index?: number) {
-	// console.log('titleFN', data, record, index)
+function titleFN(data: string, record?: any, index?: number, apiData?: any) {
+	// console.log('titleFN', data, record, index, apiData)
+	// return
 	if (!data) return null
-	const lane = record?.lane ?? ''
-	const row = record?.row ?? ''
-	const layer = record?.layer ?? ''
+	const lane = record?.lane__c ?? ''
+	const row = record?.row__c ?? ''
+	const layer = record?.lay__c ?? ''
 	const str = `${row}排 - ${layer}层 - ${data}列`
 
 	let color = data === '空闲' ? '#B4EEB4' : '#FF6A6A' // 绿色 / 红色
@@ -59,169 +87,44 @@ function titleFN(data: string, record?: any, index?: number) {
 	)
 }
 
-const statuses = ['空闲', '占用']
-const randomStatus = statuses[Math.floor(Math.random() * statuses.length)]
-console.log(randomStatus) // 随机输出：空闲 或 占用
-let rawData: any[] = []
-// for (let w = 1; w < 2; w++) {
-// 巷道
-for (let i = 1; i < 3; i++) {
-	// 排
-	for (let j = 1; j < 7; j++) {
-		// 列
-		for (let k = 1; k < 5; k++) {
-			// 层
-			const res = `第${i}排 ${j}列 ${k}层`
-			console.log(res)
-			let obj = {}
-			if (j == 1) Object.assign(obj, { column1: j })
-			if (j == 2) Object.assign(obj, { column2: j })
-			if (j == 3) Object.assign(obj, { column3: j })
-			if (j == 4) Object.assign(obj, { column4: j })
-			if (j == 5) Object.assign(obj, { column5: j })
-			if (j == 6) Object.assign(obj, { column6: j })
-			rawData.push({
-				key: res,
-				// lane: w, // 巷道
-				row: i, // 排
-				column: j, // 列
-				layer: k, // 层
-				status: randomStatus,
-				...obj,
-			})
-		}
-	}
-}
-// }
-// console.log('货位 rawData：', rawData)
-// !  这个数组，lane相同合并行，row一样合并行，该如何处理这个数组？
-
-// 📌 1️⃣ 处理数据，把 column1 ~ columnN 结构整理好
-const groupedData: any[] = []
-
-rawData.forEach(item => {
-	const { lane, row, layer, column } = item
-	const key = `${row}排 - ${layer}层`
-
-	let existing = groupedData.find(d => d.key === key)
-	if (!existing) {
-		existing = {
-			key,
-			// lane,
-			row,
-			layer,
-			column1: null,
-			column2: null,
-			column3: null,
-			column4: null,
-			column5: null,
-			column6: null,
-			// ...item,
-		}
-		groupedData.push(existing)
-	}
-
-	// 按列号填充 column1 ~ columnN
-	existing[`column${column}`] = column
-})
-console.log('货位 rawData：', rawData) //* 总共24条
-console.log('初始 groupedData', groupedData) //* 总共8条
-
-// 📌 2️⃣ 处理 rowSpan，合并相同行
-const rowSpanMap = new Map<string, number>()
-groupedData.forEach((item, index) => {
-	const key = `${item.row}-${item.layer}`
-	if (!rowSpanMap.has(key)) {
-		rowSpanMap.set(key, groupedData.filter(d => d.row === item.row && d.layer === item.layer).length)
-	}
-})
-console.log('处理后 groupedData', groupedData)
-
-// * 这里排序是因为按照货架的样子、从一层到四层
-groupedData.sort((a, b) => {
-	if (a.row != b.row) return a.row - b.row // 按 row 升序
-	return b.layer - a.layer // 按 layer 降序
-})
-console.log('排序 groupedData', groupedData)
-
-// http://localhost:9527/#/module/storage
-const columns: TableProps<DataType>['columns'] = [
+const columns = (apiData: any) => [
 	{
 		title: 'RowHead',
 		dataIndex: 'key',
-		// rowScope: 'row', //* title  以身入局
 		width: 80,
 		fixed: 'left',
-		render: (value, record, index) => {
+		render: (value: any, record: any, index: any) => {
 			return <b>{value}</b>
 		},
 	},
-	// {
-	// 	title: '巷道',
-	// 	dataIndex: 'lane',
-	// 	key: 'lane',
-	// 	width: 50,
-	// 	render: (value, row, index) => {
-	// 		// 拿到当前行
-	// 		const currentLane = row.lane
-	// 		const currentRow = row.row
-
-	// 		// 查找前面的行
-	// 		const prevRow = groupedData[index - 1]
-	// 		if (prevRow && prevRow.lane === currentLane) {
-	// 			// 如果上一行 lane、row 一样，说明应该被合并
-	// 			return {
-	// 				children: null,
-	// 				props: { rowSpan: 0 },
-	// 			}
-	// 		}
-
-	// 		// 计算有多少行是需要合并的
-	// 		let rowSpan = 1
-	// 		for (let i = index + 1; i < groupedData.length; i++) {
-	// 			if (groupedData[i].lane === currentLane) {
-	// 				rowSpan++
-	// 			} else {
-	// 				break
-	// 			}
-	// 		}
-	// 		console.log('rowSpan', rowSpan)
-	// 		return {
-	// 			children: value,
-	// 			props: { rowSpan },
-	// 		}
-	// 	},
-	// },
 	{
 		title: '排',
-		dataIndex: 'row',
-		key: 'row',
+		dataIndex: 'row__c',
+		key: 'row__c',
 		width: 50,
-		render: (value, row, index) => {
+		fixed: 'left',
+		render: (value: any, row: any, index: number) => {
 			// 拿到当前行
-			const currentLane = row.lane
-			const currentRow = row.row
+			const currentRow = row.row__c
 
 			// 查找前面的行
 			const prevRow = groupedData[index - 1]
-			if (prevRow && prevRow.row === currentRow) {
+			if (prevRow && prevRow.row__c === currentRow) {
 				// 如果上一行 lane、row 一样，说明应该被合并
 				return {
 					children: null,
 					props: { rowSpan: 0 },
 				}
 			}
-
 			// 计算有多少行是需要合并的
 			let rowSpan = 1
 			for (let i = index + 1; i < groupedData.length; i++) {
-				if (groupedData[i].row === currentRow) {
+				if (groupedData[i].row__c === currentRow) {
 					rowSpan++
 				} else {
 					break
 				}
 			}
-
 			return {
 				children: <b>{value}</b>,
 				props: { rowSpan },
@@ -230,54 +133,306 @@ const columns: TableProps<DataType>['columns'] = [
 	},
 	{
 		title: '层',
-		dataIndex: 'layer',
-		key: 'layer',
+		dataIndex: 'lay__c',
+		key: 'lay__c',
 		width: 50,
-		render: (value, record, index) => {
+		fixed: 'left',
+		render: (value: any, record: any, index: any) => {
 			return <b>{value}</b>
 		},
 	},
 	{
-		title: '第1列',
+		title: '第 1 列',
 		dataIndex: 'column1',
 		key: 'column1',
-		render: (value, record, index) => titleFN(value, record, index),
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
 	},
 	{
-		title: '第2列',
+		title: '第 2 列',
 		dataIndex: 'column2',
 		key: 'column2',
-		render: (value, record, index) => titleFN(value, record, index),
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
 	},
 	{
-		title: '第3列',
+		title: '第 3 列',
 		dataIndex: 'column3',
 		key: 'column3',
-		render: (value, record, index) => titleFN(value, record, index),
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
 	},
 	{
-		title: '第4列',
+		title: '第 4 列',
 		dataIndex: 'column4',
 		key: 'column4',
-		render: (value, record, index) => titleFN(value, record, index),
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
 	},
 	{
-		title: '第5列',
+		title: '第 5 列',
 		dataIndex: 'column5',
 		key: 'column5',
-		render: (value, record, index) => titleFN(value, record, index),
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
 	},
 	{
-		title: '第6列',
+		title: '第 6 列',
 		dataIndex: 'column6',
 		key: 'column6',
-		render: (value, record, index) => titleFN(value, record, index),
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 7 列',
+		dataIndex: 'column7',
+		key: 'column7',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 8 列',
+		dataIndex: 'column8',
+		key: 'column8',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 9 列',
+		dataIndex: 'column9',
+		key: 'column9',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 10 列',
+		dataIndex: 'column10',
+		key: 'column10',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 11 列',
+		dataIndex: 'column11',
+		key: 'column11',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 12 列',
+		dataIndex: 'column12',
+		key: 'column12',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 13 列',
+		dataIndex: 'column13',
+		key: 'column13',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 14 列',
+		dataIndex: 'column14',
+		key: 'column14',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 15 列',
+		dataIndex: 'column15',
+		key: 'column15',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 16 列',
+		dataIndex: 'column16',
+		key: 'column16',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 17 列',
+		dataIndex: 'column17',
+		key: 'column17',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 18 列',
+		dataIndex: 'column18',
+		key: 'column18',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 19 列',
+		dataIndex: 'column19',
+		key: 'column19',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 20 列',
+		dataIndex: 'column20',
+		key: 'column20',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 21 列',
+		dataIndex: 'column21',
+		key: 'column21',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 22 列',
+		dataIndex: 'column22',
+		key: 'column22',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 23 列',
+		dataIndex: 'column23',
+		key: 'column23',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 24 列',
+		dataIndex: 'column24',
+		key: 'column24',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 25 列',
+		dataIndex: 'column25',
+		key: 'column25',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 26 列',
+		dataIndex: 'column26',
+		key: 'column26',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 27 列',
+		dataIndex: 'column27',
+		key: 'column27',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 28 列',
+		dataIndex: 'column28',
+		key: 'column28',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 29 列',
+		dataIndex: 'column29',
+		key: 'column29',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 30 列',
+		dataIndex: 'column30',
+		key: 'column30',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 31 列',
+		dataIndex: 'column31',
+		key: 'column31',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 32 列',
+		dataIndex: 'column32',
+		key: 'column32',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 33 列',
+		dataIndex: 'column33',
+		key: 'column33',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 34 列',
+		dataIndex: 'column34',
+		key: 'column34',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 35 列',
+		dataIndex: 'column35',
+		key: 'column35',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 36 列',
+		dataIndex: 'column36',
+		key: 'column36',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 37 列',
+		dataIndex: 'column37',
+		key: 'column37',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
+	},
+	{
+		title: '第 38 列',
+		dataIndex: 'column38',
+		key: 'column38',
+		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
 	},
 ]
-console.log('columns length', columns.length)
-
+let groupedData: any[] = []
 const Lane: React.FC = () => {
-	console.log('巷道一')
+	const [data, setData] = useState<DataType[]>([]) // 处理后的值
+	const [apiData, setApiData] = useState<DataType[]>([]) // 接口返回的值
+	const [loading, setLoading] = useState<Boolean>(true)
+	const [error, setError] = useState<String>('')
+	useEffect(() => {
+		// console.log('Lane useEffect')
+
+		async function execFunc() {
+			const { data } = await axios.get('http://127.0.0.1:3674/api/web01/all/shelf')
+			const rawData = data.material
+			setApiData(rawData)
+
+			rawData.forEach((item: any) => {
+				// console.log('item', item)
+				// return
+				const { row__c, lay__c, col__c } = item
+				const key = `${row__c}排 - ${lay__c}层`
+
+				let existing = groupedData.find(d => d.key === key)
+				if (!existing) {
+					existing = {
+						key,
+						row__c: row__c,
+						lay__c: lay__c,
+						// column1: null,
+						// column2: null,
+						...item,
+					}
+					groupedData.push(existing)
+				}
+				// 按列号填充 column1 ~ columnN
+				existing[`column${col__c}`] = col__c
+			})
+			// console.log('处理后的rawData：', rawData) //* 总共24条
+			console.log('合并 groupedData', groupedData) //* 总共8条    将库位数据合并
+
+			// 📌 2️⃣ 处理 rowSpan，合并相同行
+			const rowSpanMap = new Map<string, number>()
+			groupedData.forEach((item, index) => {
+				const key = `${item.row__c}-${item.lay__c}`
+				if (!rowSpanMap.has(key)) rowSpanMap.set(key, groupedData.filter(d => d.row__c === item.row__c && d.lay__c === item.lay__c).length)
+			})
+			// console.log('处理排序后 groupedData', groupedData)
+
+			// * 这里排序是因为按照货架的样子、从一层到四层
+			groupedData.sort((a, b) => {
+				if (a.row__c != b.row__c) return a.row__c - b.row__c // 按 row 升序
+				return b.lay__c - a.lay__c // 按 layer 降序
+			})
+			// console.log('排序 groupedData', groupedData)
+			setData(groupedData)
+			setLoading(false)
+		}
+		execFunc()
+	}, [])
+
+	if (loading) {
+		return <div>Loading...</div>
+	}
+
+	console.log('巷道一 ==================================================================')
 	let Header = (
 		<div className="flex">
 			<div className="w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-slate-100">空库位</div>
@@ -286,14 +441,15 @@ const Lane: React.FC = () => {
 			<div className="w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-slate-100 text-red-500">选中库位</div>
 		</div>
 	)
+	console.log('结果： ', data)
 	return (
 		<Table<DataType>
 			className="cusTable"
 			title={() => Header}
-			columns={columns}
-			dataSource={groupedData}
+			columns={apiData ? (columns(apiData) as any) : []}
+			dataSource={data}
 			// scroll={{ x: "max-content" }}
-			scroll={{ x: columns.length * 150 }}
+			scroll={{ x: columns(data).length * 150 }}
 			pagination={false}
 		/>
 	)

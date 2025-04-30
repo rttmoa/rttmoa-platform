@@ -18,9 +18,10 @@ const config: AxiosRequestConfig = {
 	withCredentials: false, // 跨域时候允许携带凭证
 }
 
-// ! 1.根据packagejson中开发模式还是生产模式适用于什么接口环境
-// ! 2.Axios二次封装，接口统一存放,满足RESTful风格： https://wocwin.github.io/t-ui/projectProblem/axios.html
-// ! 3.参考 Axios Typescript 属性
+// 注意点：
+// 1..env文件，是开发还是生产环境
+// 2.Axios二次封装，接口统一存放,满足RESTful风格： https://wocwin.github.io/t-ui/projectProblem/axios.html
+// 3.参考 Axios Typescript 属性
 class RequestHttp {
 	// 服务实例
 	service: AxiosInstance
@@ -91,28 +92,26 @@ class RequestHttp {
 				}
 
 				// 下载类型特殊处理文件名
-				// const type = response.request.responseType || ''
-				// if (type.includes('blob')) {
-				//   let disposition = response.headers['content-disposition']
-				//   let filename = '默认文件名'
-				//   if (disposition && disposition.indexOf('filename=') !== -1) {
-				//     filename = decodeURI(disposition.substring(disposition.indexOf('filename=') + 9, disposition.length))
-				//   }
-				//   response.data.filename = filename
-				// }
-				// return response.data
+				const type = response.request.responseType || ''
+				if (type.includes('blob')) {
+					let disposition = response.headers['content-disposition']
+					let filename = '默认文件名'
+					if (disposition && disposition.indexOf('filename=') !== -1) {
+						filename = decodeURI(disposition.substring(disposition.indexOf('filename=') + 9, disposition.length))
+					}
+					response.data.filename = filename
+				}
 
 				// console.log('响应拦截：', response);
 				// console.log("请求地址和结果：", response.config.url, response.data); // ! 响应结果
 				return data // 结果：{code: 200, data: Array(14), msg: '成功'}
 			},
 			async (error: AxiosError) => {
-				console.log('响应错误拦截:', error)
+				console.log('响应错误拦截: ', error)
 				const { response } = error
 				tryHideFullScreenLoading()
-				// 分别判断请求超时 && 网络错误，无响应
+				// 分别判断请求超时 & 网络错误，无响应   ——    "timeout of 2000ms exceeded"
 				if (error.message.indexOf('timeout') !== -1) {
-					// "timeout of 2000ms exceeded"
 					message.error('请求超时！请您稍后重试')
 				}
 				if (error.message.indexOf('Network Error') !== -1) {
@@ -131,7 +130,6 @@ class RequestHttp {
 	 * @description Common request method encapsulation
 	 */
 	get<T>(url: string, params?: object, _object = {}): Promise<ResultData<T>> {
-		// console.log(this.service.getUri(config)); // class Axios {}
 		return this.service.get(url, { params, ..._object })
 	}
 	post<T>(url: string, params?: object | string, _object = {}): Promise<ResultData<T>> {
