@@ -2,14 +2,14 @@ import React from 'react'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Form, Input } from 'antd'
 
-const App: React.FC<{ value: string }> = ({ value }) => {
+const App: React.FC = () => {
 	const onFinish = (values: any) => {
 		console.log('Received values of form: ', values)
 	}
 
 	return (
 		<>
-			{value == 'FormLogin' && (
+			{
 				<>
 					<Form name="normal_login" className="login-form" initialValues={{ remember: true }} onFinish={onFinish}>
 						<Form.Item name="username" rules={[{ required: true, message: 'Please input your Username!' }]}>
@@ -32,11 +32,11 @@ const App: React.FC<{ value: string }> = ({ value }) => {
 							<Button type="primary" htmlType="submit" className="login-form-button">
 								Log in
 							</Button>
-							Or <a href="">register now!</a>
+							Or <a href="#">register now!</a>
 						</Form.Item>
 					</Form>
 				</>
-			)}
+			}
 		</>
 	)
 }

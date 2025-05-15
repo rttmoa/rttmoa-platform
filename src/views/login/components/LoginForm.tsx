@@ -82,9 +82,8 @@ const LoginForm: React.FC = () => {
 			// 清除最后一个帐户选项卡
 			dispatch(setTabsList([]))
 
-			// todo 初始化权限： 获取用户按钮权限 && 获取用户菜单权限
+			// * 初始化权限： 获取用户按钮权限 && 获取用户菜单权限
 			await initPermissions(data.access_token)
-			// return
 
 			notification.success({
 				message: getTimeState(),
@@ -125,7 +124,7 @@ const LoginForm: React.FC = () => {
 	}, [])
 
 	// .
-	// !  发送验证码
+	// ! 发送验证码
 	let timer: string | number | NodeJS.Timeout | null | undefined = null,
 		num = 60
 	const CountDown = () => {
@@ -139,11 +138,12 @@ const LoginForm: React.FC = () => {
 		}
 		setSendText(`${num}秒后重发`)
 	}
+
 	const sendCode = async () => {
 		try {
 			await formRef.current?.validateFields(['username'])
-			let userName = formRef.current?.getFieldValue('username')
-			if (userName !== '18888888888') return
+			// let userName = formRef.current?.getFieldValue('username')
+			// if (userName !== '18888888888') return
 			// 模拟调用后台接口 成功
 			// let { code } = await api.sendPhoneCode(phone);
 			setDisabled(true)
@@ -177,20 +177,20 @@ const LoginForm: React.FC = () => {
 				/>
 				{type === 'account' && (
 					<>
-						<Form.Item name="username" initialValue="18888888888" rules={[{ required: true, message: 'Please input your username!' }]}>
-							<Input prefix={<UserOutlined />} placeholder="User: admin / user" />
+						<Form.Item name="username" initialValue="admin" rules={[{ required: true, message: 'Please input your username!' }]}>
+							<Input prefix={<UserOutlined />} placeholder="User:  admin / user" />
 						</Form.Item>
-						<Form.Item name="password" initialValue="123123" rules={[{ required: true, message: 'Please input your password!' }]}>
-							<Input prefix={<LockOutlined />} placeholder="Password: 123123" />
+						<Form.Item name="password" initialValue="123456" rules={[{ required: true, message: 'Please input your password!' }]}>
+							<Input prefix={<LockOutlined />} placeholder="Password:  123456" />
 						</Form.Item>
 					</>
 				)}
 				{type === 'mobile' && (
 					<>
 						<Form.Item name="phone" initialValue="18888888888" rules={[{ required: true, message: 'Please input your username!' }]}>
-							<Input prefix={<UserOutlined />} placeholder="User：admin / user" />
+							<Input prefix={<UserOutlined />} placeholder="User：18888888888" />
 						</Form.Item>
-						<Form.Item name="code" initialValue="123123" rules={[{ required: true, message: 'Please input your Code!' }]}>
+						<Form.Item name="code" initialValue="123456" rules={[{ required: true, message: 'Please input your Code!' }]}>
 							<Input
 								prefix={<PhoneOutlined />}
 								suffix={

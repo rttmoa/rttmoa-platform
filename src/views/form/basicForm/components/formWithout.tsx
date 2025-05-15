@@ -24,7 +24,7 @@ const formItemLayout = {
 
 const tips = 'A prime is a natural number greater than 1 that has no positive divisors other than 1 and itself.'
 
-const App: React.FC<{ value: string }> = ({ value: PropsValue }) => {
+const App: React.FC = () => {
 	const [number, setNumber] = useState<{
 		value: number
 		validateStatus?: ValidateStatus
@@ -40,7 +40,7 @@ const App: React.FC<{ value: string }> = ({ value: PropsValue }) => {
 
 	return (
 		<>
-			{PropsValue == 'FormWithout' && (
+			{
 				<>
 					<Form style={{ maxWidth: 600 }}>
 						<Form.Item
@@ -53,7 +53,7 @@ const App: React.FC<{ value: string }> = ({ value: PropsValue }) => {
 						</Form.Item>
 					</Form>
 				</>
-			)}
+			}
 		</>
 	)
 }

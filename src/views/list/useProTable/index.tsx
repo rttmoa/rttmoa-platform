@@ -1,15 +1,27 @@
 import { useRef, useState } from 'react'
-import { Button, Drawer } from 'antd'
+import { Button, Drawer, Input, Popconfirm, Tooltip } from 'antd'
 import { formatDataForProTable } from '@/utils'
 import { pagination } from '@/config/proTable'
 import { getUserList } from '@/api/modules/user'
 import { UserList } from '@/api/interface'
-import { DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined } from '@ant-design/icons'
-import { FooterToolbar, ModalForm, ProDescriptions, ProFormText, ProFormTextArea, ProTable } from '@ant-design/pro-components'
+import {
+	DeleteOutlined,
+	DownCircleTwoTone,
+	DownOutlined,
+	EditOutlined,
+	EyeOutlined,
+	FullscreenOutlined,
+	PlusOutlined,
+	QuestionCircleOutlined,
+	SearchOutlined,
+	SettingOutlined,
+} from '@ant-design/icons'
+import { FooterToolbar, LightFilter, ModalForm, ProDescriptions, ProFormDatePicker, ProFormText, ProFormTextArea, ProTable } from '@ant-design/pro-components'
 import type { ActionType, ProColumns, ProDescriptionsItemProps } from '@ant-design/pro-components'
 import { message } from '@/hooks/useMessage'
 import { addRule, removeRule, updateRule } from './api'
 import UpdateForm from './UpdateForm'
+import Search from 'antd/lib/input/Search'
 
 /**
  * @en-US Add node
@@ -85,7 +97,19 @@ const handleRemove = async (selectedRows: UserList[]) => {
 		return false
 	}
 }
+const valueEnum: { [key: number]: string } = {
+	0: 'close',
+	1: 'running',
+	2: 'online',
+	3: 'error',
+}
 
+const ProcessMap = {
+	close: 'normal',
+	running: 'active',
+	online: 'success',
+	error: 'exception',
+} as const
 // TODO: refer： https://github.com/ant-design/ant-design-pro
 // ProTable：https://procomponents.ant.design/components/table
 const useProTable = () => {
@@ -102,6 +126,8 @@ const useProTable = () => {
 			dataIndex: 'username',
 			copyable: true,
 			width: 200,
+			fixed: 'left',
+			// fixed: 'right',
 			render: (dom, entity) => {
 				return (
 					<a
@@ -114,11 +140,21 @@ const useProTable = () => {
 					</a>
 				)
 			},
+			// 自定义筛选项功能具体实现请参考 https://ant.design/components/table-cn/#components-table-demo-custom-filter-panel
+			filterDropdown: () => (
+				<div style={{ padding: 6 }}>
+					<Input style={{ width: 188, marginBlockEnd: 8, display: 'block' }} />
+				</div>
+			),
+			filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
 		},
 		{
 			title: '性别',
 			dataIndex: 'gender',
 			width: 150,
+			initialValue: '男', // * initialValue 查询表单项初始值
+			filters: true,
+			onFilter: true,
 			valueEnum: {
 				1: { text: '男' },
 				2: { text: '女' },
@@ -128,11 +164,15 @@ const useProTable = () => {
 			title: '年龄',
 			dataIndex: 'age',
 			width: 150,
+			sorter: true,
+			tooltip: '指代用户的年纪大小', // * tooltip 提示一些信息
 		},
 		{
 			title: '状态',
-			dataIndex: 'status', // status
-			hideInForm: true,
+			dataIndex: 'status',
+			hideInForm: true, // * hideInForm 在Form中不展示此列, 不可搜索
+			filters: true,
+			onFilter: true,
 			valueEnum: {
 				0: {
 					text: '正常',
@@ -147,20 +187,31 @@ const useProTable = () => {
 					status: 'Success',
 				},
 				3: {
-					text: '',
+					text: '异常',
 					status: 'Error',
 				},
 			},
 		},
 		{
+			title: '执行进度',
+			dataIndex: 'progress',
+			width: 300,
+			valueType: item => ({
+				type: 'progress',
+				status: ProcessMap[valueEnum[item.progress_status] as 'close'] as any,
+			}),
+		},
+		{
 			title: '邮箱',
 			dataIndex: 'email',
 			hideInSearch: true,
+			ellipsis: true, // * ellipsis 是否自动缩略
 		},
 		{
 			title: '地址',
 			dataIndex: 'address',
 			hideInSearch: true,
+			ellipsis: true,
 		},
 		{
 			title: '创建时间',
@@ -181,9 +232,18 @@ const useProTable = () => {
 			title: '操作',
 			key: 'option',
 			fixed: 'right',
-			width: 250,
+			width: 220,
 			render: (data, entity) => action(entity),
 		},
+	]
+	const proAction = (entity: UserList) => [
+		<Popconfirm title="Delete the task" description="Are you sure to delete this task?" icon={<QuestionCircleOutlined style={{ color: 'red' }} />}>
+			<Button shape="circle" variant="outlined">
+				<span className="text-[14px]">
+					<DownOutlined />
+				</span>
+			</Button>
+		</Popconfirm>,
 	]
 
 	const action = (entity: UserList) => [
@@ -206,7 +266,9 @@ const useProTable = () => {
 		</Button>,
 	]
 
+	const onSearch = () => {}
 	const toolBarRender = () => [
+		<Search placeholder="快捷搜索..." allowClear onSearch={onSearch} style={{ width: 200 }} />,
 		<Button
 			type="primary"
 			key="button"
@@ -216,6 +278,9 @@ const useProTable = () => {
 			}}>
 			新建
 		</Button>,
+		<Tooltip title="全屏" className="text-lg">
+			<FullscreenOutlined />
+		</Tooltip>,
 	]
 
 	return (
@@ -226,9 +291,10 @@ const useProTable = () => {
 				actionRef={actionRef}
 				bordered
 				cardBordered
-				scroll={{ x: 1000, y: '100%' }}
+				scroll={{ x: 1500, y: '100%' }}
 				request={async params => {
 					const { data } = await getUserList(params)
+					console.log('data', data)
 					return formatDataForProTable<UserList>(data)
 				}}
 				columnsState={{
@@ -250,9 +316,11 @@ const useProTable = () => {
 			{selectedRowsState?.length > 0 && (
 				<FooterToolbar
 					extra={
-						<div>
-							已选择 <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a> 项 &nbsp;&nbsp;
-							<span>The total number is {selectedRowsState.reduce((pre, item) => pre + item.age!, 0)} age</span>
+						<div className="font-mono">
+							已选择 <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a> 项 &nbsp;&nbsp;&nbsp;&nbsp;
+							<span>
+								总数为 <span className="text-red-600">{selectedRowsState.reduce((pre, item) => pre + item.age!, 0)}</span> 岁
+							</span>
 						</div>
 					}>
 					<Button
@@ -261,9 +329,9 @@ const useProTable = () => {
 							setSelectedRows([])
 							actionRef.current?.reloadAndRest?.()
 						}}>
-						Batch deletion
+						批量删除
 					</Button>
-					<Button type="primary">Batch approval</Button>
+					<Button type="primary">批量批准</Button>
 				</FooterToolbar>
 			)}
 

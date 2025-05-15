@@ -44,4 +44,6 @@ export interface UserList {
 	createTime: string
 	status: boolean
 	avatar: string
+	progress: number
+	progress_status: number
 }

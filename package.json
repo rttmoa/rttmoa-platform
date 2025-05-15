@@ -81,7 +81,7 @@
 	},
 	"dependencies": {
 		"@ant-design/icons": "^5.2.5",
-		"@ant-design/pro-components": "^2.6.13",
+		"@ant-design/pro-components": "^2.8.7",
 		"@codemirror/lang-java": "^6.0.1",
 		"@codemirror/lang-javascript": "^6.2.2",
 		"@dnd-kit/core": "^6.0.8",
@@ -130,6 +130,7 @@
 		"mathjs": "^12.3.1",
 		"md5": "^2.3.0",
 		"mermaid": "^10.6.1",
+		"mockjs": "^1.1.0",
 		"nprogress": "^0.2.0",
 		"path": "^0.12.7",
 		"qrcode": "^1.5.3",

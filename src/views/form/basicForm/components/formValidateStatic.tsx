@@ -15,10 +15,10 @@ const formItemLayout = {
 	},
 }
 
-const App: React.FC<{ value: string }> = ({ value }) => {
+const App: React.FC = () => {
 	return (
 		<>
-			{value == 'ValidateStatic' && (
+			{
 				<>
 					<Form {...formItemLayout} style={{ maxWidth: 600 }}>
 						<Form.Item label="Fail" validateStatus="error" help="Should be combination of numbers & alphabets">
@@ -108,7 +108,7 @@ const App: React.FC<{ value: string }> = ({ value }) => {
 						</Form.Item>
 					</Form>
 				</>
-			)}
+			}
 		</>
 	)
 }

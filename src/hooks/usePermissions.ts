@@ -4,8 +4,7 @@ import { setToken } from '@/redux/modules/user'
 import { setAuthButtonList, setAuthMenuList } from '@/redux/modules/auth'
 import { getAuthMenuListApi, getAuthButtonListApi } from '@/api/modules/login'
 
-// todo
-// todo 登陆/刷新页面时；将用户按钮权限和菜单权限存到 redux
+// * 登陆/刷新页面时；将用户按钮权限和菜单权限存到 redux
 const usePermissions = () => {
 	const dispatch = useDispatch()
 
@@ -19,10 +18,10 @@ const usePermissions = () => {
 			try {
 				const { data: buttonList } = await getAuthButtonListApi() // 用户按钮权限
 				const { data: menuList } = await getAuthMenuListApi() // 用户菜单权限
+
 				// 获取Cookie、存储Cookie
 				dispatch(setAuthButtonList(buttonList))
 				dispatch(setAuthMenuList(menuList))
-				// console.log(menuList);
 
 				// 无菜单权限
 				if (!menuList.length) {

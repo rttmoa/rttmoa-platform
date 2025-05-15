@@ -377,53 +377,56 @@ const Lane: React.FC = () => {
 	const [loading, setLoading] = useState<Boolean>(true)
 	const [error, setError] = useState<String>('')
 	useEffect(() => {
-		// console.log('Lane useEffect')
-
 		async function execFunc() {
-			const { data } = await axios.get('http://127.0.0.1:3674/api/web01/all/shelf')
-			const rawData = data.material
-			setApiData(rawData)
+			try {
+				const { data } = await axios.get('http://127.0.0.1:3674/api/web01/all/shelf')
+				const rawData = data.material
+				setApiData(rawData)
 
-			rawData.forEach((item: any) => {
-				// console.log('item', item)
-				// return
-				const { row__c, lay__c, col__c } = item
-				const key = `${row__c}排 - ${lay__c}层`
+				rawData.forEach((item: any) => {
+					// console.log('item', item)
+					// return
+					const { row__c, lay__c, col__c } = item
+					const key = `${row__c}排 - ${lay__c}层`
 
-				let existing = groupedData.find(d => d.key === key)
-				if (!existing) {
-					existing = {
-						key,
-						row__c: row__c,
-						lay__c: lay__c,
-						// column1: null,
-						// column2: null,
-						...item,
+					let existing = groupedData.find(d => d.key === key)
+					if (!existing) {
+						existing = {
+							key,
+							row__c: row__c,
+							lay__c: lay__c,
+							// column1: null,
+							// column2: null,
+							...item,
+						}
+						groupedData.push(existing)
 					}
-					groupedData.push(existing)
-				}
-				// 按列号填充 column1 ~ columnN
-				existing[`column${col__c}`] = col__c
-			})
-			// console.log('处理后的rawData：', rawData) //* 总共24条
-			console.log('合并 groupedData', groupedData) //* 总共8条    将库位数据合并
+					// 按列号填充 column1 ~ columnN
+					existing[`column${col__c}`] = col__c
+				})
+				// console.log('处理后的rawData：', rawData) //* 总共24条
+				console.log('合并 groupedData', groupedData) //* 总共8条    将库位数据合并
 
-			// 📌 2️⃣ 处理 rowSpan，合并相同行
-			const rowSpanMap = new Map<string, number>()
-			groupedData.forEach((item, index) => {
-				const key = `${item.row__c}-${item.lay__c}`
-				if (!rowSpanMap.has(key)) rowSpanMap.set(key, groupedData.filter(d => d.row__c === item.row__c && d.lay__c === item.lay__c).length)
-			})
-			// console.log('处理排序后 groupedData', groupedData)
+				// 📌 2️⃣ 处理 rowSpan，合并相同行
+				const rowSpanMap = new Map<string, number>()
+				groupedData.forEach((item, index) => {
+					const key = `${item.row__c}-${item.lay__c}`
+					if (!rowSpanMap.has(key)) rowSpanMap.set(key, groupedData.filter(d => d.row__c === item.row__c && d.lay__c === item.lay__c).length)
+				})
+				// console.log('处理排序后 groupedData', groupedData)
 
-			// * 这里排序是因为按照货架的样子、从一层到四层
-			groupedData.sort((a, b) => {
-				if (a.row__c != b.row__c) return a.row__c - b.row__c // 按 row 升序
-				return b.lay__c - a.lay__c // 按 layer 降序
-			})
-			// console.log('排序 groupedData', groupedData)
-			setData(groupedData)
-			setLoading(false)
+				// * 这里排序是因为按照货架的样子、从一层到四层
+				groupedData.sort((a, b) => {
+					if (a.row__c != b.row__c) return a.row__c - b.row__c // 按 row 升序
+					return b.lay__c - a.lay__c // 按 layer 降序
+				})
+				// console.log('排序 groupedData', groupedData)
+				setData(groupedData)
+				setLoading(false)
+			} catch (error) {
+				console.log('error Line', error)
+				setLoading(false)
+			}
 		}
 		execFunc()
 	}, [])

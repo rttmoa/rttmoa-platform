@@ -12,3 +12,5 @@ declare module 'html-to-draftjs'
 declare module 'mathjs'
 
 declare module 'three'
+
+declare module 'mockjs'

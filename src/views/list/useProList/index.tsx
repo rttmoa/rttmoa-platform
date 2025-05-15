@@ -1,104 +1,44 @@
-import { ProList } from '@ant-design/pro-components'
-import { Button, Space, Tag } from 'antd'
+import React from 'react'
+import { Card, Tabs } from 'antd'
+import type { TabsProps } from 'antd'
+import UseProList from './useProList'
+import UseProListCard from './useProListCard'
 
-const dataSource = [
+const onChange = (key: string) => {
+	console.log(key)
+}
+
+const items: TabsProps['items'] = [
 	{
-		name: '语雀的天空',
-		image: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
-		desc: '我是一条测试的描述',
+		key: '1',
+		label: '编辑列表',
+		children: <UseProList />,
 	},
 	{
-		name: 'Ant Design',
-		image: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
-		desc: '我是一条测试的描述',
-	},
-	{
-		name: '蚂蚁金服体验科技',
-		image: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
-		desc: '我是一条测试的描述',
-	},
-	{
-		name: 'TechUI',
-		image: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
-		desc: '我是一条测试的描述',
-	},
-	{
-		name: '语雀的天空',
-		image: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
-		desc: '我是一条测试的描述',
-	},
-	{
-		name: 'Ant Design',
-		image: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
-		desc: '我是一条测试的描述',
-	},
-	{
-		name: '蚂蚁金服体验科技',
-		image: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
-		desc: '我是一条测试的描述',
-	},
-	{
-		name: 'TechUI',
-		image: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
-		desc: '我是一条测试的描述',
+		key: '2',
+		label: '卡片列表',
+		children: <UseProListCard />,
 	},
 ]
 
-const UseProList = () => (
-	<ProList
-		toolBarRender={() => {
-			return [
-				<Button key="add" type="primary">
-					新建
-				</Button>,
-			]
-		}}
-		onRow={record => {
-			return {
-				onMouseEnter: () => {
-					console.log(record)
-				},
-				onClick: () => {
-					console.log(record)
-				},
-			}
-		}}
-		rowKey="name"
-		headerTitle="使用 ProList"
-		tooltip="基础列表的配置"
-		dataSource={dataSource}
-		showActions="hover"
-		showExtra="hover"
-		cardBordered
-		metas={{
-			title: { dataIndex: 'name' },
-			avatar: { dataIndex: 'image' },
-			description: { dataIndex: 'desc' },
-			subTitle: {
-				render: () => {
-					return (
-						<Space size={0}>
-							<Tag color="blue">Ant Design</Tag>
-							<Tag color="#5BD8A6">TechUI</Tag>
-						</Space>
-					)
-				},
-			},
-			actions: {
-				render: () => [
-					<a target="_blank" rel="noopener noreferrer" key="link">
-						链路
-					</a>,
-					<a target="_blank" rel="noopener noreferrer" key="warning">
-						报警
-					</a>,
-					<a target="_blank" rel="noopener noreferrer" key="view">
-						查看
-					</a>,
-				],
-			},
-		}}
-	/>
-)
+const App: React.FC = () => {
+	return (
+		<>
+			<Card>
+				<div className="font-mono from-neutral-900 text-base font-semibold mb-4 ">
+					ProComponents库中 ProList.组件配置API{' —— '}
+					<a
+						className="text-sky-500"
+						href="https://pro-components.antdigital.dev/components/descriptions#%E5%9F%BA%E7%A1%80%E5%AE%9A%E4%B9%89%E5%88%97%E8%A1%A8"
+						target="_blank"
+						rel="noopener noreferrer">
+						🚀 链接：带工具栏、编辑列表、支持选中列表、查询列表 🚀
+					</a>
+				</div>
+				<Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+			</Card>
+		</>
+	)
+}
 
-export default UseProList
+export default App

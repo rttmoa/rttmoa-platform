@@ -51,7 +51,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({ open, onCre
 	)
 }
 
-const App: React.FC<{ value: string }> = ({ value }) => {
+const App: React.FC = () => {
 	const [open, setOpen] = useState(false)
 
 	const onCreate = (values: any) => {
@@ -61,7 +61,7 @@ const App: React.FC<{ value: string }> = ({ value }) => {
 
 	return (
 		<>
-			{value == 'FormModal' && (
+			{
 				<>
 					<div>
 						<Button
@@ -80,7 +80,7 @@ const App: React.FC<{ value: string }> = ({ value }) => {
 						/>
 					</div>
 				</>
-			)}
+			}
 		</>
 	)
 }

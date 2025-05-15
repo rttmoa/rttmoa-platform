@@ -16,11 +16,11 @@ const onFinish = (values: any) => {
 	console.log('Received values of form: ', values)
 }
 
-const App: React.FC<{ value: string }> = ({ value }) => {
+const App: React.FC = () => {
 	return (
 		// ? Check.Group: <Row /> <Col />
 		<>
-			{value === 'FormValidateOther' && (
+			{
 				<Form
 					name="validate_other"
 					labelCol={{ span: 10 }}
@@ -167,7 +167,7 @@ const App: React.FC<{ value: string }> = ({ value }) => {
 						</Space>
 					</Form.Item>
 				</Form>
-			)}
+			}
 		</>
 	)
 }

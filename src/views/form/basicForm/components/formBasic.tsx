@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react'
 import { Button, Checkbox, Form, Input } from 'antd'
 
-const FormBaisc: React.FC<{ value: string }> = ({ value }) => {
+const FormBaisc: React.FC = () => {
 	const [form] = Form.useForm()
 
 	useEffect(() => {
@@ -28,7 +28,7 @@ const FormBaisc: React.FC<{ value: string }> = ({ value }) => {
 
 	return (
 		<>
-			{value == 'FormBaisc' && (
+			{
 				<Form
 					name="basic"
 					labelCol={{ span: 8 }} // labelCol
@@ -63,7 +63,7 @@ const FormBaisc: React.FC<{ value: string }> = ({ value }) => {
 						</Button>
 					</Form.Item>
 				</Form>
-			)}
+			}
 		</>
 	)
 }

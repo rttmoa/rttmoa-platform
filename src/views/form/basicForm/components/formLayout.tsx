@@ -3,7 +3,7 @@ import { Button, Form, Input, Radio } from 'antd'
 
 type LayoutType = Parameters<typeof Form>[0]['layout']
 
-const App: React.FC<{ value: string }> = ({ value }: any) => {
+const App: React.FC = () => {
 	const [form] = Form.useForm()
 	const [formLayout, setFormLayout] = useState<LayoutType>('horizontal')
 
@@ -17,7 +17,7 @@ const App: React.FC<{ value: string }> = ({ value }: any) => {
 
 	return (
 		<>
-			{value == 'FormLayout' && (
+			{
 				<Form
 					{...formItemLayout}
 					layout={formLayout}
@@ -42,7 +42,7 @@ const App: React.FC<{ value: string }> = ({ value }: any) => {
 						<Button type="primary">Submit</Button>
 					</Form.Item>
 				</Form>
-			)}
+			}
 		</>
 	)
 }

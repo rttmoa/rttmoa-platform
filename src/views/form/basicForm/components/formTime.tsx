@@ -31,7 +31,7 @@ const onFinish = (fieldsValue: any) => {
 	}
 	console.log('Received values of form: ', values)
 }
-const App: React.FC<{ value: string }> = ({ value }) => {
+const App: React.FC = () => {
 	const config = {
 		rules: [{ type: 'object' as const, required: false, message: 'Please select time!' }],
 	}
@@ -41,51 +41,49 @@ const App: React.FC<{ value: string }> = ({ value }) => {
 	console.log('dayjs：', dayjs('2022-01-01').format('YYYY-MM-DD')) //  2022-01-01
 
 	return (
-		value == 'FormTime' && (
-			<Form
-				name="time_related_controls"
-				{...formItemLayout}
-				initialValues={{
-					'date-picker': dayjs(new Date()),
-					'date-time-picker': dayjs(),
-					'month-picker': dayjs(),
-					'range-picker': [dayjs(), dayjs()],
-					'range-time-picker': [dayjs(), dayjs()],
-					'time-picker': dayjs(),
-				}}
-				onFinish={onFinish}
-				style={{ maxWidth: 1200 }}>
-				{/* 2024-04-06 */}
-				<Form.Item name="date-picker" label="DatePicker" {...config}>
-					<DatePicker />
-				</Form.Item>
-				{/* 2024-04-06 02:02:05 */}
-				<Form.Item name="date-time-picker" label="DatePicker[showTime]" {...config}>
-					<DatePicker showTime format="YYYY-MM-DD HH:mm:ss" />
-				</Form.Item>
-				{/* 2024-04 */}
-				<Form.Item name="month-picker" label="MonthPicker" {...config}>
-					<DatePicker picker="month" />
-				</Form.Item>
-				{/* 2024-04-04  -  2024-05-10 */}
-				<Form.Item name="range-picker" label="RangePicker" {...rangeConfig}>
-					<RangePicker />
-				</Form.Item>
-				{/* 2024-04-03 04:04:04  -  2024-04-21 03:03:03 */}
-				<Form.Item name="range-time-picker" label="RangePicker[showTime]" {...rangeConfig}>
-					<RangePicker showTime format="YYYY-MM-DD HH:mm:ss" />
-				</Form.Item>
-				{/* 14:06:06 */}
-				<Form.Item name="time-picker" label="TimePicker" {...config}>
-					<TimePicker />
-				</Form.Item>
-				<Form.Item wrapperCol={{ xs: { span: 24, offset: 0 }, sm: { span: 16, offset: 8 } }}>
-					<Button type="primary" htmlType="submit">
-						Submit
-					</Button>
-				</Form.Item>
-			</Form>
-		)
+		<Form
+			name="time_related_controls"
+			{...formItemLayout}
+			initialValues={{
+				'date-picker': dayjs(new Date()),
+				'date-time-picker': dayjs(),
+				'month-picker': dayjs(),
+				'range-picker': [dayjs(), dayjs()],
+				'range-time-picker': [dayjs(), dayjs()],
+				'time-picker': dayjs(),
+			}}
+			onFinish={onFinish}
+			style={{ maxWidth: 1200 }}>
+			{/* 2024-04-06 */}
+			<Form.Item name="date-picker" label="DatePicker" {...config}>
+				<DatePicker />
+			</Form.Item>
+			{/* 2024-04-06 02:02:05 */}
+			<Form.Item name="date-time-picker" label="DatePicker[showTime]" {...config}>
+				<DatePicker showTime format="YYYY-MM-DD HH:mm:ss" />
+			</Form.Item>
+			{/* 2024-04 */}
+			<Form.Item name="month-picker" label="MonthPicker" {...config}>
+				<DatePicker picker="month" />
+			</Form.Item>
+			{/* 2024-04-04  -  2024-05-10 */}
+			<Form.Item name="range-picker" label="RangePicker" {...rangeConfig}>
+				<RangePicker />
+			</Form.Item>
+			{/* 2024-04-03 04:04:04  -  2024-04-21 03:03:03 */}
+			<Form.Item name="range-time-picker" label="RangePicker[showTime]" {...rangeConfig}>
+				<RangePicker showTime format="YYYY-MM-DD HH:mm:ss" />
+			</Form.Item>
+			{/* 14:06:06 */}
+			<Form.Item name="time-picker" label="TimePicker" {...config}>
+				<TimePicker />
+			</Form.Item>
+			<Form.Item wrapperCol={{ xs: { span: 24, offset: 0 }, sm: { span: 16, offset: 8 } }}>
+				<Button type="primary" htmlType="submit">
+					Submit
+				</Button>
+			</Form.Item>
+		</Form>
 	)
 }
 

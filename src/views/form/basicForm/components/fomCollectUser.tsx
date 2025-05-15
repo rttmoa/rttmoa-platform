@@ -19,7 +19,7 @@ interface BasicFormProps {
 }
 type LayoutType = Parameters<typeof Form>[0]['layout']
 type SizeType = Parameters<typeof Form>[0]['size']
-const FormCollectUser: React.FC<{ value: string }> = ({ value }) => {
+const FormCollectUser: React.FC = () => {
 	const [form] = Form.useForm()
 	const [formLayout, setFormLayout] = useState<LayoutType>('horizontal')
 	const [componentSize, setComponentSize] = useState<SizeType | 'default'>('default')
@@ -48,7 +48,7 @@ const FormCollectUser: React.FC<{ value: string }> = ({ value }) => {
 	const buttonItemLayout = formLayout === 'horizontal' ? { wrapperCol: { offset: 10, span: 16 } } : null
 	return (
 		<>
-			{value == 'FromCollectUser' && (
+			{
 				<Form<any>
 					{...formItemLayout}
 					name="basic"
@@ -172,7 +172,7 @@ const FormCollectUser: React.FC<{ value: string }> = ({ value }) => {
 						</Space>
 					</Form.Item>
 				</Form>
-			)}
+			}
 		</>
 	)
 }

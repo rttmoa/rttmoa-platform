@@ -69,7 +69,7 @@ const tailFormItemLayout = {
 	},
 }
 
-const App: React.FC<{ value: string }> = ({ value }) => {
+const App: React.FC = () => {
 	const [form] = Form.useForm()
 
 	const onFinish = (values: any) => {
@@ -111,7 +111,7 @@ const App: React.FC<{ value: string }> = ({ value }) => {
 
 	return (
 		<>
-			{value == 'FormRegister' && (
+			{
 				<>
 					<Form
 						{...formItemLayout}
@@ -243,7 +243,7 @@ const App: React.FC<{ value: string }> = ({ value }) => {
 						</Form.Item>
 					</Form>
 				</>
-			)}
+			}
 		</>
 	)
 }
