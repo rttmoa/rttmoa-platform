@@ -1,10 +1,13 @@
-import { useRef, useState } from 'react'
-import { Button, Drawer, Input, Popconfirm, Tooltip } from 'antd'
+import { CSSProperties, useRef, useState } from 'react'
+import { Button, Drawer, Dropdown, Input, MenuProps, Popconfirm, Tooltip } from 'antd'
 import { formatDataForProTable } from '@/utils'
 import { pagination } from '@/config/proTable'
 import { getUserList } from '@/api/modules/user'
 import { UserList } from '@/api/interface'
 import {
+	ArrowsAltOutlined,
+	CloseCircleOutlined,
+	ColumnWidthOutlined,
 	DeleteOutlined,
 	DownCircleTwoTone,
 	DownOutlined,
@@ -13,15 +16,22 @@ import {
 	FullscreenOutlined,
 	PlusOutlined,
 	QuestionCircleOutlined,
+	ReloadOutlined,
 	SearchOutlined,
+	SendOutlined,
 	SettingOutlined,
+	ShrinkOutlined,
 } from '@ant-design/icons'
 import { FooterToolbar, LightFilter, ModalForm, ProDescriptions, ProFormDatePicker, ProFormText, ProFormTextArea, ProTable } from '@ant-design/pro-components'
 import type { ActionType, ProColumns, ProDescriptionsItemProps } from '@ant-design/pro-components'
 import { message } from '@/hooks/useMessage'
-import { addRule, removeRule, updateRule } from './api'
-import UpdateForm from './UpdateForm'
+import { addRule, removeRule, updateRule } from '@/api/modules/api_useProTable/api'
+import UpdateForm from './component/UpdateForm'
 import Search from 'antd/lib/input/Search'
+import { IconFont } from '@/components/Icon'
+import './index.less'
+import { useDispatch } from '@/redux'
+import { setGlobalState } from '@/redux/modules/global'
 
 /**
  * @en-US Add node
@@ -119,22 +129,44 @@ const useProTable = () => {
 	const [currentRow, setCurrentRow] = useState<UserList>()
 	const [showDetail, setShowDetail] = useState<boolean>(false)
 	const [updateModalOpen, handleUpdateModalOpen] = useState<boolean>(false)
+	const dispatch = useDispatch()
+
+	// TODO:
+	// 设置 页码值的 useState
+	// 设置 搜索条件的 useState
+	// useEffect 监听值的变化去请求服务端
 
 	const columns: ProColumns<UserList>[] = [
+		{
+			title: <span className="text-[14px]">iD</span>,
+			dataIndex: 'key',
+			rowScope: 'row',
+			fixed: 'left',
+			width: 70,
+		},
 		{
 			title: '用户名',
 			dataIndex: 'username',
 			copyable: true,
-			width: 200,
+			width: 120,
 			fixed: 'left',
-			// fixed: 'right',
+			tooltip: '用户的名字',
+			// initialValue: 'zhangsan',
+			onFilter: false,
+			// hideInSearch: true,
+			// hideInTable: true,
+			// hideInForm: true,
+			// hideInDescriptions: true,
+			sorter: true,
 			render: (dom, entity) => {
 				return (
 					<a
+						href="javascript:void(0)"
+						// className="divide-x-2"
 						onClick={() => {
 							setCurrentRow(entity)
 							setShowDetail(true)
-							// message.info(`点击了 ${entity.username}`)
+							message.info(`点击了 ${entity.username}`)
 						}}>
 						{dom}
 					</a>
@@ -142,20 +174,22 @@ const useProTable = () => {
 			},
 			// 自定义筛选项功能具体实现请参考 https://ant.design/components/table-cn/#components-table-demo-custom-filter-panel
 			filterDropdown: () => (
-				<div style={{ padding: 6 }}>
-					<Input style={{ width: 188, marginBlockEnd: 8, display: 'block' }} />
+				<div style={{ padding: 2 }}>
+					<Input style={{ width: 150, marginBlockEnd: 8, display: 'block', fontSize: '14px' }} placeholder="请输入" />
 				</div>
 			),
 			filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
+			fieldProps: (form, config) => {}, // 查询表单的 props，会透传给表单项，
 		},
 		{
 			title: '性别',
 			dataIndex: 'gender',
 			width: 150,
-			initialValue: '男', // * initialValue 查询表单项初始值
+			initialValue: '全部', // * initialValue 查询表单项初始值
 			filters: true,
 			onFilter: true,
 			valueEnum: {
+				0: { text: '全部' },
 				1: { text: '男' },
 				2: { text: '女' },
 			},
@@ -212,6 +246,7 @@ const useProTable = () => {
 			dataIndex: 'address',
 			hideInSearch: true,
 			ellipsis: true,
+			copyable: true,
 		},
 		{
 			title: '创建时间',
@@ -223,6 +258,63 @@ const useProTable = () => {
 		},
 		{
 			title: '创建时间',
+			key: 'createTime',
+			dataIndex: 'createTime',
+			valueType: 'date',
+			sorter: true,
+			hideInSearch: true,
+		},
+		{
+			title: '创建时间',
+			key: 'createTime',
+			dataIndex: 'createTime',
+			valueType: 'date',
+			sorter: true,
+			hideInSearch: true,
+		},
+		{
+			title: '创建时间',
+			key: 'createTime',
+			dataIndex: 'createTime',
+			valueType: 'date',
+			sorter: true,
+			hideInSearch: true,
+		},
+		{
+			title: '创建时间',
+			key: 'createTime',
+			dataIndex: 'createTime',
+			valueType: 'date',
+			sorter: true,
+			hideInSearch: true,
+		},
+		{
+			title: '创建时间',
+			key: 'createTime',
+			dataIndex: 'createTime',
+			valueType: 'date',
+			sorter: true,
+			hideInSearch: true,
+		},
+		{
+			title: '创建时间',
+			key: 'createTime',
+			dataIndex: 'createTime',
+			valueType: 'date',
+			sorter: true,
+			hideInSearch: true,
+		},
+		{
+			title: '创建时间',
+			key: 'createTime',
+			dataIndex: 'createTime',
+			valueType: 'date',
+			sorter: true,
+			hideInSearch: true,
+		},
+
+		{
+			title: '创建时间',
 			dataIndex: 'createTime',
 			valueType: 'dateRange',
 			hideInTable: true,
@@ -232,45 +324,66 @@ const useProTable = () => {
 			title: '操作',
 			key: 'option',
 			fixed: 'right',
-			width: 220,
+			width: 60,
 			render: (data, entity) => action(entity),
 		},
 	]
-	const proAction = (entity: UserList) => [
-		<Popconfirm title="Delete the task" description="Are you sure to delete this task?" icon={<QuestionCircleOutlined style={{ color: 'red' }} />}>
-			<Button shape="circle" variant="outlined">
-				<span className="text-[14px]">
-					<DownOutlined />
-				</span>
-			</Button>
-		</Popconfirm>,
-	]
 
+	// 操作按钮：查看、新增、删除
 	const action = (entity: UserList) => [
-		<Button
-			key="view"
-			type="link"
-			size="small"
-			icon={<EyeOutlined />}
-			onClick={() => {
-				setCurrentRow(entity)
-				setShowDetail(true)
-			}}>
-			查看
-		</Button>,
-		<Button key="edit" type="link" size="small" icon={<EditOutlined />}>
-			编辑
-		</Button>,
-		<Button key="delete" type="link" size="small" danger icon={<DeleteOutlined />}>
-			删除
-		</Button>,
+		<div className="more-button">
+			<Dropdown
+				menu={{
+					items: [
+						{
+							key: '1',
+							label: (
+								<Button
+									key="view"
+									type="link"
+									size="small"
+									icon={<EyeOutlined />}
+									onClick={() => {
+										setCurrentRow(entity)
+										setShowDetail(true)
+									}}>
+									查看
+								</Button>
+							),
+						},
+						{
+							key: '2',
+							label: (
+								<Button key="edit" type="link" size="small" icon={<EditOutlined />}>
+									编辑
+								</Button>
+							),
+						},
+						{
+							key: '3',
+							label: (
+								<Button key="delete" type="link" size="small" danger icon={<DeleteOutlined />}>
+									删除
+								</Button>
+							),
+						},
+					],
+				}}
+				placement="bottomRight"
+				arrow={{ pointAtCenter: true }}
+				trigger={['click']}>
+				<div className="more-button-item">
+					<IconFont style={{ fontSize: 22 }} type="icon-xiala" />
+				</div>
+			</Dropdown>
+		</div>,
 	]
 
 	const onSearch = () => {}
 	const toolBarRender = () => [
 		<Search placeholder="快捷搜索..." allowClear onSearch={onSearch} style={{ width: 200 }} />,
 		<Button
-			type="primary"
+			type="dashed"
 			key="button"
 			icon={<PlusOutlined />}
 			onClick={() => {
@@ -278,31 +391,57 @@ const useProTable = () => {
 			}}>
 			新建
 		</Button>,
+		<Button
+			type="dashed"
+			key="button"
+			icon={<ArrowsAltOutlined />}
+			onClick={() => {
+				handleModalOpen(true)
+			}}>
+			导出EXCEL
+		</Button>,
+		<Button
+			type="dashed"
+			key="button"
+			icon={<ShrinkOutlined />}
+			onClick={() => {
+				handleModalOpen(true)
+			}}>
+			导入EXCEL
+		</Button>,
 		<Tooltip title="全屏" className="text-lg">
-			<FullscreenOutlined />
+			<span onClick={() => dispatch(setGlobalState({ key: 'maximize', value: true }))}>
+				<FullscreenOutlined />
+			</span>
 		</Tooltip>,
 	]
 
+	// & 表格封装成通用
 	return (
 		<>
 			<ProTable<UserList>
 				className="ant-pro-table-scroll"
 				columns={columns}
-				actionRef={actionRef}
-				bordered
+				actionRef={actionRef} // Table action 的引用，便于自定义触发      actionRef.current.reload()  |  actionRef.current.reset()   |   actionRef.current.clearSelected()
+				bordered={true}
 				cardBordered
-				scroll={{ x: 1500, y: '100%' }}
-				request={async params => {
+				scroll={{ x: 2500, y: '100%' }}
+				// polling={2000} // 是否轮询
+				// params={{}} // 用于 request 查询的额外参数，一旦变化会触发重新加载
+				request={async (params, sort, filter) => {
 					const { data } = await getUserList(params)
 					console.log('data', data)
 					return formatDataForProTable<UserList>(data)
 				}}
+				// postData={() => {}} // 	对通过 request 获取的数据进行处理
 				columnsState={{
+					// 持久化列的 key，用于判断是否是同一个 table
 					persistenceKey: 'use-pro-table-key',
+					// 持久化列的类型: localStorage | sessionStorage
 					persistenceType: 'localStorage',
 				}}
 				rowKey="id"
-				search={{ labelWidth: 'auto' }} // 120 / 'auto'
+				search={{ labelWidth: 'auto', filterType: 'query', span: 4 }} // 搜索表单 Search
 				pagination={pagination}
 				dateFormatter="string"
 				headerTitle="使用 ProTable"
@@ -312,7 +451,23 @@ const useProTable = () => {
 						setSelectedRows(selectedRows)
 					},
 				}}
+				defaultSize="small" // 尺寸：紧凑、中等、宽松
+				onSizeChange={() => {}} // 尺寸发生改变、将尺寸存储到数据库中
+				onSubmit={params => {}} // 提交表单时触发
+				onReset={() => {}} // 重置表单时触发
+				// editable={{
+				//   type: 'multiple',
+				//   editableKeys,
+				//   onSave: async (rowKey, data, row) => {
+				//     console.log(rowKey, data, row);
+				//     await waitTime(2000);
+				//   },
+				//   onChange: setEditableRowKeys,
+				// }}
+				ghost={false}
+				// toolbar={{}}
 			/>
+
 			{selectedRowsState?.length > 0 && (
 				<FooterToolbar
 					extra={

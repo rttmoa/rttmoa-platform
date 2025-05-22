@@ -6,7 +6,7 @@
 // 		lint:prettier:fix
 module.exports = {
   // 一行最多 180 个字符
-  printWidth: 180, // 160 ? 180
+  printWidth: 240, // 160 ? 180
   // 制表符宽度（使用 4 个空格缩进）
 	tabWidth: 4,
   // 使用 tab 进行缩进 (true: tabs, false: spaces)

@@ -379,13 +379,11 @@ const Lane: React.FC = () => {
 	useEffect(() => {
 		async function execFunc() {
 			try {
-				const { data } = await axios.get('http://127.0.0.1:3674/api/web01/all/shelf')
-				const rawData = data.material
+				const { data } = await axios.get('http://127.0.0.1:9089/shelf/api/Warehouse_Report')
+				console.log('data =====', data)
+				const rawData = data.data.material
 				setApiData(rawData)
-
 				rawData.forEach((item: any) => {
-					// console.log('item', item)
-					// return
 					const { row__c, lay__c, col__c } = item
 					const key = `${row__c}排 - ${lay__c}层`
 

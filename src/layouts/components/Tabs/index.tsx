@@ -139,7 +139,7 @@ const LayoutTabs: React.FC = () => {
 					activeKey={path} // 激活items中的key
 					onEdit={onEdit} // 新增和删除页签的回调，在 type="editable-card" 时有效
 					onChange={(path: string) => navigate(path)} // 点击其他Tabs、跳转到其他页面
-					tabBarExtraContent={<MoreButton path={path} />} // ? 更多操作：刷新、最大化、关闭其他
+					tabBarExtraContent={<MoreButton path={path} />} // ? 下拉更多操作：刷新、最大化、关闭其他
 					{...(tabsDrag && {
 						// ! 拖拽部分
 						renderTabBar: (tabBarProps, DefaultTabBar) => (

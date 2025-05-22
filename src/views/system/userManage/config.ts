@@ -1,4 +1,4 @@
-// 输入框查询 Form
+//* 表单查询 Form
 export const formList: any[] = [
 	{
 		type: 'INPUT',
@@ -7,35 +7,6 @@ export const formList: any[] = [
 		placeholder: '请输入用户名',
 		initialValue: '',
 		width: 200,
-	},
-	{
-		type: 'INPUT',
-		label: '联系地址',
-		field: 'address',
-		placeholder: '请输入联系地址',
-		initialValue: '',
-		width: 200,
-	},
-	// {
-	// 	type: "TIME",
-	//   label: "联系地址",
-	//   field: "timeshe",
-	//   placeholder: "请输入联系地址",
-	//   initialValue: "",
-	//   width: 80
-	// },
-	{
-		type: 'SELECT',
-		label: '婚姻状态',
-		field: 'isMarried',
-		placeholder: '全部',
-		initialValue: '0',
-		width: 200,
-		list: [
-			{ id: '0', name: '全部' },
-			{ id: '1', name: '未婚' },
-			{ id: '2', name: '已婚' },
-		],
 	},
 	{
 		type: 'SELECT',
@@ -50,12 +21,41 @@ export const formList: any[] = [
 			{ id: 1, name: '男' },
 		],
 	},
+	{
+		type: 'INPUT',
+		label: '手机号',
+		field: 'phone',
+		placeholder: '请输入手机号',
+		initialValue: '',
+		width: 200,
+	},
 ]
 
 // 输入框查询 Form 展开
 export const extendFormList = [
 	{
-		type: 'TIME',
+		type: 'INPUT',
+		label: '联系地址',
+		field: 'address',
+		placeholder: '请输入联系地址',
+		initialValue: '',
+		width: 200,
+	},
+	{
+		type: 'SELECT',
+		label: '婚姻状态',
+		field: 'isMarried',
+		placeholder: '全部',
+		initialValue: '0',
+		width: 200,
+		list: [
+			{ id: '0', name: '全部' },
+			{ id: '1', name: '未婚' },
+			{ id: '2', name: '已婚' },
+		],
+	},
+	{
+		type: 'TIME', // TIME类型：包含开始时间和结束时间
 		width: 200,
 	},
 	{

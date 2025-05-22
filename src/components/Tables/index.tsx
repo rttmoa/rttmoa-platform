@@ -10,6 +10,7 @@ interface TablesProps {
 	heghtAuto?: boolean
 	xScroll?: boolean
 	yScroll?: boolean
+	sticky?: any
 	loading?: TableProps['loading']
 	columns: TableProps['columns']
 	dataSource: TableProps['dataSource']
@@ -48,6 +49,7 @@ export default function Tables(props: TablesProps) {
 		yScroll = false,
 		// 已知占位的区域高度
 		scroll,
+		sticky,
 		// 数据源
 		dataSource,
 		columns,
@@ -233,6 +235,7 @@ export default function Tables(props: TablesProps) {
 				showQuickJumper: true,
 				showSizeChanger: true,
 			}}
+
 			// function pagination(data: any, callback: (page: number, pageSize: number) => void) {
 			// 	return { ... }
 			// }

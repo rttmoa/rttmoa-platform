@@ -1,7 +1,3 @@
-@REM cmd /k "cd /d E:\Project\AccountSystem\ && npm start"
-
-
-
 
 
 @echo off

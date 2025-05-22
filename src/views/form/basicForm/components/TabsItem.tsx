@@ -58,37 +58,38 @@ export const TabItems = [
 		children: <FormTime />,
 	},
 	{
-		label: `校验其他组件`,
+		label: `# 自行处理表单`,
 		key: '10',
+		children: <FormWithout />,
+	},
+	{
+		label: `校验其他组件`,
+		key: '11',
 		children: <FormValidateOther />,
 	},
 	{
 		label: `自定义校验`,
-		key: '11',
+		key: '12',
 		children: <FormValidateStatic />,
 	},
+
 	{
-		label: `# 自行处理表单`,
-		key: '12',
-		children: <FormWithout />,
-	},
-	{
-		label: `# 验证滚动`,
+		label: `# 验证滚动 None`,
 		key: '13',
 		children: '',
 	},
 	{
-		label: `# 验证滚动`,
+		label: `# 验证滚动 None`,
 		key: '14',
 		children: '',
 	},
 	{
-		label: `# 验证滚动`,
+		label: `# 验证滚动 None`,
 		key: '15',
 		children: '',
 	},
 	{
-		label: `# 验证滚动`,
+		label: `# 验证滚动 None`,
 		key: '16',
 		children: '',
 	},

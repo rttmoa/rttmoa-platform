@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Card, Badge, Button, Space, Tag, Table, message, Modal, Form, Input, Radio, Select, DatePicker, Popconfirm, Tabs, Upload } from 'antd'
+import { Card, Badge, Button, Space, Tag, Table, message, Modal, Form, Input, Radio, Select, DatePicker, Popconfirm, Tabs, Upload, Tooltip } from 'antd'
 import { createUser, editUser, getUserList } from '@/api/modules/system/userManage'
 import MultiForm from '@/components/Forms'
 import MultiTable from '@/components/Tables'
@@ -11,13 +11,9 @@ import { DeleteOutlined } from '@ant-design/icons'
 import SelectFilter, { selectdProps } from '@/components/SelectFilter'
 import useExportExcle from '@/hooks/useExportExcle'
 import UserButton from '../../../components/GrainButton'
-
-interface stateConfig {
-	[propName: number]: React.ReactNode
-}
-interface InterestConfig {
-	[propName: number]: string
-}
+import './index.less'
+import { columnConfig } from './components/Column_Config'
+import TableHeader from './components/TableHeader'
 
 interface UserListResults {
 	code?: number
@@ -40,13 +36,13 @@ interface Pagination {
 const UserManage = () => {
 	const { handleExportAll } = useExportExcle()
 	// 处理角色
-	const [roleObj, setroleObj] = useState<any>({})
+	const [roleObj, setroleObj] = useState<any>({}) // 角色对象： {0: '普通用户', 1: '客服专员', 2: '前端开发', 3: '后端开发', 4: '运维', 5: '管理员'}
 	const [roleAll, setroleAll] = useState([])
 
 	// Table 表格
 	const [loading, setLoading] = useState(false)
 	const [userList, setUserList] = useState<any>([])
-	const [pagination, setPagination] = useState<Pagination>({ page: 1, pageSize: 10, totalCount: 0 })
+	const [pagination, setPagination] = useState<Pagination>({ page: 1, pageSize: 10, totalCount: 0 }) // 分页
 	const [selectRowItem, setSelectRowItem] = useState<any>({ selectedRowKeys: [], selectedIds: [], selectedItem: {} })
 
 	// 处理弹窗
@@ -64,188 +60,51 @@ const UserManage = () => {
 	const [form] = Form.useForm()
 	const [multiForm] = Form.useForm()
 
+	function isValidValue(val: any) {
+		return !(val === undefined || val === null || (typeof val === 'string' && val.trim() === ''))
+	}
+	const hasValid = Object.values(searchFilter).some(isValidValue)
 	const getData = () => {
 		setLoading(true)
-		setTimeout(() => {
-			// console.log('最近', page, pageSize );
-			const { page, pageSize } = pagination
-			let searchParams = { page, pageSize, ...searchFilter }
-			getUserList(searchParams).then((res: any) => {
-				// console.log("响应结果：", res);
-				setLoading(false)
-				const newData = res.data.list.map((item: any, index: number) => ({
-					...item,
-					key: index,
-				}))
-				// console.log('newData', newData);
-				setUserList(newData.splice(0, pageSize))
-				setPagination({
-					page: res.data.page,
-					pageSize: res.data.page_size,
-					totalCount: res.data.total_count,
-				})
+		console.log('pagination', pagination)
+		let searchParams = { page: pagination.page, pageSize: pagination.pageSize, ...searchFilter }
+		getUserList(searchParams).then((res: any) => {
+			setLoading(false)
+			const newData = res.data.list.map((item: any, index: number) => ({ ...item, key: index }))
+			setUserList(newData.splice(0, pagination.pageSize))
+			setPagination({
+				page: pagination.page || 1,
+				pageSize: pagination.pageSize || 10,
+				totalCount: res.data.total_count || 0,
 			})
-		}, 500)
+		})
 	}
+	useEffect(() => {
+		getData()
+	}, [pagination.page, pagination.pageSize, searchFilter])
+
+	// 获取所属角色数据：管理员、前端开发
 	const getRoleData = () => {
+		console.log('getRoleData == change')
 		roleList().then((res: any) => {
-			console.log(res)
 			let data = res.data.list
-			// console.log(data);
-			const roleNames: [] = data.reduce((prev: { [x: string]: any }, curr: { id: string | number; role_name: string }) => {
+			// console.log('getRoleData', data)
+			const roleNames: [] = data.reduce((prev: any, curr: any) => {
 				prev[curr.id] = curr.role_name
 				return prev
 			}, {})
+			// console.log('roleNames', roleNames)
 			setroleObj(roleNames || [])
 			setroleAll(data)
 		})
 	}
 	useEffect(() => {
-		getData()
 		getRoleData()
-	}, [pagination.page, pagination.pageSize])
+	}, [])
 
-	const columnConfig: TableProps['columns'] = [
-		{
-			title: 'id',
-			dataIndex: 'id',
-			width: 80,
-			fixed: 'left',
-		},
-		{
-			title: '用户名',
-			dataIndex: 'username',
-			width: 80,
-			fixed: 'left',
-		},
-		{
-			title: '性别',
-			dataIndex: 'sex',
-			render: (sex: number) => (sex === 1 ? '男' : '女'),
-			// width: "6%",
-		},
-		{
-			title: '状态',
-			dataIndex: 'state',
-			render: (state: number) => {
-				let config: stateConfig = {
-					1: <Tag color="green">痛苦</Tag>,
-					2: <Tag color="blue">委屈</Tag>,
-					3: <Tag color="orange">迷茫</Tag>,
-					4: <Tag color="red">平淡</Tag>,
-					5: <Tag color="purple">开心</Tag>,
-				}
-				return config[state]
-			},
-			// width: "6%",
-		},
-		{
-			title: '爱好',
-			dataIndex: 'interest',
-			render: (interest: number) => {
-				let config: InterestConfig = {
-					1: '游泳',
-					2: '打篮球',
-					3: '踢足球',
-					4: '跑步',
-					5: '爬山',
-					6: '骑行',
-					7: '桌球',
-					8: '麦霸',
-				}
-				return config[interest]
-			},
-			// width: "6%",
-		},
-		{
-			title: '婚姻状态',
-			dataIndex: 'isMarried',
-			render(isMarried: number) {
-				return isMarried ? <Badge status="success" text="已婚" /> : <Badge status="error" text="未婚" />
-			},
-			// width: 80
-		},
-		{
-			title: '所属角色',
-			dataIndex: 'role_id',
-			render: (roleiD: number) => roleObj[roleiD],
-			// width: 80
-		},
-		{
-			title: '手机号',
-			render() {
-				let tele = 15303663375
-				let strTele = tele + '' // 数字类型转字符串
-				let phone = strTele.replace(/(\d{3})\d*(\d{4})/g, '$1***$2')
-				return <span>{phone}</span>
-			},
-		},
-		{
-			title: '身份证号',
-			// width: 150,
-			render() {
-				let identity = 231085199811011415n
-				let strIdentity = identity + '' // 数字类型转字符串
-				let res = strIdentity.replace(/(\d{3})\d*(\d{4})/g, '$1***********$2')
-				return <span>{res}</span>
-			},
-		},
-		{
-			title: '联系地址',
-			dataIndex: 'address',
-			// width: 250
-		},
-		{
-			title: '邮箱',
-			dataIndex: 'email',
-			// width: 250,
-		},
-		{
-			title: '生日',
-			dataIndex: 'birthday',
-			// width: "6%",
-		},
-		{
-			title: '早起时间',
-			dataIndex: 'time',
-			// width: "6%",
-		},
-		{
-			title: '操作',
-			fixed: 'right',
-			width: 200,
-			render(record: any) {
-				return (
-					<Space>
-						<Button
-							size="small"
-							onClick={() => {
-								handleOperator('detail', record)
-							}}>
-							详情
-						</Button>
-						<Button
-							size="small"
-							onClick={() => {
-								handleOperator('edit', record)
-							}}>
-							编辑
-						</Button>
-						<Button
-							size="small"
-							onClick={() => {
-								handleOperator('delete', record)
-							}}>
-							删除
-						</Button>
-					</Space>
-				)
-			},
-		},
-	]
 	// ! 操作员工： 新建、编辑、详情、删除  弹窗显示
 	const handleOperator = (type: string, item: any) => {
-		console.log('handleOperator', type, item)
+		// console.log('handleOperator', type, item)
 		if (type === 'create') {
 			setModalIsVisible(true)
 			setModalTitle('新建用户')
@@ -274,6 +133,7 @@ const UserManage = () => {
 		setfilterResult(value)
 	}
 
+	// 导出EXCEL表头
 	const header = {
 		address: '地址',
 		birthday: '生日',
@@ -282,86 +142,38 @@ const UserManage = () => {
 		interest: '爱好',
 		isMarried: '婚姻状态',
 	}
-	// console.log('userList', userList);
-	const structure = (
-		<div>
-			<Card className="mb20" style={{}}>
-				<Tabs
-					defaultActiveKey="1"
-					// centered
-					items={[
-						{
-							label: `输入框查询`,
-							key: '1',
-							children: (
-								<MultiForm
-									multiForm={multiForm} // form属性，初始化，获取值使用
-									formList={formList}
-									extendFormList={extendFormList}
-									filterSubmit={(filterParams = {}) => {
-										setSearchFilter(filterParams)
-									}}
-								/>
-							),
-						},
-						// {
-						// 	label: `选择框查询`,
-						// 	key: '2',
-						// 	children: <SelectFilter data={SelectFilterData} defaultValue={filterResult} selectChange={selectChange} />,
-						// },
-					]}
+	// 表头属性
+	let TableHeaderConfig = {
+		selectRowItem,
+		header,
+		userList,
+		handleOperator,
+		handleExportAll,
+	}
+	const fakeData = true
+	return (
+		<>
+			<Card className="mb5">
+				<MultiForm
+					multiForm={multiForm} // form属性，初始化，获取值使用
+					formList={formList}
+					extendFormList={extendFormList}
+					filterSubmit={(filterParams = {}) => {
+						// function isValidValue(val: any) {
+						// 	return !(val === undefined || val === null || (typeof val === 'string' && val.trim() === ''))
+						// }
+						// const hasValid = Object.values(filterParams).some(isValidValue)
+						// console.log('表单是否有值：', hasValid)
+						console.log('表单值：', filterParams)
+						setSearchFilter(filterParams)
+					}}
 				/>
 			</Card>
-			{/* <UserButton /> */}
-			<Card
-				className="mb30"
-				title="用户列表"
-				extra={
-					<Space size="large">
-						<Button
-							size="middle"
-							onClick={() => {
-								handleOperator('create', null)
-							}}>
-							新建
-						</Button>
-
-						<Popconfirm
-							title="批量删除"
-							description="你确定要删除吗？"
-							okText="确定"
-							cancelText="取消"
-							onConfirm={() => {
-								handleOperator('moreDelete', null)
-							}}>
-							<Button size="middle" disabled={selectRowItem.selectedRowKeys.length <= 1} icon={<DeleteOutlined />}>
-								批量删除
-							</Button>
-						</Popconfirm>
-						<Button
-							size="middle"
-							onClick={() => {
-								handleExportAll(header, userList, '用户列表')
-							}}>
-							导出Excel
-						</Button>
-						<Upload
-							beforeUpload={file => {
-								const isExcel = /\.(xlsx|xls)$/.test(file.name.toLowerCase())
-								if (!isExcel) {
-									message.error('请上传Excel文件（.xlsx 或 .xls）')
-									return false
-								}
-								return false
-							}}>
-							<Button>上传Excel</Button>
-						</Upload>
-					</Space>
-				}
-				style={{ width: '100%' }}>
+			{/* <UserButton />  特效按钮 */}
+			<Card className="w-full" title="用户列表" extra={<TableHeader {...TableHeaderConfig} />}>
 				<MultiTable
 					rowSelection="checkbox"
-					columns={columnConfig}
+					columns={fakeData ? columnConfig(fakeData, roleObj, handleOperator) : columnConfig()}
 					dataSource={userList}
 					pagination={pagination}
 					selectedRowKeys={selectRowItem.selectedRowKeys}
@@ -378,11 +190,14 @@ const UserManage = () => {
 						setPagination((state: Pagination) => ({ ...state, page, pageSize }))
 					}}
 					loading={loading}
-					// scroll={{ x: 1500 }}
+					// scroll={{ x: 3500 }}
 					id="cart-scrollTable"
 					xScroll
+					scroll={{ y: 55 * 10 }}
+					sticky={{ offsetHeader: 64 }}
 					// yScroll
 					// scroll={{y: 1000}}
+					//  sticky={{ offsetHeader: 64 }} // https://ant.design/components/table-cn#table-demo-sticky
 				/>
 			</Card>
 			<Modal
@@ -398,9 +213,7 @@ const UserManage = () => {
 				}}>
 				<UserFormModal roles={roleAll} userInfo={modalUserInfo} type={modalType} form={form} />
 			</Modal>
-		</div>
+		</>
 	)
-
-	return <>{structure}</>
 }
 export default UserManage

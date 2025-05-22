@@ -1,0 +1,47 @@
+
+
+
+
+高级表格：https://pro-components.antdigital.dev/components/table?tab=api&current=1&pageSize=5#%E4%BB%A3%E7%A0%81%E6%BC%94%E7%A4%BA
+
+ 
+表头：排序、筛选、过滤
+
+
+问题：如果scroll={{ x: 1500, y: '100%' }}宽度不够时，不许换行、否则表格样式错误、 如果表格内容显示不下需要省略、双击时弹出输入框显示多余的文字
+
+
+
+
+
+
+！ 下拉菜单： https://ant.design/components/dropdown-cn#dropdown-demo-placement
+
+表格相关 ↓↓↓↓
+表格筛选与排序：https://ant.design/components/table-cn#table-demo-head
+
+自定义筛选菜单：https://ant.design/components/table-cn#table-demo-custom-filter-panel
+
+紧凑型：https://ant.design/components/table-cn#table-demo-size
+
+带边框：https://ant.design/components/table-cn#table-demo-bordered
+
+固定表头： https://ant.design/components/table-cn#table-demo-fixed-header
+
+固定列：https://ant.design/components/table-cn#table-demo-fixed-columns
+
+固定头和列：https://ant.design/components/table-cn#table-demo-fixed-columns-header
+
+！可编辑单元格：https://ant.design/components/table-cn#table-demo-edit-cell
+
+可编辑行
+
+列拖拽排序：https://ant.design/components/table-cn#table-demo-drag-column-sorting
+
+单元格自动省略： https://ant.design/components/table-cn#table-demo-ellipsis
+
+自定义单元格省略提示： https://ant.design/components/table-cn#table-demo-ellipsis-custom-tooltip
+
+响应式：https://ant.design/components/table-cn#table-demo-responsive
+
+！随页面滚动的固定表头和滚动条： https://ant.design/components/table-cn#table-demo-sticky

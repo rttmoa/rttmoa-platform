@@ -1,3 +1,4 @@
+import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Col, DatePicker, Form, Input, Row, Select, Space } from 'antd'
 import React, { useCallback, useState } from 'react'
 
@@ -126,32 +127,43 @@ export default function MultiForm(props: any) {
 			const extraItems = expand ? extendFormList.map(renderFormItem) : []
 			formItemList = [...formItemList, ...extraItems]
 		}
-		console.log(formItemList)
 		return formItemList
 	}
 	const toggleExpand = useCallback(() => {
 		setexpand(prevExpand => !prevExpand)
 	}, [])
 	const formList = initFormList()
+	const layout = {
+		labelCol: { span: 7 },
+		wrapperCol: { span: 16 },
+	}
 	return (
 		<div>
-			<Form layout="horizontal" form={multiForm}>
-				<div style={{ display: 'flex' }}>
-					<Row style={{ width: 'calc(100% - 250px)' }}>{formList.map((value: any, index: number) => value)}</Row>
-					<div style={{ width: 200 }}>
-						<Form.Item>
-							<Button type="primary" onClick={Submit}>
-								查询
-							</Button>
-							<Button className="mx-3" onClick={reset}>
-								重置
-							</Button>
-							{props.extendFormList?.length > 0 && (
-								<button type="button" onClick={toggleExpand}>
-									{expand ? '收起' : '展开'}
-								</button>
-							)}
-						</Form.Item>
+			<Form {...layout} layout="horizontal" form={multiForm}>
+				<div className="flex flex-row justify-between">
+					<Row style={{ width: 'calc(100% - 300px)' }}>{formList.map((value: any, index: number) => value)}</Row>
+					<div className="w-[300px] h-[40px] flex flex-row justify-center items-center">
+						<Button type="default" onClick={Submit}>
+							查询
+						</Button>
+						<Button className="mx-3" type="dashed" onClick={reset}>
+							重置
+						</Button>
+						{props.extendFormList?.length > 0 && (
+							<button className="block" type="button" onClick={toggleExpand}>
+								{expand ? (
+									<span>
+										收起&nbsp;
+										<UpOutlined />
+									</span>
+								) : (
+									<span>
+										展开&nbsp;
+										<DownOutlined />
+									</span>
+								)}
+							</button>
+						)}
 					</div>
 				</div>
 			</Form>
