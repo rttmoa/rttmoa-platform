@@ -229,7 +229,7 @@ export default function Tables(props: TablesProps) {
 				// hideOnSinglePage: true, // 只有一个隐藏分页器 (不需要隐藏分页器)
 				current: pagination.page,
 				pageSize: pagination.pageSize,
-				pageSizeOptions: ['3', '5', '10', '15', '20', '30', '50'],
+				pageSizeOptions: [10, 20, 50, 100, 500, 1000, 5000, 10000],
 				total: pagination.totalCount,
 				showTotal: () => `共 ${pagination.totalCount} 条`,
 				showQuickJumper: true,

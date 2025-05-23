@@ -13,7 +13,7 @@ export interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
 	loading?: boolean
 }
 const config: AxiosRequestConfig = {
-	baseURL: import.meta.env.VITE_API_URL as string, // development: /api
+	baseURL: 'upack', // development: /api
 	timeout: ResultEnum.TIMEOUT as number,
 	withCredentials: false, // 跨域时候允许携带凭证
 }

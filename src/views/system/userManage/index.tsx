@@ -39,6 +39,13 @@ const UserManage = () => {
 	const [roleObj, setroleObj] = useState<any>({}) // 角色对象： {0: '普通用户', 1: '客服专员', 2: '前端开发', 3: '后端开发', 4: '运维', 5: '管理员'}
 	const [roleAll, setroleAll] = useState([])
 
+	// & 页码和搜索条件变动 去服务端取数据 searchFilter + pagination
+
+	// 表单过滤条件（输入框）
+	const [searchFilter, setSearchFilter] = useState({})
+	// 表单过滤条件（选择框）
+	const [filterResult, setfilterResult] = useState<selectdProps>({ state: '1', type: ['1', '3'] })
+
 	// Table 表格
 	const [loading, setLoading] = useState(false)
 	const [userList, setUserList] = useState<any>([])
@@ -50,12 +57,6 @@ const UserManage = () => {
 	const [modalTitle, setModalTitle] = useState('')
 	const [modalType, setModalType] = useState('')
 	const [modalUserInfo, setModalUserInfo] = useState({})
-
-	// 表单过滤条件（输入框）
-	const [searchFilter, setSearchFilter] = useState({})
-
-	// 表单过滤条件（选择框）
-	const [filterResult, setfilterResult] = useState<selectdProps>({ state: '1', type: ['1', '3'] })
 
 	const [form] = Form.useForm()
 	const [multiForm] = Form.useForm()
@@ -159,11 +160,6 @@ const UserManage = () => {
 					formList={formList}
 					extendFormList={extendFormList}
 					filterSubmit={(filterParams = {}) => {
-						// function isValidValue(val: any) {
-						// 	return !(val === undefined || val === null || (typeof val === 'string' && val.trim() === ''))
-						// }
-						// const hasValid = Object.values(filterParams).some(isValidValue)
-						// console.log('表单是否有值：', hasValid)
 						console.log('表单值：', filterParams)
 						setSearchFilter(filterParams)
 					}}

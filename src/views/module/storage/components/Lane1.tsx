@@ -3,6 +3,7 @@ import { Space, Table, Tag, Tooltip } from 'antd'
 import type { TableProps } from 'antd'
 import './index.less'
 import axios from 'axios'
+import { GetShelfStock } from '@/api/modules/upack/common'
 
 // ! http://localhost:9527/#/module/storage
 
@@ -379,7 +380,8 @@ const Lane: React.FC = () => {
 	useEffect(() => {
 		async function execFunc() {
 			try {
-				const { data } = await axios.get('http://127.0.0.1:9089/shelf/api/Warehouse_Report')
+				// const { data } = await axios.get('http://127.0.0.1:6300/shelf/Warehouse_Report')
+				const data: any = await GetShelfStock()
 				console.log('data =====', data)
 				const rawData = data.data.material
 				setApiData(rawData)
