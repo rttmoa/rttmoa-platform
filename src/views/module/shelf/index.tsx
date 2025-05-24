@@ -3,15 +3,15 @@ import { Button, Drawer } from 'antd'
 import { formatDataForProTable } from '@/utils'
 import { pagination as paginationConfig } from '@/config/proTable'
 import { UserList } from '@/api/interface'
-import { FooterToolbar, ModalForm, ProDescriptions, ProFormText, ProFormTextArea, ProTable } from '@ant-design/pro-components'
-import type { ActionType, FormInstance, ProDescriptionsItemProps } from '@ant-design/pro-components'
+import { FooterToolbar, LightFilter, ModalForm, ProDescriptions, ProFormDatePicker, ProFormText, ProFormTextArea, ProTable } from '@ant-design/pro-components'
+import type { ActionType, FormInstance, ProColumns, ProDescriptionsItemProps } from '@ant-design/pro-components'
 import { message } from '@/hooks/useMessage'
 import { addRule, removeRule, updateRule } from '@/api/modules/api_useProTable/api'
 import UpdateForm from './component/_UpdateForm'
+import './index.less'
 import TableColumnsConfig, { TableColumnsParams } from './component/Table_Column_Config'
 import ToolBarRender from './component/ToolBarRender'
-import { GetProTableUser } from '@/api/modules/upack/common'
-import './index.less'
+import { GetAllShelf } from '@/api/modules/upack/common'
 
 export type FormValueType = {
 	target?: string
@@ -122,8 +122,8 @@ const useProTable = () => {
 	return (
 		<>
 			<ProTable<UserList>
-				rowKey="id"
-				scroll={{ x: 2500, y: '100vh' }}
+				rowKey="_id"
+				scroll={{ y: '100vh' }}
 				bordered={true}
 				cardBordered
 				className="ant-pro-table-scroll"
@@ -155,13 +155,8 @@ const useProTable = () => {
 					// const { data } = await getUserList(params)
 					// console.log('api === request == data', data)
 					// return formatDataForProTable<UserList>(data)
-					const { data }: any = await GetProTableUser(params)
+					const { data }: any = await GetAllShelf(params)
 					console.log('请求数据：', data)
-					// let newData = {
-					// 	success: true,
-					// 	data: data.data,
-					// 	total: data.length,
-					// }
 					return formatDataForProTable<UserList>(data)
 				}}
 				rowSelection={{
@@ -171,7 +166,7 @@ const useProTable = () => {
 				}}
 				ghost={false}
 				dateFormatter="string"
-				headerTitle="使用 ProTable"
+				headerTitle="仓库货架表"
 				search={{ labelWidth: 'auto', filterType: 'query', span: 6 }} // 搜索表单配置 Form
 				toolBarRender={() => ToolBarRender(ToolBarParams)} // 渲染工具栏
 				defaultSize="small" // 尺寸：紧凑、中等、宽松

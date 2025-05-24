@@ -878,6 +878,19 @@
 						"isFull": false,
 						"isAffix": false
 					}
+				},
+				{
+					"path": "/module/shelf",
+					"element": "/module/shelf/index",
+					"meta": {
+						"key": "shelf",
+						"icon": "AppstoreOutlined",
+						"title": "仓库货架表",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false
+					}
 				}
 			]
 		},
