@@ -13,7 +13,7 @@ export interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
 	loading?: boolean
 }
 const config: AxiosRequestConfig = {
-	baseURL: 'upack', // development: /api
+	baseURL: 'upack', // development: /upack
 	timeout: ResultEnum.TIMEOUT as number,
 	withCredentials: false, // 跨域时候允许携带凭证
 }
@@ -108,6 +108,8 @@ class RequestHttp {
 			},
 			async (error: AxiosError) => {
 				console.log('响应错误拦截: ', error)
+				console.log('响应错误拦截信息: ', error.response?.data)
+
 				const { response } = error
 				tryHideFullScreenLoading()
 				// 分别判断请求超时 & 网络错误，无响应   ——    "timeout of 2000ms exceeded"

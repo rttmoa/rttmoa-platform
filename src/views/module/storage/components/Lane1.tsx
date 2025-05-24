@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Space, Table, Tag, Tooltip } from 'antd'
+import { Button, Space, Table, Tag, Tooltip } from 'antd'
 import type { TableProps } from 'antd'
 import './index.less'
 import axios from 'axios'
 import { GetShelfStock } from '@/api/modules/upack/common'
+import { ProSkeleton } from '@ant-design/pro-components'
+import { RedoOutlined } from '@ant-design/icons'
 
 // ! http://localhost:9527/#/module/storage
 
@@ -377,74 +379,82 @@ const Lane: React.FC = () => {
 	const [apiData, setApiData] = useState<DataType[]>([]) // 接口返回的值
 	const [loading, setLoading] = useState<Boolean>(true)
 	const [error, setError] = useState<String>('')
-	useEffect(() => {
-		async function execFunc() {
-			try {
-				// const { data } = await axios.get('http://127.0.0.1:6300/shelf/Warehouse_Report')
-				const data: any = await GetShelfStock()
-				console.log('data =====', data)
-				const rawData = data.data.material
-				setApiData(rawData)
-				rawData.forEach((item: any) => {
-					const { row__c, lay__c, col__c } = item
-					const key = `${row__c}排 - ${lay__c}层`
+	async function execFunc() {
+		try {
+			// const { data } = await axios.get('http://127.0.0.1:6300/shelf/Warehouse_Report')
+			setLoading(true)
+			const data: any = await GetShelfStock()
+			// console.log('data =====', data)
+			const rawData = data.data.material
+			setApiData(rawData)
+			rawData.forEach((item: any) => {
+				const { row__c, lay__c, col__c } = item
+				const key = `${row__c}排 - ${lay__c}层`
 
-					let existing = groupedData.find(d => d.key === key)
-					if (!existing) {
-						existing = {
-							key,
-							row__c: row__c,
-							lay__c: lay__c,
-							// column1: null,
-							// column2: null,
-							...item,
-						}
-						groupedData.push(existing)
+				let existing = groupedData.find(d => d.key === key)
+				if (!existing) {
+					existing = {
+						key,
+						row__c: row__c,
+						lay__c: lay__c,
+						// column1: null,
+						// column2: null,
+						...item,
 					}
-					// 按列号填充 column1 ~ columnN
-					existing[`column${col__c}`] = col__c
-				})
-				// console.log('处理后的rawData：', rawData) //* 总共24条
-				console.log('合并 groupedData', groupedData) //* 总共8条    将库位数据合并
+					groupedData.push(existing)
+				}
+				// 按列号填充 column1 ~ columnN
+				existing[`column${col__c}`] = col__c
+			})
+			// console.log('处理后的rawData：', rawData) //* 总共24条
+			console.log('合并 groupedData', groupedData) //* 总共8条    将库位数据合并
 
-				// 📌 2️⃣ 处理 rowSpan，合并相同行
-				const rowSpanMap = new Map<string, number>()
-				groupedData.forEach((item, index) => {
-					const key = `${item.row__c}-${item.lay__c}`
-					if (!rowSpanMap.has(key)) rowSpanMap.set(key, groupedData.filter(d => d.row__c === item.row__c && d.lay__c === item.lay__c).length)
-				})
-				// console.log('处理排序后 groupedData', groupedData)
+			// 📌 2️⃣ 处理 rowSpan，合并相同行
+			const rowSpanMap = new Map<string, number>()
+			groupedData.forEach((item, index) => {
+				const key = `${item.row__c}-${item.lay__c}`
+				if (!rowSpanMap.has(key)) rowSpanMap.set(key, groupedData.filter(d => d.row__c === item.row__c && d.lay__c === item.lay__c).length)
+			})
+			// console.log('处理排序后 groupedData', groupedData)
 
-				// * 这里排序是因为按照货架的样子、从一层到四层
-				groupedData.sort((a, b) => {
-					if (a.row__c != b.row__c) return a.row__c - b.row__c // 按 row 升序
-					return b.lay__c - a.lay__c // 按 layer 降序
-				})
-				// console.log('排序 groupedData', groupedData)
-				setData(groupedData)
-				setLoading(false)
-			} catch (error) {
-				console.log('error Line', error)
-				setLoading(false)
-			}
+			// * 这里排序是因为按照货架的样子、从一层到四层
+			groupedData.sort((a, b) => {
+				if (a.row__c != b.row__c) return a.row__c - b.row__c // 按 row 升序
+				return b.lay__c - a.lay__c // 按 layer 降序
+			})
+			// console.log('排序 groupedData', groupedData)
+			setData(groupedData)
+			setLoading(false)
+		} catch (error) {
+			console.log('error Line', error)
+			setLoading(false)
 		}
+	}
+	useEffect(() => {
 		execFunc()
 	}, [])
 
 	if (loading) {
-		return <div>Loading...</div>
+		return <ProSkeleton type="list" />
 	}
 
-	console.log('巷道一 ==================================================================')
+	// console.log('巷道一 ==================================================================')
 	let Header = (
-		<div className="flex">
-			<div className="w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-slate-100">空库位</div>
-			<div className="w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-pink-300">预占用库位</div>
-			<div className="w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-green-400">有库存库位</div>
-			<div className="w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-slate-100 text-red-500">选中库位</div>
+		<div className="flex flex-row justify-between">
+			<div className="flex flex-row">
+				<div className="w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-slate-100">空库位</div>
+				<div className="w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-pink-300">预占用库位</div>
+				<div className="w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-green-400">有库存库位</div>
+				<div className="w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-slate-100 text-red-500">选中库位</div>
+			</div>
+			<div>
+				<Button type="text" icon={<RedoOutlined />} onClick={execFunc}>
+					刷新
+				</Button>
+			</div>
 		</div>
 	)
-	console.log('结果： ', data)
+	// console.log('结果： ', data)
 	return (
 		<Table<DataType>
 			className="cusTable"
@@ -452,7 +462,7 @@ const Lane: React.FC = () => {
 			columns={apiData ? (columns(apiData) as any) : []}
 			dataSource={data}
 			// scroll={{ x: "max-content" }}
-			scroll={{ x: columns(data).length * 150 }}
+			scroll={{ x: columns(data).length * 150, y: 55 * 11 }}
 			pagination={false}
 		/>
 	)

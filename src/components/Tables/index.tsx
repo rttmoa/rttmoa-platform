@@ -99,14 +99,10 @@ export default function Tables(props: TablesProps) {
 					// debugger
 					setTimeout(() => {
 						const tbody = parent.getElementsByClassName('ant-table-body')[0]
-						if (tbody) {
-							;(tbody as HTMLElement).style.height = height + 'px'
-						}
+						if (tbody) (tbody as HTMLElement).style.height = height + 'px'
 						// 没数据的时候，请一定将“暂无数据”的UI图上下左右居中
 						const placeholder = parent.getElementsByClassName('ant-table-placeholder')[0]
-						if (placeholder) {
-							;(placeholder as HTMLElement).style.height = height + 'px'
-						}
+						if (placeholder) (placeholder as HTMLElement).style.height = height + 'px'
 					}, 30)
 				}
 			}

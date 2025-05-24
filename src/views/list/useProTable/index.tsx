@@ -14,6 +14,7 @@ import Search from 'antd/lib/input/Search'
 import './index.less'
 import TableColumnsConfig, { TableColumnsParams } from './component/Table_Column_Config'
 import ToolBarRender from './component/ToolBarRender'
+import { GetProTableUser } from '@/api/modules/upack/common'
 
 export type FormValueType = {
 	target?: string
@@ -154,8 +155,16 @@ const useProTable = () => {
 					console.log('request - params', params)
 					// console.log('request - sort', sort)
 					// console.log('request - filter', filter)
-					const { data } = await getUserList(params)
-					console.log('api === request == data', data)
+					// const { data } = await getUserList(params)
+					// console.log('api === request == data', data)
+					// return formatDataForProTable<UserList>(data)
+					const { data }: any = await GetProTableUser(params)
+					console.log('请求数据：', data)
+					// let newData = {
+					// 	success: true,
+					// 	data: data.data,
+					// 	total: data.length,
+					// }
 					return formatDataForProTable<UserList>(data)
 				}}
 				rowSelection={{
