@@ -1,4 +1,4 @@
-import { ArrowsAltOutlined, FullscreenOutlined, PlusOutlined, ShrinkOutlined } from '@ant-design/icons'
+import { ArrowsAltOutlined, FullscreenOutlined, PlusOutlined, SearchOutlined, SecurityScanTwoTone, ShrinkOutlined } from '@ant-design/icons'
 import { Button, Tooltip } from 'antd'
 import Search from 'antd/lib/input/Search' // ! antd/lib/input
 import { useDispatch } from '@/redux'
@@ -6,7 +6,7 @@ import { setGlobalState } from '@/redux/modules/global'
 
 // * 渲染工具栏
 const ToolBarRender = (Params: any) => {
-	let { handleModalOpen, quickSearch } = Params
+	let { handleModalOpen, quickSearch, openSearch, SetOpenSearch } = Params
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const dispatch = useDispatch()
 	return [
@@ -38,6 +38,11 @@ const ToolBarRender = (Params: any) => {
 			}}>
 			导入EXCEL
 		</Button>,
+		<Tooltip title={!openSearch ? '关启表单搜索' : '开启表单搜索'} className="text-lg">
+			<span onClick={() => SetOpenSearch(!openSearch)}>
+				<SearchOutlined />
+			</span>
+		</Tooltip>,
 		<Tooltip title="全屏" className="text-lg">
 			<span onClick={() => dispatch(setGlobalState({ key: 'maximize', value: true }))}>
 				<FullscreenOutlined />

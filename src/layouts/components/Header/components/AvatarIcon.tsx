@@ -10,7 +10,7 @@ import { setAuthMenuList } from '@/redux/modules/auth'
 import { modal, message } from '@/hooks/useMessage'
 import InfoModal, { InfoModalRef } from './InfoModal'
 import PasswordModal, { PasswordModalRef } from './PasswordModal'
-import avatar from '@/assets/images/atatorss.jpg'
+import avatar from '@/assets/images/avatar.png'
 
 // todo
 // todo: InfoModal: forwardRef & useImperativeHandle

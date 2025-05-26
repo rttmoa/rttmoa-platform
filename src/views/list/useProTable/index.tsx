@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { Button, Drawer } from 'antd'
+import { Button, Col, Drawer, Form, Input, Modal, Row } from 'antd'
 import { formatDataForProTable } from '@/utils'
 import { pagination as paginationConfig } from '@/config/proTable'
 import { UserList } from '@/api/interface'
@@ -7,11 +7,12 @@ import { FooterToolbar, ModalForm, ProDescriptions, ProFormText, ProFormTextArea
 import type { ActionType, FormInstance, ProDescriptionsItemProps } from '@ant-design/pro-components'
 import { message } from '@/hooks/useMessage'
 import { addRule, removeRule, updateRule } from '@/api/modules/api_useProTable/api'
-import UpdateForm from './component/_UpdateForm'
+import UpdateForm from './component/UpdateForm'
 import TableColumnsConfig, { TableColumnsParams } from './component/Table_Column_Config'
-import ToolBarRender from './component/ToolBarRender'
+import ToolBarRender from './component/Tool_Bar_Render'
 import { GetProTableUser } from '@/api/modules/upack/common'
 import './index.less'
+import { DeleteOutlined } from '@ant-design/icons'
 
 export type FormValueType = {
 	target?: string
@@ -21,9 +22,13 @@ export type FormValueType = {
 	frequency?: string
 } & Partial<UserList>
 
+import handle from './component/Handler'
+
 // TODO: refer： https://github.com/ant-design/ant-design-pro
 // ProTable：https://procomponents.ant.design/components/table
 const useProTable = () => {
+	// console.log('defalut', defalut)
+
 	const actionRef = useRef<ActionType>()
 	const formRef = useRef<FormInstance>()
 	const [createModalOpen, handleModalOpen] = useState<boolean>(false)
@@ -32,6 +37,10 @@ const useProTable = () => {
 	const [showDetail, setShowDetail] = useState<boolean>(false)
 	const [updateModalOpen, handleUpdateModalOpen] = useState<boolean>(false)
 	const [pagination, setPagination] = useState<any>({}) // 分页数据
+
+	const [openSearch, SetOpenSearch] = useState<boolean>(false) // 工具栏：开启关闭表单搜索
+	const [loading, SetLoading] = useState<boolean>(false) // Loading：加载Loading
+	const [form] = Form.useForm()
 
 	// TODO:
 	// 设置 页码值的 useState
@@ -74,7 +83,6 @@ const useProTable = () => {
 				// key: fields.key,
 			})
 			hide()
-
 			message.success('Configuration is successful')
 			return true
 		} catch (error) {
@@ -84,54 +92,35 @@ const useProTable = () => {
 		}
 	}
 
-	/**
-	 *  Delete node
-	 * @zh-CN 删除节点
-	 *
-	 * @param selectedRows
-	 */
-	const handleRemove = async (selectedRows: UserList[]) => {
-		const hide = message.loading('正在删除')
-		if (!selectedRows) return true
-		try {
-			await removeRule({
-				key: selectedRows.map(row => row.id),
-			})
-			hide()
-			message.success('Deleted successfully and will refresh soon')
-			return true
-		} catch (error) {
-			hide()
-			message.error('Delete failed, please try again')
-			return false
-		}
-	}
-
-	// * 表头：新建按钮
+	// * 工具栏 ToolBar
 	let ToolBarParams = {
-		handleModalOpen, // 表头新建按钮
-		quickSearch, // 表头快捷搜索
+		handleModalOpen, // 工具栏：新建按钮
+		quickSearch, // 工具栏：快捷搜索
+		openSearch,
+		SetOpenSearch, // 工具栏：开启表单搜索
 	}
-	// * 表格列配置
+	// * 列配置 Column
 	let TableColumnParams: TableColumnsParams = {
 		setCurrentRow,
 		setShowDetail,
 	}
 
 	// & 表格封装成通用
+	// 表格数量量多会如何？ 500 - 5000 - 50000
 	return (
 		<>
 			<ProTable<UserList>
-				rowKey="id"
-				scroll={{ x: 2500, y: '100vh' }}
-				bordered={true}
-				cardBordered
+				rowKey="_id"
 				className="ant-pro-table-scroll"
+				scroll={{ x: 2500, y: '100vh' }}
+				bordered
+				cardBordered
+				loading={loading}
 				columns={TableColumnsConfig(TableColumnParams)}
+				toolBarRender={() => ToolBarRender(ToolBarParams)} // 渲染工具栏
 				// dataSource={[]}
 				actionRef={actionRef} // Table action 的引用，便于自定义触发      actionRef.current.reload()  |  actionRef.current.reset()   |   actionRef.current.clearSelected()
 				formRef={formRef} // 可以获取到查询表单的 form 实例
-				// polling={2000} // 是否轮询
 				// params={{
 				// 	current: pagination.page,
 				// 	pageSize: pagination.pageSize,
@@ -145,11 +134,15 @@ const useProTable = () => {
 					pageSizeOptions: [10, 20, 50, 100, 500, 1000, 5000],
 					onChange: (page, pageSize) => {
 						console.log('page, pageSize', page, pageSize)
+						// SetLoading(true)
 						setPagination({ page, pageSize })
+					},
+					onShowSizeChange: (current, size) => {
+						console.log('current, size)', current, size)
 					},
 				}}
 				request={async (params, sort, filter) => {
-					console.log('request - params', params)
+					console.log('request请求参数：', params, sort, filter)
 					// console.log('request - sort', sort)
 					// console.log('request - filter', filter)
 					// const { data } = await getUserList(params)
@@ -157,11 +150,6 @@ const useProTable = () => {
 					// return formatDataForProTable<UserList>(data)
 					const { data }: any = await GetProTableUser(params)
 					console.log('请求数据：', data)
-					// let newData = {
-					// 	success: true,
-					// 	data: data.data,
-					// 	total: data.length,
-					// }
 					return formatDataForProTable<UserList>(data)
 				}}
 				rowSelection={{
@@ -172,8 +160,7 @@ const useProTable = () => {
 				ghost={false}
 				dateFormatter="string"
 				headerTitle="使用 ProTable"
-				search={{ labelWidth: 'auto', filterType: 'query', span: 6 }} // 搜索表单配置 Form
-				toolBarRender={() => ToolBarRender(ToolBarParams)} // 渲染工具栏
+				search={openSearch ? false : { labelWidth: 'auto', filterType: 'query', span: 6 }} // 搜索表单配置 Form
 				defaultSize="small" // 尺寸：紧凑、中等、宽松
 				onSizeChange={() => {}} // Table 尺寸发生改变、将尺寸存储到数据库中
 				onRequestError={(error: any) => {}} // 数据加载失败时触发
@@ -185,7 +172,6 @@ const useProTable = () => {
 					persistenceType: 'localStorage',
 				}}
 			/>
-
 			{selectedRowsState?.length > 0 && (
 				<FooterToolbar
 					extra={
@@ -197,8 +183,12 @@ const useProTable = () => {
 						</div>
 					}>
 					<Button
+						key="deleteAll"
+						size="middle"
+						icon={<DeleteOutlined />}
+						danger
 						onClick={async () => {
-							await handleRemove(selectedRowsState)
+							await handle.handleRemove(selectedRowsState)
 							setSelectedRows([])
 							actionRef.current?.reloadAndRest?.()
 						}}>
@@ -208,32 +198,81 @@ const useProTable = () => {
 				</FooterToolbar>
 			)}
 
-			<ModalForm
-				title="新建"
-				width="400px"
+			<Modal
+				title="新建用户"
+				width="1000px"
 				open={createModalOpen}
-				onOpenChange={handleModalOpen}
-				onFinish={async value => {
-					const success = await handleAdd(value as UserList)
-					if (success) {
-						handleModalOpen(false)
-						if (actionRef.current) {
-							actionRef.current.reload()
-						}
-					}
-				}}>
-				<ProFormText
-					rules={[
-						{
-							required: true,
-							message: 'Rule name is required',
-						},
-					]}
-					width="md"
-					name="name"
-				/>
-				<ProFormTextArea width="md" name="desc" />
-			</ModalForm>
+				// onOpenChange={handleModalOpen}
+				// onFinish={async value => {
+				// 	const success = await handleAdd(value as UserList)
+				// 	if (success) {
+				// 		handleModalOpen(false)
+				// 		if (actionRef.current) {
+				// 			actionRef.current.reload()
+				// 		}
+				// 	}
+				// }}
+				// okText="提交"
+				onCancel={() => {
+					handleModalOpen(false)
+				}}
+				// onOk={() => {
+				// 	console.log('成功')
+				// 	console.log('表单值：', form.getFieldsValue())
+				// 	form.resetFields()
+				// }}
+				footer={[
+					<Button danger loading={loading} onClick={() => {}}>
+						取消
+					</Button>,
+					<Button
+						key="back"
+						onClick={() => {
+							form.resetFields()
+						}}>
+						重置表单
+					</Button>,
+					<Button key="link" href="https://google.com" target="_blank" type="primary" loading={loading} onClick={() => {}}>
+						提交
+					</Button>,
+				]}>
+				<Form layout="horizontal" form={form} labelCol={{ span: 4 }} wrapperCol={{ span: 18 }}>
+					<Row gutter={16}>
+						<Col span={12}>
+							<Form.Item label="姓名" name="name" rules={[{ required: true, message: '请输入姓名' }]}>
+								<Input placeholder="请输入姓名" />
+							</Form.Item>
+						</Col>
+						<Col span={12}>
+							<Form.Item label="年龄" name="age" rules={[{ required: true, message: '请输入年龄' }]}>
+								<Input placeholder="请输入年龄" />
+							</Form.Item>
+						</Col>
+						<Col span={12}>
+							<Form.Item label="姓名" name="name" rules={[{ required: true, message: '请输入姓名' }]}>
+								<Input placeholder="请输入姓名" />
+							</Form.Item>
+						</Col>
+						<Col span={12}>
+							<Form.Item label="法定年龄" name="age" rules={[{ required: true, message: '请输入年龄' }]}>
+								<Input placeholder="请输入年龄" />
+							</Form.Item>
+						</Col>
+					</Row>
+					{/* <Row>
+						<Col span={24}>
+							<Form.Item>
+								<Button type="primary" htmlType="submit">
+									提交
+								</Button>
+								<Button type="primary" htmlType="submit">
+									提交
+								</Button>
+							</Form.Item>
+						</Col>
+					</Row> */}
+				</Form>
+			</Modal>
 
 			<UpdateForm
 				onSubmit={async value => {

@@ -6,13 +6,13 @@ import MultiTable from '@/components/Tables'
 import { roleList } from '@/api/modules/system/roleManage'
 import { TableProps } from 'antd/lib/table/InternalTable'
 import UserFormModal from './components/UserFormModal'
-import { SelectFilterData, extendFormList, formList } from './config'
+import { SelectFilterData, extendFormList, formList } from './components/Form_Config'
 import { DeleteOutlined } from '@ant-design/icons'
 import SelectFilter, { selectdProps } from '@/components/SelectFilter'
 import useExportExcle from '@/hooks/useExportExcle'
 import UserButton from '../../../components/GrainButton'
 import './index.less'
-import { columnConfig } from './components/Column_Config'
+import { columnConfig } from './components/Table_Column_Config'
 import TableHeader from './components/TableHeader'
 
 interface UserListResults {
@@ -154,17 +154,15 @@ const UserManage = () => {
 	const fakeData = true
 	return (
 		<>
-			<Card className="mb5">
-				<MultiForm
-					multiForm={multiForm} // form属性，初始化，获取值使用
-					formList={formList}
-					extendFormList={extendFormList}
-					filterSubmit={(filterParams = {}) => {
-						console.log('表单值：', filterParams)
-						setSearchFilter(filterParams)
-					}}
-				/>
-			</Card>
+			<MultiForm
+				multiForm={multiForm} // form属性，初始化，获取值使用
+				formList={formList}
+				extendFormList={extendFormList}
+				filterSubmit={(filterParams = {}) => {
+					console.log('表单值：', filterParams)
+					setSearchFilter(filterParams)
+				}}
+			/>
 			{/* <UserButton />  特效按钮 */}
 			<Card className="w-full" title="用户列表" extra={<TableHeader {...TableHeaderConfig} />}>
 				<MultiTable

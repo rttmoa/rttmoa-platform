@@ -1,0 +1,3 @@
+const CreateNewUser = () => {
+	return null
+}

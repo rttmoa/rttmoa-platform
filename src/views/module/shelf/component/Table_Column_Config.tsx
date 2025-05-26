@@ -35,7 +35,7 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<any>[] => {
 			tooltip: '哪个区域的排列层',
 			// initialValue: 'zhangsan',
 			onFilter: false,
-			// hideInSearch: true,
+			hideInSearch: true,
 			// hideInTable: true,
 			// hideInForm: true,
 			// hideInDescriptions: true,
@@ -87,6 +87,7 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<any>[] => {
 			width: 80,
 			sorter: true,
 			tooltip: '？',
+			disable: true,
 		},
 		{
 			title: '列',

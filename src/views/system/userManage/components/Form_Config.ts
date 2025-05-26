@@ -6,7 +6,7 @@ export const formList: any[] = [
 		field: 'user_name', // FIXME: 必传 唯一索引
 		placeholder: '请输入用户名',
 		initialValue: '',
-		width: 200,
+		width: 120,
 	},
 	{
 		type: 'SELECT',
@@ -14,7 +14,7 @@ export const formList: any[] = [
 		field: 'sex',
 		placeholder: '全部',
 		initialValue: 3,
-		width: 200,
+		width: 120,
 		list: [
 			{ id: 3, name: '全部' },
 			{ id: 0, name: '女' },
@@ -27,7 +27,7 @@ export const formList: any[] = [
 		field: 'phone',
 		placeholder: '请输入手机号',
 		initialValue: '',
-		width: 200,
+		width: 120,
 	},
 ]
 
@@ -39,7 +39,7 @@ export const extendFormList = [
 		field: 'address',
 		placeholder: '请输入联系地址',
 		initialValue: '',
-		width: 200,
+		width: 120,
 	},
 	{
 		type: 'SELECT',
@@ -47,7 +47,7 @@ export const extendFormList = [
 		field: 'isMarried',
 		placeholder: '全部',
 		initialValue: '0',
-		width: 200,
+		width: 120,
 		list: [
 			{ id: '0', name: '全部' },
 			{ id: '1', name: '未婚' },
@@ -56,19 +56,19 @@ export const extendFormList = [
 	},
 	{
 		type: 'TIME', // TIME类型：包含开始时间和结束时间
-		width: 200,
+		width: 120,
 	},
 	{
 		type: 'INPUT',
 		placeholder: '请输入电影名',
-		width: 200,
+		width: 120,
 		label: '电影',
 		field: 'movies',
 	},
 	{
 		type: 'SELECT',
 		placeholder: '请选择电影',
-		width: 200,
+		width: 120,
 		label: '选择种类',
 		field: 'kinds1',
 		name: 'key',

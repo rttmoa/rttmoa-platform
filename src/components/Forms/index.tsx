@@ -48,15 +48,21 @@ function formateDate(time: string | number) {
 
 function renderFormItem(item: any) {
 	const { label, field, type, placeholder, width, list, style } = item
+	console.log(width)
+	let xl = 6
+	let lg = 8
+	let md = 24
+	let sm = 24
+	let xs = 24
 	switch (type) {
 		case 'TIME':
 			return [
-				<Col xs={24} sm={24} md={24} lg={12} xl={8}>
+				<Col xs={xs} sm={sm} md={md} lg={lg} xl={xl}>
 					<Form.Item name={'startTime'} label="开始时间" key={'startTime'}>
 						<DatePicker style={width} showTime={true} placeholder={placeholder} format="YYYY-MM-DD hh:mm:ss" />
 					</Form.Item>
 				</Col>,
-				<Col xs={24} sm={24} md={24} lg={12} xl={8}>
+				<Col xs={xs} sm={sm} md={md} lg={lg} xl={xl}>
 					<Form.Item name={'endTime'} label="结束时间" key={'endTime'}>
 						<DatePicker style={width} showTime={true} placeholder={placeholder} format="YYYY-MM-DD hh:mm:ss" />
 					</Form.Item>
@@ -64,7 +70,7 @@ function renderFormItem(item: any) {
 			]
 		case 'INPUT':
 			return (
-				<Col xs={24} sm={24} md={24} lg={12} xl={8}>
+				<Col xs={xs} sm={sm} md={md} lg={lg} xl={xl}>
 					<Form.Item name={field} label={label} key={field} style={style}>
 						<Input type="text" placeholder={placeholder} style={{ width }} />
 					</Form.Item>
@@ -72,7 +78,7 @@ function renderFormItem(item: any) {
 			)
 		case 'SELECT':
 			return (
-				<Col xs={24} sm={24} md={24} lg={12} xl={8}>
+				<Col xs={xs} sm={sm} md={md} lg={lg} xl={xl}>
 					<Form.Item name={field} label={label} key={field} style={style}>
 						<Select style={{ width }} placeholder={placeholder}>
 							{getOptionList(list)}
@@ -82,7 +88,7 @@ function renderFormItem(item: any) {
 			)
 		case 'CHECKBOX':
 			return (
-				<Col xs={24} sm={24} md={24} lg={12} xl={8}>
+				<Col xs={xs} sm={sm} md={md} lg={lg} xl={xl}>
 					<Form.Item name={field} label={label} key={field}>
 						<Checkbox>{label}</Checkbox>
 					</Form.Item>
@@ -99,7 +105,7 @@ function renderFormItem(item: any) {
  * @returns
  */
 export default function MultiForm(props: any) {
-	const { filterSubmit, multiForm } = props
+	const { className, filterSubmit, multiForm } = props
 	const [expand, setexpand] = useState(false)
 
 	const Submit = useCallback(() => {
@@ -134,37 +140,41 @@ export default function MultiForm(props: any) {
 	}, [])
 	const formList = initFormList()
 	const layout = {
-		labelCol: { span: 7 },
+		labelCol: { span: 14 },
 		wrapperCol: { span: 16 },
 	}
 	return (
 		<div>
-			<Form {...layout} layout="horizontal" form={multiForm}>
-				<div className="flex flex-row justify-between">
-					<Row style={{ width: 'calc(100% - 300px)' }}>{formList.map((value: any, index: number) => value)}</Row>
-					<div className="w-[300px] h-[40px] flex flex-row justify-center items-center">
-						<Button type="default" onClick={Submit}>
-							查询
-						</Button>
-						<Button className="mx-3" type="dashed" onClick={reset}>
-							重置
-						</Button>
-						{props.extendFormList?.length > 0 && (
-							<button className="block" type="button" onClick={toggleExpand}>
-								{expand ? (
-									<span>
-										收起&nbsp;
-										<UpOutlined />
-									</span>
-								) : (
-									<span>
-										展开&nbsp;
-										<DownOutlined />
-									</span>
-								)}
-							</button>
-						)}
-					</div>
+			<Form className="bg-white rounded-lg mb-[10px]" {...layout} layout="horizontal" form={multiForm}>
+				<div className="flex justify-around">
+					<Row style={{ width: 'calc(100% - 300px)' }} align="bottom" justify="start" wrap={true}>
+						{formList.map((value: any, index: number) => value)}
+					</Row>
+					<Col xs={24} sm={24} md={24} lg={12} xl={10} span={12} className="flex justify-end  mr-4">
+						<div className="w-[300px] h-[40px] flex justify-end items-center">
+							<Button type="default" onClick={Submit}>
+								查询
+							</Button>
+							<Button className="mx-3" type="dashed" onClick={reset}>
+								重置
+							</Button>
+							{props.extendFormList?.length > 0 && (
+								<button className="block" type="button" onClick={toggleExpand}>
+									{expand ? (
+										<span>
+											收起&nbsp;
+											<UpOutlined />
+										</span>
+									) : (
+										<span>
+											展开&nbsp;
+											<DownOutlined />
+										</span>
+									)}
+								</button>
+							)}
+						</div>
+					</Col>
 				</div>
 			</Form>
 		</div>
