@@ -23,6 +23,7 @@ export type FormValueType = {
 } & Partial<UserList>
 
 import handle from './component/Handler'
+import AdvancedSearchForm from '../../../components/AdvancedSearchForm/AdvancedSearchForm'
 
 // TODO: refer： https://github.com/ant-design/ant-design-pro
 // ProTable：https://procomponents.ant.design/components/table
@@ -105,6 +106,25 @@ const useProTable = () => {
 		setShowDetail,
 	}
 
+	const handleUserAdd = async () => {
+		const hide = message.loading('正在添加')
+		try {
+			const formValues = form.getFieldsValue()
+			console.log('formValues', formValues)
+			const result = await addRule({ ...formValues })
+			if (result) {
+				hide()
+				form.resetFields()
+				handleModalOpen(false)
+				if (actionRef.current) actionRef.current.reload()
+				message.success('Added successfully')
+			}
+		} catch (error) {
+			hide()
+			message.error('Adding failed, please try again!')
+		}
+	}
+
 	// & 表格封装成通用
 	// 表格数量量多会如何？ 500 - 5000 - 50000
 	return (
@@ -131,7 +151,7 @@ const useProTable = () => {
 				onReset={() => {}} // 重置表单时触发
 				pagination={{
 					...paginationConfig,
-					pageSizeOptions: [10, 20, 50, 100, 500, 1000, 5000],
+					pageSizeOptions: [10, 20, 50],
 					onChange: (page, pageSize) => {
 						console.log('page, pageSize', page, pageSize)
 						// SetLoading(true)
@@ -152,6 +172,7 @@ const useProTable = () => {
 					console.log('请求数据：', data)
 					return formatDataForProTable<UserList>(data)
 				}}
+				postData={(data: any[]) => data.map((value, index) => ({ ...value, key: index + 1 }))}
 				rowSelection={{
 					onChange: (_, selectedRows) => {
 						setSelectedRows(selectedRows)
@@ -197,32 +218,22 @@ const useProTable = () => {
 					<Button type="primary">批量批准</Button>
 				</FooterToolbar>
 			)}
-
+			{/* 需要封装一下 Modal 中的 Form 组件------------------------ */}
 			<Modal
 				title="新建用户"
 				width="1000px"
+				loading={false}
 				open={createModalOpen}
-				// onOpenChange={handleModalOpen}
-				// onFinish={async value => {
-				// 	const success = await handleAdd(value as UserList)
-				// 	if (success) {
-				// 		handleModalOpen(false)
-				// 		if (actionRef.current) {
-				// 			actionRef.current.reload()
-				// 		}
-				// 	}
-				// }}
-				// okText="提交"
 				onCancel={() => {
 					handleModalOpen(false)
 				}}
-				// onOk={() => {
-				// 	console.log('成功')
-				// 	console.log('表单值：', form.getFieldsValue())
-				// 	form.resetFields()
-				// }}
 				footer={[
-					<Button danger loading={loading} onClick={() => {}}>
+					<Button
+						danger
+						loading={loading}
+						onClick={() => {
+							handleModalOpen(false)
+						}}>
 						取消
 					</Button>,
 					<Button
@@ -232,7 +243,13 @@ const useProTable = () => {
 						}}>
 						重置表单
 					</Button>,
-					<Button key="link" href="https://google.com" target="_blank" type="primary" loading={loading} onClick={() => {}}>
+					<Button
+						key="link"
+						type="primary"
+						loading={loading}
+						onClick={() => {
+							handleUserAdd()
+						}}>
 						提交
 					</Button>,
 				]}>
@@ -244,17 +261,17 @@ const useProTable = () => {
 							</Form.Item>
 						</Col>
 						<Col span={12}>
-							<Form.Item label="年龄" name="age" rules={[{ required: true, message: '请输入年龄' }]}>
+							<Form.Item label="年龄" name="age" rules={[{ required: false, message: '请输入年龄' }]}>
 								<Input placeholder="请输入年龄" />
 							</Form.Item>
 						</Col>
 						<Col span={12}>
-							<Form.Item label="姓名" name="name" rules={[{ required: true, message: '请输入姓名' }]}>
+							<Form.Item label="出生日期" name="date" rules={[{ required: false, message: '请输入姓名' }]}>
 								<Input placeholder="请输入姓名" />
 							</Form.Item>
 						</Col>
 						<Col span={12}>
-							<Form.Item label="法定年龄" name="age" rules={[{ required: true, message: '请输入年龄' }]}>
+							<Form.Item label="考试成绩" name="score" rules={[{ required: false, message: '请输入年龄' }]}>
 								<Input placeholder="请输入年龄" />
 							</Form.Item>
 						</Col>
@@ -273,7 +290,6 @@ const useProTable = () => {
 					</Row> */}
 				</Form>
 			</Modal>
-
 			<UpdateForm
 				onSubmit={async value => {
 					message.info('成功，，，')

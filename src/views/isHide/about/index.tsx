@@ -1,12 +1,10 @@
 import React from 'react'
-import { Card, Descriptions, Tag, Typography } from 'antd'
+import { Alert, Card, Descriptions, Tag, Typography } from 'antd'
 import TestUtil from './test-util'
 import Link from 'antd/lib/typography/Link'
 import TestForm from './test-form'
 
 const About: React.FC = () => {
-	// return null
-
 	const { pkg, lastBuildTime } = __APP_INFO__
 	const { dependencies, devDependencies, version } = pkg
 
@@ -15,12 +13,18 @@ const About: React.FC = () => {
 			<TestUtil />
 			{/* <TestForm /> */}
 			<Card className="mb10">
-				<span className="text-base text-gray-500">
-					<a href="https://github.com/rttmoa/rttmoa-platform" target="_blank">
-						rttmoa-platform：
-					</a>
-					技术基于 react18、react-router6、react-hook、redux-toolkit、typeScript、vite4、antd5
-				</span>
+				<Alert
+					message={
+						<span className="text-base text-gray-500">
+							<a href="https://github.com/rttmoa/rttmoa-platform" target="_blank">
+								rttmoa-platform：
+							</a>
+							技术基于 react@18、react-router@6、react-hook、react-redux@8、redux-toolkit、typeScript@5、vite@4、antd@5、tailwindcss@3
+						</span>
+					}
+					type="success"
+					showIcon
+				/>
 			</Card>
 
 			<Card className="mb10">
@@ -34,30 +38,25 @@ const About: React.FC = () => {
 					<Descriptions.Item label="发布时间">
 						<Tag color="processing">{lastBuildTime}</Tag>
 					</Descriptions.Item>
-					{/* <Descriptions.Item label="Gitee">
-            <Link href="" target="_blank">
-              Gitee
-            </Link>
-          </Descriptions.Item>
-          <Descriptions.Item label="Github">
-            <Link href="" target="_blank">
-              Github
-            </Link>
-          </Descriptions.Item>
-          <Descriptions.Item label="Issues">
-            <Link href="" target="_blank">
-              Issues
-            </Link>
-          </Descriptions.Item>
-          <Descriptions.Item label="预览地址">
-            <Link href="" target="_blank">
-              预览地址
-            </Link>
-          </Descriptions.Item> */}
+					<Descriptions.Item label="Github">
+						<Link href="https://github.com/rttmoa/rttmoa-platform" target="_blank">
+							Github 地址
+						</Link>
+					</Descriptions.Item>
+					<Descriptions.Item label="Issues">
+						<Link href="https://github.com/rttmoa/rttmoa-platform/issues" target="_blank">
+							Issues
+						</Link>
+					</Descriptions.Item>
+					<Descriptions.Item label="预览地址">
+						<Link href="https://rttmoa.github.io/rttmoa-platform" target="_blank">
+							线上预览地址
+						</Link>
+					</Descriptions.Item>
 				</Descriptions>
 			</Card>
 
-			<Card className="mb10">
+			<Card className="mb10 ">
 				<Typography.Title level={4} className="mb15">
 					生产环境依赖
 				</Typography.Title>
@@ -74,7 +73,7 @@ const About: React.FC = () => {
 				</Descriptions>
 			</Card>
 
-			<Card>
+			<Card className="">
 				<Typography.Title level={4} className="mb15">
 					开发环境依赖
 				</Typography.Title>

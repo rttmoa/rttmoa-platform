@@ -14,6 +14,8 @@ import UserButton from '../../../components/GrainButton'
 import './index.less'
 import { columnConfig } from './components/Table_Column_Config'
 import TableHeader from './components/TableHeader'
+import AdvancedForm from '@/views/form/advancedForm'
+import AdvancedSearchForm from '@/components/AdvancedSearchForm/AdvancedSearchForm'
 
 interface UserListResults {
 	code?: number
@@ -154,6 +156,7 @@ const UserManage = () => {
 	const fakeData = true
 	return (
 		<>
+			<AdvancedSearchForm />
 			<MultiForm
 				multiForm={multiForm} // form属性，初始化，获取值使用
 				formList={formList}

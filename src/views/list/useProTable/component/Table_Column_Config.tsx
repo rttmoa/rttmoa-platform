@@ -27,7 +27,7 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] 
 	let { setCurrentRow, setShowDetail } = Params
 	return [
 		{
-			title: <span className="text-[14px]">iD</span>,
+			title: <span className="text-[14px]">key</span>,
 			dataIndex: 'key',
 			rowScope: 'row',
 			fixed: 'left',

@@ -99,11 +99,7 @@ function renderFormItem(item: any) {
 	}
 }
 
-/**
- * 封装 Form 表格查询条件条件
- * @param props
- * @returns
- */
+// ! 文件即将废弃
 export default function MultiForm(props: any) {
 	const { className, filterSubmit, multiForm } = props
 	const [expand, setexpand] = useState(false)
@@ -159,7 +155,7 @@ export default function MultiForm(props: any) {
 								重置
 							</Button>
 							{props.extendFormList?.length > 0 && (
-								<button className="block" type="button" onClick={toggleExpand}>
+								<Button className="block" type="link" onClick={toggleExpand}>
 									{expand ? (
 										<span>
 											收起&nbsp;
@@ -171,7 +167,7 @@ export default function MultiForm(props: any) {
 											<DownOutlined />
 										</span>
 									)}
-								</button>
+								</Button>
 							)}
 						</div>
 					</Col>
