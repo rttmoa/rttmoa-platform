@@ -1,5 +1,12 @@
 export const menu = [
 	{
+		path: '/',
+		element: '/',
+		meta: {
+			title: '最顶级菜单',
+		},
+	},
+	{
 		path: '/home/index',
 		element: '/home/index',
 		meta: {

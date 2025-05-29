@@ -104,7 +104,7 @@ const LayoutTabs: React.FC = () => {
 
 	// ! Tabs['items']  配置选项卡内容  (转换为Antd-Tabs所需要的格式)
 	const items = tabsList.map(item => {
-		// console.log(item);
+		// console.log('tabs Item: ', item)
 		return {
 			key: item.path,
 			label: (

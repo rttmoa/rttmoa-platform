@@ -13,6 +13,7 @@ import ToolBarRender from './component/Tool_Bar_Render'
 import { GetProTableUser } from '@/api/modules/upack/common'
 import './index.less'
 import { DeleteOutlined } from '@ant-design/icons'
+import handle from './component/Handler'
 
 export type FormValueType = {
 	target?: string
@@ -21,9 +22,6 @@ export type FormValueType = {
 	time?: string
 	frequency?: string
 } & Partial<UserList>
-
-import handle from './component/Handler'
-import AdvancedSearchForm from '../../../components/AdvancedSearchForm/AdvancedSearchForm'
 
 // TODO: refer： https://github.com/ant-design/ant-design-pro
 // ProTable：https://procomponents.ant.design/components/table

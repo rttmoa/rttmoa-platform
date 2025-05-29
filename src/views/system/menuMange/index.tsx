@@ -1,10 +1,10 @@
-import { Button, Card } from 'antd'
+import { Button, Card, Col, Form, Input, Modal, Row } from 'antd'
 import React, { useState } from 'react'
-import { Space, Switch, Table } from 'antd'
+import { Space, Table } from 'antd'
 import type { TableColumnsType, TableProps } from 'antd'
-import * as antIcon from '@ant-design/icons'
-import { menu } from './menuConfig'
+import { menu } from './component/menuConfig'
 import { Icon } from '@/components/Icon'
+import CreateMenuModal from './component/CreateMenuModal'
 
 type TableRowSelection<T> = TableProps<T>['rowSelection']
 
@@ -19,7 +19,7 @@ interface DataType {
 
 const columns: TableColumnsType<DataType> = [
 	{
-		title: '菜单名称',
+		title: '菜单标题',
 		dataIndex: 'title',
 		key: 'title',
 	},
@@ -31,13 +31,13 @@ const columns: TableColumnsType<DataType> = [
 		render: (text, record) => <Icon name={record.icon} />,
 	},
 	{
-		title: '菜单 name',
+		title: '菜单标识',
 		dataIndex: 'key',
 		align: 'center',
 		key: 'key',
 	},
 	{
-		title: '菜单路径',
+		title: '路由路径',
 		dataIndex: 'path',
 		align: 'center',
 		key: 'path',
@@ -47,9 +47,39 @@ const columns: TableColumnsType<DataType> = [
 		dataIndex: 'element',
 		key: 'element',
 		align: 'center',
-		render: (text: string, record: any) => {
-			return record.element ? record.element : '--'
-		},
+		render: (text: string, record: any) => record.element || '-',
+	},
+	{
+		title: '重定向路径',
+		dataIndex: 'redirect',
+		key: 'redirect',
+		align: 'center',
+		render: (text: string, record: any) => record.redirect || '-',
+	},
+	{
+		title: '外链 url',
+		dataIndex: 'redirect',
+		key: 'redirect',
+		align: 'center',
+		render: (text: string, record: any) => record.redirect || '-',
+	},
+	{
+		title: '是否隐藏菜单项',
+		dataIndex: 'is_hide',
+		key: 'is_hide',
+		align: 'center',
+	},
+	{
+		title: '是否全屏显示页面',
+		dataIndex: 'is_full',
+		key: 'is_full',
+		align: 'center',
+	},
+	{
+		title: '是否固定标签页',
+		dataIndex: 'is_affix',
+		key: 'is_affix',
+		align: 'center',
 	},
 	{
 		title: '操作',
@@ -58,7 +88,7 @@ const columns: TableColumnsType<DataType> = [
 			return (
 				<Space size="middle">
 					<Button type="text" onClick={() => handleEdit(record)}>
-						编辑
+						修改
 					</Button>
 					<Button type="text" onClick={() => handleDelete(record)}>
 						删除
@@ -69,7 +99,9 @@ const columns: TableColumnsType<DataType> = [
 	},
 ]
 
-const handleEdit = (record: any) => {}
+const handleEdit = (record: any) => {
+	console.log('修改：', record)
+}
 const handleDelete = (record: any) => {}
 
 const rowSelection: TableRowSelection<DataType> = {
@@ -85,7 +117,10 @@ const rowSelection: TableRowSelection<DataType> = {
 }
 
 const MenuMange: React.FC = () => {
-	const [checkStrictly, setCheckStrictly] = useState(false)
+	const [checkStrictly, setCheckStrictly] = useState<boolean>(false)
+	const [createModalOpen, SetCreateModalOpen] = useState<boolean>(false)
+
+	const [form] = Form.useForm()
 
 	function getShowMenuList(menuList: any) {
 		let newMenuList: any = JSON.parse(JSON.stringify(menuList))
@@ -93,26 +128,33 @@ const MenuMange: React.FC = () => {
 			return { ...item, ...item.meta, children: item.children ? getShowMenuList(item.children) : null }
 		})
 	}
-	const menuList = getShowMenuList(menu)
-	// console.log(',m', menuList)
-
+	let NewMenuModalConfig = {
+		form,
+		createModalOpen,
+		SetCreateModalOpen,
+	}
 	return (
 		<>
 			<Card>
-				<div className="h-12">
-					<Button>新增菜单</Button>
-				</div>
+				<Button
+					className="mb-3"
+					onClick={() => {
+						SetCreateModalOpen(true)
+					}}>
+					新增菜单
+				</Button>
 				<Table
 					size="middle"
 					bordered
 					columns={columns}
 					// rowSelection={{ ...rowSelection, checkStrictly }}
-					dataSource={menuList}
+					dataSource={getShowMenuList(menu)}
 					expandable={{
 						indentSize: 40,
 					}}
 				/>
 			</Card>
+			<CreateMenuModal {...NewMenuModalConfig} />
 		</>
 	)
 }

@@ -13,3 +13,6 @@ export const DelMoreProTableUser = (ids: { [key: string]: any }) => http.post('/
 
 // 获取仓库货架表 （nb_shelf__c）
 export const GetAllShelf = (params: { [key: string]: any }) => http.get(`/shelf/Warehouse_All_Shelf`, params)
+
+// 系统管理 — 菜单管理 — 新增菜单
+export const InsNewMenu = (params: { [key: string]: any }) => http.post(`/menu/ins_Menu`, params)
