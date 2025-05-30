@@ -1,57 +1,90 @@
 import { Alert, Button, Card, Cascader, Col, Form, Input, InputNumber, Modal, Radio, Row } from 'antd'
 import { menu } from './menuConfig'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './index.less'
 import { InsNewMenu } from '@/api/modules/upack/common'
 import { message } from '@/hooks/useMessage'
 
 const CreateMenuModal = (Props: any) => {
-	const { form, createModalOpen, SetCreateModalOpen } = Props
-
+	const { form, menuList, modalTitle, setModalTitle, modalType, setModalType, modalIsVisible, setModalIsVisible, modalMenuInfo, setModalMenuInfo } = Props
+	let type = modalType
+	console.log('type', type)
+	console.log('modalMenuInfo', modalMenuInfo)
+	// console.log('menuList', menuList)
 	const [menuType, SetmenuType] = useState('目录')
 
 	// * 处理菜单结构： 递归
-	const handleMenu = (menuConfig: any) => {
+	const handleMenu = (menuConfig: any, type: string) => {
 		return menuConfig?.map((item: any) => {
 			const option: any = {
 				value: item.path || item.meta?.key,
 				label: item.meta?.title,
 			}
+			// console.log('item', type, item)
 			if (item.children && item.children.length) {
-				option.children = handleMenu(item.children)
+				option.children = handleMenu(item.children, 'children')
+				// handleMenu(item.children, 'children')
 			}
 			return option
 		})
 	}
+	// ! 这里提交要注意是 新增还是修改
 	const commitCreateMenu = async () => {
 		// 1、获取字段数据
 		// 2、将字段传入到接口中
 		// 3、获取返回值并展示
 		// 4、清空表单值
 		// 5、关闭弹窗
-		const formlist = form.getFieldsValue()
-		console.log('获取字段：', formlist)
-		const result: any = await InsNewMenu(formlist)
-		console.log('获取结果：', result)
-		message.success(result.data.message)
-		form.resetFields()
-		SetCreateModalOpen(false)
+		if (modalType == 'create') {
+			// const formlist = form.getFieldsValue()
+			// console.log('获取字段：', formlist)
+			// const result: any = await InsNewMenu(formlist)
+			// console.log('获取结果：', result)
+			// message.success(result.data.message)
+			// form.resetFields()
+			// setModalIsVisible(false)
+		} else {
+			console.log('edit')
+		}
 	}
+	useEffect(() => {
+		if (type === 'edit' && modalMenuInfo) {
+			form.setFieldsValue({
+				// 	top: type == 'create' ? '/' : modalMenuInfo.top,
+				path: modalMenuInfo.path,
+				element: modalMenuInfo.element,
+				redirect: modalMenuInfo.redirect,
+				isLink: modalMenuInfo?.meta?.isLink,
+				isHide: modalMenuInfo?.meta?.isHide == 1 ? '是' : '否',
+				isFull: modalMenuInfo?.meta?.isFull == 1 ? '是' : '否',
+				isAffix: modalMenuInfo?.meta?.isAffix == 1 ? '是' : '否',
+				type: modalMenuInfo.meta?.type,
+				key: modalMenuInfo.meta?.key,
+				title: modalMenuInfo.meta?.title,
+				icon: modalMenuInfo.meta?.icon,
+				sort: modalMenuInfo.meta?.sort,
+			})
+		} else {
+			form.resetFields()
+		}
+	}, [modalMenuInfo, type])
+
 	return (
 		<Modal
-			title="新建菜单"
+			title={modalTitle}
 			width="1000px"
 			loading={false}
-			open={createModalOpen}
+			open={modalIsVisible}
+			// open={true}
 			onCancel={() => {
-				SetCreateModalOpen(false)
+				setModalIsVisible(false)
 			}}
 			footer={[
 				<Button
 					danger
 					loading={false}
 					onClick={() => {
-						SetCreateModalOpen(false)
+						setModalIsVisible(false)
 					}}>
 					取消
 				</Button>,
@@ -74,13 +107,33 @@ const CreateMenuModal = (Props: any) => {
 					提交
 				</Button>,
 			]}>
-			<Form layout="horizontal" form={form} labelCol={{ span: 6 }} wrapperCol={{ span: 16 }} initialValues={{ top: '/', type: '目录', path: '', element: '', redirect: '', key: '', title: '', icon: '', is_link: '', is_hide: '否', is_full: '否', is_affix: '否', sort: 1 }}>
+			<Form
+				layout="horizontal"
+				form={form}
+				labelCol={{ span: 6 }}
+				wrapperCol={{ span: 16 }}
+				// initialValues={{
+				// 	top: type == 'create' ? '/' : modalMenuInfo.top,
+				// 	type: type == 'create' ? '目录' : modalMenuInfo?.meta?.type,
+				// 	path: type == 'create' ? '' : modalMenuInfo.path,
+				// 	element: type == 'create' ? '' : modalMenuInfo.element,
+				// 	redirect: type == 'create' ? '' : modalMenuInfo.redirect,
+				// 	key: type == 'create' ? '' : modalMenuInfo?.meta?.key,
+				// 	title: type == 'create' ? '' : modalMenuInfo?.meta?.title,
+				// 	icon: type == 'create' ? '' : modalMenuInfo?.meta?.icon,
+				// 	is_link: type == 'create' ? '' : modalMenuInfo?.meta?.isLink,
+				// 	is_hide: type == 'create' ? '否' : modalMenuInfo?.meta?.isHide == '是' ? 1 : 0,
+				// 	is_full: type == 'create' ? '否' : modalMenuInfo?.meta?.isFull == '是' ? 1 : 0,
+				// 	is_affix: type == 'create' ? '否' : modalMenuInfo?.meta?.isAffix == '是' ? 1 : 0,
+				// 	sort: type == 'create' ? 1 : modalMenuInfo?.meta?.sort,
+				// }}
+			>
 				<Row gutter={16}>
 					<Col span={24} pull={3}>
 						<Form.Item label="菜单上级" name="top">
 							<Cascader
 								popupClassName="Customize_Cascader"
-								options={handleMenu(menu)}
+								options={handleMenu(menuList, '一级')}
 								allowClear
 								showSearch
 								changeOnSelect
@@ -130,7 +183,7 @@ const CreateMenuModal = (Props: any) => {
 								className="w-[400px]">
 								<Input onChange={() => {}} placeholder="Input a number" maxLength={16} />
 							</Tooltip> */}
-							<Input placeholder="到antd中选择图标、格式： MenuUnfoldOutlined" maxLength={16} />
+							<Input placeholder="到antd中选择图标、格式： MenuUnfoldOutlined" maxLength={30} />
 						</Form.Item>
 					</Col>
 					<Col span={12}>

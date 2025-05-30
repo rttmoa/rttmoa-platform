@@ -16,3 +16,6 @@ export const GetAllShelf = (params: { [key: string]: any }) => http.get(`/shelf/
 
 // 系统管理 — 菜单管理 — 新增菜单
 export const InsNewMenu = (params: { [key: string]: any }) => http.post(`/menu/ins_Menu`, params)
+
+// 系统管理 — 菜单管理 — 获取菜单
+export const FindAllMenu = (params: { [key: string]: any }) => http.get(`/menu/find_all_menu`, params)
