@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.32](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.31...v2.3.32) (2025-06-02)
+
+
+### Features
+
+* 🚀 aa ([07eb25b](https://github.com/rttmoa/rttmoa-platform/commit/07eb25beb12a0c11596044cb34a83c10875424aa))
+* 🚀 aa ([5992766](https://github.com/rttmoa/rttmoa-platform/commit/5992766deadbd8d908fe9407dfbe347530ec2eab))
+* 🚀 menuMange ([d6cdb0c](https://github.com/rttmoa/rttmoa-platform/commit/d6cdb0c79bcf8bd0c23a9c7fdde1cac1be7edd00))
+
 ### [2.3.31](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.30...v2.3.31) (2025-05-27)
 
 
