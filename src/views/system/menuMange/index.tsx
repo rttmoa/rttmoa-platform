@@ -5,7 +5,8 @@ import type { TableColumnsType, TableProps } from 'antd'
 import { menu } from './component/menuConfig'
 import { Icon } from '@/components/Icon'
 import CreateMenuModal from './component/CreateMenuModal'
-import { FindAllMenu } from '@/api/modules/upack/common'
+import { DelMenu, FindAllMenu } from '@/api/modules/upack/common'
+import { message } from '@/hooks/useMessage'
 
 type TableRowSelection<T> = TableProps<T>['rowSelection']
 
@@ -42,7 +43,7 @@ const MenuMange: React.FC = () => {
 
 	const getMenu = async () => {
 		const res: any = await FindAllMenu({})
-		console.log('获取菜单：', res)
+		// console.log('获取菜单：', res)
 		setMenuList(res?.data.list)
 	}
 
@@ -55,6 +56,7 @@ const MenuMange: React.FC = () => {
 			title: '菜单标题',
 			dataIndex: 'title',
 			key: 'title',
+			width: 200,
 		},
 		{
 			title: '菜单图标',
@@ -62,6 +64,12 @@ const MenuMange: React.FC = () => {
 			align: 'center',
 			key: 'icon',
 			render: (text, record) => <Icon name={record.icon} />,
+		},
+		{
+			title: '菜单类型',
+			dataIndex: 'type',
+			align: 'center',
+			key: 'type',
 		},
 		{
 			title: '菜单标识',
@@ -74,12 +82,14 @@ const MenuMange: React.FC = () => {
 			dataIndex: 'path',
 			align: 'center',
 			key: 'path',
+			width: 180,
 		},
 		{
 			title: '组件路径',
 			dataIndex: 'element',
 			key: 'element',
 			align: 'center',
+			width: 180,
 			render: (text: string, record: any) => record.element || '-',
 		},
 		{
@@ -87,6 +97,7 @@ const MenuMange: React.FC = () => {
 			dataIndex: 'redirect',
 			key: 'redirect',
 			align: 'center',
+			width: 180,
 			render: (text: string, record: any) => record.redirect || '-',
 		},
 		{
@@ -94,6 +105,7 @@ const MenuMange: React.FC = () => {
 			dataIndex: 'isLink',
 			key: 'isLink',
 			align: 'center',
+			width: 180,
 			render: (text: string, record: any) => record.redirect || '-',
 		},
 		{
@@ -101,13 +113,15 @@ const MenuMange: React.FC = () => {
 			dataIndex: 'isHide',
 			key: 'isHide',
 			align: 'center',
+			width: 120,
 			render: (text: string, record: any) => record.is_hide || '否',
 		},
 		{
-			title: '是否全屏显示页面',
+			title: '是否全屏显示',
 			dataIndex: 'isFull',
 			key: 'isFull',
 			align: 'center',
+			width: 120,
 			render: (text: string, record: any) => record.is_full || '否',
 		},
 		{
@@ -115,19 +129,28 @@ const MenuMange: React.FC = () => {
 			dataIndex: 'isAffix',
 			key: 'isAffix',
 			align: 'center',
+			width: 120,
 			render: (text: string, record: any) => record.is_affix || '否',
+		},
+		{
+			title: '排序值',
+			dataIndex: 'sort',
+			align: 'center',
+			key: 'sort',
 		},
 		{
 			title: '操作',
 			align: 'center',
+			fixed: 'right',
+			width: 120,
 			render: (text: string, record: any) => {
 				return (
-					<Space size="middle">
-						<Button type="text" onClick={() => handleEdit(record)}>
-							修改菜单
+					<Space size="small">
+						<Button type="dashed" size="small" onClick={() => handleEdit(record)}>
+							修改
 						</Button>
-						<Button type="text" onClick={() => handleDelete(record)}>
-							删除菜单
+						<Button type="dashed" size="small" onClick={() => handleDelete(record)}>
+							删除
 						</Button>
 					</Space>
 				)
@@ -135,15 +158,20 @@ const MenuMange: React.FC = () => {
 		},
 	]
 
-	// * 编辑菜单
+	// * 编辑菜单  【点击编辑时、要获取几级菜单的属性】
 	const handleEdit = (menuItem: any) => {
-		console.log('修改：', menuItem)
+		// console.log('修改：', menuItem)
 		setModalMenuInfo(menuItem)
 		setModalTitle('修改菜单')
 		setModalType('edit')
 		setModalIsVisible(true)
 	}
-	const handleDelete = (record: any) => {}
+	const handleDelete = async (record: any) => {
+		// console.log('删除菜单：', record) // 判断下面是否有children
+		const result: any = await DelMenu(record)
+		console.log('删除菜单结果：', result)
+		message.success(result?.data.message || '删除成功')
+	}
 
 	function getShowMenuList(menuList: any) {
 		let newMenuList: any = JSON.parse(JSON.stringify(menuList))
@@ -168,6 +196,7 @@ const MenuMange: React.FC = () => {
 			<Card>
 				<Button
 					className="mb-3"
+					size="small"
 					onClick={() => {
 						setModalTitle('新建菜单')
 						setModalType('create')
@@ -176,7 +205,7 @@ const MenuMange: React.FC = () => {
 					新增菜单
 				</Button>
 				<Table
-					size="middle"
+					size="small"
 					bordered
 					columns={columns}
 					// rowSelection={{ ...rowSelection, checkStrictly }}
@@ -184,6 +213,7 @@ const MenuMange: React.FC = () => {
 					expandable={{
 						indentSize: 40,
 					}}
+					scroll={{ x: 1800 }}
 				/>
 			</Card>
 			<CreateMenuModal {...NewMenuModalConfig} />

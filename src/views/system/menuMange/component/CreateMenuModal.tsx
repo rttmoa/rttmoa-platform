@@ -2,18 +2,17 @@ import { Alert, Button, Card, Cascader, Col, Form, Input, InputNumber, Modal, Ra
 import { menu } from './menuConfig'
 import { useEffect, useState } from 'react'
 import './index.less'
-import { InsNewMenu } from '@/api/modules/upack/common'
 import { message } from '@/hooks/useMessage'
 
 const CreateMenuModal = (Props: any) => {
 	const { form, menuList, modalTitle, setModalTitle, modalType, setModalType, modalIsVisible, setModalIsVisible, modalMenuInfo, setModalMenuInfo } = Props
-	let type = modalType
-	console.log('type', type)
-	console.log('modalMenuInfo', modalMenuInfo)
-	// console.log('menuList', menuList)
+
 	const [menuType, SetmenuType] = useState('目录')
 
-	// * 处理菜单结构： 递归
+	let type = modalType
+	const initMenuList = [{ meta: { key: '/', title: '最顶级菜单' } }, ...menuList]
+
+	// * 处理菜单结构：递归
 	const handleMenu = (menuConfig: any, type: string) => {
 		return menuConfig?.map((item: any) => {
 			const option: any = {
@@ -35,22 +34,45 @@ const CreateMenuModal = (Props: any) => {
 		// 3、获取返回值并展示
 		// 4、清空表单值
 		// 5、关闭弹窗
+		const formlist = form.getFieldsValue()
+		console.log('获取字段：', formlist)
 		if (modalType == 'create') {
-			// const formlist = form.getFieldsValue()
-			// console.log('获取字段：', formlist)
+			message.info('新增')
 			// const result: any = await InsNewMenu(formlist)
 			// console.log('获取结果：', result)
 			// message.success(result.data.message)
-			// form.resetFields()
-			// setModalIsVisible(false)
 		} else {
 			console.log('edit')
+			message.info('编辑')
 		}
+		form.resetFields()
+		setModalTitle('新建菜单')
+		setModalIsVisible(false)
+		setModalMenuInfo({})
 	}
+	function findAncestors(tree: any[], targetPath: string, pathStack: any[] = []): any[] | null {
+		for (const node of tree) {
+			const newPathStack = [...pathStack, node]
+			if (node.path === targetPath) {
+				return newPathStack // 找到了，返回路径堆栈
+			}
+			if (node.children) {
+				const result = findAncestors(node.children, targetPath, newPathStack)
+				if (result) return result
+			}
+		}
+		return null
+	}
+	const result = findAncestors(initMenuList, modalMenuInfo.path)
+	let initTop = result?.map(value => value.path) || []
+
 	useEffect(() => {
 		if (type === 'edit' && modalMenuInfo) {
 			form.setFieldsValue({
-				// 	top: type == 'create' ? '/' : modalMenuInfo.top,
+				// ['/dataScreen/index']
+				// ['/assembly', '/assembly/recharts']
+				// ['/menu', '/menu/menu2', '/menu/menu2/menu23']
+				top: initTop || [],
 				path: modalMenuInfo.path,
 				element: modalMenuInfo.element,
 				redirect: modalMenuInfo.redirect,
@@ -133,7 +155,7 @@ const CreateMenuModal = (Props: any) => {
 						<Form.Item label="菜单上级" name="top">
 							<Cascader
 								popupClassName="Customize_Cascader"
-								options={handleMenu(menuList, '一级')}
+								options={handleMenu(initMenuList, '一级')}
 								allowClear
 								showSearch
 								changeOnSelect
@@ -183,17 +205,17 @@ const CreateMenuModal = (Props: any) => {
 								className="w-[400px]">
 								<Input onChange={() => {}} placeholder="Input a number" maxLength={16} />
 							</Tooltip> */}
-							<Input placeholder="到antd中选择图标、格式： MenuUnfoldOutlined" maxLength={30} />
+							<Input variant="filled" placeholder="到antd中选择图标、格式： MenuUnfoldOutlined" maxLength={30} />
 						</Form.Item>
 					</Col>
 					<Col span={12}>
 						<Form.Item label="菜单路由路径" name="path" tooltip={{ title: '路由路径必须填写' }}>
-							<Input placeholder="path: /home/index" />
+							<Input variant="filled" placeholder="path: /home/index" />
 						</Form.Item>
 					</Col>
 					<Col span={12}>
 						<Form.Item label="菜单组件路径" name="element" tooltip={{ title: '一级菜单无children时填写' }}>
-							<Input placeholder="element: /home/index" />
+							<Input variant="filled" placeholder="element: /home/index" />
 						</Form.Item>
 					</Col>
 					{/* {menuType == '目录' && (
@@ -207,24 +229,23 @@ const CreateMenuModal = (Props: any) => {
 					{menuType == '目录' && (
 						<Col span={12}>
 							<Form.Item label="重定向路径" name="redirect" tooltip={{ title: '一级菜单有children填写' }}>
-								<Input placeholder="redirect: /author/page" />
+								<Input variant="filled" placeholder="redirect: /author/page" />
 							</Form.Item>
 						</Col>
 					)}
-
 					<Col span={12}>
 						<Form.Item label="菜单唯一标识" name="key">
-							<Input placeholder="home" />
+							<Input variant="filled" placeholder="home" />
 						</Form.Item>
 					</Col>
 					<Col span={12}>
 						<Form.Item label="菜单标题" name="title">
-							<Input placeholder="首页" />
+							<Input variant="filled" placeholder="首页" />
 						</Form.Item>
 					</Col>
 					<Col span={12}>
 						<Form.Item label="外链URL" name="is_link">
-							<Input placeholder="外链链接地址 eg：www.baidu.com" />
+							<Input variant="filled" placeholder="外链链接地址 eg：www.baidu.com" />
 						</Form.Item>
 					</Col>
 					<Col span={12}>
@@ -246,7 +267,7 @@ const CreateMenuModal = (Props: any) => {
 
 					<Col span={12}>
 						<Form.Item label="显示排序" name="sort" tooltip={{ title: '最小值：1、最大值：999、数值小排在前面' }}>
-							<InputNumber controls min={1} max={999} defaultValue={1} />
+							<InputNumber variant="filled" controls min={1} max={999} defaultValue={1} />
 						</Form.Item>
 					</Col>
 				</Row>
