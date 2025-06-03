@@ -43,8 +43,8 @@ const UserManage = () => {
 
 	// & 页码和搜索条件变动 去服务端取数据 searchFilter + pagination
 
-	// 表单过滤条件（输入框）
-	const [searchFilter, setSearchFilter] = useState({})
+	// 表格查询：表单搜索条件
+	const [searchFilter, setSearchFilter] = useState({}) // * {user_name: '张三', sex: 2, phone: '15303663375'}
 	// 表单过滤条件（选择框）
 	const [filterResult, setfilterResult] = useState<selectdProps>({ state: '1', type: ['1', '3'] })
 
@@ -55,9 +55,9 @@ const UserManage = () => {
 	const [selectRowItem, setSelectRowItem] = useState<any>({ selectedRowKeys: [], selectedIds: [], selectedItem: {} })
 
 	// 处理弹窗
-	const [modalIsVisible, setModalIsVisible] = useState(false)
-	const [modalTitle, setModalTitle] = useState('')
-	const [modalType, setModalType] = useState('')
+	const [modalIsVisible, setModalIsVisible] = useState<boolean>(false)
+	const [modalTitle, setModalTitle] = useState<string>('')
+	const [modalType, setModalType] = useState<string>('')
 	const [modalUserInfo, setModalUserInfo] = useState({})
 
 	const [form] = Form.useForm()
@@ -154,20 +154,26 @@ const UserManage = () => {
 		handleExportAll,
 	}
 	const fakeData = true
+
+	let columnConfigParams = {
+		fakeData,
+		roleObj,
+		handleOperator,
+	}
 	return (
 		<>
-			<AdvancedSearchForm />
+			{/* <AdvancedSearchForm /> */}
 			<MultiForm
 				multiForm={multiForm} // form属性，初始化，获取值使用
 				formList={formList}
 				extendFormList={extendFormList}
 				filterSubmit={(filterParams = {}) => {
-					console.log('表单值：', filterParams)
+					console.log('表单值：', filterParams) // * {user_name: '张三', sex: 2, phone: '15303663375'}
 					setSearchFilter(filterParams)
 				}}
 			/>
-			{/* <UserButton />  特效按钮 */}
-			<Card className="w-full" title="用户列表" extra={<TableHeader {...TableHeaderConfig} />}>
+			{/* <UserButton /> 特效按钮 */}
+			<Card className="tableCard w-full" title={<span className="text-[14px]">用户列表</span>} extra={<TableHeader {...TableHeaderConfig} />}>
 				<MultiTable
 					rowSelection="checkbox"
 					columns={fakeData ? columnConfig(fakeData, roleObj, handleOperator) : columnConfig()}
@@ -190,7 +196,7 @@ const UserManage = () => {
 					// scroll={{ x: 3500 }}
 					id="cart-scrollTable"
 					xScroll
-					scroll={{ y: 55 * 10 }}
+					scroll={{ y: 550 }}
 					sticky={{ offsetHeader: 64 }}
 					// yScroll
 					// scroll={{y: 1000}}
@@ -204,8 +210,8 @@ const UserManage = () => {
 				onOk={handleSubmit}
 				onCancel={() => {
 					setModalTitle('')
-					setModalIsVisible(false)
 					setModalType('')
+					setModalIsVisible(false)
 					setModalUserInfo({})
 				}}>
 				<UserFormModal roles={roleAll} userInfo={modalUserInfo} type={modalType} form={form} />

@@ -73,7 +73,7 @@ class RequestHttp {
 			(response: AxiosResponse) => {
 				const { data, config, headers, status, statusText } = response
 				tryHideFullScreenLoading()
-				console.log('response', response)
+				// console.log('response', response)
 				// ! 修改apifox中mock中code的值
 
 				// login failure （401）

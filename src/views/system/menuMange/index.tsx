@@ -1,14 +1,14 @@
-import { Button, Card, Col, Form, Input, Modal, Row } from 'antd'
+import { Button, Card, Col, Form, Input, Modal, Row, Tooltip } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { Space, Table } from 'antd'
 import type { TableColumnsType, TableProps } from 'antd'
-import { menu } from './component/menuConfig'
 import { Icon } from '@/components/Icon'
 import CreateMenuModal from './component/CreateMenuModal'
 import { DelMenu, FindAllMenu } from '@/api/modules/upack/common'
 import { message } from '@/hooks/useMessage'
 
 type TableRowSelection<T> = TableProps<T>['rowSelection']
+type ModalType = 'create' | 'edit' | 'view'
 
 interface DataType {
 	title: string
@@ -19,23 +19,11 @@ interface DataType {
 	children?: DataType[]
 }
 
-// const rowSelection: TableRowSelection<DataType> = {
-// 	onChange: (selectedRowKeys, selectedRows) => {
-// 		console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-// 	},
-// 	onSelect: (record, selected, selectedRows) => {
-// 		console.log(record, selected, selectedRows)
-// 	},
-// 	onSelectAll: (selected, selectedRows, changeRows) => {
-// 		console.log(selected, selectedRows, changeRows)
-// 	},
-// }
-
 const MenuMange: React.FC = () => {
 	const [checkStrictly, setCheckStrictly] = useState<boolean>(false)
 	const [modalTitle, setModalTitle] = useState<string>('新建菜单')
 	const [modalIsVisible, setModalIsVisible] = useState<boolean>(false)
-	const [modalType, setModalType] = useState<string>('create')
+	const [modalType, setModalType] = useState<ModalType>('create')
 	const [modalMenuInfo, setModalMenuInfo] = useState<any>({}) // 行菜单信息
 
 	const [menuList, setMenuList] = useState<Array<any>[]>([])
@@ -43,7 +31,7 @@ const MenuMange: React.FC = () => {
 
 	const getMenu = async () => {
 		const res: any = await FindAllMenu({})
-		// console.log('获取菜单：', res)
+		console.log('获取菜单：', res)
 		setMenuList(res?.data.list)
 	}
 
@@ -54,89 +42,126 @@ const MenuMange: React.FC = () => {
 	const columns: TableColumnsType<DataType> = [
 		{
 			title: '菜单标题',
-			dataIndex: 'title',
 			key: 'title',
+			dataIndex: 'title',
 			width: 200,
+			ellipsis: { showTitle: false },
+			render: value => (
+				<Tooltip placement="top" title={value}>
+					{value || '-'}
+				</Tooltip>
+			),
 		},
 		{
 			title: '菜单图标',
+			key: 'icon',
 			dataIndex: 'icon',
 			align: 'center',
-			key: 'icon',
+			width: 80,
 			render: (text, record) => <Icon name={record.icon} />,
 		},
 		{
 			title: '菜单类型',
+			key: 'type',
 			dataIndex: 'type',
 			align: 'center',
-			key: 'type',
+			width: 80,
 		},
 		{
 			title: '菜单标识',
+			key: 'key',
 			dataIndex: 'key',
 			align: 'center',
-			key: 'key',
+			width: 100,
+			ellipsis: { showTitle: false },
+			render: value => (
+				<Tooltip placement="top" title={value}>
+					{value || '-'}
+				</Tooltip>
+			),
 		},
 		{
 			title: '路由路径',
+			key: 'path',
 			dataIndex: 'path',
 			align: 'center',
-			key: 'path',
 			width: 180,
+			ellipsis: { showTitle: false },
+			render: value => (
+				<Tooltip placement="topLeft" title={value}>
+					{value || '-'}
+				</Tooltip>
+			),
 		},
 		{
 			title: '组件路径',
-			dataIndex: 'element',
 			key: 'element',
+			dataIndex: 'element',
 			align: 'center',
 			width: 180,
-			render: (text: string, record: any) => record.element || '-',
+			ellipsis: { showTitle: false },
+			render: value => (
+				<Tooltip placement="top" title={value}>
+					{value || '-'}
+				</Tooltip>
+			),
 		},
 		{
 			title: '重定向路径',
-			dataIndex: 'redirect',
 			key: 'redirect',
+			dataIndex: 'redirect',
 			align: 'center',
 			width: 180,
-			render: (text: string, record: any) => record.redirect || '-',
+			ellipsis: { showTitle: false },
+			render: value => (
+				<Tooltip placement="top" title={value}>
+					{value || '-'}
+				</Tooltip>
+			),
 		},
 		{
 			title: '外链 url',
-			dataIndex: 'isLink',
 			key: 'isLink',
+			dataIndex: 'isLink',
 			align: 'center',
 			width: 180,
-			render: (text: string, record: any) => record.redirect || '-',
+			ellipsis: { showTitle: false },
+			render: value => (
+				<Tooltip placement="top" title={value}>
+					{value || '-'}
+				</Tooltip>
+			),
 		},
 		{
-			title: '是否隐藏菜单项',
-			dataIndex: 'isHide',
+			title: '隐藏菜单项',
 			key: 'isHide',
+			dataIndex: 'isHide',
 			align: 'center',
-			width: 120,
+			width: 90,
 			render: (text: string, record: any) => record.is_hide || '否',
 		},
 		{
-			title: '是否全屏显示',
-			dataIndex: 'isFull',
+			title: '全屏显示',
 			key: 'isFull',
+			dataIndex: 'isFull',
 			align: 'center',
-			width: 120,
+			width: 90,
 			render: (text: string, record: any) => record.is_full || '否',
 		},
 		{
-			title: '是否固定标签页',
-			dataIndex: 'isAffix',
+			title: '固定标签页',
 			key: 'isAffix',
+			dataIndex: 'isAffix',
 			align: 'center',
-			width: 120,
+			width: 90,
 			render: (text: string, record: any) => record.is_affix || '否',
 		},
 		{
 			title: '排序值',
+			key: 'sort',
 			dataIndex: 'sort',
 			align: 'center',
-			key: 'sort',
+			width: 60,
 		},
 		{
 			title: '操作',
@@ -158,21 +183,23 @@ const MenuMange: React.FC = () => {
 		},
 	]
 
-	// * 编辑菜单  【点击编辑时、要获取几级菜单的属性】
+	// * 操作：编辑菜单
 	const handleEdit = (menuItem: any) => {
-		// console.log('修改：', menuItem)
+		// 编辑菜单：点击编辑时、要获取几级菜单的属性
 		setModalMenuInfo(menuItem)
 		setModalTitle('修改菜单')
 		setModalType('edit')
 		setModalIsVisible(true)
 	}
+	// * 操作：删除菜单
 	const handleDelete = async (record: any) => {
-		// console.log('删除菜单：', record) // 判断下面是否有children
+		// 删除菜单：判断下面是否有children、有children无法删除
 		const result: any = await DelMenu(record)
 		console.log('删除菜单结果：', result)
-		message.success(result?.data.message || '删除成功')
+		if (result?.data.message?.includes('失败')) message.error(result?.data.message || '删除失败')
+		else message.success(result?.data.message || '删除成功')
 	}
-
+	// * 表格数据：树结构表格
 	function getShowMenuList(menuList: any) {
 		let newMenuList: any = JSON.parse(JSON.stringify(menuList))
 		return newMenuList.map((item: any) => {
@@ -181,6 +208,7 @@ const MenuMange: React.FC = () => {
 	}
 	let NewMenuModalConfig = {
 		form,
+		getMenu,
 		menuList,
 		modalTitle,
 		setModalTitle,
@@ -211,9 +239,9 @@ const MenuMange: React.FC = () => {
 					// rowSelection={{ ...rowSelection, checkStrictly }}
 					dataSource={getShowMenuList(menuList)}
 					expandable={{
-						indentSize: 40,
+						indentSize: 20,
 					}}
-					scroll={{ x: 1800 }}
+					scroll={{ x: 1800, y: 580 }}
 				/>
 			</Card>
 			<CreateMenuModal {...NewMenuModalConfig} />

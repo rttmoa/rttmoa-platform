@@ -10,10 +10,11 @@ const ToolBarRender = (Params: any) => {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const dispatch = useDispatch()
 	return [
-		<Search placeholder="快捷搜索..." allowClear onSearch={quickSearch} style={{ width: 200 }} />,
+		<Search size="small" placeholder="快捷搜索..." allowClear onSearch={quickSearch} style={{ width: 200 }} />,
 		<Button
 			type="dashed"
 			key="button"
+			size="small"
 			icon={<PlusOutlined />}
 			onClick={() => {
 				handleModalOpen(true)
@@ -23,6 +24,7 @@ const ToolBarRender = (Params: any) => {
 		<Button
 			type="dashed"
 			key="button"
+			size="small"
 			icon={<ArrowsAltOutlined />}
 			onClick={() => {
 				handleModalOpen(true)
@@ -32,6 +34,7 @@ const ToolBarRender = (Params: any) => {
 		<Button
 			type="dashed"
 			key="button"
+			size="small"
 			icon={<ShrinkOutlined />}
 			onClick={() => {
 				handleModalOpen(true)

@@ -26,7 +26,7 @@ export function createProxy(list: ProxyList = []) {
 			...(isHttps ? { secure: false } : {}),
 		}
 	}
-	console.log('ret_createProxy', ret)
+	// console.log('ret_createProxy', ret)
 	return ret
 	// proxy: {
 	// 	'/api': {

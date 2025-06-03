@@ -3,13 +3,13 @@ import { menu } from './menuConfig'
 import { useEffect, useState } from 'react'
 import './index.less'
 import { message } from '@/hooks/useMessage'
+import { InsNewMenu, UpMenu } from '@/api/modules/upack/common'
 
 const CreateMenuModal = (Props: any) => {
-	const { form, menuList, modalTitle, setModalTitle, modalType, setModalType, modalIsVisible, setModalIsVisible, modalMenuInfo, setModalMenuInfo } = Props
+	const { form, menuList, modalTitle, setModalTitle, modalType: type, setModalType, modalIsVisible, setModalIsVisible, modalMenuInfo, setModalMenuInfo, getMenu } = Props
 
 	const [menuType, SetmenuType] = useState('目录')
 
-	let type = modalType
 	const initMenuList = [{ meta: { key: '/', title: '最顶级菜单' } }, ...menuList]
 
 	// * 处理菜单结构：递归
@@ -19,37 +19,51 @@ const CreateMenuModal = (Props: any) => {
 				value: item.path || item.meta?.key,
 				label: item.meta?.title,
 			}
-			// console.log('item', type, item)
 			if (item.children && item.children.length) {
 				option.children = handleMenu(item.children, 'children')
-				// handleMenu(item.children, 'children')
 			}
 			return option
 		})
 	}
 	// ! 这里提交要注意是 新增还是修改
-	const commitCreateMenu = async () => {
+	const SubmitNewMenu = async () => {
 		// 1、获取字段数据
 		// 2、将字段传入到接口中
 		// 3、获取返回值并展示
 		// 4、清空表单值
 		// 5、关闭弹窗
+		// 6、重新回去菜单列表
 		const formlist = form.getFieldsValue()
-		console.log('获取字段：', formlist)
-		if (modalType == 'create') {
-			message.info('新增')
-			// const result: any = await InsNewMenu(formlist)
-			// console.log('获取结果：', result)
-			// message.success(result.data.message)
-		} else {
-			console.log('edit')
-			message.info('编辑')
+		formlist.unique = modalMenuInfo.unique
+		// console.log('获取Form表单字段：', formlist)
+
+		// return ''
+		if (type == 'create') {
+			const result: any = await InsNewMenu(formlist)
+			console.log('获取结果：', result)
+			if (result?.data?.statusCode === 500) {
+				message.error(result?.data?.message)
+				return null
+			} else message.success(result?.data?.message)
 		}
+		if (type == 'edit') {
+			const result: any = await UpMenu(formlist)
+			console.log('获取结果：', result)
+			if (result?.data?.statusCode === 500) {
+				message.error(result?.data?.message)
+				return null
+			} else message.success(result?.data?.message)
+		}
+		// return ''
 		form.resetFields()
 		setModalTitle('新建菜单')
+		setModalType('create')
 		setModalIsVisible(false)
 		setModalMenuInfo({})
+		getMenu()
 	}
+
+	// 级联选择 - 菜单上级需要的结构
 	function findAncestors(tree: any[], targetPath: string, pathStack: any[] = []): any[] | null {
 		for (const node of tree) {
 			const newPathStack = [...pathStack, node]
@@ -76,18 +90,28 @@ const CreateMenuModal = (Props: any) => {
 				path: modalMenuInfo.path,
 				element: modalMenuInfo.element,
 				redirect: modalMenuInfo.redirect,
-				isLink: modalMenuInfo?.meta?.isLink,
-				isHide: modalMenuInfo?.meta?.isHide == 1 ? '是' : '否',
-				isFull: modalMenuInfo?.meta?.isFull == 1 ? '是' : '否',
-				isAffix: modalMenuInfo?.meta?.isAffix == 1 ? '是' : '否',
 				type: modalMenuInfo.meta?.type,
 				key: modalMenuInfo.meta?.key,
 				title: modalMenuInfo.meta?.title,
 				icon: modalMenuInfo.meta?.icon,
-				sort: modalMenuInfo.meta?.sort,
+				sort: modalMenuInfo.meta?.sort || 1,
+				isLink: modalMenuInfo?.meta?.isLink,
+				isHide: modalMenuInfo?.meta?.isHide == 1 ? '是' : '否',
+				isFull: modalMenuInfo?.meta?.isFull == 1 ? '是' : '否',
+				isAffix: modalMenuInfo?.meta?.isAffix == 1 ? '是' : '否',
 			})
-		} else {
+		}
+		if (type === 'create') {
 			form.resetFields()
+			form.setFieldsValue({
+				top: ['/'],
+				type: '目录',
+				isLink: '',
+				isHide: '否',
+				isFull: '否',
+				isAffix: '否',
+				sort: 999,
+			})
 		}
 	}, [modalMenuInfo, type])
 
@@ -95,6 +119,7 @@ const CreateMenuModal = (Props: any) => {
 		<Modal
 			title={modalTitle}
 			width="1000px"
+			// height={600}
 			loading={false}
 			open={modalIsVisible}
 			// open={true}
@@ -122,38 +147,17 @@ const CreateMenuModal = (Props: any) => {
 					type="primary"
 					loading={false}
 					onClick={() => {
-						// handleUserAdd()
-						// console.log(form.getFieldsValue())
-						commitCreateMenu()
+						SubmitNewMenu()
 					}}>
 					提交
 				</Button>,
 			]}>
-			<Form
-				layout="horizontal"
-				form={form}
-				labelCol={{ span: 6 }}
-				wrapperCol={{ span: 16 }}
-				// initialValues={{
-				// 	top: type == 'create' ? '/' : modalMenuInfo.top,
-				// 	type: type == 'create' ? '目录' : modalMenuInfo?.meta?.type,
-				// 	path: type == 'create' ? '' : modalMenuInfo.path,
-				// 	element: type == 'create' ? '' : modalMenuInfo.element,
-				// 	redirect: type == 'create' ? '' : modalMenuInfo.redirect,
-				// 	key: type == 'create' ? '' : modalMenuInfo?.meta?.key,
-				// 	title: type == 'create' ? '' : modalMenuInfo?.meta?.title,
-				// 	icon: type == 'create' ? '' : modalMenuInfo?.meta?.icon,
-				// 	is_link: type == 'create' ? '' : modalMenuInfo?.meta?.isLink,
-				// 	is_hide: type == 'create' ? '否' : modalMenuInfo?.meta?.isHide == '是' ? 1 : 0,
-				// 	is_full: type == 'create' ? '否' : modalMenuInfo?.meta?.isFull == '是' ? 1 : 0,
-				// 	is_affix: type == 'create' ? '否' : modalMenuInfo?.meta?.isAffix == '是' ? 1 : 0,
-				// 	sort: type == 'create' ? 1 : modalMenuInfo?.meta?.sort,
-				// }}
-			>
+			<Form className="h-[650px]  overflow-auto" layout="horizontal" size="middle" form={form} labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
 				<Row gutter={16}>
 					<Col span={24} pull={3}>
-						<Form.Item label="菜单上级" name="top">
+						<Form.Item label="菜单上级" name="top" rules={[{ required: true }]}>
 							<Cascader
+								// disabled={type === 'edit'}
 								popupClassName="Customize_Cascader"
 								options={handleMenu(initMenuList, '一级')}
 								allowClear
@@ -168,12 +172,11 @@ const CreateMenuModal = (Props: any) => {
 						</Form.Item>
 					</Col>
 					<Col span={24} pull={3}>
-						<Form.Item label="菜单类型" name="type">
+						<Form.Item label="菜单类型" name="type" rules={[{ required: true, message: '创建菜单需 type' }]}>
 							<Radio.Group
 								options={['目录', '菜单', '按钮']}
 								defaultValue="目录"
 								onChange={(item: any) => {
-									// form.resetFields()
 									SetmenuType(item.target.value)
 								}}
 								value={menuType}
@@ -188,7 +191,8 @@ const CreateMenuModal = (Props: any) => {
 								<a href="https://ant.design/components/icon-cn" target="_blank">
 									ant-icon 🚀
 								</a>
-							}>
+							}
+							rules={[{ required: true, message: '创建菜单需 图标' }]}>
 							{/* <Tooltip
 								overlayStyle={{ maxWidth: 500 }}
 								// classNames="ss"
@@ -209,7 +213,7 @@ const CreateMenuModal = (Props: any) => {
 						</Form.Item>
 					</Col>
 					<Col span={12}>
-						<Form.Item label="菜单路由路径" name="path" tooltip={{ title: '路由路径必须填写' }}>
+						<Form.Item label="菜单路由路径" name="path" tooltip={{ title: '路由路径必须填写' }} rules={[{ required: true, message: '创建菜单需 path' }]}>
 							<Input variant="filled" placeholder="path: /home/index" />
 						</Form.Item>
 					</Col>
@@ -234,33 +238,33 @@ const CreateMenuModal = (Props: any) => {
 						</Col>
 					)}
 					<Col span={12}>
-						<Form.Item label="菜单唯一标识" name="key">
+						<Form.Item label="菜单唯一标识" name="key" rules={[{ required: true, message: '创建菜单需 key' }]}>
 							<Input variant="filled" placeholder="home" />
 						</Form.Item>
 					</Col>
 					<Col span={12}>
-						<Form.Item label="菜单标题" name="title">
+						<Form.Item label="菜单标题" name="title" rules={[{ required: true, message: '创建菜单需 title' }]}>
 							<Input variant="filled" placeholder="首页" />
 						</Form.Item>
 					</Col>
 					<Col span={12}>
-						<Form.Item label="外链URL" name="is_link">
+						<Form.Item label="外链URL" name="isLink">
 							<Input variant="filled" placeholder="外链链接地址 eg：www.baidu.com" />
 						</Form.Item>
 					</Col>
 					<Col span={12}>
-						<Form.Item label="是否隐藏菜单项" name="is_hide">
+						<Form.Item label="是否隐藏菜单项" name="isHide" rules={[{ required: true, message: '创建菜单需 isHide' }]}>
 							<Radio.Group options={['是', '否']} defaultValue="否" />
 						</Form.Item>
 					</Col>
 					<Col span={12}>
-						<Form.Item label="是否全屏显示" name="is_full">
+						<Form.Item label="是否全屏显示" name="isFull" rules={[{ required: true, message: '创建菜单需 isFull' }]}>
 							<Radio.Group options={['是', '否']} defaultValue="否" />
 						</Form.Item>
 					</Col>
 
 					<Col span={12}>
-						<Form.Item label="是否固定标签页" name="is_affix">
+						<Form.Item label="是否固定标签页" name="isAffix" rules={[{ required: true, message: '创建菜单需 isAffix' }]}>
 							<Radio.Group options={['是', '否']} defaultValue="否" />
 						</Form.Item>
 					</Col>
@@ -271,7 +275,7 @@ const CreateMenuModal = (Props: any) => {
 						</Form.Item>
 					</Col>
 				</Row>
-				<Card title="菜单结构 JSON 数据、参考如何创建菜单" bodyStyle={{ height: 400, overflow: 'auto' }}>
+				<Card title={<span className="text-[14px]">菜单结构 JSON 数据、参考如何创建菜单</span>} bodyStyle={{ height: 400, overflow: 'auto' }}>
 					<pre style={{ backgroundColor: '#f5f5f5', padding: '12px', borderRadius: '6px', overflow: 'auto', fontSize: 13 }}>
 						<code>{JSON.stringify(menu, null, 2)}</code>
 					</pre>

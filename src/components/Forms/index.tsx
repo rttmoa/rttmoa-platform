@@ -48,7 +48,7 @@ function formateDate(time: string | number) {
 
 function renderFormItem(item: any) {
 	const { label, field, type, placeholder, width, list, style } = item
-	console.log(width)
+	// console.log(width)
 	let xl = 6
 	let lg = 8
 	let md = 24
