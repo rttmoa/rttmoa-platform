@@ -1,4 +1,5 @@
 import { Badge, Button, Space, Tag, Tooltip } from 'antd'
+import { ColumnProps } from 'antd/es/table'
 
 interface stateConfig {
 	[propName: number]: React.ReactNode
@@ -8,13 +9,22 @@ interface InterestConfig {
 }
 // * 表格：列配置项
 export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: any) => {
+	// * 表头搜索框：自定义筛选菜单：https://ant.design/components/table-cn#table-demo-custom-filter-panel
+	// * 表头过滤和加载 — 获取远程数据：https://ant.design/components/table-cn#table-demo-ajax
+	// 固定表头
+	// * 设置：隐藏列设置：对应表的设置存储到数据库中、还有列排序也需要存储
+	// 拖拽排序需用到标签栏的组件
 	return [
 		{
 			title: 'id',
 			dataIndex: 'id',
 			fixed: 'left',
-			width: 50,
+			width: 60,
 			align: 'center',
+			sorter: (a: any, b: any) => {
+				return a.id - b.id
+			},
+			sortDirections: ['descend', 'ascend'],
 			ellipsis: { showTitle: false },
 			render: (value: any) => (
 				<Tooltip placement="top" title={value}>
@@ -31,15 +41,22 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 			ellipsis: { showTitle: false },
 			render: (value: any) => (
 				<Tooltip placement="top" title={value}>
-					{value || '-'}
+					<a href="">{value || '-'}</a>
 				</Tooltip>
 			),
 		},
 		{
 			title: '性别',
 			dataIndex: 'sex',
-			width: 60,
+			width: 80,
 			align: 'center',
+			filters: [
+				{ text: '男', value: 1 },
+				{ text: '女', value: 2 },
+			],
+			onFilter: (value: any, record: any) => {
+				return record?.sex == value
+			},
 			ellipsis: { showTitle: false },
 			render: (sex: any) => (
 				<Tooltip placement="top" title={sex === 1 ? '男' : '女'}>
@@ -94,8 +111,11 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 		{
 			title: '所属角色',
 			dataIndex: 'role_id',
-			width: 80,
+			width: 100,
 			align: 'center',
+			sorter: (a: any, b: any) => {
+				return a.role_id - b.role_id
+			},
 			ellipsis: { showTitle: false },
 			render: (roleiD: number) => {
 				return (
@@ -238,7 +258,8 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 		{
 			title: '操作',
 			fixed: 'right',
-			width: 200,
+			width: 180,
+			align: 'center',
 			render(record: any) {
 				return (
 					<Space>

@@ -4,8 +4,26 @@ import { Table } from 'antd'
 import { TableProps } from 'antd/es/table/InternalTable'
 import { TableRowSelection } from 'antd/es/table/interface'
 import React, { useCallback, useEffect, useState } from 'react'
-
+// import { createStyles } from 'antd-style'
+// const useStyle = createStyles(({ css, token }: any) => {
+// 	const { antCls } = token
+// 	return {
+// 		customTable: css`
+// 			${antCls}-table {
+// 				${antCls}-table-container {
+// 					${antCls}-table-body,
+// 					${antCls}-table-content {
+// 						scrollbar-width: thin;
+// 						scrollbar-color: #eaeaea transparent;
+// 						scrollbar-gutter: stable;
+// 					}
+// 				}
+// 			}
+// 		`,
+// 	}
+// })
 interface TablesProps {
+	size?: string
 	id?: string
 	heghtAuto?: boolean
 	xScroll?: boolean
@@ -33,9 +51,42 @@ interface TablesProps {
 	 * @returns
 	 */
 	updatePage?: (page: number, pageSize: number) => void
+	summary?: () => any
 }
 
-export default function Tables(props: TablesProps) {
+interface MultiTableProps<T> extends TableProps<T> {
+	size?: any
+	id?: string
+	heghtAuto?: boolean
+	xScroll?: boolean
+	yScroll?: boolean
+	sticky?: any
+	loading?: TableProps['loading']
+	columns: any // TableProps['columns']
+	dataSource: TableProps['dataSource']
+	// 分页配置
+	pagination: {
+		page?: number
+		pageSize?: number
+		totalCount?: number
+	}
+	scroll?: TableProps['scroll']
+	rowSelection?: any // 'checkbox' | 'radio' | false | null
+
+	selectedRowKeys?: number[]
+	selectedIds?: number[]
+	selectedItem?: any
+	updateSelectedItem?: (selectKey?: any, selectedRows?: any, selectedIds?: any) => void
+	/**
+	 * @param page 页码回调
+	 * @param pageSize 每页数量回调
+	 * @returns
+	 */
+	updatePage?: (page: number, pageSize: number) => void
+	summary?: () => any
+}
+
+export default function Tables<T extends object>(props: MultiTableProps<T>) {
 	// console.log('Tables props: ', props);
 	const {
 		// className = '',
@@ -71,10 +122,10 @@ export default function Tables(props: TablesProps) {
 			const parent = document.getElementById(id)
 			if (parent) {
 				const FixedWidth = props
-					.columns!.filter(item => item.width)
-					.map(item => Number(item.width))
-					.reduce((m, n) => m + n, 0)
-				const RemainItemArr = props.columns!.filter(item => !item.width).map(item => item.title!.toString().length)
+					.columns!.filter((item: { width: any }) => item.width)
+					.map((item: { width: any }) => Number(item.width))
+					.reduce((m: any, n: any) => m + n, 0)
+				const RemainItemArr = props.columns!.filter((item: { width: any }) => !item.width).map((item: { title: any }) => item.title!.toString().length)
 				const RemainItemWidth = (Math.max(...RemainItemArr) + 1) * 12 + 8 * 2 + 2
 				const RemainWidth = RemainItemArr.length * RemainItemWidth
 				// debugger
@@ -174,7 +225,7 @@ export default function Tables(props: TablesProps) {
 
 	const rowSelectConfig: TableProps['rowSelection'] = {
 		type: 'radio',
-		selectedRowKeys: selectedRowKeys,
+		selectedRowKeys: selectedRowKeys, // 选择的行数据
 		onChange: rowChange,
 		onSelect: (record: any, selected: any, selectedRows: any) => {
 			console.log('....')
@@ -184,7 +235,6 @@ export default function Tables(props: TablesProps) {
 		// 	console.log('redner', checked, record, index, originNode);
 		// }
 	}
-
 	//* 处理行选择：单选框，复选框，无
 	let rowSelect: TablesProps['rowSelection'] = rowSelection
 	if ([false, null].includes(rowSelect as any)) {
@@ -196,15 +246,15 @@ export default function Tables(props: TablesProps) {
 	}
 
 	// console.log("x,y: ", x, y);
+
 	return (
-		<Table
+		<Table<T>
 			// className={}
 			{...props}
 			bordered
-			size="small"
 			columns={columns}
 			dataSource={dataSource}
-			rowSelection={rowSelect ? rowSelectConfig : undefined}
+			rowSelection={rowSelect ? rowSelectConfig : undefined} // 行选择：checkbox|radio及 选择事件
 			onRow={(record: any, index: any) => ({
 				onClick() {
 					if (!rowSelect) return

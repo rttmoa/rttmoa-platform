@@ -13,9 +13,9 @@ export const Icon: React.FC<IconProps> = React.memo(({ name, className }) => {
 		if (name) return React.createElement(customIcons[name], { className })
 		else return null
 	} catch (error) {
-		console.log('Icon — error', error)
+		console.log('components — Icon — error', error)
 	}
-	// bundle.js:2 Error handled by React Router default ErrorBoundary: Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
+	// bundle.js:2 Error handled by React Router default ErrorBoundary: Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: 【undefined】. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
 })
 // 使用；<Icon name="AppstoreOutlined" />
 

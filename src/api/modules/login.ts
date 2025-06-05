@@ -22,8 +22,8 @@ export const loginApi = (params: ReqLogin) => {
 
 // ! 获取菜单列表
 export const getAuthMenuListApi = () => {
-	// return http.get<AuthState['authMenuList']>(PORT1 + `/menu/list`)
-	return authMenuList
+	return http.get<AuthState['authMenuList']>(PORT1 + `/menu/list`)
+	// return authMenuList
 }
 
 // 获取按钮权限

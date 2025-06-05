@@ -18,6 +18,7 @@ const usePermissions = () => {
 			try {
 				const { data: buttonList } = await getAuthButtonListApi() // 用户按钮权限
 				const { data: menuList } = await getAuthMenuListApi() // 用户菜单权限
+				console.log('menuList', menuList)
 
 				// 获取Cookie、存储Cookie
 				dispatch(setAuthButtonList(buttonList))

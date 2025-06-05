@@ -66,9 +66,9 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
 			// 	}
 			// },
 
-			// 构建后是否生成source map文件
+			// * 构建后是否生成source map文件 【用于开发环境查看源文件而不是chunk-RC7UN3OL.js文件】
 			// 这个生产环境一定要关闭，不然打包的产物会很大
-			sourcemap: false,
+			sourcemap: true,
 			// 关闭文件计算
 			reportCompressedSize: false,
 			// 确定触发警告的块大小
