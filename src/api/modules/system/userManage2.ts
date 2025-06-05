@@ -26,6 +26,7 @@ export const fetchRoleList = (params = {}) => {
 	return http.get(PORT1 + `/rolelist`, params)
 }
 
+// 获取用户状态
 export const fetchChangeUserStatus = (params = {}) => {
 	return http.get(PORT1 + `/user/changeStatus`, params)
 }
@@ -39,7 +40,7 @@ export const fetchUserAdd = (params = {}) => {
 	return http.post(PORT1 + `/user/add`, params)
 }
 
-// 角色：修改角色信息
+// // 角色：修改角色信息
 export const fetchUserSetRole = (params = {}) => {
 	return http.post(PORT1 + `/user/set/role`, params)
 }

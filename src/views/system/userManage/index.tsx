@@ -1,29 +1,26 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { Card, Badge, Button, Space, Tag, Table, message, Modal, Form, Input, Radio, Select, DatePicker, Popconfirm, Tabs, Upload, Tooltip } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { Card, message, Modal, Form } from 'antd'
 import { createUser, editUser, getUserList } from '@/api/modules/system/userManage'
-import MultiForm from '@/components/Forms'
 import MultiTable from '@/components/Tables'
 import { roleList } from '@/api/modules/system/roleManage'
-import { TableProps } from 'antd/lib/table/InternalTable'
 import UserFormModal from './components/UserFormModal'
-import { SelectFilterData, extendFormList, formList } from './components/Form_Config'
-import { DeleteOutlined } from '@ant-design/icons'
-import SelectFilter, { selectdProps } from '@/components/SelectFilter'
+import { newFormList } from './components/Form_Config'
+import { selectdProps } from '@/components/SelectFilter'
 import useExportExcle from '@/hooks/useExportExcle'
 import './index.less'
 import { columnConfig } from './components/Table_Column_Config'
 import TableHeader from './components/TableHeader'
-import AdvancedForm from '@/views/form/advancedForm'
-import AdvancedSearchForm from '@/components/AdvancedSearchForm/AdvancedSearchForm'
+import AdvancedSearchForm from '@/components/AdvancedSearchForm'
+import { DelMoreUser, DelUser, GetUserManagerList } from '@/api/modules/upack/common'
 
 interface UserListResults {
 	code?: number
 	data: {
 		list: []
-		page?: number
-		page_count?: number
-		page_size?: number
-		total_count?: number
+		current?: number
+		pageSize?: number
+		total?: number
+		message?: string
 	}
 	msg?: string
 }
@@ -36,6 +33,9 @@ interface Pagination {
 
 // ! 1、注意：向后台传递的参数有：表头搜索、表格过滤、表格排序、分页
 // ! 2、页码和搜索条件变动 去服务端取数据 searchFilter + pagination
+// * 表格和表头的 高度
+// * 查询参数的处理
+// * 弹窗内 Form 的样式
 const UserManage: React.FC = () => {
 	const { handleExportAll } = useExportExcle()
 
@@ -63,62 +63,70 @@ const UserManage: React.FC = () => {
 	const [form] = Form.useForm()
 	const [multiForm] = Form.useForm()
 
-	function isValidValue(val: any) {
-		return !(val === undefined || val === null || (typeof val === 'string' && val.trim() === ''))
-	}
-	const hasValid = Object.values(searchFilter).some(isValidValue)
 	const GetData = async () => {
 		setLoading(true)
-		console.log('pagination', pagination)
-		let searchParams = { page: pagination.page, pageSize: pagination.pageSize, ...searchFilter }
-		getUserList(searchParams).then((res: any) => {
-			setLoading(false)
-			const newData = res.data.list.map((item: any, index: number) => ({ ...item, key: index }))
-			setUserList(newData.splice(0, pagination.pageSize))
-			setPagination({
-				page: pagination.page || 1,
-				pageSize: pagination.pageSize || 10,
-				totalCount: res.data.total_count || 0,
-			})
+		console.log('参数 pagination：', pagination)
+		let { page, pageSize } = pagination
+		let searchParams = { page, pageSize, ...searchFilter }
+		const result: any = await GetUserManagerList(searchParams)
+		const userlist = result?.data?.list?.map((item: any, index: number) => ({ ...item, key: index + 1 }))
+		setUserList(userlist || [])
+		setPagination({
+			page: page || 1,
+			pageSize: pageSize || 10,
+			totalCount: result?.data?.total || 0,
 		})
+		setLoading(false)
 	}
 	useEffect(() => {
 		GetData()
 	}, [pagination.page, pagination.pageSize, searchFilter])
 
 	// 获取所属角色数据：管理员、前端开发
-	const GetRoleData = () => {
-		console.log('getRoleData == change')
-		roleList().then((res: any) => {
-			let data = res.data.list
-			const roleNames: [] = data.reduce((prev: any, curr: any) => {
-				prev[curr.id] = curr.role_name
-				return prev
-			}, {})
-			setroleObj(roleNames || [])
-			setroleAll(data)
-		})
-	}
-	useEffect(() => {
-		GetRoleData()
-	}, [])
+	// const GetRoleData = () => {
+	// 	console.log('getRoleData == change')
+	// 	roleList().then((res: any) => {
+	// 		let data = res.data.list
+	// 		const roleNames: [] = data.reduce((prev: any, curr: any) => {
+	// 			prev[curr.id] = curr.role_name
+	// 			return prev
+	// 		}, {})
+	// 		setroleObj(roleNames || [])
+	// 		setroleAll(data)
+	// 	})
+	// }
+	// useEffect(() => {
+	// 	GetRoleData()
+	// }, [])
 
-	// * 操作 — 员工： 新建、编辑、详情、删除  弹窗显示
-	const handleOperator = (type: string, item: any) => {
+	// * 操作 — 员工： 新建、编辑、详情、删除  按钮
+	const handleOperator = async (type: string, item: any) => {
 		// console.log('handleOperator', type, item)
 		if (type === 'create') {
 			setModalIsVisible(true)
 			setModalTitle('新建用户')
 			setModalType(type)
+			setModalUserInfo({})
 		} else if (['edit', 'detail'].includes(type)) {
+			setModalIsVisible(true)
 			setModalTitle(type === 'edit' ? '编辑用户' : '查看详情')
 			setModalType(type)
 			setModalUserInfo(item)
-			setModalIsVisible(true)
 		} else if (type === 'delete') {
-			message.success(`删除用户成功！ id：${item.id}`)
+			// 1、参数传递到后台
+			// 2、获取响应结果、提示响应结果
+			// 3、重新获取数据
+			const result: any = await DelUser(item._id)
+			message.success(result.data.message)
+			GetData()
 		} else if (type === 'moreDelete') {
-			message.success(`删除更多用户成功！ id：${JSON.stringify(selectRowItem.selectedIds)}`)
+			// 1、参数传递到后台
+			// 2、获取响应结果、提示响应结果
+			// 3、重新获取数据
+			const res: any = await DelMoreUser(selectRowItem.selectedIds || [])
+			message.success(res.data.message)
+			setSelectRowItem({ selectedRowKeys: [], selectedIds: [], selectedItem: {} })
+			GetData()
 		}
 	}
 	// * 操作 — 员工： 新建、编辑、详情、删除  弹窗内容提交
@@ -154,10 +162,26 @@ const UserManage: React.FC = () => {
 		roleObj,
 		handleOperator,
 	}
+	let FormConfig = {
+		rowCount: 3, // 每行数量
+		FormListConfig: newFormList, // 配置
+		FormOnFinish(data: any) {}, // Form表单提交结果：表单是否有参数变化
+	}
 	return (
 		<>
-			{/* <AdvancedSearchForm /> */}
-			<MultiForm
+			{/* <AdvancedSearchForm {...FormConfig} /> */}
+			<AdvancedSearchForm
+				loading={loading}
+				rowCount={3}
+				FormListConfig={newFormList}
+				FormOnFinish={(filterParams = {}) => {
+					const filtered = Object.fromEntries(Object.entries(filterParams).filter(([_, value]) => value !== undefined && value !== null && !(typeof value === 'string' && value.trim() === '')))
+					// console.log('过滤 filterParams', filtered)
+					setSearchFilter(filtered || {})
+				}}
+			/>
+
+			{/* <MultiForm
 				multiForm={multiForm} // form属性，初始化，获取值使用
 				formList={formList}
 				extendFormList={extendFormList}
@@ -165,8 +189,8 @@ const UserManage: React.FC = () => {
 					console.log('表单值：', filterParams) // * {user_name: '张三', sex: 2, phone: '15303663375'}
 					setSearchFilter(filterParams)
 				}}
-			/>
-			<Card className="tableCard w-full" size="small" hoverable loading={false} title={<span className="text-[14px]">用户列表</span>} extra={<TableHeader {...TableHeaderConfig} />}>
+			/> */}
+			<Card className="tableCard w-full mt-2" size="small" hoverable loading={false} title={<span className="text-[14px]">用户列表</span>} extra={<TableHeader {...TableHeaderConfig} />}>
 				<MultiTable<any>
 					id="cart-scrollTable"
 					size="small"
@@ -191,18 +215,18 @@ const UserManage: React.FC = () => {
 					updatePage={(page, pageSize) => {
 						setPagination((state: Pagination) => ({ ...state, page, pageSize }))
 					}}
-					summary={() => (
-						// <Table.Summary fixed>
-						// 	<Table.Summary.Row>
-						// 		<Table.Summary.Cell index={0}>Summary</Table.Summary.Cell>
-						// 		<Table.Summary.Cell index={1}>This is a summary content</Table.Summary.Cell>
-						// 	</Table.Summary.Row>
-						// </Table.Summary>
-						<div className="flex h-[30px]">
-							<div className="ml-4 w-[80px]">Summassry：</div>
-							<div className="flex w-[180px] h-[30px] ml-6">This is a summary content</div>
-						</div>
-					)}
+					// summary={() => (
+					// 	// <Table.Summary fixed>
+					// 	// 	<Table.Summary.Row>
+					// 	// 		<Table.Summary.Cell index={0}>Summary</Table.Summary.Cell>
+					// 	// 		<Table.Summary.Cell index={1}>This is a summary content</Table.Summary.Cell>
+					// 	// 	</Table.Summary.Row>
+					// 	// </Table.Summary>
+					// 	<div className="flex h-[30px]">
+					// 		<div className="ml-4 w-[80px]">Summassry：</div>
+					// 		<div className="flex w-[180px] h-[30px] ml-6">This is a summary content</div>
+					// 	</div>
+					// )}
 				/>
 			</Card>
 			<Modal

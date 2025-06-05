@@ -3,52 +3,6 @@ import { DownOutlined, InfoCircleOutlined } from '@ant-design/icons'
 import { Button, Card, Checkbox, Col, DatePicker, Form, FormProps, Input, Row, Select, Space, theme, Typography } from 'antd'
 import './index.less'
 
-// * 表单配置项
-let FormConfig = [
-	{
-		type: 'INPUT',
-		// Form.Item属性
-		label: '用户名',
-		uname: 'username',
-		rules: null,
-		wrapperCol: { offset: 6, span: 16 },
-		require: true,
-		tooltip: { title: 'Tooltip with customize icon', icon: <InfoCircleOutlined /> },
-		// Input属性
-		field: 'user_name',
-		placeholder: '请输入用户名',
-		initialValue: '',
-		// width: 120,
-	},
-	{
-		type: 'INPUT',
-		label: '年纪',
-		uname: 'age',
-		field: 'age',
-		placeholder: '请输入年纪',
-		initialValue: '',
-		// width: 120,
-	},
-	{
-		type: 'INPUT',
-		label: '爱好',
-		uname: 'hobby',
-		field: 'hobby',
-		placeholder: '请输入爱好',
-		initialValue: '',
-		// width: 120,
-	},
-	{
-		type: 'INPUT',
-		label: '托盘号',
-		uname: 'pallet',
-		field: 'pallet',
-		placeholder: '请输入托盘号',
-		initialValue: '',
-		// width: 120,
-	},
-]
-
 function getOptionList(data = []) {
 	if (!data) {
 		return []
@@ -68,37 +22,39 @@ function formateDate(time: string | number) {
 	const date = new Date(time)
 	const month = date.getMonth() < 9 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
 	const data = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
-	return `${date.getFullYear()}-${month}-${data}`
+	return `${date.getFullYear()}-${month}-${data}` // * 2025-06-05
 }
 
 //
 //
 //
-type FormPropsType = {
-	name?: string // 表示每个Form表格、必须不相同
-	FormList?: any[] // 表单的配置项
-	isSearch?: boolean // 是否是表单搜索
-	rowCount?: number // 每行的数量
-}
 
-// 待实现1：ProTable 新建按钮使用封装的 AdvancedSearchForm 组件
-// 待实现2：用户管理中表头也需要使用 AdvancedSearchForm 组件
 /**
  * & 高级搜索表格 & 新建表单数据 Form
  * @param props
  * @returns
  */
+// 待实现1：ProTable 新建按钮使用封装的 AdvancedSearchForm 组件
+// 待实现2：用户管理中表头也需要使用 AdvancedSearchForm 组件
+type FormPropsType = {
+	name?: string // 表示每个Form表格、必须不相同
+	isSearch?: boolean // 是否是表单搜索
+	loading: boolean
+	rowCount?: number // 每行的数量
+	FormListConfig?: any[] // 表单的配置项
+	FormOnFinish: (data: any) => any // 将结果传递到父组件
+}
 const AdvancedSearchForm = (Props: FormPropsType) => {
-	let propsName = 'advanced_search'
-	let propsIsSearch
-	let propsRowCount
+	const { name = 'advanced_search', loading, FormListConfig = [], rowCount = 3, FormOnFinish } = Props
+	const FormConfig = FormListConfig
+
 	const [form] = Form.useForm()
 	const [expand, setExpand] = useState<boolean>(false) // 是否展开
 	const [isSearch, SetIsSearch] = useState<boolean>(true) // 是否是表单搜索
 
 	// * 处理 Form.Item 字段
 	const GetFieldsForms = () => {
-		const rowCount: any = 3
+		// const rowCount: any = 3
 		const colsPerRow = rowCount // 每行占几个 <Col />
 		const rowCounts = 24 / colsPerRow // 动态计算span: 1、2、3、4   不可超过4个
 
@@ -111,7 +67,6 @@ const AdvancedSearchForm = (Props: FormPropsType) => {
 		const children: React.ReactNode[] = []
 
 		for (let i = 0; i < FormList.length; i++) {
-			// console.log('FormConfig', FormList[i])
 			const { type, label, field, placeholder, list } = FormList[i]
 			let FormItem = null
 			if (type == 'INPUT') {
@@ -165,7 +120,7 @@ const AdvancedSearchForm = (Props: FormPropsType) => {
 			// )
 		}
 		if (isSearch) {
-			// 当前行剩余列数（按钮插入新行 or 同一行补齐）
+			// 当前行剩余列数 （按钮插入新行 or 同一行补齐）
 			const remainder = FormList.length % colsPerRow
 			if (remainder !== 0) {
 				for (let i = 0; i < colsPerRow - remainder - 1; i++) {
@@ -198,32 +153,19 @@ const AdvancedSearchForm = (Props: FormPropsType) => {
 		return children
 	}
 
-	// * 函数部分
-	type FieldType = {
-		username?: string
-		password?: string
-		remember?: string
-	}
-
 	// 提交表单数据
-	const onFinish = (values: any) => {
+	const OnFinish = (values: any) => {
 		// 处理字段：input、time、select、checkbox
-		console.log('Received values of form: ', values)
-		form.getFieldsValue()
-		// 成功后置空
-		form.resetFields()
+		// console.log('Received values of form: ', values)
+		const formValue = form.getFieldsValue()
+		// console.log('formValue', formValue)
+		if (formValue.startTime) formValue.startTime = formateDate(formValue.startTime)
+		if (formValue.endTime) formValue.endTime = formateDate(formValue.endTime)
+		// console.log('formValue', formValue)
+		// console.log('value', values)
+		FormOnFinish && FormOnFinish(formValue)
 	}
-	const Submit = useCallback(() => {
-		let filterValue = form.getFieldsValue()
-		if (filterValue.startTime) {
-			filterValue.startTime = formateDate(filterValue.startTime)
-		}
-		if (filterValue.endTime) {
-			filterValue.endTime = formateDate(filterValue.endTime)
-		}
-		// filterSubmit && filterSubmit(filterValue) // 传递给父组件处理
-	}, [])
-	const onFailed: FormProps<FieldType>['onFinishFailed'] = errorInfo => {
+	const OnFailed: FormProps<any>['onFinishFailed'] = errorInfo => {
 		console.log('Failed:', errorInfo)
 	}
 
@@ -233,12 +175,12 @@ const AdvancedSearchForm = (Props: FormPropsType) => {
 	}
 	let maxWidth = { maxWidth: 600 }
 	return (
-		<Card>
-			<Form name={propsName} form={form} layout="horizontal" size="middle" variant="outlined" onFinish={onFinish} onFinishFailed={onFailed}>
+		<Card size="small" hoverable>
+			<Form disabled={loading} name={name} form={form} layout="horizontal" size="middle" variant="outlined" onFinish={OnFinish} onFinishFailed={OnFailed}>
 				<Row gutter={24}>{GetFieldsForms()}</Row>
 			</Form>
 			{/* <Typography>
-				<pre>Name Value: 监听表单的值、使用 useWatch</pre>
+				<pre>Name Value: useWatch</pre>
 				<pre>Custom Value: Form.useWatch</pre>
 			</Typography> */}
 		</Card>

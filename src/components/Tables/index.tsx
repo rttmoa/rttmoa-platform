@@ -212,7 +212,7 @@ export default function Tables<T extends object>(props: MultiTableProps<T>) {
 		let selectedIds: number[] = []
 		if (rowSelectProps === 'checkbox') {
 			selectedRows.forEach((item: any) => {
-				selectedIds.push(item.id)
+				selectedIds.push(item._id) // * 这里是 _id
 			})
 			setState({
 				selectedRowKeys,
@@ -275,7 +275,7 @@ export default function Tables<T extends object>(props: MultiTableProps<T>) {
 				// hideOnSinglePage: true, // 只有一个隐藏分页器 (不需要隐藏分页器)
 				current: pagination.page,
 				pageSize: pagination.pageSize,
-				pageSizeOptions: [10, 20, 50, 100, 500, 1000, 5000, 10000],
+				pageSizeOptions: [10, 20, 50, 100, 500, 1000],
 				total: pagination.totalCount,
 				showTotal: () => `共 ${pagination.totalCount} 条`,
 				showQuickJumper: true,

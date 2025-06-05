@@ -1,8 +1,11 @@
-import { Badge, Button, Space, Tag, Tooltip } from 'antd'
+import { IconFont } from '@/components/Icon'
+import { message } from '@/hooks/useMessage'
+import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'
+import { Badge, Button, Dropdown, Image, Space, Tag, Tooltip } from 'antd'
 import { ColumnProps } from 'antd/es/table'
 
 interface stateConfig {
-	[propName: number]: React.ReactNode
+	[propName: string]: React.ReactNode
 }
 interface InterestConfig {
 	[propName: number]: string
@@ -46,13 +49,27 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 			),
 		},
 		{
+			title: '头像',
+			dataIndex: 'head',
+			width: 80,
+			align: 'center',
+			ellipsis: { showTitle: false },
+			render: (avatar: any) => {
+				return (
+					<div>
+						<Image height={20} src={avatar} />
+					</div>
+				)
+			},
+		},
+		{
 			title: '性别',
 			dataIndex: 'sex',
 			width: 80,
 			align: 'center',
 			filters: [
 				{ text: '男', value: 1 },
-				{ text: '女', value: 2 },
+				{ text: '女', value: 0 },
 			],
 			onFilter: (value: any, record: any) => {
 				return record?.sex == value
@@ -65,109 +82,85 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 			),
 		},
 		{
-			title: '状态',
-			dataIndex: 'state',
-			width: 70,
+			title: '年龄',
+			dataIndex: 'age',
+			width: 60,
 			align: 'center',
-			render: (state: number) => {
+		},
+		{
+			title: '在线状态',
+			dataIndex: 'status',
+			width: 80,
+			align: 'center',
+			render: (state: string) => {
 				let config: stateConfig = {
-					1: <Tag color="green">痛苦</Tag>,
-					2: <Tag color="blue">委屈</Tag>,
-					3: <Tag color="orange">迷茫</Tag>,
-					4: <Tag color="red">平淡</Tag>,
-					5: <Tag color="purple">开心</Tag>,
+					隐身: <Tag color="blue">隐身</Tag>,
+					在线: <Tag color="green">在线</Tag>,
+					离线: <Tag color="red">离线</Tag>,
+					异常: <Tag color="orange">异常</Tag>,
 				}
 				return config[state]
 			},
 		},
 		{
-			title: '爱好',
-			dataIndex: 'interest',
-			width: 80,
-			align: 'center',
-			render: (interest: number) => {
-				let config: InterestConfig = {
-					1: '游泳',
-					2: '打篮球',
-					3: '踢足球',
-					4: '跑步',
-					5: '爬山',
-					6: '骑行',
-					7: '桌球',
-					8: '麦霸',
-				}
-				return config[interest]
-			},
-		},
-		{
 			title: '婚姻状态',
-			dataIndex: 'isMarried',
+			dataIndex: 'marriage',
 			width: 80,
 			align: 'center',
-			render(isMarried: number) {
-				return isMarried ? <Badge status="success" text="已婚" /> : <Badge status="error" text="未婚" />
+			render(marriage: string) {
+				switch (marriage) {
+					case '未婚':
+						return <Badge status="default" text="未婚" />
+					case '已婚':
+						return <Badge status="success" text="已婚" />
+					case '离异':
+						return <Badge status="error" text="离异" />
+					default:
+						return ''
+				}
 			},
 		},
-		{
-			title: '所属角色',
-			dataIndex: 'role_id',
-			width: 100,
-			align: 'center',
-			sorter: (a: any, b: any) => {
-				return a.role_id - b.role_id
-			},
-			ellipsis: { showTitle: false },
-			render: (roleiD: number) => {
-				return (
-					<Tooltip placement="top" title={roleObj && roleObj[roleiD]}>
-						{roleObj && roleObj[roleiD]}
-					</Tooltip>
-				)
-			},
-		},
+		// {
+		// 	title: '所属角色',
+		// 	dataIndex: 'role_id',
+		// 	width: 100,
+		// 	align: 'center',
+		// 	sorter: (a: any, b: any) => {
+		// 		return a.role_id - b.role_id
+		// 	},
+		// 	ellipsis: { showTitle: false },
+		// 	render: (roleiD: number) => {
+		// 		return (
+		// 			<Tooltip placement="top" title={roleObj && roleObj[roleiD]}>
+		// 				{roleObj && roleObj[roleiD]}
+		// 			</Tooltip>
+		// 		)
+		// 	},
+		// },
 		{
 			title: '手机号',
-			// dataIndex: '',
+			dataIndex: 'phone',
 			width: 100,
 			align: 'center',
 			ellipsis: { showTitle: false },
-			render: () => {
-				let tele = 15303663375
-				let strTele = tele + '' // 数字类型转字符串
-				let phone = strTele.replace(/(\d{3})\d*(\d{4})/g, '$1***$2')
+			render: (phone: number) => {
+				let aPhone = String(phone).replace(/(\d{3})\d*(\d{4})/g, '$1***$2')
 				return (
-					<Tooltip placement="top" title={phone}>
-						{phone}
-					</Tooltip>
-				)
-			},
-		},
-		{
-			title: '身份证号',
-			// dataIndex: '',
-			width: 120,
-			align: 'center',
-			ellipsis: { showTitle: false },
-			render: () => {
-				let identity = 231085199811011415n
-				let strIdentity = identity + '' // 数字类型转字符串
-				let res = strIdentity.replace(/(\d{3})\d*(\d{4})/g, '$1***********$2')
-				return (
-					<Tooltip placement="top" title={res}>
-						{res}
+					<Tooltip placement="top" title={aPhone}>
+						{aPhone}
 					</Tooltip>
 				)
 			},
 		},
 		{
 			title: '联系地址',
-			dataIndex: 'address',
+			dataIndex: 'city',
 			width: 150,
 			align: 'center',
 			ellipsis: { showTitle: false },
-			render: (address: any) => (
-				<Tooltip placement="top" title={address}>
-					{address}
+			render: (city: any) => (
+				<Tooltip placement="top" title={city}>
+					{city}
 				</Tooltip>
 			),
 		},
@@ -220,9 +213,21 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 			),
 		},
 		{
-			title: '邮箱',
-			dataIndex: 'email',
-			width: 150,
+			title: '过去日期',
+			dataIndex: 'date',
+			width: 120,
+			align: 'center',
+			ellipsis: { showTitle: false },
+			render: (element: any) => (
+				<Tooltip placement="top" title={element}>
+					{element}
+				</Tooltip>
+			),
+		},
+		{
+			title: '醒来时间',
+			dataIndex: 'time',
+			width: 120,
 			align: 'center',
 			ellipsis: { showTitle: false },
 			render: (element: any) => (
@@ -233,7 +238,7 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 		},
 		{
 			title: '生日',
-			dataIndex: 'birthday',
+			dataIndex: 'dateTime',
 			width: 150,
 			align: 'center',
 			ellipsis: { showTitle: false },
@@ -243,48 +248,110 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 				</Tooltip>
 			),
 		},
+		// {
+		// 	title: '操作2',
+		// 	fixed: 'right',
+		// 	width: 180,
+		// 	align: 'center',
+		// 	render(record: any) {
+		// 		return (
+		// 			<Space>
+		// 				<Button
+		// 					size="small"
+		// 					onClick={() => {
+		// 						handleOperator('detail', record)
+		// 					}}>
+		// 					详情
+		// 				</Button>
+		// 				<Button
+		// 					size="small"
+		// 					onClick={() => {
+		// 						handleOperator('edit', record)
+		// 					}}>
+		// 					编辑
+		// 				</Button>
+		// 				<Button
+		// 					size="small"
+		// 					onClick={() => {
+		// 						handleOperator('delete', record)
+		// 					}}>
+		// 					删除
+		// 				</Button>
+		// 			</Space>
+		// 		)
+		// 	},
+		// },
 		{
-			title: '早起时间',
-			dataIndex: 'time',
-			width: 150,
-			align: 'center',
-			ellipsis: { showTitle: false },
-			render: (element: any) => (
-				<Tooltip placement="top" title={element}>
-					{element}
-				</Tooltip>
-			),
-		},
-		{
-			title: '操作',
+			title: '操作1',
 			fixed: 'right',
-			width: 180,
+			width: 60,
 			align: 'center',
 			render(record: any) {
 				return (
-					<Space>
-						<Button
-							size="small"
-							onClick={() => {
-								handleOperator('detail', record)
-							}}>
-							详情
-						</Button>
-						<Button
-							size="small"
-							onClick={() => {
-								handleOperator('edit', record)
-							}}>
-							编辑
-						</Button>
-						<Button
-							size="small"
-							onClick={() => {
-								handleOperator('delete', record)
-							}}>
-							删除
-						</Button>
-					</Space>
+					<div className="more-button">
+						<Dropdown
+							menu={{
+								items: [
+									{
+										key: '1',
+										label: (
+											<Button
+												key="view"
+												type="link"
+												size="small"
+												icon={<EyeOutlined />}
+												onClick={() => {
+													// console.log(entity)
+													// Params.setCurrentRow(entity)
+													// Params.setShowDetail(true)
+													handleOperator('detail', record)
+												}}>
+												查看
+											</Button>
+										),
+									},
+									{
+										key: '2',
+										label: (
+											<Button
+												key="edit"
+												type="link"
+												size="small"
+												icon={<EditOutlined />}
+												onClick={() => {
+													handleOperator('edit', record)
+												}}>
+												编辑
+											</Button>
+										),
+									},
+									{
+										key: '3',
+										label: (
+											<Button
+												key="delete"
+												type="link"
+												size="small"
+												danger
+												icon={<DeleteOutlined />}
+												onClick={() => {
+													// message.success(`删除了iD为: ${entity.username}`, 2)
+													handleOperator('delete', record)
+												}}>
+												删除
+											</Button>
+										),
+									},
+								],
+							}}
+							placement="bottomRight"
+							arrow={{ pointAtCenter: true }}
+							trigger={['click']}>
+							<div className="more-button-item">
+								<IconFont style={{ fontSize: 22 }} type="icon-xiala" />
+							</div>
+						</Dropdown>
+					</div>
 				)
 			},
 		},
