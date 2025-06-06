@@ -25,10 +25,6 @@ function formateDate(time: string | number) {
 	return `${date.getFullYear()}-${month}-${data}` // * 2025-06-05
 }
 
-//
-//
-//
-
 /**
  * & 高级搜索表格 & 新建表单数据 Form
  * @param props
@@ -54,7 +50,7 @@ const AdvancedSearchForm = (Props: FormPropsType) => {
 
 	// * 处理 Form.Item 字段
 	const GetFieldsForms = () => {
-		const colsPerRow = rowCount ?? 3 // 每行占几个 <Col />
+		const colsPerRow = rowCount || 3 // 每行占几个 <Col />
 		const rowCounts = 24 / colsPerRow // 动态计算span: 1、2、3、4   不可超过4个
 
 		let closeCount = null
@@ -65,118 +61,59 @@ const AdvancedSearchForm = (Props: FormPropsType) => {
 
 		const children: React.ReactNode[] = []
 
-		for (const element of FormList) {
-			const { type, label, field, placeholder, list } = element
-			let inputComponent: React.ReactNode = null
-
-			switch (type) {
-				case 'INPUT':
-					inputComponent = <Input placeholder={placeholder} />
-					break
-				case 'SELECT':
-					inputComponent = <Select placeholder={placeholder}>{getOptionList(list)}</Select>
-					break
-				case 'CHECKBOX':
-					inputComponent = <Checkbox>{label}</Checkbox>
-					break
-				case 'TIME_START':
-				case 'TIME_END':
-					inputComponent = <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" placeholder={placeholder} />
-					break
+		for (let i = 0; i < FormList.length; i++) {
+			const { type, label, field, placeholder, list } = FormList[i]
+			let FormItem = null
+			if (type == 'INPUT') {
+				FormItem = (
+					<Col span={rowCounts} key={i}>
+						<Form.Item name={field} label={label} key={field}>
+							<Input type="text" placeholder={placeholder} />
+						</Form.Item>
+					</Col>
+				)
+			} else if (type === 'SELECT') {
+				FormItem = (
+					<Col span={rowCounts} key={i}>
+						<Form.Item name={field} label={label} key={field}>
+							<Select placeholder={placeholder}>{getOptionList(list)}</Select>
+						</Form.Item>
+					</Col>
+				)
+			} else if (type === 'CHECKBOX') {
+				FormItem = (
+					<Col span={rowCounts} key={i}>
+						<Form.Item name={field} label={label} key={field}>
+							<Checkbox>{label}</Checkbox>
+						</Form.Item>
+					</Col>
+				)
+			} else if (type === 'TIME_START') {
+				FormItem = (
+					<Col span={rowCounts} key={i}>
+						<Form.Item name={'startTime'} label="开始时间" key={'startTime'}>
+							<DatePicker showTime={true} placeholder={placeholder} format="YYYY-MM-DD hh:mm:ss" />
+						</Form.Item>
+					</Col>
+				)
+			} else if (type === 'TIME_END') {
+				FormItem = (
+					<Col span={rowCounts} key={i}>
+						<Form.Item name={'endTime'} label="结束时间" key={'endTime'}>
+							<DatePicker showTime={true} placeholder={placeholder} format="YYYY-MM-DD hh:mm:ss" />
+						</Form.Item>
+					</Col>
+				)
 			}
-			let formItems = (
-				<Col span={rowCounts} key={field}>
-					<Form.Item name={field} label={label} key={field}>
-						{inputComponent}
-					</Form.Item>
-				</Col>
-			)
-			children.push(formItems)
+			children.push(FormItem)
+			// children.push(
+			// 	<Col span={rowCounts} key={i}>
+			// 		<Form.Item name={`field-${i}`} label={`Field ${i}`} rules={[{ required: true, message: 'Input something!' }]} required tooltip={{ title: 'Tooltip with customize icon', icon: <InfoCircleOutlined /> }}>
+			// 			<Input placeholder="placeholder  禁用" />
+			// 		</Form.Item>
+			// 	</Col>
+			// )
 		}
-		// for (let i = 0; i < FormList.length; i++) {
-		// 	const { type, label, field, placeholder, list } = FormList[i]
-		// 	let FormItem = null
-		// 	if (type == 'INPUT') {
-		// 		FormItem = (
-		// 			<Col span={rowCounts} key={i}>
-		// 				<Form.Item name={field} label={label} key={field}>
-		// 					<Input type="text" placeholder={placeholder} />
-		// 				</Form.Item>
-		// 			</Col>
-		// 		)
-		// 	} else if (type === 'SELECT') {
-		// 		FormItem = (
-		// 			<Col span={rowCounts} key={i}>
-		// 				<Form.Item name={field} label={label} key={field}>
-		// 					<Select placeholder={placeholder}>{getOptionList(list)}</Select>
-		// 				</Form.Item>
-		// 			</Col>
-		// 		)
-		// 	} else if (type === 'CHECKBOX') {
-		// 		FormItem = (
-		// 			<Col span={rowCounts} key={i}>
-		// 				<Form.Item name={field} label={label} key={field}>
-		// 					<Checkbox>{label}</Checkbox>
-		// 				</Form.Item>
-		// 			</Col>
-		// 		)
-		// 	} else if (type === 'TIME_START') {
-		// 		FormItem = (
-		// 			<Col span={rowCounts} key={i}>
-		// 				<Form.Item name={'startTime'} label="开始时间" key={'startTime'}>
-		// 					<DatePicker showTime={true} placeholder={placeholder} format="YYYY-MM-DD hh:mm:ss" />
-		// 				</Form.Item>
-		// 			</Col>
-		// 		)
-		// 	} else if (type === 'TIME_END') {
-		// 		FormItem = (
-		// 			<Col span={rowCounts} key={i}>
-		// 				<Form.Item name={'endTime'} label="结束时间" key={'endTime'}>
-		// 					<DatePicker showTime={true} placeholder={placeholder} format="YYYY-MM-DD hh:mm:ss" />
-		// 				</Form.Item>
-		// 			</Col>
-		// 		)
-		// 	}
-		// 	children.push(FormItem)
-		// 	// children.push(
-		// 	// 	<Col span={rowCounts} key={i}>
-		// 	// 		<Form.Item name={`field-${i}`} label={`Field ${i}`} rules={[{ required: true, message: 'Input something!' }]} required tooltip={{ title: 'Tooltip with customize icon', icon: <InfoCircleOutlined /> }}>
-		// 	// 			<Input placeholder="placeholder  禁用" />
-		// 	// 		</Form.Item>
-		// 	// 	</Col>
-		// 	// )
-		// }
-		// {
-		// 	FormList.map(({ type, label, field, placeholder, list }, i) => {
-		// 		let inputComponent: React.ReactNode = null
-
-		// 		switch (type) {
-		// 			case 'INPUT':
-		// 				inputComponent = <Input placeholder={placeholder} />
-		// 				break
-		// 			case 'SELECT':
-		// 				inputComponent = <Select placeholder={placeholder}>{getOptionList(list)}</Select>
-		// 				break
-		// 			case 'CHECKBOX':
-		// 				inputComponent = <Checkbox>{label}</Checkbox>
-		// 				break
-		// 			case 'TIME_START':
-		// 			case 'TIME_END':
-		// 				inputComponent = <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" placeholder={placeholder} />
-		// 				break
-		// 			default:
-		// 				return null
-		// 		}
-		// 		let formItems = (
-		// 			<Col span={rowCounts} key={field || i}>
-		// 				<Form.Item name={field} label={label} key={field}>
-		// 					{inputComponent}
-		// 				</Form.Item>
-		// 			</Col>
-		// 		)
-		// 		children.push(formItems)
-		// 	})
-		// }
 		if (isSearch) {
 			// 当前行剩余列数 （按钮插入新行 or 同一行补齐）
 			const remainder = FormList.length % colsPerRow

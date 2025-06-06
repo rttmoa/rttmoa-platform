@@ -1,7 +1,24 @@
 import { InfoCircleOutlined } from '@ant-design/icons'
 
+// types.ts
+export type FormItemType = 'INPUT' | 'SELECT' | 'CHECKBOX' | 'TIME_START' | 'TIME_END'
+
+export interface FormFieldConfig {
+	type: FormItemType
+	label: string
+	field: string
+	placeholder?: string
+	list?: { value: string | number; label: string }[]
+	uname?: any
+	rules?: any
+	wrapperCol?: any
+	require?: any
+	tooltip?: any
+	initialValue?: any
+}
+
 // * 表单配置项
-let FormConfig = [
+let FormConfig: FormFieldConfig[] = [
 	{
 		type: 'INPUT',
 		// Form.Item属性

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Card, message, Modal, Form } from 'antd'
-import { createUser, editUser, getUserList } from '@/api/modules/system/userManage'
 import MultiTable from '@/components/Tables'
-import { roleList } from '@/api/modules/system/roleManage'
 import UserFormModal from './components/UserFormModal'
 import { newFormList } from './components/Form_Config'
 import { selectdProps } from '@/components/SelectFilter'
@@ -31,11 +29,13 @@ interface Pagination {
 	totalCount?: number
 }
 
-// ! 1、注意：向后台传递的参数有：表头搜索、表格过滤、表格排序、分页
-// ! 2、页码和搜索条件变动 去服务端取数据 searchFilter + pagination
+// 完成： 查询参数的处理
+// 完成： 1、注意：向后台传递的参数有：表头搜索、表格过滤、表格排序、分页
+// 完成： 2、页码和搜索条件变动 去服务端取数据 searchFilter + pagination
+// 完成 弹窗内 Form 的样式 — 使用 AdvancedSearchForm 组件中的 Row、Col组件
+// * 如何封装Form、其中input等组件如何传值
+// * 列配置
 // * 表格和表头的 高度
-// * 查询参数的处理
-// * 弹窗内 Form 的样式
 const UserManage: React.FC = () => {
 	const { handleExportAll } = useExportExcle()
 
@@ -65,7 +65,7 @@ const UserManage: React.FC = () => {
 
 	const GetData = async () => {
 		setLoading(true)
-		console.log('参数 pagination：', pagination)
+		// console.log('参数 pagination：', pagination)
 		let { page, pageSize } = pagination
 		let searchParams = { page, pageSize, ...searchFilter }
 		const result: any = await GetUserManagerList(searchParams)
@@ -129,13 +129,22 @@ const UserManage: React.FC = () => {
 			GetData()
 		}
 	}
-	// * 操作 — 员工： 新建、编辑、详情、删除  弹窗内容提交
-	const handleSubmit = () => {
+	// * 操作 — 员工： 新建、编辑、详情  弹窗内容提交
+	const handleModalSubmit = () => {
+		// 1、获取form字段值 并 过滤出有值的字段
+		// 2、字段值传递接口、获取接口结果、并提示出信息
+		// 3、重置Modal信息
+		// 4、重新请求，根据页码等条件
 		let type = modalType
-		let data = form.getFieldsValue()
-		// console.log("handleSubmit data", data);
-		let res = type === 'create' ? createUser(data) : editUser(data)
-		// 重新请求，根据页码等条件
+		let formData = form.getFieldsValue()
+		console.log('弹窗Modal：', formData)
+		// let res = type === 'create' ? createUser(formData) : editUser(formData)
+
+		setModalTitle('')
+		setModalType('')
+		setModalIsVisible(false)
+		setModalUserInfo({})
+		message.info('待实现')
 	}
 
 	// 导出EXCEL表头
@@ -162,34 +171,19 @@ const UserManage: React.FC = () => {
 		roleObj,
 		handleOperator,
 	}
-	let FormConfig = {
-		rowCount: 3, // 每行数量
-		FormListConfig: newFormList, // 配置
-		FormOnFinish(data: any) {}, // Form表单提交结果：表单是否有参数变化
-	}
 	return (
 		<>
-			{/* <AdvancedSearchForm {...FormConfig} /> */}
 			<AdvancedSearchForm
 				loading={loading}
-				rowCount={3}
-				FormListConfig={newFormList}
+				rowCount={3} // 每行数量
+				FormListConfig={newFormList} // Form配置项
+				// Form表单提交结果：表单是否有参数变化
 				FormOnFinish={(filterParams = {}) => {
 					const filtered = Object.fromEntries(Object.entries(filterParams).filter(([_, value]) => value !== undefined && value !== null && !(typeof value === 'string' && value.trim() === '')))
 					// console.log('过滤 filterParams', filtered)
 					setSearchFilter(filtered || {})
 				}}
 			/>
-
-			{/* <MultiForm
-				multiForm={multiForm} // form属性，初始化，获取值使用
-				formList={formList}
-				extendFormList={extendFormList}
-				filterSubmit={(filterParams = {}) => {
-					console.log('表单值：', filterParams) // * {user_name: '张三', sex: 2, phone: '15303663375'}
-					setSearchFilter(filterParams)
-				}}
-			/> */}
 			<Card className="tableCard w-full mt-2" size="small" hoverable loading={false} title={<span className="text-[14px]">用户列表</span>} extra={<TableHeader {...TableHeaderConfig} />}>
 				<MultiTable<any>
 					id="cart-scrollTable"
@@ -230,17 +224,20 @@ const UserManage: React.FC = () => {
 				/>
 			</Card>
 			<Modal
+				// className="" // 设置 tailwindCSS
 				width={800}
+				height={800}
 				title={modalTitle}
 				open={modalIsVisible}
-				onOk={handleSubmit}
+				// open={true}
+				onOk={handleModalSubmit}
 				onCancel={() => {
 					setModalTitle('')
 					setModalType('')
 					setModalIsVisible(false)
 					setModalUserInfo({})
 				}}>
-				<UserFormModal roles={roleAll} userInfo={modalUserInfo} type={modalType} form={form} />
+				<UserFormModal form={form} roles={roleAll} userInfo={modalUserInfo} type={modalType} />
 			</Modal>
 		</>
 	)
