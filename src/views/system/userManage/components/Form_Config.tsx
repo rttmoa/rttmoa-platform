@@ -1,4 +1,5 @@
 import { InfoCircleOutlined } from '@ant-design/icons'
+import { Input } from 'antd'
 
 export let newFormList = [
 	{
@@ -15,6 +16,16 @@ export let newFormList = [
 		placeholder: '请输入用户名',
 		initialValue: '',
 		// width: 120,
+	},
+
+	{
+		type: 'INPUT',
+		label: 'component',
+		uname: 'age',
+		field: 'age',
+		placeholder: '请输入年纪',
+		initialValue: '',
+		component: <Input.TextArea rows={1} placeholder="请输入描述信息" />,
 	},
 	{
 		type: 'INPUT',

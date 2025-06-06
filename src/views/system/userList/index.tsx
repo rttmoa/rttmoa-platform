@@ -219,7 +219,7 @@ const useProTable = () => {
 			{/* 需要封装一下 Modal 中的 Form 组件------------------------ */}
 			<Modal
 				title="新建用户"
-				width="1000px"
+				width={1000}
 				loading={false}
 				open={createModalOpen}
 				onCancel={() => {

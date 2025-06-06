@@ -1,4 +1,5 @@
 import { InfoCircleOutlined } from '@ant-design/icons'
+import { Input } from 'antd'
 
 // types.ts
 export type FormItemType = 'INPUT' | 'SELECT' | 'CHECKBOX' | 'TIME_START' | 'TIME_END'
@@ -15,6 +16,7 @@ export interface FormFieldConfig {
 	require?: any
 	tooltip?: any
 	initialValue?: any
+	component?: any
 }
 
 // * 表单配置项
@@ -33,6 +35,7 @@ let FormConfig: FormFieldConfig[] = [
 		placeholder: '请输入用户名',
 		initialValue: '',
 		// width: 120,
+		component: <Input.TextArea rows={4} placeholder="请输入描述信息" />,
 	},
 	{
 		type: 'INPUT',

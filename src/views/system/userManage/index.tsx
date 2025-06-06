@@ -32,8 +32,8 @@ interface Pagination {
 // 完成： 查询参数的处理
 // 完成： 1、注意：向后台传递的参数有：表头搜索、表格过滤、表格排序、分页
 // 完成： 2、页码和搜索条件变动 去服务端取数据 searchFilter + pagination
-// 完成 弹窗内 Form 的样式 — 使用 AdvancedSearchForm 组件中的 Row、Col组件
-// * 如何封装Form、其中input等组件如何传值
+// 完成： 弹窗内 Form 的样式 — 使用 AdvancedSearchForm 组件中的 Row、Col组件
+// 完成： 如何封装Form、其中input等组件如何传值
 // * 列配置
 // * 表格和表头的 高度
 const UserManage: React.FC = () => {
@@ -172,59 +172,61 @@ const UserManage: React.FC = () => {
 		handleOperator,
 	}
 	return (
-		<>
-			<AdvancedSearchForm
-				loading={loading}
-				rowCount={3} // 每行数量
-				FormListConfig={newFormList} // Form配置项
-				// Form表单提交结果：表单是否有参数变化
-				FormOnFinish={(filterParams = {}) => {
-					const filtered = Object.fromEntries(Object.entries(filterParams).filter(([_, value]) => value !== undefined && value !== null && !(typeof value === 'string' && value.trim() === '')))
-					// console.log('过滤 filterParams', filtered)
-					setSearchFilter(filtered || {})
-				}}
-			/>
-			<Card className="tableCard w-full mt-2" size="small" hoverable loading={false} title={<span className="text-[14px]">用户列表</span>} extra={<TableHeader {...TableHeaderConfig} />}>
-				<MultiTable<any>
-					id="cart-scrollTable"
-					size="small"
+		<div className="flex-1 overflow-hidden flex flex-col">
+			{/* 顶部搜索表单区域，高度固定或动态 */}
+			<div className="shrink-0">
+				<AdvancedSearchForm
 					loading={loading}
-					xScroll
-					scroll={{ x: 'max-content', y: 550 }} // 550
-					sticky={{ offsetHeader: 0 }} // https://ant.design/components/table-cn#table-demo-sticky
-					rowSelection="checkbox" // checkbox | radio
-					columns={fakeData ? columnConfig(fakeData, roleObj, handleOperator) : columnConfig()}
-					dataSource={userList}
-					pagination={pagination}
-					selectedRowKeys={selectRowItem.selectedRowKeys}
-					selectedIds={selectRowItem.selectedIds}
-					selectedItem={selectRowItem.selectedItem}
-					updateSelectedItem={(selectedRowKeys: any, selectedRows: any, selectedIds: any) => {
-						setSelectRowItem({
-							selectedRowKeys,
-							selectedIds: selectedIds && selectedIds.length > 0 ? selectedIds : [],
-							selectedRows,
-						})
+					rowCount={3} // 每行数量
+					FormListConfig={newFormList} // Form配置项
+					// Form表单提交结果：表单是否有参数变化
+					FormOnFinish={(filterParams = {}) => {
+						const filtered = Object.fromEntries(Object.entries(filterParams).filter(([_, value]) => value !== undefined && value !== null && !(typeof value === 'string' && value.trim() === '')))
+						// console.log('过滤 filterParams', filtered)
+						setSearchFilter(filtered || {})
 					}}
-					updatePage={(page, pageSize) => {
-						setPagination((state: Pagination) => ({ ...state, page, pageSize }))
-					}}
-					// summary={() => (
-					// 	// <Table.Summary fixed>
-					// 	// 	<Table.Summary.Row>
-					// 	// 		<Table.Summary.Cell index={0}>Summary</Table.Summary.Cell>
-					// 	// 		<Table.Summary.Cell index={1}>This is a summary content</Table.Summary.Cell>
-					// 	// 	</Table.Summary.Row>
-					// 	// </Table.Summary>
-					// 	<div className="flex h-[30px]">
-					// 		<div className="ml-4 w-[80px]">Summassry：</div>
-					// 		<div className="flex w-[180px] h-[30px] ml-6">This is a summary content</div>
-					// 	</div>
-					// )}
 				/>
-			</Card>
+			</div>
+			{/* 下部内容（Card + Table），高度自动撑满剩余空间 */}
+			<div className="flex-1 overflow-hidden mt-2">
+				<Card
+					className="h-full flex flex-col"
+					bodyStyle={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}
+					size="small" // size
+					hoverable
+					loading={false}
+					title={<span className="text-[14px]">用户列表</span>}
+					extra={<TableHeader {...TableHeaderConfig} />}>
+					<MultiTable<any>
+						id="cart-scrollTable"
+						size="small"
+						style={{ flex: 1 }}
+						loading={loading}
+						xScroll
+						scroll={{ x: 'max-content', y: '100%' }} // 👈 表体区域滚动 550
+						sticky={{ offsetHeader: 0 }} // https://ant.design/components/table-cn#table-demo-sticky
+						rowSelection="checkbox" // checkbox | radio
+						columns={fakeData ? columnConfig(fakeData, roleObj, handleOperator) : columnConfig()}
+						dataSource={userList}
+						pagination={pagination}
+						selectedRowKeys={selectRowItem.selectedRowKeys}
+						selectedIds={selectRowItem.selectedIds}
+						selectedItem={selectRowItem.selectedItem}
+						updateSelectedItem={(selectedRowKeys: any, selectedRows: any, selectedIds: any) => {
+							setSelectRowItem({
+								selectedRowKeys,
+								selectedIds: selectedIds && selectedIds.length > 0 ? selectedIds : [],
+								selectedRows,
+							})
+						}}
+						updatePage={(page, pageSize) => {
+							setPagination((state: Pagination) => ({ ...state, page, pageSize }))
+						}}
+					/>
+				</Card>
+			</div>
+
 			<Modal
-				// className="" // 设置 tailwindCSS
 				width={800}
 				height={800}
 				title={modalTitle}
@@ -239,7 +241,7 @@ const UserManage: React.FC = () => {
 				}}>
 				<UserFormModal form={form} roles={roleAll} userInfo={modalUserInfo} type={modalType} />
 			</Modal>
-		</>
+		</div>
 	)
 }
 export default UserManage

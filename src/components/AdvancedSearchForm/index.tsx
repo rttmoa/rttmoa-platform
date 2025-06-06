@@ -1,33 +1,7 @@
-import React, { useCallback, useState } from 'react'
+import React, { ReactNode, useCallback, useMemo, useState } from 'react'
 import { DownOutlined, InfoCircleOutlined } from '@ant-design/icons'
 import { Button, Card, Checkbox, Col, DatePicker, Form, FormProps, Input, Row, Select, Space, theme, Typography } from 'antd'
 import './index.less'
-
-function getOptionList(data = []) {
-	if (!data) {
-		return []
-	}
-	let options: any = [] //[<Option value="0" key="all_key">全部</Option>];
-	data.forEach((item: any) => {
-		options.push(
-			<Select.Option value={item.id} key={item.id}>
-				{item.name}
-			</Select.Option>
-		)
-	})
-	return options
-}
-function formateDate(time: string | number) {
-	if (!time) return ''
-	const date = new Date(time)
-	const month = date.getMonth() < 9 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
-	const data = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
-	return `${date.getFullYear()}-${month}-${data}` // * 2025-06-05
-}
-
-//
-//
-//
 
 /**
  * & 高级搜索表格 & 新建表单数据 Form
@@ -36,6 +10,15 @@ function formateDate(time: string | number) {
  */
 // 完成：待实现1：ProTable 新建按钮使用封装的 AdvancedSearchForm 组件
 // 完成：待实现2：用户管理中表头也需要使用 AdvancedSearchForm 组件
+export type FormItemType = 'INPUT' | 'SELECT' | 'CHECKBOX' | 'TIME_START' | 'TIME_END'
+type FormFieldItem = {
+	type?: 'INPUT' | 'SELECT' | 'CHECKBOX' | 'TIME_START' | 'TIME_END'
+	label: string
+	field: string
+	placeholder?: string
+	list?: any[]
+	component?: React.ReactNode // 👈 支持传入完整组件
+}
 type FormPropsType = {
 	name?: string // 表示每个Form表格、必须不相同
 	isSearch?: boolean // 是否是表单搜索
@@ -52,165 +35,13 @@ const AdvancedSearchForm = (Props: FormPropsType) => {
 	const [expand, setExpand] = useState<boolean>(false) // 是否展开
 	const [isSearch, SetIsSearch] = useState<boolean>(true) // 是否是表单搜索
 
-	// * 处理 Form.Item 字段
-	const GetFieldsForms = () => {
-		const colsPerRow = rowCount ?? 3 // 每行占几个 <Col />
-		const rowCounts = 24 / colsPerRow // 动态计算span: 1、2、3、4   不可超过4个
-
-		let closeCount = null
-		if (colsPerRow == 1) closeCount = FormConfig.slice(0, 1)
-		else closeCount = FormConfig.length >= colsPerRow ? FormConfig.slice(0, colsPerRow - 1) : FormConfig // 闭合时数量
-
-		const FormList: any[] = expand ? FormConfig : closeCount // 展开与关闭的数量
-
-		const children: React.ReactNode[] = []
-
-		for (const element of FormList) {
-			const { type, label, field, placeholder, list } = element
-			let inputComponent: React.ReactNode = null
-
-			switch (type) {
-				case 'INPUT':
-					inputComponent = <Input placeholder={placeholder} />
-					break
-				case 'SELECT':
-					inputComponent = <Select placeholder={placeholder}>{getOptionList(list)}</Select>
-					break
-				case 'CHECKBOX':
-					inputComponent = <Checkbox>{label}</Checkbox>
-					break
-				case 'TIME_START':
-				case 'TIME_END':
-					inputComponent = <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" placeholder={placeholder} />
-					break
-			}
-			let formItems = (
-				<Col span={rowCounts} key={field}>
-					<Form.Item name={field} label={label} key={field}>
-						{inputComponent}
-					</Form.Item>
-				</Col>
-			)
-			children.push(formItems)
-		}
-		// for (let i = 0; i < FormList.length; i++) {
-		// 	const { type, label, field, placeholder, list } = FormList[i]
-		// 	let FormItem = null
-		// 	if (type == 'INPUT') {
-		// 		FormItem = (
-		// 			<Col span={rowCounts} key={i}>
-		// 				<Form.Item name={field} label={label} key={field}>
-		// 					<Input type="text" placeholder={placeholder} />
-		// 				</Form.Item>
-		// 			</Col>
-		// 		)
-		// 	} else if (type === 'SELECT') {
-		// 		FormItem = (
-		// 			<Col span={rowCounts} key={i}>
-		// 				<Form.Item name={field} label={label} key={field}>
-		// 					<Select placeholder={placeholder}>{getOptionList(list)}</Select>
-		// 				</Form.Item>
-		// 			</Col>
-		// 		)
-		// 	} else if (type === 'CHECKBOX') {
-		// 		FormItem = (
-		// 			<Col span={rowCounts} key={i}>
-		// 				<Form.Item name={field} label={label} key={field}>
-		// 					<Checkbox>{label}</Checkbox>
-		// 				</Form.Item>
-		// 			</Col>
-		// 		)
-		// 	} else if (type === 'TIME_START') {
-		// 		FormItem = (
-		// 			<Col span={rowCounts} key={i}>
-		// 				<Form.Item name={'startTime'} label="开始时间" key={'startTime'}>
-		// 					<DatePicker showTime={true} placeholder={placeholder} format="YYYY-MM-DD hh:mm:ss" />
-		// 				</Form.Item>
-		// 			</Col>
-		// 		)
-		// 	} else if (type === 'TIME_END') {
-		// 		FormItem = (
-		// 			<Col span={rowCounts} key={i}>
-		// 				<Form.Item name={'endTime'} label="结束时间" key={'endTime'}>
-		// 					<DatePicker showTime={true} placeholder={placeholder} format="YYYY-MM-DD hh:mm:ss" />
-		// 				</Form.Item>
-		// 			</Col>
-		// 		)
-		// 	}
-		// 	children.push(FormItem)
-		// 	// children.push(
-		// 	// 	<Col span={rowCounts} key={i}>
-		// 	// 		<Form.Item name={`field-${i}`} label={`Field ${i}`} rules={[{ required: true, message: 'Input something!' }]} required tooltip={{ title: 'Tooltip with customize icon', icon: <InfoCircleOutlined /> }}>
-		// 	// 			<Input placeholder="placeholder  禁用" />
-		// 	// 		</Form.Item>
-		// 	// 	</Col>
-		// 	// )
-		// }
-		// {
-		// 	FormList.map(({ type, label, field, placeholder, list }, i) => {
-		// 		let inputComponent: React.ReactNode = null
-
-		// 		switch (type) {
-		// 			case 'INPUT':
-		// 				inputComponent = <Input placeholder={placeholder} />
-		// 				break
-		// 			case 'SELECT':
-		// 				inputComponent = <Select placeholder={placeholder}>{getOptionList(list)}</Select>
-		// 				break
-		// 			case 'CHECKBOX':
-		// 				inputComponent = <Checkbox>{label}</Checkbox>
-		// 				break
-		// 			case 'TIME_START':
-		// 			case 'TIME_END':
-		// 				inputComponent = <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" placeholder={placeholder} />
-		// 				break
-		// 			default:
-		// 				return null
-		// 		}
-		// 		let formItems = (
-		// 			<Col span={rowCounts} key={field || i}>
-		// 				<Form.Item name={field} label={label} key={field}>
-		// 					{inputComponent}
-		// 				</Form.Item>
-		// 			</Col>
-		// 		)
-		// 		children.push(formItems)
-		// 	})
-		// }
-		if (isSearch) {
-			// 当前行剩余列数 （按钮插入新行 or 同一行补齐）
-			const remainder = FormList.length % colsPerRow
-			if (remainder !== 0) {
-				for (let i = 0; i < colsPerRow - remainder - 1; i++) {
-					children.push(<Col span={rowCounts} key={`blank-${i}`} />)
-				}
-			} else {
-				for (let i = 0; i < colsPerRow - 1; i++) {
-					children.push(<Col span={rowCounts} key={`blank-${i}`} />)
-				}
-			}
-			children.push(
-				<Col span={rowCounts} key="actions" style={{ textAlign: 'right' }}>
-					<Form.Item>
-						<Space size="small">
-							<Button type="primary" htmlType="submit">
-								查询
-							</Button>
-							<Button onClick={() => form.resetFields()}>重置</Button>
-							{FormConfig.length < colsPerRow ? null : (
-								<Button type="link" className="text-[12px]" onClick={() => setExpand(!expand)}>
-									{expand ? '关闭' : '展开'} <DownOutlined />
-								</Button>
-							)}
-						</Space>
-					</Form.Item>
-				</Col>
-			)
-		}
-
-		return children
+	function formateDate(time: string | number) {
+		if (!time) return ''
+		const date = new Date(time)
+		const month = date.getMonth() < 9 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
+		const data = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
+		return `${date.getFullYear()}-${month}-${data}` // * 2025-06-05
 	}
-
 	// 提交表单数据
 	const OnFinish = (values: any) => {
 		// 处理字段：input、time、select、checkbox
@@ -227,6 +58,83 @@ const AdvancedSearchForm = (Props: FormPropsType) => {
 		console.log('Failed:', errorInfo)
 	}
 
+	// * 处理 Form.Item 字段 👈
+	const FormFields = useMemo(() => {
+		const colsPerRow = rowCount || 3
+		const colSpan = 24 / colsPerRow
+		const collapsedCount = colsPerRow === 1 ? 1 : FormConfig.length >= colsPerRow ? colsPerRow - 1 : FormConfig.length
+
+		const shownList = expand ? FormConfig : FormConfig.slice(0, collapsedCount)
+
+		const fieldNodes = shownList.map((cfg: FormFieldItem, idx) => {
+			const { type, label, field, placeholder, list, component } = cfg
+
+			let inputEl: React.ReactNode = null
+
+			if (component) {
+				// 👈 优先使用自定义组件 {label: "年末", component: <Input placeholder="" /> }
+				inputEl = component
+			} else {
+				switch (type) {
+					case 'INPUT':
+						inputEl = <Input placeholder={placeholder} />
+						break
+					case 'SELECT':
+						inputEl = <Select placeholder={placeholder}>{/* {getOptionList(list)} */}</Select>
+						break
+					case 'CHECKBOX':
+						inputEl = <Checkbox>{label}</Checkbox>
+						break
+					case 'TIME_START':
+					case 'TIME_END':
+						inputEl = <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" placeholder={placeholder} />
+						break
+					default:
+						return null
+				}
+			}
+
+			return (
+				<Col span={colSpan} key={idx}>
+					<Form.Item name={field} label={label}>
+						{inputEl}
+					</Form.Item>
+				</Col>
+			)
+		})
+
+		// 🔽 渲染操作按钮（补空位 + 查询/重置）
+		let actionNode: React.ReactNode[] = []
+		if (isSearch) {
+			const remainder = shownList.length % colsPerRow
+			const fillCount = remainder === 0 ? colsPerRow - 1 : colsPerRow - remainder - 1
+
+			const blankCols = Array.from({ length: fillCount }, (_, i) => <Col span={colSpan} key={`blank-${i}`} />)
+
+			const actions = (
+				<Col span={colSpan} key="actions" style={{ textAlign: 'right' }}>
+					<Form.Item>
+						<Space size="small">
+							<Button type="primary" htmlType="submit">
+								查询
+							</Button>
+							<Button onClick={() => form.resetFields()}>重置</Button>
+							{FormConfig.length < colsPerRow ? null : (
+								<Button type="link" className="text-[12px]" onClick={() => setExpand(!expand)}>
+									{expand ? '关闭' : '展开'} <DownOutlined />
+								</Button>
+							)}
+						</Space>
+					</Form.Item>
+				</Col>
+			)
+
+			actionNode = [...blankCols, actions]
+		}
+
+		return [...fieldNodes, ...actionNode]
+	}, [expand, FormConfig, rowCount, isSearch])
+
 	let layout = {
 		labelCol: { span: 8 },
 		wrapperCol: { span: 16 },
@@ -235,12 +143,8 @@ const AdvancedSearchForm = (Props: FormPropsType) => {
 	return (
 		<Card size="small" hoverable>
 			<Form disabled={loading} name={name} form={form} layout="horizontal" size="middle" variant="outlined" onFinish={OnFinish} onFinishFailed={OnFailed}>
-				<Row gutter={24}>{GetFieldsForms()}</Row>
+				<Row gutter={24}>{FormFields}</Row>
 			</Form>
-			{/* <Typography>
-				<pre>Name Value: useWatch</pre>
-				<pre>Custom Value: Form.useWatch</pre>
-			</Typography> */}
 		</Card>
 	)
 }

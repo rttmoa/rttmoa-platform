@@ -143,7 +143,7 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] 
 		{
 			title: '地址',
 			dataIndex: 'city',
-			hideInSearch: true,
+			// hideInSearch: true,
 			ellipsis: true,
 			copyable: true,
 		},
@@ -153,7 +153,7 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] 
 			dataIndex: 'time',
 			valueType: 'time',
 			sorter: true,
-			hideInSearch: true,
+			// hideInSearch: true,
 			ellipsis: true,
 		},
 		{
@@ -162,7 +162,7 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] 
 			dataIndex: 'date',
 			valueType: 'date',
 			sorter: true,
-			hideInSearch: true,
+			// hideInSearch: true,
 			ellipsis: true,
 		},
 		{
@@ -171,7 +171,7 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] 
 			dataIndex: 'dateTime',
 			valueType: 'dateTime',
 			sorter: true,
-			hideInSearch: true,
+			// hideInSearch: true,
 			ellipsis: true,
 		},
 		{
@@ -180,7 +180,7 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] 
 			dataIndex: 'dateTime',
 			valueType: 'dateTime',
 			sorter: true,
-			hideInSearch: true,
+			// hideInSearch: true,
 			ellipsis: true,
 		},
 		{
@@ -189,7 +189,7 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] 
 			dataIndex: 'dateTime',
 			valueType: 'dateTime',
 			sorter: true,
-			hideInSearch: true,
+			// hideInSearch: true,
 			ellipsis: true,
 		},
 		{
@@ -198,7 +198,7 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] 
 			dataIndex: 'dateTime',
 			valueType: 'dateTime',
 			sorter: true,
-			hideInSearch: true,
+			// hideInSearch: true,
 			ellipsis: true,
 		},
 		{
@@ -207,7 +207,7 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] 
 			dataIndex: 'dateTime',
 			valueType: 'dateTime',
 			sorter: true,
-			hideInSearch: true,
+			// hideInSearch: true,
 			ellipsis: true,
 		},
 
@@ -217,7 +217,7 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] 
 			dataIndex: 'dateTime',
 			valueType: 'dateTime',
 			sorter: true,
-			hideInSearch: true,
+			// hideInSearch: true,
 			ellipsis: true,
 		},
 

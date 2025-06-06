@@ -4,24 +4,25 @@ import { Table } from 'antd'
 import { TableProps } from 'antd/es/table/InternalTable'
 import { TableRowSelection } from 'antd/es/table/interface'
 import React, { useCallback, useEffect, useState } from 'react'
-// import { createStyles } from 'antd-style'
-// const useStyle = createStyles(({ css, token }: any) => {
-// 	const { antCls } = token
-// 	return {
-// 		customTable: css`
-// 			${antCls}-table {
-// 				${antCls}-table-container {
-// 					${antCls}-table-body,
-// 					${antCls}-table-content {
-// 						scrollbar-width: thin;
-// 						scrollbar-color: #eaeaea transparent;
-// 						scrollbar-gutter: stable;
-// 					}
-// 				}
-// 			}
-// 		`,
-// 	}
-// })
+// import './index.less'
+import { createStyles } from 'antd-style'
+const useStyle = createStyles(({ css, token }: any) => {
+	const { antCls } = token
+	return {
+		customTable: css`
+			${antCls}-table {
+				${antCls}-table-container {
+					${antCls}-table-body,
+					${antCls}-table-content {
+						scrollbar-width: thin;
+						scrollbar-color: #eaeaea transparent;
+						scrollbar-gutter: stable;
+					}
+				}
+			}
+		`,
+	}
+})
 interface TablesProps {
 	size?: string
 	id?: string
@@ -246,10 +247,9 @@ export default function Tables<T extends object>(props: MultiTableProps<T>) {
 	}
 
 	// console.log("x,y: ", x, y);
-
 	return (
 		<Table<T>
-			// className={}
+			// className="MultiTable flex-1"
 			{...props}
 			bordered
 			columns={columns}
@@ -281,10 +281,6 @@ export default function Tables<T extends object>(props: MultiTableProps<T>) {
 				showQuickJumper: true,
 				showSizeChanger: true,
 			}}
-
-			// function pagination(data: any, callback: (page: number, pageSize: number) => void) {
-			// 	return { ... }
-			// }
 		/>
 	)
 }
