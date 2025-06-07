@@ -1,11 +1,35 @@
 .MultiTable {
-	// background-color: red !important;
-	.ant-pro-table-scroll .ant-pro-card:last-child .ant-pro-card-body .ant-table-wrapper .ant-spin-nested-loading {
-		height: 100%;
+	// * 表头固定的
+
+	flex: 1 !important;
+	height: 100% !important;
+	overflow: auto;
+
+	// card 100%
+	.ant-card {
+		display: flex !important;
+		flex-direction: column !important;
+		height: 100% !important;
 	}
+
+	// 表格
 	.ant-table {
-		height: 850px !important;
+		max-height: 600px !important;
 	}
+
+	// 内容
+	.ant-table-container {
+		display: flex !important;
+		flex-direction: column !important;
+		max-height: 570px !important;
+	}
+
+	// 分页器
+	.ant-pagination {
+		// background-color: #e51313;
+		margin-right: 15px !important;
+	}
+
 	// .ant-pro-table-scroll .ant-pro-card:last-child .ant-pro-card-body .ant-table-wrapper {
 	// 	flex: 1 !important;
 	// 	overflow: hidden !important;
@@ -23,18 +47,11 @@
 	// 	flex: auto !important;
 	// 	overflow: hidden !important;
 	// }
-	.ant-table-wrapper {
-		display: flex !important;
-		flex-direction: column !important;
-		height: 100% !important;
-	}
-
-	// card 100%
-	.ant-card {
-		display: flex !important;
-		flex-direction: column !important;
-		height: 100% !important;
-	}
+	// .ant-table-wrapper {
+	// 	display: flex !important;
+	// 	flex-direction: column !important;
+	// 	height: 200px !important;
+	// }
 
 	// .ant-pro-table-scroll .ant-pro-card:last-child .ant-pro-card-body .ant-table-wrapper .ant-spin-nested-loading .ant-spin-container .ant-table .ant-table-container {
 	// 	display: flex;
@@ -70,9 +87,4 @@
 	// .ant-pro-table-scroll .ant-pro-card:last-child .ant-pro-card-body .ant-table-wrapper .ant-spin-nested-loading .ant-spin-container .ant-table .ant-table-container .ant-table-body {
 	// 	flex: auto !important;
 	// }
-	.ant-table-container {
-		display: flex !important;
-		flex-direction: column !important;
-		height: 100% !important;
-	}
 }

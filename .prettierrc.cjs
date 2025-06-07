@@ -6,26 +6,26 @@
 // 		lint:prettier:fix
 module.exports = {
 	// 一行最多 180 个字符
-	printWidth: 320, // 160 ? 180
+	printWidth: 180, // 160 ? 180
 	// 制表符宽度（使用 4 个空格缩进）
 	tabWidth: 4,
 	// 使用 tab 进行缩进 (true: tabs, false: spaces)
 	useTabs: true,
 	// 在语句末尾使用分号 (true: yes, false: no)
-	semi: false,
+	semi: true,
 	// 对字符串使用单引号 (true: single quotes, false: double quotes)
 	singleQuote: true,
 	// 确定是否在对象文字中的属性名称周围使用引号 ("<as-needed|consistent|preserve>")
 	quoteProps: 'as-needed',
 	// 在 JSX 中使用单引号代替双引号 (true: single quotes, false: double quotes)
-	jsxSingleQuote: false,
+	jsxSingleQuote: true,
 	// 对象和数组中的尾随逗号  ("<none|es5|all>")
 	trailingComma: 'es5',
 	// 在对象文字和数组中的大括号之间添加空格 "{ foo: bar }" (true: yes, false: no)
 	bracketSpacing: true,
 	// 将 > 的 JSX 元素放在最后一行的末尾而不是新行上 (true: 最后一行的末尾, false: 在新行上)
-	bracketSameLine: true,
-	jsxBracketSameLine: true, // jsx尖括号不换行
+	bracketSameLine: false,
+	jsxBracketSameLine: false, // jsx尖括号不换行
 	// 在唯一的箭头函数参数周围包含括号 (avoid: omit parentheses, always: include parentheses)
 	arrowParens: 'avoid',
 	// 指定要使用的解析器，无需在文件开头包含 @prettier
