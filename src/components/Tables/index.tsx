@@ -3,26 +3,12 @@ import math from '@/utils/math';
 import { Table } from 'antd';
 import { TableProps } from 'antd/es/table/InternalTable';
 import React, { useCallback, useEffect, useState } from 'react';
-import './index.less';
 import { MultiTableProps } from './type';
+import './index.less';
 
 export default function Tables<T extends object>(props: MultiTableProps<T>) {
 	// console.log('Tables props: ', props);
-	const {
-		id,
-		heghtAuto = false,
-		xScroll = false,
-		yScroll = false,
-		scroll,
-		sticky,
-		dataSource,
-		columns,
-		pagination,
-		selectedRowKeys,
-		rowSelection,
-		updateSelectedItem,
-		updatePage,
-	} = props;
+	const { id, xScroll = false, yScroll = false, scroll, dataSource, columns, pagination, selectedRowKeys, rowSelection, updatePage, updateSelectedItem } = props;
 	const [state, setState] = useState<any>({});
 
 	const dataSourceLength = dataSource?.length;
@@ -160,10 +146,14 @@ export default function Tables<T extends object>(props: MultiTableProps<T>) {
 	let y = scroll?.y as number;
 	console.log('x,y: ', x, y);
 	// 389 - 76 - 38 - 32 = 243
-	if (y) y = y - 76 - 32;
+	// if (y) y = y - 76 - 32 // 高度 - 标题 -分页器 （size=default）
+	if (y) y = y - 38 - 32; // 高度 - 标题 -分页器 （size=small）
+	// console.log('dataSource', dataSource && dataSource.length);
+
 	return (
 		<Table<T>
-			// className="MultiTable"
+			className='MultiTable'
+			// style={{ minHeight: y > 500 ? 650 : 300 }}
 			{...props}
 			bordered
 			columns={columns}
@@ -176,8 +166,10 @@ export default function Tables<T extends object>(props: MultiTableProps<T>) {
 					onRowClick(record, index);
 				},
 			})}
+			// pagination={false}
 			pagination={{
 				size: 'default',
+				// style: { marginBottom: 0 }, // 防止分页器下方再留空
 				// 页码改变的回调，参数是改变后的页码及每页条数
 				onChange: (page: number, pageSize: number) => {
 					console.log('onChange 变化的回调', page, pageSize);
@@ -189,9 +181,11 @@ export default function Tables<T extends object>(props: MultiTableProps<T>) {
 				// hideOnSinglePage: true, // 只有一个隐藏分页器 (不需要隐藏分页器)
 				current: pagination.page,
 				pageSize: pagination.pageSize,
-				pageSizeOptions: [10, 20, 50, 100, 500, 1000],
+				pageSizeOptions: [5, 10, 15, 20, 50, 100, 500, 1000],
 				total: pagination.totalCount,
-				showTotal: () => `共 ${pagination.totalCount} 条`,
+				// showTotal: () => `共 ${pagination.totalCount} 条`,
+				showTotal: () => `共 ${pagination.totalCount} 条`, // 	第 31-40 条 || 总共 27469 条
+
 				showQuickJumper: true,
 				showSizeChanger: true,
 			}}

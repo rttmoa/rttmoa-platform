@@ -1,30 +1,28 @@
-import { UserList } from '@/api/interface'
-import { ProFormDateTimePicker, ProFormRadio, ProFormSelect, ProFormText, ProFormTextArea, StepsForm } from '@ant-design/pro-components'
-import { Modal } from 'antd'
-import React from 'react'
+import { UserList } from '@/api/interface';
+import { ProFormDateTimePicker, ProFormRadio, ProFormSelect, ProFormText, ProFormTextArea, StepsForm } from '@ant-design/pro-components';
+import { Modal } from 'antd';
+import React from 'react';
 
 // Partial<API.RuleListItem>
 export type FormValueType = {
-	target?: string
-	template?: string
-	type?: string
-	time?: string
-	frequency?: string
-} & Partial<UserList>
+	target?: string;
+	template?: string;
+	type?: string;
+	time?: string;
+	frequency?: string;
+} & Partial<UserList>;
 
 export type UpdateFormProps = {
-	onCancel: (flag?: boolean, formVals?: FormValueType) => void
-	onSubmit: (values: FormValueType) => Promise<void>
-	updateModalOpen: boolean
-	values: Partial<UserList>
-}
+	onCancel: (flag?: boolean, formVals?: FormValueType) => void;
+	onSubmit: (values: FormValueType) => Promise<void>;
+	updateModalOpen: boolean;
+	values: Partial<UserList>;
+};
 
 const UpdateForm: React.FC<UpdateFormProps> = props => {
 	return (
 		<StepsForm
-			stepsProps={{
-				size: 'small',
-			}}
+			stepsProps={{ size: 'small' }}
 			stepsFormRender={(dom, submitter) => {
 				return (
 					<Modal
@@ -35,13 +33,15 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
 						open={props.updateModalOpen}
 						footer={submitter}
 						onCancel={() => {
-							props.onCancel()
-						}}>
+							props.onCancel();
+						}}
+					>
 						{dom}
 					</Modal>
-				)
+				);
 			}}
-			onFinish={props.onSubmit}>
+			onFinish={props.onSubmit}
+		>
 			<StepsForm.StepForm
 				initialValues={
 					{
@@ -49,11 +49,12 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
 						// desc: props.values.desc,
 					}
 				}
-				title={'基本信息'}>
+				title={'基本信息'}
+			>
 				<ProFormText
-					name="name"
+					name='name'
 					label={'规则名称'}
-					width="md"
+					width='md'
 					rules={[
 						{
 							required: true,
@@ -62,8 +63,8 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
 					]}
 				/>
 				<ProFormTextArea
-					name="desc"
-					width="md"
+					name='desc'
+					width='md'
 					label={'规则描述'}
 					placeholder={'请输入至少五个字符'}
 					rules={[
@@ -80,10 +81,11 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
 					target: '0',
 					template: '0',
 				}}
-				title={'配置规则属性'}>
+				title={'配置规则属性'}
+			>
 				<ProFormSelect
-					name="target"
-					width="md"
+					name='target'
+					width='md'
 					label={'监控对象'}
 					valueEnum={{
 						0: '表一',
@@ -91,8 +93,8 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
 					}}
 				/>
 				<ProFormSelect
-					name="template"
-					width="md"
+					name='template'
+					width='md'
 					label={'规则模板'}
 					valueEnum={{
 						0: '规则模板一',
@@ -100,7 +102,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
 					}}
 				/>
 				<ProFormRadio.Group
-					name="type"
+					name='type'
 					label={'规则类型'}
 					options={[
 						{
@@ -119,10 +121,11 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
 					type: '1',
 					frequency: 'month',
 				}}
-				title={'设定调度周期'}>
+				title={'设定调度周期'}
+			>
 				<ProFormDateTimePicker
-					name="time"
-					width="md"
+					name='time'
+					width='md'
 					label={'开始时间'}
 					rules={[
 						{
@@ -132,9 +135,9 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
 					]}
 				/>
 				<ProFormSelect
-					name="frequency"
+					name='frequency'
 					label={'监控对象'}
-					width="md"
+					width='md'
 					valueEnum={{
 						month: '月',
 						week: '周',
@@ -142,7 +145,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
 				/>
 			</StepsForm.StepForm>
 		</StepsForm>
-	)
-}
+	);
+};
 
-export default UpdateForm
+export default UpdateForm;

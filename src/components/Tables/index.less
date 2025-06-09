@@ -1,9 +1,10 @@
 .MultiTable {
 	// * 表头固定的
 
-	flex: 1 !important;
-	height: 100% !important;
-	overflow: auto;
+	// flex: 1 !important;
+	// height: 100% !important;
+	// overflow: auto;
+	// flex: auto;
 
 	// card 100%
 	.ant-card {
@@ -11,17 +12,31 @@
 		flex-direction: column !important;
 		height: 100% !important;
 	}
+	// .ant-card-body {
+	// 	display: flex !important;
+	// 	flex-direction: column !important;
+	// 	height: 100% !important;
+	// }
 
 	// 表格
 	.ant-table {
-		max-height: 600px !important;
+		max-height: 100% !important;
+	}
+	.ant-table-tbody {
+		// flex: 1 !important;
+		// display: flex !important;
+		// flex-direction: column !important;
+		height: 100% !important;
 	}
 
 	// 内容
 	.ant-table-container {
 		display: flex !important;
 		flex-direction: column !important;
-		max-height: 570px !important;
+		height: 100% !important;
+	}
+	.ant-table-row {
+		flex: 1 !important;
 	}
 
 	// 分页器
