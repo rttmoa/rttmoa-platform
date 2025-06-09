@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.35](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.34...v2.3.35) (2025-06-09)
+
+
+### Features
+
+* 🚀 advancedSearchForm ([e8412e3](https://github.com/rttmoa/rttmoa-platform/commit/e8412e3a21a34771f3c603d234a13e0e4b3ff002))
+* 🚀 usermanager ([0aa3bf4](https://github.com/rttmoa/rttmoa-platform/commit/0aa3bf476f63efb23fb4b931c520b594725ef805))
+* 🚀 usermanger ([9283fe1](https://github.com/rttmoa/rttmoa-platform/commit/9283fe1cc081022f9dafa8a3baecc290af7494ad))
+
 ### [2.3.34](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.33...v2.3.34) (2025-06-05)
 
 
