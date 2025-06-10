@@ -3,7 +3,16 @@ import { ProDescriptions, ProDescriptionsItemProps } from '@ant-design/pro-compo
 import { Drawer } from 'antd';
 import TableColumnsConfig from './ColumnConfig';
 
-const DrawerComponent = (Params: any) => {
+type DrawerComponentProps = {
+	showDetail: any;
+	currentRow: any;
+	setCurrentRow: any;
+	setShowDetail: any;
+	columnParams: any;
+};
+
+// 查看用户
+const DrawerComponent: React.FC<DrawerComponentProps> = Params => {
 	const { showDetail, currentRow, setCurrentRow, setShowDetail, columnParams } = Params;
 	return (
 		<Drawer

@@ -1,19 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { Button, Col, Drawer, Form, Input, Modal, Row, Space } from 'antd';
 import { formatDataForProTable } from '@/utils';
-import { pagination as paginationConfig } from '@/config/proTable';
 import { UserList } from '@/api/interface';
 import { FooterToolbar, ProDescriptions, ProTable } from '@ant-design/pro-components';
 import type { ActionType, FormInstance, ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { message } from '@/hooks/useMessage';
-import { addRule, updateRule } from '@/api/modules/api_useProTable_eg/api';
-import UpdateForm from './component/UpdateForm';
 import TableColumnsConfig, { TableColumnsParams } from './component/ColumnConfig';
 import ToolBarRender from './component/ToolBar';
 import { DelMoreUser, DelUser, GetProTableUser } from '@/api/modules/upack/common';
 import './index.less';
-import { DeleteOutlined } from '@ant-design/icons';
-import handle from './component/Operate';
 import ModalComponent from './component/ModalComponent';
 import DrawerComponent from './component/DrawerComponent';
 import FooterComponent from './component/FooterComponent';
@@ -28,21 +23,23 @@ export type FormValueType = {
 
 // TODO: refer： https://github.com/ant-design/ant-design-pro
 // ProTable：https://procomponents.ant.design/components/table
+// 表格数量量多会如何？ 500 - 5000 - 50000
 const useProTable = () => {
-	// console.log('defalut', defalut)
+	const actionRef = useRef<ActionType>(); // 表格 ref
+	const formRef = useRef<FormInstance>(); // 表单 ref
 
-	const actionRef = useRef<ActionType>();
-	const formRef = useRef<FormInstance>();
+	const [form] = Form.useForm();
+
+	const [loading, SetLoading] = useState<boolean>(false); // Loading：加载Loading
+	const [pagination, SetPagination] = useState<any>({ page: 1, pageSize: 10, total: 0 }); // 分页数据
+
 	const [createModalOpen, handleModalOpen] = useState<boolean>(false);
 	const [selectedRowsState, setSelectedRows] = useState<any[]>([]); // 表格：选择行数据
 	const [currentRow, setCurrentRow] = useState<UserList>();
 	const [showDetail, setShowDetail] = useState<boolean>(false);
 	const [updateModalOpen, handleUpdateModalOpen] = useState<boolean>(false);
-	const [pagination, SetPagination] = useState<any>({ page: 1, pageSize: 10, total: 0 }); // 分页数据
 	const [dataSource, SetdataSource] = useState([]);
 	const [openSearch, SetOpenSearch] = useState<boolean>(false); // 工具栏：开启关闭表单搜索
-	const [loading, SetLoading] = useState<boolean>(false); // Loading：加载Loading
-	const [form] = Form.useForm();
 
 	const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
 	const [modalTitle, setModalTitle] = useState<string>('');
@@ -132,26 +129,24 @@ const useProTable = () => {
 		// setModalIsVisible(false);
 		// setModalUserInfo({});
 		message.info('待实现');
-	};
-
-	const handleUserAdd = async () => {
 		const hide = message.loading('正在添加');
 		try {
 			const formValues = form.getFieldsValue();
 			console.log('formValues', formValues);
-			const result = await addRule({ ...formValues });
-			if (result) {
-				hide();
-				form.resetFields();
-				setModalIsVisible(false);
-				if (actionRef.current) actionRef.current.reload();
-				message.success('Added successfully');
-			}
+			// const result = await addRule({ ...formValues });
+			// if (result) {
+			// 	hide();
+			// 	form.resetFields();
+			// 	setModalIsVisible(false);
+			// 	if (actionRef.current) actionRef.current.reload();
+			// 	message.success('Added successfully');
+			// }
 		} catch (error) {
 			hide();
 			message.error('Adding failed, please try again!');
 		}
 	};
+
 	// * 工具栏 ToolBar
 	let ToolBarParams = {
 		setModalIsVisible, // 工具栏：新建按钮
@@ -166,8 +161,7 @@ const useProTable = () => {
 		setShowDetail,
 		handleOperator,
 	};
-	// & 表格封装成通用
-	// 表格数量量多会如何？ 500 - 5000 - 50000
+	// * 表格封装成通用
 	return (
 		<>
 			<ProTable<UserList>
@@ -182,9 +176,9 @@ const useProTable = () => {
 				loading={loading}
 				columns={TableColumnsConfig(columnParams)}
 				toolBarRender={() => ToolBarRender(ToolBarParams)} // 渲染工具栏
-				actionRef={actionRef} // Table action 的引用，便于自定义触发      actionRef.current.reload()  |  actionRef.current.reset()   |   actionRef.current.clearSelected()
+				actionRef={actionRef} // Table action 的引用，便于自定义触发 actionRef.current.reset()
 				formRef={formRef} // 可以获取到查询表单的 form 实例
-				search={openSearch ? false : { labelWidth: 'auto', filterType: 'query', span: 6 }} // 搜索表单配置 Form
+				search={openSearch ? false : { labelWidth: 'auto', filterType: 'query', span: 6 }} // 搜索表单配置
 				// onSubmit={params => {}} // {username: '张三'}  提交表单时触发
 				// onReset={() => {}} // 重置表单时触发
 				// dataSource={dataSource}
@@ -194,7 +188,6 @@ const useProTable = () => {
 					console.log('request请求参数：', params, sort, filter);
 					// const { data } = await getUserList(params)
 					const { data }: any = await GetProTableUser({ ...params, page: params.current });
-					// console.log('请求数据：', data);
 					SetLoading(false);
 					SetPagination({ ...pagination, total: data.total });
 					return formatDataForProTable<UserList>({ ...data, current: params.current });
@@ -203,8 +196,6 @@ const useProTable = () => {
 					...pagination,
 					pageSizeOptions: [10, 20, 30, 50, 100],
 					onChange: (page, pageSize) => {
-						// SetLoading(true);
-						console.log('page, pageSize', page, pageSize);
 						SetPagination({ ...pagination, page, pageSize });
 					},
 				}}

@@ -166,29 +166,29 @@ export default function Tables<T extends object>(props: MultiTableProps<T>) {
 					onRowClick(record, index);
 				},
 			})}
-			// pagination={false}
-			pagination={{
-				size: 'default',
-				// style: { marginBottom: 0 }, // 防止分页器下方再留空
-				// 页码改变的回调，参数是改变后的页码及每页条数
-				onChange: (page: number, pageSize: number) => {
-					console.log('onChange 变化的回调', page, pageSize);
-					return updatePage && updatePage(page!, pageSize!);
-				},
-				onShowSizeChange: (page: number, pageSize: number) => {
-					// console.log("onShowSizeChange 变化的回调", current, size);
-				},
-				// hideOnSinglePage: true, // 只有一个隐藏分页器 (不需要隐藏分页器)
-				current: pagination.page,
-				pageSize: pagination.pageSize,
-				pageSizeOptions: [5, 10, 15, 20, 50, 100, 500, 1000],
-				total: pagination.totalCount,
-				// showTotal: () => `共 ${pagination.totalCount} 条`,
-				showTotal: () => `共 ${pagination.totalCount} 条`, // 	第 31-40 条 || 总共 27469 条
+			pagination={false}
+			// pagination={{
+			// 	size: 'default',
+			// 	// style: { marginBottom: 0 }, // 防止分页器下方再留空
+			// 	// 页码改变的回调，参数是改变后的页码及每页条数
+			// 	onChange: (page: number, pageSize: number) => {
+			// 		console.log('onChange 变化的回调', page, pageSize);
+			// 		return updatePage && updatePage(page!, pageSize!);
+			// 	},
+			// 	onShowSizeChange: (page: number, pageSize: number) => {
+			// 		// console.log("onShowSizeChange 变化的回调", current, size);
+			// 	},
+			// 	// hideOnSinglePage: true, // 只有一个隐藏分页器 (不需要隐藏分页器)
+			// 	current: pagination.page,
+			// 	pageSize: pagination.pageSize,
+			// 	pageSizeOptions: [5, 10, 15, 20, 50, 100, 500, 1000],
+			// 	total: pagination.totalCount,
+			// 	// showTotal: () => `共 ${pagination.totalCount} 条`,
+			// 	showTotal: () => `共 ${pagination.totalCount} 条`, // 	第 31-40 条 || 总共 27469 条
 
-				showQuickJumper: true,
-				showSizeChanger: true,
-			}}
+			// 	showQuickJumper: true,
+			// 	showSizeChanger: true,
+			// }}
 		/>
 	);
 }

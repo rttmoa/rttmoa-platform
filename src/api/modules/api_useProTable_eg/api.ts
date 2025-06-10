@@ -74,7 +74,7 @@ export async function updateRule(options?: { [key: string]: any }) {
 }
 
 /** 新建规则 POST /api/rule */
-// await addRule({ ...fields });
+// await addRule({ ...formValues });
 export async function addRule(options?: { [key: string]: any }) {
 	return http.post<API.RuleListItem>('/api/rule', {
 		method: 'POST',

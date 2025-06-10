@@ -60,7 +60,7 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] 
 						onClick={() => {
 							setCurrentRow(entity);
 							setShowDetail(true);
-							message.info(`点击了 ${entity.username}`);
+							// message.info(`点击了 ${entity.username}`);
 						}}
 					>
 						{dom}
@@ -245,73 +245,57 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] 
 };
 
 // 操作按钮：查看、新增、删除
-const action = (entity: UserList, Params: TableColumnsParams) => [
-	<div className='more-button'>
-		<Dropdown
-			menu={{
-				items: [
-					{
-						key: '1',
-						label: (
-							<Button
-								key='view'
-								type='link'
-								size='small'
-								icon={<EyeOutlined />}
-								onClick={() => {
-									Params.setCurrentRow(entity);
-									Params.setShowDetail(true);
-									message.info(`点击了 ${entity.username}`);
-								}}
-							>
-								查看
-							</Button>
-						),
-					},
-					{
-						key: '2',
-						label: (
-							<Button
-								key='edit'
-								type='link'
-								size='small'
-								icon={<EditOutlined />}
-								onClick={() => {
-									Params.handleOperator('edit', entity);
-								}}
-							>
-								编辑
-							</Button>
-						),
-					},
-					{
-						key: '3',
-						label: (
-							<Button
-								key='delete'
-								type='link'
-								size='small'
-								danger
-								icon={<DeleteOutlined />}
-								onClick={() => {
-									// message.success(`删除了iD为: ${entity.username}`, 2);
-									Params.handleOperator('delete', entity);
-								}}
-							>
-								删除
-							</Button>
-						),
-					},
-				],
-			}}
-			placement='bottomLeft'
-			arrow={{ pointAtCenter: true }}
-			trigger={['click']}
-		>
-			<div className='more-button-item'>
-				<IconFont style={{ fontSize: 22 }} type='icon-xiala' />
-			</div>
-		</Dropdown>
-	</div>,
-];
+const action = (entity: UserList, Params: TableColumnsParams) => {
+	const OnView = () => {
+		Params.setCurrentRow(entity);
+		Params.setShowDetail(true);
+	};
+	const OnEdit = () => {
+		Params.handleOperator('edit', entity);
+	};
+	const OnDelete = () => {
+		Params.handleOperator('delete', entity);
+	};
+	return [
+		<div className='more-button'>
+			<Dropdown
+				menu={{
+					items: [
+						{
+							key: '1',
+							label: (
+								<Button key='view' type='link' size='small' icon={<EyeOutlined />} onClick={OnView}>
+									查看
+								</Button>
+							),
+						},
+						{
+							key: '2',
+							label: (
+								<Button key='edit' type='link' size='small' icon={<EditOutlined />} onClick={OnEdit}>
+									编辑
+								</Button>
+							),
+						},
+						{
+							key: '3',
+							label: (
+								<Button key='delete' type='link' size='small' danger icon={<DeleteOutlined />} onClick={OnDelete}>
+									删除
+								</Button>
+							),
+						},
+					],
+				}}
+				placement='bottom'
+				arrow={{ pointAtCenter: true }}
+				trigger={['click']}
+			>
+				<div className='more-button-item'>
+					<IconFont style={{ fontSize: 22 }} type='icon-xiala' />
+				</div>
+			</Dropdown>
+		</div>,
+	];
+};
 export default TableColumnsConfig;

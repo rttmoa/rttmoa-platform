@@ -4,7 +4,7 @@ import Search from 'antd/lib/input/Search'; // ! antd/lib/input
 import { useDispatch } from '@/redux';
 import { setGlobalState } from '@/redux/modules/global';
 
-// * 渲染工具栏
+// * 渲染工具栏 组件
 const ToolBarRender = (Params: any) => {
 	let { setModalIsVisible, quickSearch, openSearch, SetOpenSearch, handleOperator } = Params;
 	const dispatch = useDispatch();

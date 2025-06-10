@@ -20,17 +20,19 @@ type FormFieldItem = {
 	component?: React.ReactNode; // 👈 支持传入完整组件
 };
 type FormPropsType = {
+	formRef: React.RefObject<HTMLDivElement>;
 	cid?: string;
 	name?: string; // 表示每个Form表格、必须不相同
 	isSearch?: boolean; // 是否是表单搜索
 	loading: boolean;
 	rowCount?: number; // 每行的数量
 	FormListConfig?: any[]; // 表单的配置项
-	tableYHeight: any;
+	// tableYHeight: any;
 	FormOnFinish: (data: any) => any; // 将结果传递到父组件
+	SetIsExpand: any;
 };
 const AdvancedSearchForm = (Props: FormPropsType) => {
-	const { cid, name = 'advanced_search', loading, FormListConfig = [], rowCount = 3, tableYHeight, FormOnFinish } = Props;
+	const { formRef, cid, name = 'advanced_search', loading, FormListConfig = [], rowCount = 3, FormOnFinish, SetIsExpand } = Props;
 	const FormConfig = FormListConfig;
 
 	const [form] = Form.useForm();
@@ -39,17 +41,17 @@ const AdvancedSearchForm = (Props: FormPropsType) => {
 
 	const [tableHeight, setTableHeight] = useState(350);
 
-	useEffect(() => {
-		const total = document.body.clientHeight;
-		const topHeight = document.getElementById('AdvancedSearchForm')?.offsetHeight || 0;
-		const header = 55 + 45;
-		const footer = 30; // 假设有底部
-		console.log('params: ', total, topHeight); // 898  69|289
-		setTableHeight(total - topHeight - header - footer - 40);
-		let tableY: number = total - topHeight - header - footer - 40;
-		tableYHeight && tableYHeight(tableY);
-	}, [expand]);
-	console.log('tableHeight', tableHeight);
+	// useEffect(() => {
+	// 	const total = document.body.clientHeight;
+	// 	const topHeight = document.getElementById('AdvancedSearchForm')?.offsetHeight || 0;
+	// 	const header = 55 + 45;
+	// 	const footer = 30; // 假设有底部
+	// 	console.log('params: ', total, topHeight); // 898  69|289
+	// 	setTableHeight(total - topHeight - header - footer - 40);
+	// 	let tableY: number = total - topHeight - header - footer - 40;
+	// 	tableYHeight && tableYHeight(tableY);
+	// }, [expand]);
+	// console.log('tableHeight', tableHeight);
 
 	function formateDate(time: string | number) {
 		if (!time) return '';
@@ -72,6 +74,11 @@ const AdvancedSearchForm = (Props: FormPropsType) => {
 	};
 	const OnFailed: FormProps<any>['onFinishFailed'] = errorInfo => {
 		console.log('Failed:', errorInfo);
+	};
+
+	const OnExpand = () => {
+		setExpand(!expand);
+		SetIsExpand(!expand); // 父组件展开状态
 	};
 
 	// * 处理 Form.Item 字段 👈
@@ -136,7 +143,7 @@ const AdvancedSearchForm = (Props: FormPropsType) => {
 							</Button>
 							<Button onClick={() => form.resetFields()}>重置</Button>
 							{FormConfig.length < colsPerRow ? null : (
-								<Button type='link' className='text-[12px]' onClick={() => setExpand(!expand)}>
+								<Button type='link' className='text-[12px]' onClick={OnExpand}>
 									{expand ? '关闭' : '展开'} <DownOutlined />
 								</Button>
 							)}
@@ -157,7 +164,7 @@ const AdvancedSearchForm = (Props: FormPropsType) => {
 	};
 	let maxWidth = { maxWidth: 600 };
 	return (
-		<Card id={'AdvancedSearchForm'} size='small' hoverable>
+		<Card id={'AdvancedSearchForm'} size='small' hoverable ref={formRef}>
 			<Form disabled={loading} name={name} form={form} layout='horizontal' size='middle' variant='outlined' onFinish={OnFinish} onFinishFailed={OnFailed}>
 				<Row gutter={24}>{FormFields}</Row>
 			</Form>
