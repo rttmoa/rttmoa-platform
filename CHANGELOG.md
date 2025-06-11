@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.36](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.35...v2.3.36) (2025-06-11)
+
+
+### Features
+
+* 🚀 修改用户列表 ([4d8503e](https://github.com/rttmoa/rttmoa-platform/commit/4d8503e143024558a1b72d01551c6f81aa6348d3))
+* **api:** 🚀 更新接口函数 ([9519624](https://github.com/rttmoa/rttmoa-platform/commit/951962455c86e84c92cd619a32f8e8576381f1bb))
+
 ### [2.3.35](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.34...v2.3.35) (2025-06-09)
 
 
