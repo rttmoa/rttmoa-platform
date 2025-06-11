@@ -1,14 +1,14 @@
-import { IconFont } from '@/components/Icon'
-import { message } from '@/hooks/useMessage'
-import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'
-import { Badge, Button, Dropdown, Image, Space, Tag, Tooltip } from 'antd'
-import { ColumnProps } from 'antd/es/table'
+import { IconFont } from '@/components/Icon';
+import { message } from '@/hooks/useMessage';
+import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
+import { Badge, Button, Dropdown, Image, Space, Tag, Tooltip } from 'antd';
+import { ColumnProps } from 'antd/es/table';
 
 interface stateConfig {
-	[propName: string]: React.ReactNode
+	[propName: string]: React.ReactNode;
 }
 interface InterestConfig {
-	[propName: number]: string
+	[propName: number]: string;
 }
 // * 表格：列配置项
 export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: any) => {
@@ -25,12 +25,12 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 			width: 60,
 			align: 'center',
 			sorter: (a: any, b: any) => {
-				return a.id - b.id
+				return a.id - b.id;
 			},
 			sortDirections: ['descend', 'ascend'],
 			ellipsis: { showTitle: false },
 			render: (value: any) => (
-				<Tooltip placement="top" title={value}>
+				<Tooltip placement='top' title={value}>
 					{value || '-'}
 				</Tooltip>
 			),
@@ -43,8 +43,8 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 			align: 'center',
 			ellipsis: { showTitle: false },
 			render: (value: any) => (
-				<Tooltip placement="top" title={value}>
-					<a href="">{value || '-'}</a>
+				<Tooltip placement='top' title={value}>
+					<a href=''>{value || '-'}</a>
 				</Tooltip>
 			),
 		},
@@ -59,7 +59,7 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 					<div>
 						<Image height={20} src={avatar} />
 					</div>
-				)
+				);
 			},
 		},
 		{
@@ -72,11 +72,11 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 				{ text: '女', value: 0 },
 			],
 			onFilter: (value: any, record: any) => {
-				return record?.sex == value
+				return record?.sex == value;
 			},
 			ellipsis: { showTitle: false },
 			render: (sex: any) => (
-				<Tooltip placement="top" title={sex === 1 ? '男' : '女'}>
+				<Tooltip placement='top' title={sex === 1 ? '男' : '女'}>
 					{sex === 1 ? '男' : '女'}
 				</Tooltip>
 			),
@@ -86,20 +86,33 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 			dataIndex: 'age',
 			width: 60,
 			align: 'center',
+			ellipsis: { showTitle: false },
+			render: (element: string) => {
+				return (
+					<Tooltip placement='top' title={element}>
+						{element}
+					</Tooltip>
+				);
+			},
 		},
 		{
 			title: '在线状态',
 			dataIndex: 'status',
 			width: 80,
 			align: 'center',
+			ellipsis: { showTitle: false },
 			render: (state: string) => {
 				let config: stateConfig = {
-					隐身: <Tag color="blue">隐身</Tag>,
-					在线: <Tag color="green">在线</Tag>,
-					离线: <Tag color="red">离线</Tag>,
-					异常: <Tag color="orange">异常</Tag>,
-				}
-				return config[state]
+					隐身: <Tag color='blue'>隐身</Tag>,
+					在线: <Tag color='green'>在线</Tag>,
+					离线: <Tag color='red'>离线</Tag>,
+					异常: <Tag color='orange'>异常</Tag>,
+				};
+				return (
+					<Tooltip placement='top' title={state}>
+						{config[state]}
+					</Tooltip>
+				);
 			},
 		},
 		{
@@ -107,17 +120,25 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 			dataIndex: 'marriage',
 			width: 80,
 			align: 'center',
+			ellipsis: { showTitle: false },
 			render(marriage: string) {
-				switch (marriage) {
-					case '未婚':
-						return <Badge status="default" text="未婚" />
-					case '已婚':
-						return <Badge status="success" text="已婚" />
-					case '离异':
-						return <Badge status="error" text="离异" />
-					default:
-						return ''
+				function marriaged() {
+					switch (marriage) {
+						case '未婚':
+							return <Badge status='default' text='未婚' />;
+						case '已婚':
+							return <Badge status='success' text='已婚' />;
+						case '离异':
+							return <Badge status='error' text='离异' />;
+						default:
+							return '';
+					}
 				}
+				return (
+					<Tooltip placement='top' title={marriage}>
+						{marriaged()}
+					</Tooltip>
+				);
 			},
 		},
 		// {
@@ -144,12 +165,12 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 			align: 'center',
 			ellipsis: { showTitle: false },
 			render: (phone: number) => {
-				let aPhone = String(phone).replace(/(\d{3})\d*(\d{4})/g, '$1***$2')
+				let aPhone = String(phone).replace(/(\d{3})\d*(\d{4})/g, '$1***$2');
 				return (
-					<Tooltip placement="top" title={aPhone}>
+					<Tooltip placement='top' title={aPhone}>
 						{aPhone}
 					</Tooltip>
-				)
+				);
 			},
 		},
 		{
@@ -159,7 +180,7 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 			align: 'center',
 			ellipsis: { showTitle: false },
 			render: (city: any) => (
-				<Tooltip placement="top" title={city}>
+				<Tooltip placement='top' title={city}>
 					{city}
 				</Tooltip>
 			),
@@ -171,7 +192,7 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 			align: 'center',
 			ellipsis: { showTitle: false },
 			render: (element: any) => (
-				<Tooltip placement="top" title={element}>
+				<Tooltip placement='top' title={element}>
 					{element}
 				</Tooltip>
 			),
@@ -183,7 +204,7 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 			align: 'center',
 			ellipsis: { showTitle: false },
 			render: (element: any) => (
-				<Tooltip placement="top" title={element}>
+				<Tooltip placement='top' title={element}>
 					{element}
 				</Tooltip>
 			),
@@ -195,7 +216,7 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 			align: 'center',
 			ellipsis: { showTitle: false },
 			render: (element: any) => (
-				<Tooltip placement="top" title={element}>
+				<Tooltip placement='top' title={element}>
 					{element}
 				</Tooltip>
 			),
@@ -207,7 +228,7 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 			align: 'center',
 			ellipsis: { showTitle: false },
 			render: (element: any) => (
-				<Tooltip placement="top" title={element}>
+				<Tooltip placement='top' title={element}>
 					{element}
 				</Tooltip>
 			),
@@ -219,7 +240,7 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 			align: 'center',
 			ellipsis: { showTitle: false },
 			render: (element: any) => (
-				<Tooltip placement="top" title={element}>
+				<Tooltip placement='top' title={element}>
 					{element}
 				</Tooltip>
 			),
@@ -231,7 +252,7 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 			align: 'center',
 			ellipsis: { showTitle: false },
 			render: (element: any) => (
-				<Tooltip placement="top" title={element}>
+				<Tooltip placement='top' title={element}>
 					{element}
 				</Tooltip>
 			),
@@ -243,7 +264,7 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 			align: 'center',
 			ellipsis: { showTitle: false },
 			render: (element: any) => (
-				<Tooltip placement="top" title={element}>
+				<Tooltip placement='top' title={element}>
 					{element}
 				</Tooltip>
 			),
@@ -286,9 +307,10 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 			fixed: 'right',
 			width: 60,
 			align: 'center',
+			ellipsis: { showTitle: false },
 			render(record: any) {
 				return (
-					<div className="more-button">
+					<div className='more-button'>
 						<Dropdown
 							menu={{
 								items: [
@@ -296,16 +318,17 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 										key: '1',
 										label: (
 											<Button
-												key="view"
-												type="link"
-												size="small"
+												key='view'
+												type='link'
+												size='small'
 												icon={<EyeOutlined />}
 												onClick={() => {
 													// console.log(entity)
 													// Params.setCurrentRow(entity)
 													// Params.setShowDetail(true)
-													handleOperator('detail', record)
-												}}>
+													handleOperator('detail', record);
+												}}
+											>
 												查看
 											</Button>
 										),
@@ -314,13 +337,14 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 										key: '2',
 										label: (
 											<Button
-												key="edit"
-												type="link"
-												size="small"
+												key='edit'
+												type='link'
+												size='small'
 												icon={<EditOutlined />}
 												onClick={() => {
-													handleOperator('edit', record)
-												}}>
+													handleOperator('edit', record);
+												}}
+											>
 												编辑
 											</Button>
 										),
@@ -329,31 +353,33 @@ export const columnConfig: any = (apiData: any, roleObj: any, handleOperator: an
 										key: '3',
 										label: (
 											<Button
-												key="delete"
-												type="link"
-												size="small"
+												key='delete'
+												type='link'
+												size='small'
 												danger
 												icon={<DeleteOutlined />}
 												onClick={() => {
 													// message.success(`删除了iD为: ${entity.username}`, 2)
-													handleOperator('delete', record)
-												}}>
+													handleOperator('delete', record);
+												}}
+											>
 												删除
 											</Button>
 										),
 									},
 								],
 							}}
-							placement="bottomRight"
+							placement='bottomRight'
 							arrow={{ pointAtCenter: true }}
-							trigger={['click']}>
-							<div className="more-button-item">
-								<IconFont style={{ fontSize: 22 }} type="icon-xiala" />
+							trigger={['click']}
+						>
+							<div className='more-button-item'>
+								<IconFont style={{ fontSize: 22 }} type='icon-xiala' />
 							</div>
 						</Dropdown>
 					</div>
-				)
+				);
 			},
 		},
-	]
-}
+	];
+};

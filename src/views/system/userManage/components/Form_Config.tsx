@@ -1,5 +1,5 @@
-import { InfoCircleOutlined } from '@ant-design/icons'
-import { Input } from 'antd'
+import { InfoCircleOutlined } from '@ant-design/icons';
+import { Input } from 'antd';
 
 export let newFormList = [
 	{
@@ -25,7 +25,7 @@ export let newFormList = [
 		field: 'age',
 		placeholder: '请输入年纪',
 		initialValue: '',
-		component: <Input.TextArea rows={1} placeholder="请输入描述信息" />,
+		component: <Input.TextArea rows={1} placeholder='请输入描述信息' />,
 	},
 	{
 		type: 'INPUT',
@@ -77,63 +77,7 @@ export let newFormList = [
 		placeholder: '测试高度',
 		initialValue: '',
 	},
-	{
-		type: 'INPUT',
-		label: '其他',
-		uname: 'hobby',
-		field: 'hobby',
-		placeholder: '测试高度',
-		initialValue: '',
-	},
-	{
-		type: 'INPUT',
-		label: '其他',
-		uname: 'hobby',
-		field: 'hobby',
-		placeholder: '测试高度',
-		initialValue: '',
-	},
-	{
-		type: 'INPUT',
-		label: '其他',
-		uname: 'hobby',
-		field: 'hobby',
-		placeholder: '测试高度',
-		initialValue: '',
-	},
-	{
-		type: 'INPUT',
-		label: '其他',
-		uname: 'hobby',
-		field: 'hobby',
-		placeholder: '测试高度',
-		initialValue: '',
-	},
-	{
-		type: 'INPUT',
-		label: '其他',
-		uname: 'hobby',
-		field: 'hobby',
-		placeholder: '测试高度',
-		initialValue: '',
-	},
-	{
-		type: 'INPUT',
-		label: '其他',
-		uname: 'hobby',
-		field: 'hobby',
-		placeholder: '测试高度',
-		initialValue: '',
-	},
-	{
-		type: 'INPUT',
-		label: '其他',
-		uname: 'hobby',
-		field: 'hobby',
-		placeholder: '测试高度',
-		initialValue: '',
-	},
-]
+];
 
 //* 表单查询 Form
 export const formList: any[] = [
@@ -166,7 +110,7 @@ export const formList: any[] = [
 		initialValue: '',
 		width: 120,
 	},
-]
+];
 
 // 输入框查询 Form 展开
 export const extendFormList = [
@@ -224,7 +168,7 @@ export const extendFormList = [
 			},
 		],
 	},
-]
+];
 
 // 选择框查询 SelectFilter 配置
 export const SelectFilterData = [
@@ -290,4 +234,4 @@ export const SelectFilterData = [
 			},
 		],
 	},
-]
+];

@@ -34,15 +34,18 @@ interface Pagination {
 // 完成： 2、页码和搜索条件变动 去服务端取数据 searchFilter + pagination
 // 完成： 弹窗内 Form 的样式 — 使用 AdvancedSearchForm 组件中的 Row、Col组件
 // 完成： 如何封装Form、其中input等组件如何传值
+// 完成： 表格和表头的 高度
 // * 列配置
-// * 表格和表头的 高度
 const UserManage: React.FC = () => {
 	const { handleExportAll } = useExportExcle();
 	const [form] = Form.useForm();
 	const [multiForm] = Form.useForm();
 
-	const [tableY, setTableY] = useState<any>(500);
-	console.log('tableY', tableY);
+	const formRef = useRef<HTMLDivElement>(null);
+	const containerRef = useRef<HTMLDivElement>(null);
+	const paginationRef = useRef<HTMLDivElement>(null);
+	const toolBarRef = useRef<HTMLDivElement>(null);
+
 	// * 处理角色
 	const [roleObj, setroleObj] = useState<any>({}); // 角色对象： {0: '普通用户', 2: '前端开发', 5: '管理员'}
 	const [roleAll, setroleAll] = useState([]); // 所有角色的集合
@@ -63,25 +66,18 @@ const UserManage: React.FC = () => {
 	const [modalType, setModalType] = useState<string>('');
 	const [modalUserInfo, setModalUserInfo] = useState({});
 
-	const formRef = useRef<HTMLDivElement>(null);
-	const containerRef = useRef<HTMLDivElement>(null);
-	const [scrollY, setScrollY] = useState(300);
-	const [isExpand, SetIsExpand] = useState(false);
+	const [scrollY, setScrollY] = useState(0);
+	const [isExpand, SetIsExpand] = useState(false); // 获取子组件是否展开
 
 	// 表格高度自适应
 	useEffect(() => {
 		const updateHeight = () => {
-			const containerHeight = containerRef.current?.clientHeight || 0;
-			console.log('main 盒子高度', containerHeight);
-			const formHeight = formRef.current?.clientHeight || 0;
-			console.log('表单高度：', formHeight);
-			const paginationHeight = 56;
-			const headerH = 55 + 38;
-			const footerH = 30;
-
-			const tableHeight = containerHeight - formHeight - paginationHeight - headerH - footerH - 120; // 100 | 120 | 140
-			let tableh = tableHeight > 100 ? tableHeight : 100;
-			console.log('useEffect 表格高度', tableh);
+			const containerH = containerRef.current?.clientHeight || 0; // 可视区高
+			const formH = formRef.current?.clientHeight || 0; // 表单高
+			const toolBarH = toolBarRef.current?.clientHeight || 0; // 表单高
+			const paginationH = paginationRef.current?.clientHeight || 0; // 分页高
+			const tableHeight = containerH - formH - toolBarH - paginationH; // 100 | 120 | 140
+			let tableh = tableHeight > 200 ? tableHeight : 200;
 			setScrollY(tableh);
 		};
 		updateHeight();
@@ -193,12 +189,11 @@ const UserManage: React.FC = () => {
 
 	console.log('总高度：', containerRef?.current?.clientHeight);
 	console.log('表单高度: ', formRef.current?.clientHeight);
+	console.log('表格高度：', scrollY);
 	return (
 		<div className='h-full flex flex-col overflow-hidden' ref={containerRef}>
-			{/* 顶部搜索表单区域，高度固定或动态 */}
 			<AdvancedSearchForm
 				formRef={formRef}
-				cid='AdvancedSearchForm'
 				loading={loading}
 				rowCount={3} // 每行数量
 				FormListConfig={newFormList} // Form配置项
@@ -207,26 +202,23 @@ const UserManage: React.FC = () => {
 					const filtered = Object.fromEntries(
 						Object.entries(filterParams).filter(([_, value]) => value !== undefined && value !== null && !(typeof value === 'string' && value.trim() === ''))
 					);
-					// console.log('过滤 filterParams', filtered)
 					setSearchFilter(filtered || {});
 				}}
 				SetIsExpand={SetIsExpand}
 			/>
-			{/* 下部内容（Card + Table），高度自动撑满剩余空间 */}
-			<Card
-				className='cardTable h-full flex-1 overflow-hidden mt-[12px]'
-				size='small' // size
-				hoverable
-				loading={false}
-				title={<span className='text-[14px]'>用户列表</span>}
-				extra={<TableHeader {...TableHeaderConfig} />}
-			>
+			<div className='h-full flex-1  mt-[12px] rounded-lg bg-white'>
+				<div className='flex justify-between px-[18px] py-[10px]' ref={toolBarRef}>
+					<span className='text-[14px] font-mono'>
+						<b>用户列表</b>
+					</span>
+					<TableHeader {...TableHeaderConfig} />
+				</div>
 				<MultiTable<any> // Table 👈
 					id='cart-scrollTable'
 					size='small' // small | default
 					loading={loading}
 					xScroll
-					scroll={{ x: 'max-content', y: tableY }} // 550   '100%'
+					scroll={{ x: 'max-content', y: scrollY }} // 550   '100%'
 					sticky={{ offsetHeader: 0 }}
 					rowSelection='checkbox' // checkbox | radio
 					columns={fakeData ? columnConfig(fakeData, roleObj, handleOperator) : columnConfig()}
@@ -246,10 +238,22 @@ const UserManage: React.FC = () => {
 					selectedIds={selectRowItem.selectedIds}
 					selectedItem={selectRowItem.selectedItem}
 				/>
-			</Card>
+			</div>
 
-			<div className='flex justify-end rounded-xl mt-[12px] bg-white px-[16px] py-[12px]'>
-				<Pagination showQuickJumper defaultCurrent={2} total={500} onChange={() => {}} />
+			<div className='flex justify-end rounded-lg px-[20px] pb-[12px] bg-white' ref={paginationRef}>
+				<Pagination
+					size='default'
+					showQuickJumper
+					showSizeChanger
+					onChange={(page: number, pageSize: number) => {
+						setPagination({ ...pagination, page, pageSize });
+					}}
+					current={pagination.page}
+					pageSize={pagination.pageSize}
+					pageSizeOptions={[5, 10, 15, 20, 50, 100, 500, 1000]}
+					total={pagination.totalCount}
+					showTotal={() => `第${pagination.page}页， 共 ${pagination.totalCount} 条`} // 	第 31-40 条 || 总共 27469 条
+				/>
 			</div>
 
 			<Modal

@@ -21,7 +21,6 @@ type FormFieldItem = {
 };
 type FormPropsType = {
 	formRef: React.RefObject<HTMLDivElement>;
-	cid?: string;
 	name?: string; // 表示每个Form表格、必须不相同
 	isSearch?: boolean; // 是否是表单搜索
 	loading: boolean;
@@ -32,26 +31,12 @@ type FormPropsType = {
 	SetIsExpand: any;
 };
 const AdvancedSearchForm = (Props: FormPropsType) => {
-	const { formRef, cid, name = 'advanced_search', loading, FormListConfig = [], rowCount = 3, FormOnFinish, SetIsExpand } = Props;
+	const { formRef, name = 'advanced_search', loading, FormListConfig = [], rowCount = 3, FormOnFinish, SetIsExpand } = Props;
 	const FormConfig = FormListConfig;
 
 	const [form] = Form.useForm();
 	const [expand, setExpand] = useState<boolean>(false); // 是否展开
 	const [isSearch, SetIsSearch] = useState<boolean>(true); // 是否是表单搜索
-
-	const [tableHeight, setTableHeight] = useState(350);
-
-	// useEffect(() => {
-	// 	const total = document.body.clientHeight;
-	// 	const topHeight = document.getElementById('AdvancedSearchForm')?.offsetHeight || 0;
-	// 	const header = 55 + 45;
-	// 	const footer = 30; // 假设有底部
-	// 	console.log('params: ', total, topHeight); // 898  69|289
-	// 	setTableHeight(total - topHeight - header - footer - 40);
-	// 	let tableY: number = total - topHeight - header - footer - 40;
-	// 	tableYHeight && tableYHeight(tableY);
-	// }, [expand]);
-	// console.log('tableHeight', tableHeight);
 
 	function formateDate(time: string | number) {
 		if (!time) return '';
@@ -165,7 +150,7 @@ const AdvancedSearchForm = (Props: FormPropsType) => {
 	let maxWidth = { maxWidth: 600 };
 	return (
 		<Card id={'AdvancedSearchForm'} size='small' hoverable ref={formRef}>
-			<Form disabled={loading} name={name} form={form} layout='horizontal' size='middle' variant='outlined' onFinish={OnFinish} onFinishFailed={OnFailed}>
+			<Form size='middle' layout='horizontal' disabled={loading} name={name} form={form} variant='outlined' onFinish={OnFinish} onFinishFailed={OnFailed}>
 				<Row gutter={24}>{FormFields}</Row>
 			</Form>
 		</Card>

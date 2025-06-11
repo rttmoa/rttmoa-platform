@@ -30,17 +30,16 @@ const useProTable = () => {
 
 	const [form] = Form.useForm();
 
+	const [openSearch, SetOpenSearch] = useState<boolean>(false); // 工具栏：开启关闭表单搜索
 	const [loading, SetLoading] = useState<boolean>(false); // Loading：加载Loading
 	const [pagination, SetPagination] = useState<any>({ page: 1, pageSize: 10, total: 0 }); // 分页数据
-
-	const [createModalOpen, handleModalOpen] = useState<boolean>(false);
 	const [selectedRowsState, setSelectedRows] = useState<any[]>([]); // 表格：选择行数据
-	const [currentRow, setCurrentRow] = useState<UserList>();
-	const [showDetail, setShowDetail] = useState<boolean>(false);
-	const [updateModalOpen, handleUpdateModalOpen] = useState<boolean>(false);
-	const [dataSource, SetdataSource] = useState([]);
-	const [openSearch, SetOpenSearch] = useState<boolean>(false); // 工具栏：开启关闭表单搜索
 
+	// Drawer
+	const [currentRow, setCurrentRow] = useState<UserList>(); // Drawer 选择当前行数据
+	const [showDetail, setShowDetail] = useState<boolean>(false); // Drawer 是否显示
+
+	// Modal
 	const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
 	const [modalTitle, setModalTitle] = useState<string>('');
 	const [modalType, setModalType] = useState<string>('');
@@ -56,7 +55,7 @@ const useProTable = () => {
 	// 	const { data }: any = await GetProTableUser(queryParams);
 	// 	console.log('请求数据：', data);
 	// 	if (data?.list?.length) {
-	// 		SetdataSource(data.list);
+	// 		SetdataSource(data?.list);
 	// 		SetPagination({ ...pagination, total: data.total });
 	// 	} else {
 	// 		SetdataSource([]);
@@ -161,6 +160,7 @@ const useProTable = () => {
 		setShowDetail,
 		handleOperator,
 	};
+
 	// * 表格封装成通用
 	return (
 		<>
