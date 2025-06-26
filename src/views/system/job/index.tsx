@@ -7,7 +7,7 @@ import type { ActionType, FormInstance, ProDescriptionsItemProps } from '@ant-de
 import { message } from '@/hooks/useMessage';
 import TableColumnsConfig, { TableColumnsParams } from './component/ColumnConfig';
 import ToolBarRender from './component/ToolBar';
-import { DelMoreUser, DelUser, GetProTableUser } from '@/api/modules/upack/common';
+import { DelMoreUser, DelUser, findJob, GetProTableUser } from '@/api/modules/upack/common';
 import './index.less';
 import ModalComponent from './component/ModalComponent';
 import DrawerComponent from './component/DrawerComponent';
@@ -145,7 +145,7 @@ const useProTable = () => {
 			<ProTable<UserList>
 				rowKey='_id'
 				className='ant-pro-table-scroll'
-				scroll={{ x: 2500, y: '100vh' }} // 100vh
+				// scroll={{ x: 2500, y: '100vh' }} // 100vh
 				bordered
 				cardBordered
 				dateFormatter='string'
@@ -157,18 +157,15 @@ const useProTable = () => {
 				actionRef={actionRef} // Table action 的引用，便于自定义触发 actionRef.current.reset()
 				formRef={formRef} // 可以获取到查询表单的 form 实例
 				search={openSearch ? false : { labelWidth: 'auto', filterType: 'query', span: 6 }} // 搜索表单配置
-				// onSubmit={params => {}} // {username: '张三'}  提交表单时触发
-				// onReset={() => {}} // 重置表单时触发
-				// dataSource={dataSource}
-				// request请求、获取所有数据、将数据存储起来、
 				request={async (params, sort, filter) => {
 					SetLoading(true);
 					console.log('request请求参数：', params, sort, filter);
 					// const { data } = await getUserList(params)
-					const { data }: any = await GetProTableUser({ ...params, page: params.current });
+					const { data }: any = await findJob({ ...params, page: params.current });
+					console.log('data', data);
 					SetLoading(false);
 					SetPagination({ ...pagination, total: data.total });
-					return formatDataForProTable<UserList>({ ...data, current: params.current });
+					return formatDataForProTable<any>({ ...data, page: params.current });
 				}}
 				pagination={{
 					...pagination,

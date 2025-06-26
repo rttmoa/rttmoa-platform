@@ -18,16 +18,16 @@ export const GetAllShelf = (params: Params) => http.get(`/shelf/Warehouse_All_Sh
 
 // * System
 // 系统管理 — 菜单管理 — 新增菜单
-export const InsNewMenu = (params: Params) => http.post(`/menu/ins_Menu`, params);
+export const InsNewMenu = (params: Params) => http.post(`/menu/addMenu`, params);
 
 // 系统管理 — 菜单管理 — 获取菜单
-export const FindAllMenu = (params: Params) => http.get(`/menu/find_Menu`, params);
+export const FindAllMenu = (params: Params) => http.get(`/menu/allMenu`, params);
 
 // 系统管理 — 菜单管理 — 更新菜单
-export const UpMenu = (params: Params) => http.post(`/menu/up_Menu`, params);
+export const UpMenu = (params: Params) => http.post(`/menu/modMenu`, params);
 
 // 系统管理 — 菜单管理 — 删除菜单
-export const DelMenu = (params: Params) => http.post(`/menu/del_Menu`, params);
+export const DelMenu = (params: Params) => http.post(`/menu/delMenu`, params);
 
 // 系统管理 — 用户管理 — 获取用户列表
 export const GetUserManagerList = (params: Params) => http.get(`/userp/find_User_Manager`, params);
@@ -37,3 +37,9 @@ export const DelUser = (id: string) => http.delete(`/userp/del_User`, { id });
 
 // 系统管理 — 用户管理 — 删除更多用户
 export const DelMoreUser = (ids: string[]) => http.post(`/userp/dels`, { ids });
+
+// 系统管理 — 岗位管理 — 查询岗位
+export const findJob = (params: Params) => http.get(`/job/allJob`, params);
+
+// 系统管理 — 岗位管理 — 新增岗位
+export const addJob = (params: Params) => http.post(`/job/addJob`, params);
