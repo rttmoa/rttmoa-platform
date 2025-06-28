@@ -17,8 +17,8 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] 
 
 	return [
 		{
-			title: '岗位名称',
-			dataIndex: 'postName',
+			title: '角色名称',
+			dataIndex: 'name',
 			copyable: true,
 			// width: 150,
 			fixed: 'left',
@@ -55,8 +55,22 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] 
 			fieldProps: (form, config) => {}, // 查询表单的 props，会透传给表单项，
 		},
 		{
-			title: '岗位排序',
-			dataIndex: 'postSort',
+			title: '权限字符',
+			dataIndex: 'permission_str',
+			// width: 150,
+			filters: true,
+			onFilter: true,
+		},
+		{
+			title: '角色级别',
+			dataIndex: 'level',
+			// width: 150,
+			filters: true,
+			onFilter: true,
+		},
+		{
+			title: '角色排序',
+			dataIndex: 'sort',
 			// width: 150,
 			filters: true,
 			onFilter: true,

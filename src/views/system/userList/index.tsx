@@ -96,9 +96,7 @@ const useProTable = () => {
 		// 2、字段值传递接口、获取接口结果、并提示出信息
 		// 3、重置Modal信息
 		// 4、重新请求，根据页码等条件
-		// let type = modalType;
-		// let formData = form.getFieldsValue();
-		// console.log('弹窗Modal：', formData);
+
 		// let res = type === 'create' ? createUser(formData) : editUser(formData)
 		console.log('Modal 提交：', type, item);
 		// setModalTitle('');
@@ -203,7 +201,7 @@ const useProTable = () => {
 				modalTitle={modalTitle}
 				modalType={modalType}
 				modalUserInfo={modalUserInfo}
-				handleModalSubmit={handleModalSubmit}
+				handleModalSubmit={handleModalSubmit} // 提交表单
 			/>
 			<DrawerComponent showDetail={showDetail} currentRow={currentRow} setCurrentRow={setCurrentRow} setShowDetail={setShowDetail} columnParams={columnParams} />
 		</>

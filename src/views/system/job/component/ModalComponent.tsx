@@ -1,22 +1,26 @@
 import { Button, Col, Form, Input, Modal, Radio, Row, Space, Switch } from 'antd';
+import TextArea from 'antd/es/input/TextArea';
 import { useEffect } from 'react';
 
 const ModalComponent = (Params: any) => {
 	const { form, modalIsVisible, setModalIsVisible, modalTitle, modalType, modalUserInfo: userInfo, handleModalSubmit } = Params;
-
+	console.log('userInfo', userInfo);
 	useEffect(() => {
 		if (modalType == 'create') {
-			form.resetFields();
+			// 创建要给字段初始值、否则服务端获取不到
+			form.setFieldsValue({
+				job_name: '',
+				job_sort: '',
+				status: false,
+				desc: '',
+			});
 		}
 		if (modalType == 'edit') {
 			form.setFieldsValue({
-				username: userInfo.username,
-				age: userInfo.age,
-				email: userInfo.email,
-				sex: userInfo.sex,
-				status: userInfo.status,
-				phone: userInfo.phone,
-				city: userInfo.city,
+				job_name: userInfo.postName,
+				job_sort: userInfo.postSort,
+				status: userInfo.status == '0' ? false : true,
+				desc: userInfo.desc,
 			});
 		}
 	}, [modalType, userInfo]);
@@ -29,25 +33,21 @@ const ModalComponent = (Params: any) => {
 	};
 	const FormOnFinish = () => {
 		const formList = form.getFieldsValue();
+		if (modalType == 'edit') {
+			formList._id = userInfo._id;
+		}
 		handleModalSubmit && handleModalSubmit(modalType, formList);
 	};
 
 	return (
 		<Modal
-			className='relative '
+			className='relative'
 			title={modalTitle}
 			width={600}
 			// loading={false}
 			open={modalIsVisible}
 			onCancel={OnCancel}
 			footer={false}
-			// footer={[
-			// 	<Button loading={loading} onClick={() => {}}>取消</Button>,
-			// 	<Button key='back' onClick={() => {}}>
-			// 		重置表单
-			// 	</Button>,
-			// 	<Button key='link' type='primary' loading={loading} onClick={() => {}}>提交</Button>,
-			// ]}
 		>
 			<Form className='mb-[60px] max-h-[500px] overflow-auto' layout='horizontal' form={form} labelCol={{ span: 4 }} wrapperCol={{ span: 18 }} onFinish={FormOnFinish}>
 				<Row gutter={16}>
@@ -64,6 +64,11 @@ const ModalComponent = (Params: any) => {
 					<Col span={24}>
 						<Form.Item label='状态' name='status' rules={[{ required: false }]}>
 							<Switch />
+						</Form.Item>
+					</Col>
+					<Col span={24}>
+						<Form.Item label='岗位描述' name='desc' rules={[{ required: false }]}>
+							<TextArea rows={3} placeholder='岗位说明' maxLength={60} />
 						</Form.Item>
 					</Col>
 				</Row>

@@ -40,6 +40,11 @@ export const DelMoreUser = (ids: string[]) => http.post(`/userp/dels`, { ids });
 
 // 系统管理 — 岗位管理 — 查询岗位
 export const findJob = (params: Params) => http.get(`/job/allJob`, params);
-
 // 系统管理 — 岗位管理 — 新增岗位
 export const addJob = (params: Params) => http.post(`/job/addJob`, params);
+// 系统管理 — 岗位管理 — 修改岗位
+export const modifyJob = (params: Params) => http.post(`/job/modifyJob`, params);
+// 系统管理 — 岗位管理 — 删除岗位
+export const delJob = (id: string) => http.delete(`/job/delJob`, { id });
+// 系统管理 — 岗位管理 — 删除更多岗位
+export const delMoreJob = (ids: string[]) => http.post(`/job/delMoreJob`, { ids });
