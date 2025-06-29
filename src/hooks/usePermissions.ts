@@ -21,9 +21,9 @@ const usePermissions = () => {
 				// const { data: menuList } = await getAuthMenuListApi() // 用户菜单权限【假数据】
 
 				const newMenu: any = await FindAllMenu({}); // 用户菜单权限【接口数据】
-				console.log('newMenu', newMenu);
+				// console.log('newMenu', newMenu);
 				const menuList = newMenu?.data || [];
-				console.log('menuList', menuList);
+				// console.log('menuList', menuList);
 
 				// 获取Cookie、存储Cookie
 				dispatch(setAuthButtonList(buttonList));

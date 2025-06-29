@@ -11,7 +11,6 @@ const ModalComponent = (Params: any) => {
 	const [expandedKeys, setExpandedKeys] = useState([]); // 展开
 	const [checkedKeys, setCheckedKeys] = useState([]); // 全选
 	const [linkage, setLinkage] = useState(false); // 父子联动
-	const [menuHandle, setMenuHandle] = useState([]); // 父子联动
 
 	useEffect(() => {
 		if (modalType == 'create') {
@@ -61,43 +60,13 @@ const ModalComponent = (Params: any) => {
 	const OnReset = () => {
 		form.resetFields();
 	};
-
-	// * 提交最终数据 （将菜单处理为menu格式、为每个角色可以直接使用的菜单结构）
 	const FormOnFinish = () => {
-		// 🔧 Step 1：递归查找某个 key 的路径
-		function findPathByKey(tree: any, targetKey: any, path = []) {
-			for (const node of tree) {
-				const currentKey = node.key;
-				const newPath: any = [...path, currentKey];
-				if (currentKey === targetKey) {
-					return newPath;
-				}
-				if (node.children && node.children.length > 0) {
-					const found: any = findPathByKey(node.children, targetKey, newPath);
-					if (found) return found;
-				}
-			}
-			return null;
-		}
-		function findPathsForKeys(tree: any, keys: any[]) {
-			const result = new Set(); // 使用 Set 避免重复
-			keys.forEach((key: any) => {
-				const path = findPathByKey(tree, key);
-				if (path) {
-					path.forEach((k: unknown) => result.add(k)); // 父节点也加入
-				}
-			});
-			return Array.from(result); // 最终返回扁平 key 数组
-		}
-		const flatKeys = findPathsForKeys(menuList, checkedKeys);
-		// console.log('所有菜单：', menuList);
-		// console.log('checkedKeys', checkedKeys);
-		console.log('flatKeys', flatKeys); // 获取到所有的父子菜单： ['menu', 'menu2', 'menu22', 'menu221', 'menu222']
 		const formList = form.getFieldsValue();
 		if (modalType == 'edit') {
 			formList._id = userInfo._id;
 		}
-		formList.permission_menu = flatKeys;
+		console.log('expandedKeys', expandedKeys);
+		console.log('checkedKeys', checkedKeys);
 		handleModalSubmit && handleModalSubmit(modalType, formList);
 	};
 
@@ -144,7 +113,7 @@ const ModalComponent = (Params: any) => {
 
 	return (
 		<Modal className='relative' title={modalTitle} width={600} open={modalIsVisible} onCancel={OnCancel} footer={false}>
-			<Form className='mb-[60px] max-h-[600px] overflow-auto' layout='horizontal' form={form} labelCol={{ span: 4 }} wrapperCol={{ span: 18 }} onFinish={FormOnFinish}>
+			<Form className='mb-[60px] max-h-[500px] overflow-auto' layout='horizontal' form={form} labelCol={{ span: 4 }} wrapperCol={{ span: 18 }} onFinish={FormOnFinish}>
 				<Row gutter={16}>
 					<Col span={24}>
 						<Form.Item label='角色名称' name='role_name' rules={[{ required: true, message: '必填：角色名称' }]}>
@@ -195,20 +164,12 @@ const ModalComponent = (Params: any) => {
 									treeData={menuList}
 									checkedKeys={checkedKeys}
 									expandedKeys={expandedKeys}
-									// 自动寻找父级吗？
-									onExpand={(keys: any) => {
-										// console.log('展开', keys);
-										setExpandedKeys(keys);
+									onExpand={(keys: any) => setExpandedKeys(keys)}
+									onCheck={(keys: any) => setCheckedKeys(keys)}
+									onSelect={(selectedKeys, e: any) => {
+										console.log(selectedKeys);
+										console.log(e);
 									}}
-									onCheck={(keys: any) => {
-										// console.log('check', keys);
-										setCheckedKeys(keys);
-									}}
-									// onSelect={(selectedKeys, e: any) => {
-									// 	console.log('选择');
-									// 	console.log(selectedKeys);
-									// 	console.log(e);
-									// }}
 								/>
 							</div>
 						</Form.Item>

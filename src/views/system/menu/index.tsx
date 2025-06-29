@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Button, Col, Drawer, Form } from 'antd';
+import { Button, Col, Drawer, Form, Input, Modal, Row, Space } from 'antd';
 import { formatDataForProTable } from '@/utils';
 import { UserList } from '@/api/interface';
 import { FooterToolbar, ProDescriptions, ProTable } from '@ant-design/pro-components';
@@ -7,7 +7,7 @@ import type { ActionType, FormInstance, ProDescriptionsItemProps } from '@ant-de
 import { message } from '@/hooks/useMessage';
 import TableColumnsConfig, { TableColumnsParams } from './component/ColumnConfig';
 import ToolBarRender from './component/ToolBar';
-import { addJob, delJob, delMoreJob, DelMoreUser, DelUser, findJob, GetProTableUser, modifyJob } from '@/api/modules/upack/common';
+import { addJob, delJob, delMoreJob, DelMoreUser, DelUser, FindAllMenu, findJob, GetProTableUser, modifyJob } from '@/api/modules/upack/common';
 import './index.less';
 import ModalComponent from './component/ModalComponent';
 import DrawerComponent from './component/DrawerComponent';
@@ -116,17 +116,18 @@ const useProTable = () => {
 			message.error(error.message || error.msg);
 		}
 	};
-	// * 列配置 Column
-	let columnParams: TableColumnsParams = {
-		setCurrentRow,
-		setShowDetail,
-		handleOperator,
-	};
+
 	// * 工具栏 ToolBar
 	let ToolBarParams: any = {
 		quickSearch, // 工具栏：快捷搜索
 		openSearch,
 		SetOpenSearch, // 工具栏：开启表单搜索
+		handleOperator,
+	};
+	// * 列配置 Column
+	let columnParams: TableColumnsParams = {
+		setCurrentRow,
+		setShowDetail,
 		handleOperator,
 	};
 
@@ -150,12 +151,29 @@ const useProTable = () => {
 				search={openSearch ? false : { labelWidth: 'auto', filterType: 'query', span: 6 }} // 搜索表单配置
 				request={async (params, sort, filter) => {
 					SetLoading(true);
-					// console.log('request请求参数：', params, sort, filter);
-					const { data }: any = await findJob({ ...params, page: params.current });
-					// console.log('data', data);
+					const res: any = await FindAllMenu({});
+					console.log('获取菜单：', res);
+					// * 表格数据：树结构表格
+					function getShowMenuList(menuList: any[]): any[] {
+						return menuList.map(item => {
+							const children = item.children?.length ? getShowMenuList(item.children) : undefined;
+							return {
+								...item,
+								...item.meta,
+								children,
+							};
+						});
+					}
+					const menuList = getShowMenuList(res.data);
+					let format = {
+						list: menuList,
+						current: res.page,
+						pageSize: res.pageSise,
+						total: res.total,
+					};
 					SetLoading(false);
-					SetPagination({ ...pagination, total: data.total });
-					return formatDataForProTable<any>({ ...data, page: params.current });
+					SetPagination({ ...pagination, total: format.total });
+					return formatDataForProTable<any>({ ...format });
 				}}
 				pagination={{
 					...pagination,

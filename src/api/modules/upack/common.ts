@@ -48,3 +48,6 @@ export const modifyJob = (params: Params) => http.post(`/job/modifyJob`, params)
 export const delJob = (id: string) => http.delete(`/job/delJob`, { id });
 // 系统管理 — 岗位管理 — 删除更多岗位
 export const delMoreJob = (ids: string[]) => http.post(`/job/delMoreJob`, { ids });
+
+// 系统管理 — 角色管理 — 查询
+export const findRole = (params: Params) => http.post(`/role/findRole`, params);
