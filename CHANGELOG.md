@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.38](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.37...v2.3.38) (2025-06-30)
+
+
+### Features
+
+* **view:** 🚀 角色管理处理完毕、菜单处理完 ([b3ba9f2](https://github.com/rttmoa/rttmoa-platform/commit/b3ba9f2fea0f60eb7bbdc9e66de44cf933a2a197))
+
 ### [2.3.37](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.36...v2.3.37) (2025-06-29)
 
 
