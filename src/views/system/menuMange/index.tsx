@@ -32,7 +32,7 @@ const MenuMange: React.FC = () => {
 
 	const getMenu = async () => {
 		const res: any = await FindAllMenu({});
-		console.log('获取菜单：', res);
+		// console.log('获取菜单：', res);
 		setMenuList(res?.data);
 	};
 

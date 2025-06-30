@@ -13,16 +13,15 @@ export interface TableColumnsParams {
 
 const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] => {
 	let { setCurrentRow, setShowDetail, handleOperator } = Params;
-	// Params.setCurrentRow()
-
 	return [
 		{
 			title: '菜单标题',
-			dataIndex: 'title',
+			dataIndex: ['meta', 'title'],
 			copyable: true,
-			// width: 150,
+			ellipsis: true,
+			width: 200,
 			fixed: 'left',
-			tooltip: '用户的名字',
+			// tooltip: '用户的名字',
 			// initialValue: 'zhangsan',
 			onFilter: false,
 			// hideInSearch: true,
@@ -56,76 +55,92 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] 
 		},
 		{
 			title: '菜单图标',
-			dataIndex: 'icon',
+			dataIndex: ['meta', 'icon'],
+			width: 80,
 			filters: true,
 			onFilter: true,
-			render: (text, record: any) => <Icon name={record?.icon} />,
+			render: (text, record: any) => <Icon name={record?.meta?.icon} />,
 		},
 		{
 			title: '菜单类型',
-			dataIndex: 'type',
+			dataIndex: ['meta', 'type'],
+			width: 80,
+			filters: true,
+			onFilter: true,
+		},
+
+		{
+			title: '排序',
+			width: 80,
+			dataIndex: ['meta', 'sort'],
 			filters: true,
 			onFilter: true,
 		},
 		{
 			title: '菜单标识',
-			dataIndex: 'key',
+			dataIndex: ['meta', 'key'],
+			ellipsis: true,
+			width: 100,
 			filters: true,
 			onFilter: true,
 		},
 		{
 			title: '路由路径',
 			dataIndex: 'path',
+			ellipsis: true,
+			width: 180,
 			filters: true,
 			onFilter: true,
 		},
 		{
 			title: '组件路径',
 			dataIndex: 'element',
+			ellipsis: true,
+			width: 180,
 			filters: true,
 			onFilter: true,
 		},
 		{
 			title: '重定向路径',
 			dataIndex: 'redirect',
+			ellipsis: true,
+			width: 180,
 			filters: true,
 			onFilter: true,
 		},
 		{
 			title: '外链url',
-			dataIndex: 'isLink',
+			dataIndex: ['meta', 'isLink'],
+			width: 180,
 			filters: true,
 			onFilter: true,
-			render: (_, record: any) => record.isLink || '',
+			render: (_, record: any) => record.meta.isLink || '-',
 		},
 		{
 			title: '隐藏菜单项',
-			dataIndex: 'isHide',
+			dataIndex: ['meta', 'isHide'],
+			ellipsis: true,
+			width: 90,
 			filters: true,
 			onFilter: true,
-			render: (_, record: any) => (record.is_hide ? '是' : '否'),
+			render: (_, record: any) => (record.meta.isHide ? '是' : '否'),
 		},
 		{
 			title: '全屏显示',
-			dataIndex: 'isFull',
+			dataIndex: ['meta', 'isFull'],
+			width: 80,
 			filters: true,
 			onFilter: true,
-
-			render: (_, record: any) => (record.isFull ? '是' : '否'),
+			render: (_, record: any) => (record.meta.isFull ? '是' : '否'),
 		},
 		{
 			title: '固定标签页',
-			dataIndex: 'isAffix',
+			dataIndex: ['meta', 'isAffix'],
+			ellipsis: true,
+			width: 90,
 			filters: true,
 			onFilter: true,
-
-			render: (_, record: any) => (record.isAffix ? '是' : '否'),
-		},
-		{
-			title: '排序',
-			dataIndex: 'sort',
-			filters: true,
-			onFilter: true,
+			render: (_, record: any) => (record.meta.isAffix ? '是' : '否'),
 		},
 
 		{

@@ -7,11 +7,11 @@ import type { ActionType, FormInstance, ProDescriptionsItemProps } from '@ant-de
 import { message } from '@/hooks/useMessage';
 import TableColumnsConfig, { TableColumnsParams } from './component/ColumnConfig';
 import ToolBarRender from './component/ToolBar';
-import { addJob, delJob, delMoreJob, DelMoreUser, DelUser, findJob, GetProTableUser, modifyJob } from '@/api/modules/upack/common';
+import { addJob, addRole, delJob, delMoreJob, DelMoreUser, delRole, DelUser, findJob, findRole, GetProTableUser, modifyJob, modifyRole } from '@/api/modules/upack/common';
 import './index.less';
-import ModalComponent from './component/ModalComponent';
-import DrawerComponent from './component/DrawerComponent';
-import FooterComponent from './component/FooterComponent';
+import ModalComponent from './component/Modal';
+import DrawerComponent from './component/Drawer';
+import FooterComponent from './component/Footer';
 
 export type FormValueType = {
 	target?: string;
@@ -63,11 +63,11 @@ const useProTable = () => {
 		} else if (type === 'delete') {
 			const hide = message.loading('正在删除');
 			try {
-				const result: any = await delJob(item._id);
+				const result: any = await delRole(item._id);
 				if (result) {
 					hide();
 					actionRef?.current?.reload();
-					message.success(`删除 ${item?.postName} 成功`);
+					message.success(`删除 ${item?.role_name} 成功`);
 				}
 			} catch (error) {
 				hide();
@@ -100,7 +100,7 @@ const useProTable = () => {
 		// 4、重新请求，根据页码等条件
 		const hide = message.loading(type == 'create' ? '正在添加' : '正在编辑');
 		try {
-			let res = type === 'create' ? await addJob(item) : await modifyJob(item);
+			let res = type === 'create' ? await addRole(item) : await modifyRole(item);
 			if (res) {
 				hide();
 				form.resetFields();
@@ -151,7 +151,7 @@ const useProTable = () => {
 				request={async (params, sort, filter) => {
 					SetLoading(true);
 					// console.log('request请求参数：', params, sort, filter);
-					const { data }: any = await findJob({ ...params, page: params.current });
+					const { data }: any = await findRole({ ...params, page: params.current });
 					// console.log('data', data);
 					SetLoading(false);
 					SetPagination({ ...pagination, total: data.total });

@@ -7,7 +7,7 @@ import type { ActionType, FormInstance, ProDescriptionsItemProps } from '@ant-de
 import { message } from '@/hooks/useMessage';
 import TableColumnsConfig, { TableColumnsParams } from './component/ColumnConfig';
 import ToolBarRender from './component/ToolBar';
-import { addJob, delJob, delMoreJob, DelMoreUser, DelUser, FindAllMenu, findJob, GetProTableUser, modifyJob } from '@/api/modules/upack/common';
+import { addJob, delJob, DelMenu, delMoreJob, DelMoreUser, DelUser, FindAllMenu, findJob, GetProTableUser, InsNewMenu, modifyJob, UpMenu } from '@/api/modules/upack/common';
 import './index.less';
 import ModalComponent from './component/ModalComponent';
 import DrawerComponent from './component/DrawerComponent';
@@ -45,25 +45,29 @@ const useProTable = () => {
 	const [modalType, setModalType] = useState<string>('');
 	const [modalUserInfo, setModalUserInfo] = useState({});
 
+	const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]);
+	const [menuList, setMenuList] = useState<[]>([]);
+
 	const quickSearch = () => {};
 
 	// * 操作 — 员工： 新建、编辑、详情、删除  按钮
 	const handleOperator = async (type: string, item: any) => {
-		// console.log('handleOperator', type, item);
+		// console.log('操作：类型+记录', type, item);
 		if (type === 'create') {
 			setModalIsVisible(true);
-			setModalTitle('新建用户');
+			setModalTitle('新建菜单');
 			setModalType(type);
 			setModalUserInfo({});
 		} else if (['edit'].includes(type)) {
 			setModalIsVisible(true);
-			setModalTitle(type === 'edit' ? '编辑用户' : '查看详情');
+			setModalTitle(type === 'edit' ? '编辑菜单' : '查看详情');
 			setModalType(type);
 			setModalUserInfo(item);
 		} else if (type === 'delete') {
 			const hide = message.loading('正在删除');
 			try {
-				const result: any = await delJob(item._id);
+				const result: any = await DelMenu(item);
+				// console.log('删除菜单结果：', result);
 				if (result) {
 					hide();
 					actionRef?.current?.reload();
@@ -74,33 +78,36 @@ const useProTable = () => {
 				message.error('删除失败、请再试一次！');
 			}
 		} else if (type === 'moreDelete') {
-			const hide = message.loading('正在删除');
-			try {
-				const selectIds = selectedRowsState.map(value => value?._id);
-				console.log('selectIds', selectIds);
-				const res: any = await delMoreJob(selectIds || []);
-				if (res) {
-					hide();
-					setSelectedRows([]);
-					actionRef.current?.reloadAndRest?.();
-					message.success('全部删除完成！');
-				}
-			} catch (error) {
-				hide();
-				message.error('删除失败、请再试一次！');
-			}
+			message.loading('删除更多按钮、正在实现');
+			// const hide = message.loading('正在删除');
+			// try {
+			// 	const selectIds = selectedRowsState.map(value => value?._id);
+			// 	console.log('selectIds', selectIds);
+			// 	const res: any = await delMoreJob(selectIds || []);
+			// 	if (res) {
+			// 		hide();
+			// 		setSelectedRows([]);
+			// 		actionRef.current?.reloadAndRest?.();
+			// 		message.success('全部删除完成！');
+			// 	}
+			// } catch (error) {
+			// 	hide();
+			// 	message.error('删除失败、请再试一次！');
+			// }
 		}
 	};
 	// * 操作 — 员工： 新建、编辑、详情  弹窗内容提交
 	const handleModalSubmit = async (type: string, item: any) => {
 		console.log('Modal 提交：', type, item);
-		// 1、获取form字段值 并 过滤出有值的字段
-		// 2、字段值传递接口、获取接口结果、并提示出信息
-		// 3、重置Modal信息
-		// 4、重新请求，根据页码等条件
+		// 1、获取字段数据
+		// 2、将字段传入到接口中
+		// 3、获取返回值并展示
+		// 4、清空表单值
+		// 5、关闭弹窗
+		// 6、重新回去菜单列表
 		const hide = message.loading(type == 'create' ? '正在添加' : '正在编辑');
 		try {
-			let res = type === 'create' ? await addJob(item) : await modifyJob(item);
+			let res = type === 'create' ? await InsNewMenu(item) : await UpMenu(item);
 			if (res) {
 				hide();
 				form.resetFields();
@@ -135,11 +142,11 @@ const useProTable = () => {
 	return (
 		<>
 			<ProTable<UserList>
-				rowKey='_id'
+				rowKey='unique' // ! 此key设置错误、导致点击某一个展开、全部节点全展开
 				className='ant-pro-table-scroll'
-				// scroll={{ x: 2500, y: '100vh' }} // 100vh
+				scroll={{ y: '100vh' }} // 100vh
 				bordered
-				cardBordered
+				// cardBordered
 				dateFormatter='string'
 				headerTitle='使用 ProTable'
 				defaultSize='small'
@@ -148,40 +155,26 @@ const useProTable = () => {
 				toolBarRender={() => ToolBarRender(ToolBarParams)} // 渲染工具栏
 				actionRef={actionRef} // Table action 的引用，便于自定义触发 actionRef.current.reset()
 				formRef={formRef} // 可以获取到查询表单的 form 实例
-				search={openSearch ? false : { labelWidth: 'auto', filterType: 'query', span: 6 }} // 搜索表单配置
 				request={async (params, sort, filter) => {
 					SetLoading(true);
 					const res: any = await FindAllMenu({});
-					console.log('获取菜单：', res);
-					// * 表格数据：树结构表格
-					function getShowMenuList(menuList: any[]): any[] {
-						return menuList.map(item => {
-							const children = item.children?.length ? getShowMenuList(item.children) : undefined;
-							return {
-								...item,
-								...item.meta,
-								children,
-							};
-						});
-					}
-					const menuList = getShowMenuList(res.data);
+					// console.log('获取菜单：', res);
 					let format = {
-						list: menuList,
+						list: res.data,
 						current: res.page,
 						pageSize: res.pageSise,
 						total: res.total,
 					};
+					setMenuList(res.data);
 					SetLoading(false);
 					SetPagination({ ...pagination, total: format.total });
 					return formatDataForProTable<any>({ ...format });
 				}}
-				pagination={{
-					...pagination,
-					pageSizeOptions: [10, 20, 30, 50, 100],
-					onChange: (page, pageSize) => {
-						SetPagination({ ...pagination, page, pageSize });
-					},
-				}}
+				// rowKey="key"
+				// columns={columns}
+				search={false}
+				pagination={false}
+				options={false}
 				rowSelection={{
 					onChange: (selectedRowKeys, selectedRows) => {
 						setSelectedRows(selectedRows);
@@ -204,11 +197,12 @@ const useProTable = () => {
 			{/* 新建 / 编辑 Modal弹窗 */}
 			<ModalComponent
 				form={form}
-				modalIsVisible={modalIsVisible}
-				setModalIsVisible={setModalIsVisible}
-				modalTitle={modalTitle}
-				modalType={modalType}
-				modalUserInfo={modalUserInfo}
+				menuList={menuList}
+				modalTitle={modalTitle} // 标题
+				modalType={modalType} // 类型
+				modalIsVisible={modalIsVisible} // 显示
+				modalMenuInfo={modalUserInfo} // 菜单信息
+				setModalIsVisible={setModalIsVisible} // 设置显示
 				handleModalSubmit={handleModalSubmit}
 			/>
 			<DrawerComponent showDetail={showDetail} currentRow={currentRow} setCurrentRow={setCurrentRow} setShowDetail={setShowDetail} columnParams={columnParams} />

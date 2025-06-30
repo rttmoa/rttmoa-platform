@@ -18,7 +18,7 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] 
 	return [
 		{
 			title: '角色名称',
-			dataIndex: 'name',
+			dataIndex: 'role_name',
 			copyable: true,
 			// width: 150,
 			fixed: 'left',

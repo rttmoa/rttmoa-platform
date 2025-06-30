@@ -1,60 +1,100 @@
 import { FindAllMenu } from '@/api/modules/upack/common';
-import { Button, Checkbox, Col, Form, Input, InputNumber, Modal, Radio, Row, Space, Switch, Tree } from 'antd';
+import { Button, Card, Cascader, Checkbox, Col, Form, Input, InputNumber, Modal, Radio, Row, Space, Switch, Tree } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { useEffect, useState } from 'react';
+import { menu } from '../../menuMange/component/menuConfig';
 
-const ModalComponent = (Params: any) => {
-	const { form, modalIsVisible, setModalIsVisible, modalTitle, modalType, modalUserInfo: userInfo, handleModalSubmit } = Params;
-	// console.log('userInfo', userInfo);
+const ModalComponent = (Props: any) => {
+	const {
+		form, // form
 
-	const [menuList, setMenuList] = useState([]);
-	const [expandedKeys, setExpandedKeys] = useState([]); // 展开
-	const [checkedKeys, setCheckedKeys] = useState([]); // 全选
-	const [linkage, setLinkage] = useState(false); // 父子联动
+		menuList, // 菜单
+
+		modalTitle, // 标题
+		modalType: type, // 类型
+		modalIsVisible, // 显示
+		modalMenuInfo, // 菜单信息
+
+		setModalTitle, // 设置标题
+		setModalType, // 设置类型
+		setModalIsVisible, // 设置显示
+		setModalMenuInfo, // 设置菜单信息
+		getMenu, // 重新获取菜单 getDate
+
+		handleModalSubmit, // 提交
+	} = Props;
+
+	const [menuType, SetmenuType] = useState('目录');
+	// const initMenuList = [{ meta: { key: '/', title: '最顶级菜单' },children: menuList }, ...menuList];
+	const initMenuList = [{ meta: { key: '/', title: '顶级菜单（下面是一级菜单，创建一级菜单选择顶级菜单）' } }, ...menuList];
+
+	// 级联选择 - 菜单上级需要的结构
+	function findAncestors(tree: any[], targetPath: string, pathStack: any[] = []): any[] | null {
+		for (const node of tree) {
+			const newPathStack = [...pathStack, node];
+			if (node.path === targetPath) {
+				return newPathStack; // 找到了，返回路径堆栈
+			}
+			if (node.children) {
+				const result = findAncestors(node.children, targetPath, newPathStack);
+				if (result) return result;
+			}
+		}
+		return null;
+	}
+	const result = findAncestors(initMenuList, modalMenuInfo.path);
+	let initTop = result?.map(value => value.path) || [];
 
 	useEffect(() => {
-		if (modalType == 'create') {
-			// 创建要给字段初始值、否则服务端获取不到
-			FindAllMenu({}).then(res => {
-				// console.log('res', res);
-				const menuList: any = res.data;
-				function transformRoutes(routes: any[]) {
-					return routes.map((route: any) => {
-						const item: any = {
-							title: route.meta?.title || '',
-							key: route.meta?.key || '',
-						};
-						if (Array.isArray(route.children) && route.children.length > 0) {
-							item.children = transformRoutes(route.children);
-						}
-						return item;
-					});
-				}
-				const menu: any = transformRoutes(menuList || []);
-				setMenuList(menu || []);
-			});
+		if (type === 'edit' && modalMenuInfo) {
 			form.setFieldsValue({
-				role_name: '',
-				permission_str: '',
-				level: 1,
-				order: 1,
-				status: false,
-				desc: '',
+				// ['/dataScreen/index']
+				// ['/assembly', '/assembly/recharts']
+				// ['/menu', '/menu/menu2', '/menu/menu2/menu23']
+				top: initTop || [],
+				path: modalMenuInfo.path,
+				element: modalMenuInfo.element,
+				redirect: modalMenuInfo.redirect,
+				type: modalMenuInfo.meta?.type,
+				key: modalMenuInfo.meta?.key,
+				title: modalMenuInfo.meta?.title,
+				icon: modalMenuInfo.meta?.icon,
+				sort: modalMenuInfo.meta?.sort || 1,
+				isLink: modalMenuInfo?.meta?.isLink,
+				isHide: modalMenuInfo?.meta?.isHide == 1 ? '是' : '否',
+				isFull: modalMenuInfo?.meta?.isFull == 1 ? '是' : '否',
+				isAffix: modalMenuInfo?.meta?.isAffix == 1 ? '是' : '否',
 			});
 		}
-		if (modalType == 'edit') {
-			// form.setFieldsValue({
-			// 	job_name: userInfo.postName,
-			// 	job_sort: userInfo.postSort,
-			// 	status: userInfo.status == '0' ? false : true,
-			// 	desc: userInfo.desc,
-			// });
+		if (type === 'create') {
+			form.resetFields();
+			form.setFieldsValue({
+				top: ['/'],
+				type: '目录',
+				isLink: '',
+				isHide: '否',
+				isFull: '否',
+				isAffix: '否',
+				sort: 999,
+			});
 		}
-	}, [modalType, userInfo]);
+	}, [modalMenuInfo, type]);
+
+	// * 处理菜单结构：递归
+	const handleMenu = (menuConfig: any, type: string) => {
+		return menuConfig?.map((item: any) => {
+			const option: any = {
+				value: item.path || item.meta?.key,
+				label: item.meta?.title,
+			};
+			if (item.children && item.children.length) {
+				option.children = handleMenu(item.children, 'children');
+			}
+			return option;
+		});
+	};
 
 	const OnCancel = () => {
-		setExpandedKeys([]);
-		setCheckedKeys([]);
 		setModalIsVisible(false);
 	};
 	const OnReset = () => {
@@ -62,139 +102,181 @@ const ModalComponent = (Params: any) => {
 	};
 	const FormOnFinish = () => {
 		const formList = form.getFieldsValue();
-		if (modalType == 'edit') {
-			formList._id = userInfo._id;
+		if (type == 'edit') {
+			formList.unique = modalMenuInfo.unique;
 		}
-		console.log('expandedKeys', expandedKeys);
-		console.log('checkedKeys', checkedKeys);
-		handleModalSubmit && handleModalSubmit(modalType, formList);
+		handleModalSubmit && handleModalSubmit(type, formList);
 	};
-
-	const getAllKeys = (nodes: any) => {
-		const keys: any[] = [];
-		const traverse = (arr: any[]) => {
-			arr.forEach((item: { key: any; children: any }) => {
-				keys.push(item.key);
-				if (item.children) traverse(item.children);
-			});
-		};
-		traverse(nodes);
-		return keys;
-	};
-	// 展开/折叠
-	const ExpandedFunc = (e: any) => {
-		const isTrue = e.target.checked;
-		if (isTrue) {
-			const allKeys: any = getAllKeys(menuList);
-			setExpandedKeys(allKeys);
-		} else {
-			setExpandedKeys([]);
-		}
-	};
-	// 全选/全不选
-	const SelectAllFunc = (e: any) => {
-		const isTrue = e.target.checked;
-		if (isTrue) {
-			const allKeys: any = getAllKeys(menuList);
-			setCheckedKeys(allKeys);
-		} else {
-			setCheckedKeys([]);
-		}
-	};
-	// 父子联动
-	const LinkageFunc = (e: any) => {
-		const isTrue = e.target.checked;
-		if (isTrue) {
-			setLinkage(true);
-		} else {
-			setLinkage(false);
-		}
-	};
-
 	return (
-		<Modal className='relative' title={modalTitle} width={600} open={modalIsVisible} onCancel={OnCancel} footer={false}>
-			<Form className='mb-[60px] max-h-[500px] overflow-auto' layout='horizontal' form={form} labelCol={{ span: 4 }} wrapperCol={{ span: 18 }} onFinish={FormOnFinish}>
+		<Modal
+			title={modalTitle}
+			width='1000px'
+			// height={600}
+			loading={false}
+			open={modalIsVisible}
+			// open={true}
+			onCancel={() => {
+				OnCancel();
+			}}
+			footer={[
+				<Button
+					danger
+					loading={false}
+					onClick={() => {
+						OnCancel();
+					}}
+				>
+					取消
+				</Button>,
+				<Button
+					key='back'
+					onClick={() => {
+						OnReset();
+					}}
+				>
+					重置表单
+				</Button>,
+				<Button
+					key='link'
+					type='primary'
+					loading={false}
+					onClick={() => {
+						FormOnFinish();
+					}}
+				>
+					提交
+				</Button>,
+			]}
+		>
+			<Form className='h-[650px]  overflow-auto' layout='horizontal' size='middle' form={form} labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
 				<Row gutter={16}>
-					<Col span={24}>
-						<Form.Item label='角色名称' name='role_name' rules={[{ required: true, message: '必填：角色名称' }]}>
-							<Input placeholder='请输入角色名称' />
+					<Col span={24} pull={3}>
+						<Form.Item label='菜单上级' name='top' rules={[{ required: true }]}>
+							<Cascader
+								// disabled={type === 'edit'}
+								popupClassName='Customize_Cascader'
+								options={handleMenu(initMenuList, '一级')}
+								allowClear
+								showSearch
+								changeOnSelect
+								expandTrigger='click'
+								variant='filled'
+								// displayRender={displayRender}
+								placeholder='请选择上级菜单！'
+								// onChange={onChangeCascader}
+							/>
 						</Form.Item>
 					</Col>
-					<Col span={24}>
-						<Form.Item label='权限字符' name='permission_str' rules={[{ required: true, message: '必填：权限字符' }]}>
-							<Input placeholder='请输入权限字符' />
+					<Col span={24} pull={3}>
+						<Form.Item label='菜单类型' name='type' rules={[{ required: true, message: '创建菜单需 type' }]}>
+							<Radio.Group
+								options={['目录', '菜单', '按钮']}
+								defaultValue='目录'
+								onChange={(item: any) => {
+									SetmenuType(item.target.value);
+								}}
+								value={menuType}
+							/>
 						</Form.Item>
 					</Col>
-					<Col span={24}>
-						<Form.Item label='角色级别' name='level' rules={[{ required: true, message: '必填：角色级别' }]}>
-							<InputNumber defaultValue={1} className='always-show-handler' keyboard={false} />
+					<Col span={24} pull={3}>
+						<Form.Item
+							label='菜单图标'
+							name='icon'
+							tooltip={
+								<a href='https://ant.design/components/icon-cn' target='_blank'>
+									ant-icon 🚀
+								</a>
+							}
+							rules={[{ required: true, message: '创建菜单需 图标' }]}
+						>
+							{/* <Tooltip
+								overlayStyle={{ maxWidth: 500 }}
+								// classNames="ss"
+								trigger={['focus']}
+								title={
+									<div className="w-[400px] h-[300px]">
+										{ICONS.map(value => {
+											let obj = { name: 'StepBackwardOutlined', className: 'w-[18px] h-[18px]' }
+											return <Icon {...obj} />
+										})}
+									</div>
+								}
+								placement="bottomLeft"
+								className="w-[400px]">
+								<Input onChange={() => {}} placeholder="Input a number" maxLength={16} />
+							</Tooltip> */}
+							<Input variant='filled' placeholder='到antd中选择图标、格式： MenuUnfoldOutlined' maxLength={30} />
 						</Form.Item>
 					</Col>
-					<Col span={24}>
-						<Form.Item label='角色顺序' name='order' rules={[{ required: true, message: '必填：角色顺序' }]}>
-							<InputNumber defaultValue={1} className='always-show-handler' keyboard={false} />
+					<Col span={12}>
+						<Form.Item label='菜单路由路径' name='path' tooltip={{ title: '路由路径必须填写' }} rules={[{ required: true, message: '创建菜单需 path' }]}>
+							<Input variant='filled' placeholder='path: /home/index' />
 						</Form.Item>
 					</Col>
-					<Col span={24}>
-						<Form.Item label='状态' name='status' rules={[{ required: false }]}>
-							<Switch />
+					<Col span={12}>
+						<Form.Item label='菜单组件路径' name='element' tooltip={{ title: '一级菜单无children时填写' }}>
+							<Input variant='filled' placeholder='element: /home/index' />
 						</Form.Item>
 					</Col>
-					<Col span={24}>
-						<Form.Item label='菜单权限' name='permission_menu' rules={[{ required: false, message: '必填：菜单权限' }]}>
-							<div className='mt-[6px] px-3 w-full flex justify-between'>
-								<div>
-									<Checkbox onChange={ExpandedFunc}>展开/折叠</Checkbox>
-								</div>
-								<div>
-									<Checkbox onChange={SelectAllFunc}>全选/全不选</Checkbox>
-								</div>
-								<div>
-									<Checkbox defaultChecked onChange={() => {}}>
-										父子联动
-									</Checkbox>
-								</div>
-							</div>
-							<div className='mt-3 w-full p-3  border-[1px] rounded-lg'>
-								<Tree
-									// checkStrictly={!linkage} // 父子联动
-									checkStrictly={false}
-									showLine
-									checkable
-									treeData={menuList}
-									checkedKeys={checkedKeys}
-									expandedKeys={expandedKeys}
-									onExpand={(keys: any) => setExpandedKeys(keys)}
-									onCheck={(keys: any) => setCheckedKeys(keys)}
-									onSelect={(selectedKeys, e: any) => {
-										console.log(selectedKeys);
-										console.log(e);
-									}}
-								/>
-							</div>
+					{/* {menuType == '目录' && (
+						<Col span={12}>
+							<Form.Item label="重定向路由路径" name="redirect_path" tooltip={{ title: '一级菜单有children时填写' }}>
+								<Input placeholder="path: /auth" />
+							</Form.Item>
+						</Col>
+					)} */}
+					{menuType == '目录' && <Col span={12}></Col>}
+					{menuType == '目录' && (
+						<Col span={12}>
+							<Form.Item label='重定向路径' name='redirect' tooltip={{ title: '一级菜单有children填写' }}>
+								<Input variant='filled' placeholder='redirect: /author/page' />
+							</Form.Item>
+						</Col>
+					)}
+					<Col span={12}>
+						<Form.Item label='菜单唯一标识' name='key' rules={[{ required: true, message: '创建菜单需 key' }]}>
+							<Input variant='filled' placeholder='home' />
 						</Form.Item>
 					</Col>
-					<Col span={24}>
-						<Form.Item label='角色描述' name='desc' rules={[{ required: false }]}>
-							<TextArea rows={3} placeholder='请输入内容' maxLength={60} />
+					<Col span={12}>
+						<Form.Item label='菜单标题' name='title' rules={[{ required: true, message: '创建菜单需 title' }]}>
+							<Input variant='filled' placeholder='首页' />
+						</Form.Item>
+					</Col>
+					<Col span={12}>
+						<Form.Item label='外链URL' name='isLink'>
+							<Input variant='filled' placeholder='外链链接地址 eg：www.baidu.com' />
+						</Form.Item>
+					</Col>
+					<Col span={12}>
+						<Form.Item label='是否隐藏菜单项' name='isHide' rules={[{ required: true, message: '创建菜单需 isHide' }]}>
+							<Radio.Group options={['是', '否']} defaultValue='否' />
+						</Form.Item>
+					</Col>
+					<Col span={12}>
+						<Form.Item label='是否全屏显示' name='isFull' rules={[{ required: true, message: '创建菜单需 isFull' }]}>
+							<Radio.Group options={['是', '否']} defaultValue='否' />
+						</Form.Item>
+					</Col>
+
+					<Col span={12}>
+						<Form.Item label='是否固定标签页' name='isAffix' rules={[{ required: true, message: '创建菜单需 isAffix' }]}>
+							<Radio.Group options={['是', '否']} defaultValue='否' />
+						</Form.Item>
+					</Col>
+
+					<Col span={12}>
+						<Form.Item label='显示排序' name='sort' tooltip={{ title: '最小值：1、最大值：999、数值小排在前面' }}>
+							<InputNumber variant='filled' controls min={1} max={999} defaultValue={1} />
 						</Form.Item>
 					</Col>
 				</Row>
-				<Row className='absolute right-[105px] bottom-[0px]'>
-					<Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-						<Space>
-							<Button type='default' htmlType='button' onClick={OnCancel}>
-								取消
-							</Button>
-							<Button type='default' htmlType='button' onClick={OnReset}>
-								重置
-							</Button>
-							<Button type='primary' htmlType='submit'>
-								提交
-							</Button>
-						</Space>
-					</Form.Item>
-				</Row>
+				<Card title={<span className='text-[14px]'>菜单结构 JSON 数据、参考如何创建菜单</span>} bodyStyle={{ height: 400, overflow: 'auto' }}>
+					<pre style={{ backgroundColor: '#f5f5f5', padding: '12px', borderRadius: '6px', overflow: 'auto', fontSize: 13 }}>
+						<code>{JSON.stringify(menu, null, 2)}</code>
+					</pre>
+				</Card>
 			</Form>
 		</Modal>
 	);

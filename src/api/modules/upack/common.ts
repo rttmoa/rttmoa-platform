@@ -50,4 +50,7 @@ export const delJob = (id: string) => http.delete(`/job/delJob`, { id });
 export const delMoreJob = (ids: string[]) => http.post(`/job/delMoreJob`, { ids });
 
 // 系统管理 — 角色管理 — 查询
-export const findRole = (params: Params) => http.post(`/role/findRole`, params);
+export const findRole = (params: Params) => http.get(`/role/findRole`, params);
+export const addRole = (params: Params) => http.post(`/role/addRole`, params);
+export const modifyRole = (params: Params) => http.post(`/role/modifyRole`, params);
+export const delRole = (id: string) => http.delete(`/role/delRole`, { id });

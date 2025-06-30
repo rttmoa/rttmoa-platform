@@ -9,50 +9,52 @@ const ModalComponent = (Params: any) => {
 
 	const [menuList, setMenuList] = useState([]);
 	const [expandedKeys, setExpandedKeys] = useState([]); // 展开
-	const [checkedKeys, setCheckedKeys] = useState([]); // 全选
-	const [linkage, setLinkage] = useState(false); // 父子联动
-	const [menuHandle, setMenuHandle] = useState([]); // 父子联动
+	const [checkedKeys, setCheckedKeys] = useState<any>([]); // 全选
+
+	function transformRoutes(routes: any[]) {
+		return routes.map((route: any) => {
+			const item: any = {
+				title: route.meta?.title || '',
+				key: route.meta?.key || '',
+			};
+			if (Array.isArray(route.children) && route.children.length > 0) {
+				item.children = transformRoutes(route.children);
+			}
+			return item;
+		});
+	}
 
 	useEffect(() => {
-		if (modalType == 'create') {
-			// 创建要给字段初始值、否则服务端获取不到
-			FindAllMenu({}).then(res => {
-				// console.log('res', res);
-				const menuList: any = res.data;
-				function transformRoutes(routes: any[]) {
-					return routes.map((route: any) => {
-						const item: any = {
-							title: route.meta?.title || '',
-							key: route.meta?.key || '',
-						};
-						if (Array.isArray(route.children) && route.children.length > 0) {
-							item.children = transformRoutes(route.children);
-						}
-						return item;
-					});
-				}
-				const menu: any = transformRoutes(menuList || []);
-				setMenuList(menu || []);
-			});
-			form.setFieldsValue({
-				role_name: '',
-				permission_str: '',
-				level: 1,
-				order: 1,
-				status: false,
-				desc: '',
-			});
-		}
-		if (modalType == 'edit') {
-			// form.setFieldsValue({
-			// 	job_name: userInfo.postName,
-			// 	job_sort: userInfo.postSort,
-			// 	status: userInfo.status == '0' ? false : true,
-			// 	desc: userInfo.desc,
-			// });
-		}
+		FindAllMenu({}).then((res: any) => {
+			setMenuList(transformRoutes(res.data || []) as any);
+			if (modalType == 'create') {
+				setExpandedKeys([]);
+				setCheckedKeys([]);
+				form.setFieldsValue({
+					role_name: '',
+					permission_str: '',
+					level: 1,
+					sort: 1,
+					status: false,
+					desc: '',
+				});
+			}
+			if (modalType == 'edit') {
+				setExpandedKeys([]);
+				setCheckedKeys(userInfo.permission_menu);
+				form.setFieldsValue({
+					role_name: userInfo.role_name,
+					permission_str: userInfo.permission_str,
+					level: userInfo.level,
+					sort: userInfo.sort,
+					status: userInfo.status,
+					desc: userInfo.desc,
+				});
+			}
+		});
 	}, [modalType, userInfo]);
 
+	// 取消按钮
 	const OnCancel = () => {
 		setExpandedKeys([]);
 		setCheckedKeys([]);
@@ -92,12 +94,13 @@ const ModalComponent = (Params: any) => {
 		const flatKeys = findPathsForKeys(menuList, checkedKeys);
 		// console.log('所有菜单：', menuList);
 		// console.log('checkedKeys', checkedKeys);
-		console.log('flatKeys', flatKeys); // 获取到所有的父子菜单： ['menu', 'menu2', 'menu22', 'menu221', 'menu222']
+		// console.log('flatKeys', flatKeys); // 获取到所有的父子菜单： ['menu', 'menu2', 'menu22', 'menu221', 'menu222']
 		const formList = form.getFieldsValue();
 		if (modalType == 'edit') {
 			formList._id = userInfo._id;
 		}
-		formList.permission_menu = flatKeys;
+		formList.permission_menu = checkedKeys; // 无父节点：['pageMenu']
+		formList.menuList = flatKeys; // 有父节点：['auth', 'pageMenu']
 		handleModalSubmit && handleModalSubmit(modalType, formList);
 	};
 
@@ -132,15 +135,15 @@ const ModalComponent = (Params: any) => {
 			setCheckedKeys([]);
 		}
 	};
-	// 父子联动
-	const LinkageFunc = (e: any) => {
-		const isTrue = e.target.checked;
-		if (isTrue) {
-			setLinkage(true);
-		} else {
-			setLinkage(false);
-		}
-	};
+	// // 父子联动
+	// const LinkageFunc = (e: any) => {
+	// 	const isTrue = e.target.checked;
+	// 	if (isTrue) {
+	// 		setLinkage(true);
+	// 	} else {
+	// 		setLinkage(false);
+	// 	}
+	// };
 
 	return (
 		<Modal className='relative' title={modalTitle} width={600} open={modalIsVisible} onCancel={OnCancel} footer={false}>
@@ -162,7 +165,7 @@ const ModalComponent = (Params: any) => {
 						</Form.Item>
 					</Col>
 					<Col span={24}>
-						<Form.Item label='角色顺序' name='order' rules={[{ required: true, message: '必填：角色顺序' }]}>
+						<Form.Item label='角色顺序' name='sort' rules={[{ required: true, message: '必填：角色顺序' }]}>
 							<InputNumber defaultValue={1} className='always-show-handler' keyboard={false} />
 						</Form.Item>
 					</Col>

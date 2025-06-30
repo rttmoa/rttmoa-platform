@@ -18,7 +18,7 @@
 		width: 45px;
 		height: 100%;
 		cursor: pointer;
-		border-left: 1px solid var(--hooks-colorBorderSecondary);
+		// border-left: 1px solid var(--hooks-colorBorderSecondary);
 		&:hover {
 			background-color: var(--hooks-colorBorderSecondary);
 			transition: all 0.3s;
@@ -26,9 +26,16 @@
 	}
 }
 
-/* 覆盖antd的悬浮行为 */
+/* 数字输入框：鼠标移入显示悬浮增减按钮 */
 .always-show-handler .ant-input-number-handler-wrap {
 	// width: 300px;
 	opacity: 1 !important;
 	pointer-events: auto !important;
+}
+
+// Modal中下拉菜单的高度
+.ant-cascader-menus > .ant-cascader-menu {
+	width: 130px !important;
+	height: 480px !important;
+	overflow-y: auto !important;
 }

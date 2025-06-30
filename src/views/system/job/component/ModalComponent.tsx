@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 const ModalComponent = (Params: any) => {
 	const { form, modalIsVisible, setModalIsVisible, modalTitle, modalType, modalUserInfo: userInfo, handleModalSubmit } = Params;
-	console.log('userInfo', userInfo);
+	// console.log('userInfo', userInfo);
 	useEffect(() => {
 		if (modalType == 'create') {
 			// 创建要给字段初始值、否则服务端获取不到
