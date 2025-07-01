@@ -49,3 +49,4 @@ public class Example {
   }
 }
  `;export{e as tempJava};
+//# sourceMappingURL=tempJava-3ef93966.js.map

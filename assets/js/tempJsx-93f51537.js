@@ -61,3 +61,4 @@ const Globalization: React.FC = () => {
 
 export default Globalization
 `;export{e as tempJsx};
+//# sourceMappingURL=tempJsx-93f51537.js.map
