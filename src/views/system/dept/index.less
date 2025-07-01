@@ -1,0 +1,51 @@
+// Form 样式  原24px
+.ant-form {
+	padding: 12px !important;
+}
+// Card 样式  原24px
+.ant-card-body {
+	padding: 0 !important;
+}
+
+// ColumnConfig.tsx — 列配置中：操作按钮样式、倒三角形
+.more-button {
+	display: flex;
+	height: 100%;
+	.more-button-item {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 45px;
+		height: 100%;
+		cursor: pointer;
+		// border-left: 1px solid var(--hooks-colorBorderSecondary);
+		&:hover {
+			background-color: var(--hooks-colorBorderSecondary);
+			transition: all 0.3s;
+		}
+	}
+}
+
+/* 数字输入框：鼠标移入显示悬浮增减按钮 */
+.always-show-handler .ant-input-number-handler-wrap {
+	// width: 300px;
+	opacity: 1 !important;
+	pointer-events: auto !important;
+}
+
+// Modal中下拉菜单的高度
+// .ant-cascader-menus > .ant-cascader-menu {
+// 	width: 130px !important;
+// 	height: 480px !important;
+// 	overflow-y: auto !important;
+// }
+
+// Modal中下拉树结构菜单的高度   Less 或 CSS 中
+// .ant-select-tree {
+// 	width: 130px !important;
+//   height: 600px !important;
+//   overflow-y: auto !important;
+// }
+.custom-tree-dropdown .ant-select-tree {
+	height: 100% !important;
+}

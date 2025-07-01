@@ -2,7 +2,7 @@ import { FindAllMenu } from '@/api/modules/upack/common';
 import { Button, Card, Cascader, Checkbox, Col, Form, Input, InputNumber, Modal, Radio, Row, Space, Switch, Tree } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { useEffect, useState } from 'react';
-import { menu } from '../../menuMange/component/menuConfig';
+import { menu } from './menuConfig';
 
 const ModalComponent = (Props: any) => {
 	const {
@@ -107,6 +107,9 @@ const ModalComponent = (Props: any) => {
 		}
 		handleModalSubmit && handleModalSubmit(type, formList);
 	};
+	const OnSubmit = () => {
+		form.submit();
+	};
 	return (
 		<Modal
 			title={modalTitle}
@@ -115,40 +118,17 @@ const ModalComponent = (Props: any) => {
 			loading={false}
 			open={modalIsVisible}
 			// open={true}
-			onCancel={() => {
-				OnCancel();
-			}}
+			onCancel={OnCancel}
 			footer={[
-				<Button
-					danger
-					loading={false}
-					onClick={() => {
-						OnCancel();
-					}}
-				>
+				<Button danger loading={false} onClick={OnCancel}>
 					取消
 				</Button>,
-				<Button
-					key='back'
-					onClick={() => {
-						OnReset();
-					}}
-				>
-					重置表单
-				</Button>,
-				<Button
-					key='link'
-					type='primary'
-					loading={false}
-					onClick={() => {
-						FormOnFinish();
-					}}
-				>
+				<Button key='link' type='primary' loading={false} onClick={OnSubmit}>
 					提交
 				</Button>,
 			]}
 		>
-			<Form className='h-[650px]  overflow-auto' layout='horizontal' size='middle' form={form} labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
+			<Form className='h-[650px]  overflow-auto' layout='horizontal' size='middle' form={form} onFinish={FormOnFinish} labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
 				<Row gutter={16}>
 					<Col span={24} pull={3}>
 						<Form.Item label='菜单上级' name='top' rules={[{ required: true }]}>

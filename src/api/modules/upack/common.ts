@@ -54,3 +54,9 @@ export const findRole = (params: Params) => http.get(`/role/findRole`, params);
 export const addRole = (params: Params) => http.post(`/role/addRole`, params);
 export const modifyRole = (params: Params) => http.post(`/role/modifyRole`, params);
 export const delRole = (id: string) => http.delete(`/role/delRole`, { id });
+
+// 系统管理 — 部门管理 — 新增
+export const addDept = (params: Params) => http.post(`/dept/department`, params);
+export const findDept = (params: Params) => http.get(`/dept/departments`, params);
+export const modifyDept = (id: string, data: any) => http.put(`/dept/department/${id}`, data);
+export const delDept = (id: string) => http.delete(`/dept/department/${id}`);

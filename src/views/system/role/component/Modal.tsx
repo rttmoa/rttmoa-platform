@@ -144,9 +144,25 @@ const ModalComponent = (Params: any) => {
 	// 		setLinkage(false);
 	// 	}
 	// };
-
+	const OnSubmit = () => {
+		form.submit();
+	};
 	return (
-		<Modal className='relative' title={modalTitle} width={600} open={modalIsVisible} onCancel={OnCancel} footer={false}>
+		<Modal
+			className='relative'
+			title={modalTitle}
+			width={600}
+			open={modalIsVisible}
+			onCancel={OnCancel}
+			footer={[
+				<Button danger loading={false} onClick={OnCancel}>
+					取消
+				</Button>,
+				<Button key='link' type='primary' loading={false} onClick={OnSubmit}>
+					提交
+				</Button>,
+			]}
+		>
 			<Form className='mb-[60px] max-h-[600px] overflow-auto' layout='horizontal' form={form} labelCol={{ span: 4 }} wrapperCol={{ span: 18 }} onFinish={FormOnFinish}>
 				<Row gutter={16}>
 					<Col span={24}>
@@ -222,7 +238,7 @@ const ModalComponent = (Params: any) => {
 						</Form.Item>
 					</Col>
 				</Row>
-				<Row className='absolute right-[105px] bottom-[0px]'>
+				{/* <Row className='absolute right-[105px] bottom-[0px]'>
 					<Form.Item wrapperCol={{ offset: 8, span: 16 }}>
 						<Space>
 							<Button type='default' htmlType='button' onClick={OnCancel}>
@@ -236,7 +252,7 @@ const ModalComponent = (Params: any) => {
 							</Button>
 						</Space>
 					</Form.Item>
-				</Row>
+				</Row> */}
 			</Form>
 		</Modal>
 	);

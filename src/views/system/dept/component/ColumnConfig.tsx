@@ -3,7 +3,7 @@ import { UserList } from '@/api/interface';
 import { Button, Dropdown, Input, Popconfirm, Switch } from 'antd';
 import { DeleteOutlined, EditOutlined, EyeOutlined, SearchOutlined } from '@ant-design/icons';
 import { message } from '@/hooks/useMessage';
-import { IconFont } from '@/components/Icon';
+import { Icon, IconFont } from '@/components/Icon';
 
 export interface TableColumnsParams {
 	setCurrentRow: (arg: any) => void;
@@ -13,16 +13,15 @@ export interface TableColumnsParams {
 
 const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] => {
 	let { setCurrentRow, setShowDetail, handleOperator } = Params;
-	// Params.setCurrentRow()
-
 	return [
 		{
-			title: '岗位名称',
-			dataIndex: 'postName',
+			title: '部门名称',
+			dataIndex: 'name',
 			copyable: true,
-			// width: 150,
+			ellipsis: true,
+			width: 200,
 			fixed: 'left',
-			tooltip: '用户的名字',
+			// tooltip: '用户的名字',
 			// initialValue: 'zhangsan',
 			onFilter: false,
 			// hideInSearch: true,
@@ -55,30 +54,45 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] 
 			fieldProps: (form, config) => {}, // 查询表单的 props，会透传给表单项，
 		},
 		{
-			title: '岗位排序',
-			dataIndex: 'postSort',
-			// width: 150,
+			title: '部门排序',
+			dataIndex: 'sort',
+			width: 80,
 			filters: true,
 			onFilter: true,
 		},
+
 		{
-			title: '状态',
+			title: '部门状态',
+			width: 80,
 			dataIndex: 'status',
-			// width: 150,
-			sorter: true,
-			tooltip: '指代用户的年纪大小', // * tooltip 提示一些信息
-			render: (data, entity) => {
-				return <Switch value={data == '0' ? false : true} />;
-			},
-		},
-		{
-			title: '创建日期',
-			dataIndex: 'createTime',
-			hideInForm: true, // * hideInForm 在Form中不展示此列, 不可搜索
 			filters: true,
 			onFilter: true,
-			hideInSearch: true,
 		},
+		{
+			title: '部门负责人',
+			dataIndex: 'leader',
+			ellipsis: true,
+			width: 100,
+			filters: true,
+			onFilter: true,
+		},
+		{
+			title: '负责人手机号',
+			dataIndex: 'phone',
+			ellipsis: true,
+			width: 180,
+			filters: true,
+			onFilter: true,
+		},
+		{
+			title: '负责人邮箱',
+			dataIndex: 'email',
+			ellipsis: true,
+			width: 180,
+			filters: true,
+			onFilter: true,
+		},
+
 		{
 			title: '操作',
 			key: 'option',

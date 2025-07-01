@@ -1,6 +1,6 @@
 import { ProColumns } from '@ant-design/pro-components';
 import { UserList } from '@/api/interface';
-import { Button, Dropdown, Input } from 'antd';
+import { Button, Dropdown, Input, Popconfirm } from 'antd';
 import { DeleteOutlined, EditOutlined, EyeOutlined, SearchOutlined } from '@ant-design/icons';
 import { message } from '@/hooks/useMessage';
 import { IconFont } from '@/components/Icon';
@@ -246,46 +246,52 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] 
 
 // 操作按钮：查看、新增、删除
 const action = (entity: UserList, Params: TableColumnsParams) => {
+	// 查看
 	const OnView = () => {
 		Params.setCurrentRow(entity);
 		Params.setShowDetail(true);
 	};
+	// 编辑
 	const OnEdit = () => {
 		Params.handleOperator('edit', entity);
 	};
+	// 删除
 	const OnDelete = () => {
 		Params.handleOperator('delete', entity);
 	};
+	const menuList = [
+		{
+			key: '1',
+			label: (
+				<Button key='view' type='link' size='small' icon={<EyeOutlined />} onClick={OnView}>
+					查看
+				</Button>
+			),
+		},
+		{
+			key: '2',
+			label: (
+				<Button key='edit' type='link' size='small' icon={<EditOutlined />} onClick={OnEdit}>
+					编辑
+				</Button>
+			),
+		},
+		{
+			key: '3',
+			label: (
+				<Popconfirm title='删除任务！' description='你确定要删除这条任务?' onConfirm={OnDelete} okText='确认' cancelText='取消' placement='bottom' trigger='hover'>
+					<Button key='delete' type='link' size='small' danger icon={<DeleteOutlined />}>
+						删除
+					</Button>
+				</Popconfirm>
+			),
+		},
+	];
 	return [
 		<div className='more-button'>
 			<Dropdown
 				menu={{
-					items: [
-						{
-							key: '1',
-							label: (
-								<Button key='view' type='link' size='small' icon={<EyeOutlined />} onClick={OnView}>
-									查看
-								</Button>
-							),
-						},
-						{
-							key: '2',
-							label: (
-								<Button key='edit' type='link' size='small' icon={<EditOutlined />} onClick={OnEdit}>
-									编辑
-								</Button>
-							),
-						},
-						{
-							key: '3',
-							label: (
-								<Button key='delete' type='link' size='small' danger icon={<DeleteOutlined />} onClick={OnDelete}>
-									删除
-								</Button>
-							),
-						},
-					],
+					items: menuList,
 				}}
 				placement='bottom'
 				arrow={{ pointAtCenter: true }}

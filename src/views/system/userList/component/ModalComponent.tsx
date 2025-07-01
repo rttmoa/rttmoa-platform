@@ -33,7 +33,9 @@ const ModalComponent = (Params: any) => {
 		// console.log('formList', formList);
 		handleModalSubmit && handleModalSubmit(modalType, formList);
 	};
-
+	const OnSubmit = () => {
+		form.submit();
+	};
 	return (
 		<Modal
 			className='relative '
@@ -42,14 +44,14 @@ const ModalComponent = (Params: any) => {
 			// loading={false}
 			open={modalIsVisible}
 			onCancel={OnCancel}
-			footer={false}
-			// footer={[
-			// 	<Button loading={loading} onClick={() => {}}>取消</Button>,
-			// 	<Button key='back' onClick={() => {}}>
-			// 		重置表单
-			// 	</Button>,
-			// 	<Button key='link' type='primary' loading={loading} onClick={() => {}}>提交</Button>,
-			// ]}
+			footer={[
+				<Button danger loading={false} onClick={OnCancel}>
+					取消
+				</Button>,
+				<Button key='link' type='primary' loading={false} onClick={OnSubmit}>
+					提交
+				</Button>,
+			]}
 		>
 			<Form className='mb-[120px] max-h-[500px] overflow-auto' layout='horizontal' form={form} labelCol={{ span: 4 }} wrapperCol={{ span: 18 }} onFinish={FormOnFinish}>
 				<Row gutter={16}>
@@ -98,7 +100,7 @@ const ModalComponent = (Params: any) => {
 						</Form.Item>
 					</Col>
 				</Row>
-				<Row className='absolute right-[105px] bottom-[0px]'>
+				{/* <Row className='absolute right-[105px] bottom-[0px]'>
 					<Form.Item wrapperCol={{ offset: 8, span: 16 }}>
 						<Space>
 							<Button type='default' htmlType='button' onClick={OnCancel}>
@@ -112,7 +114,7 @@ const ModalComponent = (Params: any) => {
 							</Button>
 						</Space>
 					</Form.Item>
-				</Row>
+				</Row> */}
 			</Form>
 		</Modal>
 	);

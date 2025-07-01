@@ -964,4 +964,4 @@ export const menu = [
 			isAffix: false,
 		},
 	},
-]
+];

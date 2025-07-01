@@ -5,24 +5,14 @@ import { useEffect } from 'react';
 const ModalComponent = (Params: any) => {
 	const { form, modalIsVisible, setModalIsVisible, modalTitle, modalType, modalUserInfo: userInfo, handleModalSubmit } = Params;
 	// console.log('userInfo', userInfo);
+
 	useEffect(() => {
-		if (modalType == 'create') {
-			// 创建要给字段初始值、否则服务端获取不到
-			form.setFieldsValue({
-				job_name: '',
-				job_sort: '',
-				status: false,
-				desc: '',
-			});
-		}
-		if (modalType == 'edit') {
-			form.setFieldsValue({
-				job_name: userInfo.postName,
-				job_sort: userInfo.postSort,
-				status: userInfo.status == '0' ? false : true,
-				desc: userInfo.desc,
-			});
-		}
+		form.setFieldsValue({
+			job_name: modalType == 'create' ? '' : userInfo.postName,
+			job_sort: modalType == 'create' ? '' : userInfo.postSort,
+			status: modalType == 'create' ? false : userInfo.status == '0' ? false : true,
+			desc: modalType == 'create' ? '' : userInfo.desc,
+		});
 	}, [modalType, userInfo]);
 
 	const OnCancel = () => {
@@ -38,7 +28,9 @@ const ModalComponent = (Params: any) => {
 		}
 		handleModalSubmit && handleModalSubmit(modalType, formList);
 	};
-
+	const Submit = () => {
+		form.submit();
+	};
 	return (
 		<Modal
 			className='relative'
@@ -47,7 +39,15 @@ const ModalComponent = (Params: any) => {
 			// loading={false}
 			open={modalIsVisible}
 			onCancel={OnCancel}
-			footer={false}
+			footer={[
+				<Button loading={false} onClick={OnCancel}>
+					取消
+				</Button>,
+				// & 修改此处、提交使用 form.submit()
+				<Button key='link' type='primary' loading={false} onClick={Submit}>
+					提交
+				</Button>,
+			]}
 		>
 			<Form className='mb-[60px] max-h-[500px] overflow-auto' layout='horizontal' form={form} labelCol={{ span: 4 }} wrapperCol={{ span: 18 }} onFinish={FormOnFinish}>
 				<Row gutter={16}>
@@ -72,7 +72,7 @@ const ModalComponent = (Params: any) => {
 						</Form.Item>
 					</Col>
 				</Row>
-				<Row className='absolute right-[105px] bottom-[0px]'>
+				{/* <Row className='absolute right-[105px] bottom-[0px]'>
 					<Form.Item wrapperCol={{ offset: 8, span: 16 }}>
 						<Space>
 							<Button type='default' htmlType='button' onClick={OnCancel}>
@@ -86,7 +86,7 @@ const ModalComponent = (Params: any) => {
 							</Button>
 						</Space>
 					</Form.Item>
-				</Row>
+				</Row> */}
 			</Form>
 		</Modal>
 	);
