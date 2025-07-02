@@ -4,29 +4,29 @@ import { Button, Popconfirm } from 'antd';
 
 type FooterComponentProps = {
 	actionRef: any;
-	selectedRowsState: any;
+	selectedRows: any;
 	setSelectedRows: any;
 	handleOperator: any;
 };
 const FooterComponent: React.FC<FooterComponentProps> = props => {
-	const { actionRef, selectedRowsState, setSelectedRows, handleOperator } = props;
+	const { actionRef, selectedRows, setSelectedRows, handleOperator } = props;
 	return (
 		<FooterToolbar
 			extra={
 				<div className='font-mono'>
-					已选择 <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a> 项 &nbsp;&nbsp;&nbsp;&nbsp;
-					{/* <span>
-						总数为 <span className='text-red-600'>{selectedRowsState.reduce((pre: any, item: { age: any }) => pre + item.age!, 0)}</span> 岁
-					</span> */}
+					已选择 <a style={{ fontWeight: 600 }}>{selectedRows.length}</a> 项 &nbsp;&nbsp;&nbsp;&nbsp;
+					<span>
+						总数为 <span className='text-red-600'>{selectedRows.reduce((pre: any, item: { age: any }) => pre + item.age!, 0)}</span> 岁
+					</span>
 				</div>
 			}
 		>
 			<Popconfirm
 				className=''
 				title='删除多个任务！'
-				description={`是否要删除这 ${selectedRowsState.length} 个任务`}
+				description={`是否要删除这 ${selectedRows.length} 个任务`}
 				onConfirm={() => {
-					// 	await handle.handleRemove(selectedRowsState);
+					// 	await handle.handleRemove(selectedRows);
 					// 	setSelectedRows([]);
 					// 	actionRef.current?.reloadAndRest?.();
 					handleOperator('moreDelete', null);

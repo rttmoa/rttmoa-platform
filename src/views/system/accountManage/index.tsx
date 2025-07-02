@@ -42,17 +42,17 @@ export default function Index() {
 	};
 	return (
 		<div className='flex'>
-			<Card className='w-1/3 mr-7'>
-				<h2 className='py-2 mb-6 flex justify-center border-b'>个人信息</h2>
+			<div className='bg-white px-[40px] py-[15px] w-1/3 mr-7 rounded-lg'>
+				<h2 className='py-2 mb-6 flex justify-center border-b  text-base'>个人信息</h2>
 				<div className='mb-8 flex justify-center'>
 					<Avatar size={84} src={avatar} />
 				</div>
 				<UserInfo />
-			</Card>
-			<Card className='w-2/3'>
+			</div>
+			<div className='w-2/3 bg-white px-[40px] py-[15px] rounded-lg'>
 				<h2 className='py-2 mb-6 flex justify-center border-b text-base'>基本信息</h2>
 				<Tabs defaultActiveKey='1' items={items} onChange={onChange} />
-			</Card>
+			</div>
 		</div>
 	);
 }

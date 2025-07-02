@@ -4,37 +4,40 @@ import { Drawer } from 'antd';
 import TableColumnsConfig from './ColumnConfig';
 
 type DrawerComponentProps = {
-	showDetail: any;
-	currentRow: any;
-	setCurrentRow: any;
-	setShowDetail: any;
-	columnParams: any;
+	drawerIsVisible: boolean;
+	drawerCurrentRow: any;
+	setDrawerCurrentRow: React.Dispatch<React.SetStateAction<any | null>>;
+	setDrawerIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+	handleOperator: (type: string, item: any) => void;
 };
-
-// 查看用户
 const DrawerComponent: React.FC<DrawerComponentProps> = Params => {
-	const { showDetail, currentRow, setCurrentRow, setShowDetail, columnParams } = Params;
+	const { drawerIsVisible, drawerCurrentRow, setDrawerCurrentRow, setDrawerIsVisible, handleOperator } = Params;
+
 	return (
 		<Drawer
-			width={600}
-			open={showDetail}
+			width={550}
+			open={drawerIsVisible}
 			onClose={() => {
-				setCurrentRow(undefined);
-				setShowDetail(false);
+				setDrawerCurrentRow(undefined);
+				setDrawerIsVisible(false);
 			}}
-			closable={false}
+			closable={true}
 		>
-			{currentRow?.username && (
+			{drawerCurrentRow?.name && (
 				<ProDescriptions<UserList>
-					column={2}
-					title={currentRow?.username}
+					// extra='extra'
+					bordered
+					size='small'
+					layout='horizontal'
+					column={1}
+					title={drawerCurrentRow?.name}
 					request={async () => ({
-						data: currentRow || {},
+						data: drawerCurrentRow || {},
 					})}
 					params={{
-						id: currentRow?.username,
+						id: drawerCurrentRow?.name,
 					}}
-					columns={TableColumnsConfig(columnParams) as ProDescriptionsItemProps<UserList>[]}
+					columns={TableColumnsConfig(handleOperator) as ProDescriptionsItemProps<UserList>[]}
 				/>
 			)}
 		</Drawer>

@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 
 const ModalComponent = (Params: any) => {
 	const { form, modalIsVisible, setModalIsVisible, modalTitle, modalType, modalUserInfo: userInfo, handleModalSubmit } = Params;
-	// console.log('userInfo', userInfo);
 
 	const [menuList, setMenuList] = useState([]);
 	const [expandedKeys, setExpandedKeys] = useState([]); // 展开
@@ -216,18 +215,11 @@ const ModalComponent = (Params: any) => {
 									expandedKeys={expandedKeys}
 									// 自动寻找父级吗？
 									onExpand={(keys: any) => {
-										// console.log('展开', keys);
 										setExpandedKeys(keys);
 									}}
 									onCheck={(keys: any) => {
-										// console.log('check', keys);
 										setCheckedKeys(keys);
 									}}
-									// onSelect={(selectedKeys, e: any) => {
-									// 	console.log('选择');
-									// 	console.log(selectedKeys);
-									// 	console.log(e);
-									// }}
 								/>
 							</div>
 						</Form.Item>
@@ -238,21 +230,6 @@ const ModalComponent = (Params: any) => {
 						</Form.Item>
 					</Col>
 				</Row>
-				{/* <Row className='absolute right-[105px] bottom-[0px]'>
-					<Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-						<Space>
-							<Button type='default' htmlType='button' onClick={OnCancel}>
-								取消
-							</Button>
-							<Button type='default' htmlType='button' onClick={OnReset}>
-								重置
-							</Button>
-							<Button type='primary' htmlType='submit'>
-								提交
-							</Button>
-						</Space>
-					</Form.Item>
-				</Row> */}
 			</Form>
 		</Modal>
 	);

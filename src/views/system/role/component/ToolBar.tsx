@@ -3,6 +3,7 @@ import { Button, Tooltip } from 'antd';
 import Search from 'antd/lib/input/Search'; // ! antd/lib/input
 import { useDispatch } from '@/redux';
 import { setGlobalState } from '@/redux/modules/global';
+import { message } from '@/hooks/useMessage';
 
 type ToolBarProps = {
 	quickSearch: () => void;
@@ -11,6 +12,7 @@ type ToolBarProps = {
 	handleOperator: (type: string, data: any) => void;
 };
 
+// * 角色：
 // * 渲染工具栏 组件
 const ToolBarRender = (props: ToolBarProps) => {
 	let { quickSearch, openSearch, SetOpenSearch, handleOperator } = props;
@@ -19,17 +21,25 @@ const ToolBarRender = (props: ToolBarProps) => {
 	const CreateBtn = () => {
 		handleOperator('create', null);
 	};
+	const authorize = () => {
+		// handleOperator('create', null);
+		// message.info('用户授权');
+		handleOperator('authorize', null);
+	};
 	const ExportBtn = () => {};
 	const ImportBtn = () => {};
 	return [
-		<Search size='small' placeholder='快捷搜索...' allowClear onSearch={quickSearch} style={{ width: 150 }} />,
-		<Button size='small' type='dashed' key='button' icon={<PlusOutlined />} onClick={CreateBtn}>
+		<Search placeholder='快捷搜索...' allowClear onSearch={quickSearch} style={{ width: 200 }} />,
+		<Button icon={<PlusOutlined />} onClick={CreateBtn}>
 			新建
 		</Button>,
-		<Button size='small' type='dashed' key='button' icon={<ArrowsAltOutlined />} onClick={ExportBtn}>
+		<Button icon={<PlusOutlined />} onClick={authorize}>
+			用户授权
+		</Button>,
+		<Button icon={<ArrowsAltOutlined />} onClick={ExportBtn}>
 			导出EXCEL
 		</Button>,
-		<Button size='small' type='dashed' key='button' icon={<ShrinkOutlined />} onClick={ImportBtn}>
+		<Button icon={<ShrinkOutlined />} onClick={ImportBtn}>
 			导入EXCEL
 		</Button>,
 		<Tooltip title={!openSearch ? '关闭表单搜索' : '开启表单搜索'} className='text-lg'>

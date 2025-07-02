@@ -3,17 +3,16 @@ import TextArea from 'antd/es/input/TextArea';
 import { useEffect } from 'react';
 
 const ModalComponent = (Params: any) => {
-	const { form, modalIsVisible, setModalIsVisible, modalTitle, modalType, modalUserInfo: userInfo, handleModalSubmit } = Params;
-	// console.log('userInfo', userInfo);
+	const { form, modalIsVisible, setModalIsVisible, modalTitle, modalType, modalUserInfo, handleModalSubmit } = Params;
 
 	useEffect(() => {
 		form.setFieldsValue({
-			job_name: modalType == 'create' ? '' : userInfo.postName,
-			job_sort: modalType == 'create' ? '' : userInfo.postSort,
-			status: modalType == 'create' ? false : userInfo.status == '0' ? false : true,
-			desc: modalType == 'create' ? '' : userInfo.desc,
+			job_name: modalType == 'create' ? '' : modalUserInfo.postName,
+			job_sort: modalType == 'create' ? '' : modalUserInfo.postSort,
+			status: modalType == 'create' ? false : modalUserInfo.status == '0' ? false : true,
+			desc: modalType == 'create' ? '' : modalUserInfo.desc,
 		});
-	}, [modalType, userInfo]);
+	}, [modalType, modalUserInfo]);
 
 	const OnCancel = () => {
 		setModalIsVisible(false);
@@ -24,7 +23,7 @@ const ModalComponent = (Params: any) => {
 	const FormOnFinish = () => {
 		const formList = form.getFieldsValue();
 		if (modalType == 'edit') {
-			formList._id = userInfo._id;
+			formList._id = modalUserInfo._id;
 		}
 		handleModalSubmit && handleModalSubmit(modalType, formList);
 	};
@@ -72,21 +71,6 @@ const ModalComponent = (Params: any) => {
 						</Form.Item>
 					</Col>
 				</Row>
-				{/* <Row className='absolute right-[105px] bottom-[0px]'>
-					<Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-						<Space>
-							<Button type='default' htmlType='button' onClick={OnCancel}>
-								取消
-							</Button>
-							<Button type='default' htmlType='button' onClick={OnReset}>
-								重置
-							</Button>
-							<Button type='primary' htmlType='submit'>
-								提交
-							</Button>
-						</Space>
-					</Form.Item>
-				</Row> */}
 			</Form>
 		</Modal>
 	);

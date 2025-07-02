@@ -1,6 +1,4 @@
-import { FindAllMenu } from '@/api/modules/upack/common';
-import { Button, Card, Cascader, Checkbox, Col, Form, Input, InputNumber, Modal, Radio, Row, Space, Switch, Tree, TreeSelect } from 'antd';
-import TextArea from 'antd/es/input/TextArea';
+import { Button, Col, Form, Input, InputNumber, Modal, Radio, Row, TreeSelect } from 'antd';
 import { useEffect, useState } from 'react';
 
 const ModalComponent = (Props: any) => {

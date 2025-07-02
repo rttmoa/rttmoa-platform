@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Card, message, Modal, Form, Pagination } from 'antd';
+import { message, Modal, Form, Pagination } from 'antd';
 import MultiTable from '@/components/Tables';
 import UserFormModal from './components/UserFormModal';
 import { newFormList } from './components/Form_Config';

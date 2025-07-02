@@ -29,8 +29,6 @@ const ModalComponent = (Params: any) => {
 	};
 	const FormOnFinish = () => {
 		const formList = form.getFieldsValue();
-		// 处理一下表单数据
-		// console.log('formList', formList);
 		handleModalSubmit && handleModalSubmit(modalType, formList);
 	};
 	const OnSubmit = () => {
@@ -41,7 +39,6 @@ const ModalComponent = (Params: any) => {
 			className='relative '
 			title={modalTitle}
 			width={1000}
-			// loading={false}
 			open={modalIsVisible}
 			onCancel={OnCancel}
 			footer={[
@@ -100,21 +97,6 @@ const ModalComponent = (Params: any) => {
 						</Form.Item>
 					</Col>
 				</Row>
-				{/* <Row className='absolute right-[105px] bottom-[0px]'>
-					<Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-						<Space>
-							<Button type='default' htmlType='button' onClick={OnCancel}>
-								取消
-							</Button>
-							<Button type='default' htmlType='button' onClick={OnReset}>
-								重置
-							</Button>
-							<Button type='primary' htmlType='submit'>
-								提交
-							</Button>
-						</Space>
-					</Form.Item>
-				</Row> */}
 			</Form>
 		</Modal>
 	);

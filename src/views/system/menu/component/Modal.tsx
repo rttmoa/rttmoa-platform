@@ -1,6 +1,4 @@
-import { FindAllMenu } from '@/api/modules/upack/common';
 import { Button, Card, Cascader, Checkbox, Col, Form, Input, InputNumber, Modal, Radio, Row, Space, Switch, Tree } from 'antd';
-import TextArea from 'antd/es/input/TextArea';
 import { useEffect, useState } from 'react';
 import { menu } from './menuConfig';
 
@@ -15,11 +13,7 @@ const ModalComponent = (Props: any) => {
 		modalIsVisible, // 显示
 		modalMenuInfo, // 菜单信息
 
-		setModalTitle, // 设置标题
-		setModalType, // 设置类型
 		setModalIsVisible, // 设置显示
-		setModalMenuInfo, // 设置菜单信息
-		getMenu, // 重新获取菜单 getDate
 
 		handleModalSubmit, // 提交
 	} = Props;

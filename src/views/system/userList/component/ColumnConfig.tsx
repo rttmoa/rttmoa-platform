@@ -2,7 +2,6 @@ import { ProColumns } from '@ant-design/pro-components';
 import { UserList } from '@/api/interface';
 import { Button, Dropdown, Input, Popconfirm } from 'antd';
 import { DeleteOutlined, EditOutlined, EyeOutlined, SearchOutlined } from '@ant-design/icons';
-import { message } from '@/hooks/useMessage';
 import { IconFont } from '@/components/Icon';
 
 const valueEnum: { [key: number]: string } = {
@@ -18,26 +17,8 @@ const ProcessMap = {
 	error: 'exception',
 } as const;
 
-export interface TableColumnsParams {
-	setCurrentRow: (arg: any) => void;
-	setShowDetail: (arg: any) => void;
-	handleOperator: (type: string, record: any) => void;
-}
-
-const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] => {
-	let { setCurrentRow, setShowDetail, handleOperator } = Params;
-	// Params.setCurrentRow()
-
+const TableColumnsConfig = (handleOperator: any): ProColumns<UserList>[] => {
 	return [
-		// {
-		// 	title: <span className='text-[14px]'>key</span>,
-		// 	dataIndex: 'key',
-		// 	rowScope: 'row',
-		// 	fixed: 'left',
-		// 	width: 70,
-		// 	hideInSearch: true,
-		// 	// hideInForm: true,
-		// },
 		{
 			title: '用户名',
 			dataIndex: 'username',
@@ -56,11 +37,8 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] 
 				return (
 					<a
 						href='javascript:void(0)'
-						// className="divide-x-2"
 						onClick={() => {
-							setCurrentRow(entity);
-							setShowDetail(true);
-							// message.info(`点击了 ${entity.username}`);
+							handleOperator('detail', entity);
 						}}
 					>
 						{dom}
@@ -239,25 +217,20 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] 
 			fixed: 'right',
 			width: 50,
 			hideInSearch: true,
-			render: (data, entity) => action(entity, Params),
+			render: (data, entity) => action(entity, handleOperator),
 		},
 	];
 };
 
-// 操作按钮：查看、新增、删除
-const action = (entity: UserList, Params: TableColumnsParams) => {
-	// 查看
+const action = (entity: UserList, handleOperator: any) => {
 	const OnView = () => {
-		Params.setCurrentRow(entity);
-		Params.setShowDetail(true);
+		handleOperator('detail', entity);
 	};
-	// 编辑
 	const OnEdit = () => {
-		Params.handleOperator('edit', entity);
+		handleOperator('edit', entity);
 	};
-	// 删除
 	const OnDelete = () => {
-		Params.handleOperator('delete', entity);
+		handleOperator('delete', entity);
 	};
 	const menuList = [
 		{

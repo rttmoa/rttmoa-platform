@@ -5,13 +5,13 @@ import { UserList } from '@/api/interface';
 import { FooterToolbar, ProDescriptions, ProTable } from '@ant-design/pro-components';
 import type { ActionType, FormInstance, ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { message } from '@/hooks/useMessage';
-import TableColumnsConfig, { TableColumnsParams } from './component/ColumnConfig';
+import TableColumnsConfig from './component/ColumnConfig';
 import ToolBarRender from './component/ToolBar';
 import { addJob, delJob, DelMenu, delMoreJob, DelMoreUser, DelUser, FindAllMenu, findJob, GetProTableUser, InsNewMenu, modifyJob, UpMenu } from '@/api/modules/upack/common';
 import './index.less';
-import ModalComponent from './component/ModalComponent';
-import DrawerComponent from './component/DrawerComponent';
-import FooterComponent from './component/FooterComponent';
+import ModalComponent from './component/Modal';
+import DrawerComponent from './component/Drawer';
+import FooterComponent from './component/Footer';
 
 export type FormValueType = {
 	target?: string;
@@ -21,9 +21,6 @@ export type FormValueType = {
 	frequency?: string;
 } & Partial<UserList>;
 
-// TODO: refer： https://github.com/ant-design/ant-design-pro
-// ProTable：https://procomponents.ant.design/components/table
-// 表格数量量多会如何？ 500 - 5000 - 50000
 const useProTable = () => {
 	const actionRef = useRef<ActionType>(); // 表格 ref
 	const formRef = useRef<FormInstance>(); // 表单 ref
@@ -33,11 +30,12 @@ const useProTable = () => {
 	const [openSearch, SetOpenSearch] = useState<boolean>(false); // 工具栏：开启关闭表单搜索
 	const [loading, SetLoading] = useState<boolean>(false); // Loading：加载Loading
 	const [pagination, SetPagination] = useState<any>({ page: 1, pageSize: 10, total: 0 }); // 分页数据
-	const [selectedRowsState, setSelectedRows] = useState<any[]>([]); // 表格：选择行数据
+	const [menuList, setMenuList] = useState<[]>([]);
+	const [selectedRows, setSelectedRows] = useState<any[]>([]); // 表格：选择行数据
 
 	// Drawer
-	const [currentRow, setCurrentRow] = useState<UserList>(); // Drawer 选择当前行数据
-	const [showDetail, setShowDetail] = useState<boolean>(false); // Drawer 是否显示
+	const [drawerCurrentRow, setDrawerCurrentRow] = useState({}); // Drawer 选择当前行数据
+	const [drawerIsVisible, setDrawerIsVisible] = useState<boolean>(false); // Drawer 是否显示
 
 	// Modal
 	const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
@@ -45,15 +43,15 @@ const useProTable = () => {
 	const [modalType, setModalType] = useState<string>('');
 	const [modalUserInfo, setModalUserInfo] = useState({});
 
-	const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]);
-	const [menuList, setMenuList] = useState<[]>([]);
-
 	const quickSearch = () => {};
 
 	// * 操作 — 员工： 新建、编辑、详情、删除  按钮
 	const handleOperator = async (type: string, item: any) => {
 		// console.log('操作：类型+记录', type, item);
-		if (type === 'create') {
+		if (type === 'detail') {
+			setDrawerIsVisible(true);
+			setDrawerCurrentRow(item);
+		} else if (type === 'create') {
 			setModalIsVisible(true);
 			setModalTitle('新建菜单');
 			setModalType(type);
@@ -81,7 +79,7 @@ const useProTable = () => {
 			message.loading('删除更多按钮、正在实现');
 			// const hide = message.loading('正在删除');
 			// try {
-			// 	const selectIds = selectedRowsState.map(value => value?._id);
+			// 	const selectIds = selectedRows.map(value => value?._id);
 			// 	console.log('selectIds', selectIds);
 			// 	const res: any = await delMoreJob(selectIds || []);
 			// 	if (res) {
@@ -131,12 +129,6 @@ const useProTable = () => {
 		SetOpenSearch, // 工具栏：开启表单搜索
 		handleOperator,
 	};
-	// * 列配置 Column
-	let columnParams: TableColumnsParams = {
-		setCurrentRow,
-		setShowDetail,
-		handleOperator,
-	};
 
 	// * 表格封装成通用
 	return (
@@ -151,7 +143,7 @@ const useProTable = () => {
 				headerTitle='使用 ProTable'
 				defaultSize='small'
 				loading={loading}
-				columns={TableColumnsConfig(columnParams)}
+				columns={TableColumnsConfig(handleOperator)}
 				toolBarRender={() => ToolBarRender(ToolBarParams)} // 渲染工具栏
 				actionRef={actionRef} // Table action 的引用，便于自定义触发 actionRef.current.reset()
 				formRef={formRef} // 可以获取到查询表单的 form 实例
@@ -191,9 +183,7 @@ const useProTable = () => {
 					persistenceType: 'localStorage',
 				}}
 			/>
-			{selectedRowsState?.length > 0 && (
-				<FooterComponent actionRef={actionRef} selectedRowsState={selectedRowsState} setSelectedRows={setSelectedRows} handleOperator={handleOperator} />
-			)}
+			{selectedRows?.length > 0 && <FooterComponent actionRef={actionRef} selectedRows={selectedRows} setSelectedRows={setSelectedRows} handleOperator={handleOperator} />}
 			{/* 新建 / 编辑 Modal弹窗 */}
 			<ModalComponent
 				form={form}
@@ -205,7 +195,13 @@ const useProTable = () => {
 				setModalIsVisible={setModalIsVisible} // 设置显示
 				handleModalSubmit={handleModalSubmit}
 			/>
-			<DrawerComponent showDetail={showDetail} currentRow={currentRow} setCurrentRow={setCurrentRow} setShowDetail={setShowDetail} columnParams={columnParams} />
+			<DrawerComponent
+				drawerIsVisible={drawerIsVisible}
+				drawerCurrentRow={drawerCurrentRow}
+				setDrawerCurrentRow={setDrawerCurrentRow}
+				setDrawerIsVisible={setDrawerIsVisible}
+				handleOperator={handleOperator}
+			/>
 		</>
 	);
 };
