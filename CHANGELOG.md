@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.40](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.39...v2.3.40) (2025-07-02)
+
+
+### Features
+
+* **view:** 🚀 删除index.select文件 ([1222a00](https://github.com/rttmoa/rttmoa-platform/commit/1222a00bdf736ea6c6559730251303ba756a5764))
+
+
+### Bug Fixes
+
+* 🧩 vercel部署修复2 ([dcded36](https://github.com/rttmoa/rttmoa-platform/commit/dcded36b89494972bd1181e869f5efc0a430a02c))
+* **cercel:** 🧩 vercel部署修复1 ([4dad3af](https://github.com/rttmoa/rttmoa-platform/commit/4dad3afdbc9618e3907f2cb63f2c80b6eb411c9c))
+* **view:** 🧩 优化system管理代码 ([40d7097](https://github.com/rttmoa/rttmoa-platform/commit/40d70976e43a5fd723fc615280efb8838c97f78a))
+
 ### [2.3.39](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.38...v2.3.39) (2025-07-01)
 
 
