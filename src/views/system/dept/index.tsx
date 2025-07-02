@@ -144,7 +144,7 @@ const useProTable = () => {
 				rowKey='unique' // ! 此key设置错误、导致点击某一个展开、全部节点全展开
 				className='ant-pro-table-scroll'
 				scroll={{ y: '100vh' }} // 100vh
-				bordered
+				// bordered
 				// cardBordered
 				dateFormatter='string'
 				headerTitle='使用 ProTable'
