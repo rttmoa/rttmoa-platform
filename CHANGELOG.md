@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.41](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.40...v2.3.41) (2025-07-02)
+
+
+### Bug Fixes
+
+* **view:** 🧩 更新Modal、Drawer代码 ([7aee039](https://github.com/rttmoa/rttmoa-platform/commit/7aee0395f6fd8202418d4e1fcc3622c1021dbabe))
+
 ### [2.3.40](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.39...v2.3.40) (2025-07-02)
 
 
