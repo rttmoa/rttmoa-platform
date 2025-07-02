@@ -1,4 +1,4 @@
-import { Button, Card, Cascader, Checkbox, Col, Form, Input, InputNumber, Modal, Radio, Row, Space, Switch, Tree } from 'antd';
+import { Button, Card, Cascader, Col, Form, Input, InputNumber, Modal, Radio, Row, TreeSelect } from 'antd';
 import { useEffect, useState } from 'react';
 import { menu } from './menuConfig';
 
@@ -11,74 +11,44 @@ const ModalComponent = (Props: any) => {
 		modalTitle, // 标题
 		modalType: type, // 类型
 		modalIsVisible, // 显示
-		modalMenuInfo, // 菜单信息
+		modalMenuInfo: data, // 菜单信息
 
 		setModalIsVisible, // 设置显示
 
 		handleModalSubmit, // 提交
 	} = Props;
 
+	const [isTop, setIsTop] = useState('是');
+	const [value, setValue] = useState<string>('');
 	const [menuType, SetmenuType] = useState('目录');
-	// const initMenuList = [{ meta: { key: '/', title: '最顶级菜单' },children: menuList }, ...menuList];
-	const initMenuList = [{ meta: { key: '/', title: '顶级菜单（下面是一级菜单，创建一级菜单选择顶级菜单）' } }, ...menuList];
 
-	// 级联选择 - 菜单上级需要的结构
-	function findAncestors(tree: any[], targetPath: string, pathStack: any[] = []): any[] | null {
-		for (const node of tree) {
-			const newPathStack = [...pathStack, node];
-			if (node.path === targetPath) {
-				return newPathStack; // 找到了，返回路径堆栈
-			}
-			if (node.children) {
-				const result = findAncestors(node.children, targetPath, newPathStack);
-				if (result) return result;
-			}
-		}
-		return null;
-	}
-	const result = findAncestors(initMenuList, modalMenuInfo.path);
-	let initTop = result?.map(value => value.path) || [];
-
+	console.log('data', data);
 	useEffect(() => {
-		if (type === 'edit' && modalMenuInfo) {
-			form.setFieldsValue({
-				// ['/dataScreen/index']
-				// ['/assembly', '/assembly/recharts']
-				// ['/menu', '/menu/menu2', '/menu/menu2/menu23']
-				top: initTop || [],
-				path: modalMenuInfo.path,
-				element: modalMenuInfo.element,
-				redirect: modalMenuInfo.redirect,
-				type: modalMenuInfo.meta?.type,
-				key: modalMenuInfo.meta?.key,
-				title: modalMenuInfo.meta?.title,
-				icon: modalMenuInfo.meta?.icon,
-				sort: modalMenuInfo.meta?.sort || 1,
-				isLink: modalMenuInfo?.meta?.isLink,
-				isHide: modalMenuInfo?.meta?.isHide == 1 ? '是' : '否',
-				isFull: modalMenuInfo?.meta?.isFull == 1 ? '是' : '否',
-				isAffix: modalMenuInfo?.meta?.isAffix == 1 ? '是' : '否',
-			});
-		}
-		if (type === 'create') {
-			form.resetFields();
-			form.setFieldsValue({
-				top: ['/'],
-				type: '目录',
-				isLink: '',
-				isHide: '否',
-				isFull: '否',
-				isAffix: '否',
-				sort: 999,
-			});
-		}
-	}, [modalMenuInfo, type]);
+		form.setFieldsValue({
+			isTop: type === 'create' ? '是' : data?.parent_id == 0 ? '是' : '否',
+			parent_id: type === 'create' ? null : data?.parent_id == 0 ? null : data?.parent_id,
+			path: type === 'create' ? null : data.path,
+			element: type === 'create' ? null : data.element,
+			redirect: type === 'create' ? null : data.redirect,
+			type: type === 'create' ? '目录' : data.meta?.type,
+			key: type === 'create' ? null : data.meta?.key,
+			title: type === 'create' ? null : data.meta?.title,
+			icon: type === 'create' ? null : data.meta?.icon,
+			sort: type === 'create' ? null : data.meta?.sort || 1,
+			isLink: type === 'create' ? null : data?.meta?.isLink,
+			isHide: type === 'create' ? '否' : data?.meta?.isHide == 1 ? '是' : '否',
+			isFull: type === 'create' ? '否' : data?.meta?.isFull == 1 ? '是' : '否',
+			isAffix: type === 'create' ? '否' : data?.meta?.isAffix == 1 ? '是' : '否',
+		});
+		setIsTop(type === 'create' ? '是' : data?.parent_id == 0 ? '是' : '否');
+		setValue(type === 'create' ? '' : data?.parent_id == 0 ? null : data?.parent_id);
+	}, [type, data]);
 
 	// * 处理菜单结构：递归
 	const handleMenu = (menuConfig: any, type: string) => {
 		return menuConfig?.map((item: any) => {
 			const option: any = {
-				value: item.path || item.meta?.key,
+				value: item.meta?.key,
 				label: item.meta?.title,
 			};
 			if (item.children && item.children.length) {
@@ -87,31 +57,32 @@ const ModalComponent = (Props: any) => {
 			return option;
 		});
 	};
+	const treeData = handleMenu(menuList, '');
 
 	const OnCancel = () => {
 		setModalIsVisible(false);
 	};
-	const OnReset = () => {
-		form.resetFields();
+	const OnSubmit = () => {
+		form.submit();
 	};
 	const FormOnFinish = () => {
 		const formList = form.getFieldsValue();
+		formList.isTop = isTop; // 是否 是顶级上级
+		if (isTop == '是') formList.parent_id = 0; // 父 id
+		if (isTop == '否') formList.parent_id = value;
 		if (type == 'edit') {
-			formList.unique = modalMenuInfo.unique;
+			formList._id = data.unique;
 		}
+		console.log('parent_id', isTop, '+', formList.parent_id);
+		// return;
 		handleModalSubmit && handleModalSubmit(type, formList);
-	};
-	const OnSubmit = () => {
-		form.submit();
 	};
 	return (
 		<Modal
 			title={modalTitle}
-			width='1000px'
-			// height={600}
+			width={1000}
 			loading={false}
 			open={modalIsVisible}
-			// open={true}
 			onCancel={OnCancel}
 			footer={[
 				<Button danger loading={false} onClick={OnCancel}>
@@ -124,23 +95,37 @@ const ModalComponent = (Props: any) => {
 		>
 			<Form className='h-[650px]  overflow-auto' layout='horizontal' size='middle' form={form} onFinish={FormOnFinish} labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
 				<Row gutter={16}>
-					<Col span={24} pull={3}>
-						<Form.Item label='菜单上级' name='top' rules={[{ required: true }]}>
-							<Cascader
-								// disabled={type === 'edit'}
-								popupClassName='Customize_Cascader'
-								options={handleMenu(initMenuList, '一级')}
-								allowClear
-								showSearch
-								changeOnSelect
-								expandTrigger='click'
-								variant='filled'
-								// displayRender={displayRender}
-								placeholder='请选择上级菜单！'
-								// onChange={onChangeCascader}
+					<Col span={12}>
+						<Form.Item label='是否顶级部门' name='isTop' rules={[{ required: true, message: '' }]}>
+							<Radio.Group
+								options={['是', '否']}
+								defaultValue='是'
+								onChange={(item: any) => {
+									setIsTop(item.target.value);
+								}}
+								value={isTop}
 							/>
 						</Form.Item>
 					</Col>
+					{isTop == '否' && (
+						<Col span={12} pull={3}>
+							<Form.Item label='上级部门' name='parent_id' rules={[{ required: true, message: '必须：上级部门' }]}>
+								<TreeSelect
+									style={{ width: '100%' }}
+									value={value}
+									variant='filled'
+									placeholder='请选择上级部门'
+									allowClear
+									onChange={newValue => {
+										setValue(newValue);
+									}}
+									treeData={treeData}
+									dropdownStyle={{ maxHeight: 500, overflow: 'auto' }}
+									className='custom-tree-dropdown'
+								/>
+							</Form.Item>
+						</Col>
+					)}
 					<Col span={24} pull={3}>
 						<Form.Item label='菜单类型' name='type' rules={[{ required: true, message: '创建菜单需 type' }]}>
 							<Radio.Group
@@ -153,7 +138,7 @@ const ModalComponent = (Props: any) => {
 							/>
 						</Form.Item>
 					</Col>
-					<Col span={24} pull={3}>
+					<Col span={12}>
 						<Form.Item
 							label='菜单图标'
 							name='icon'
@@ -164,63 +149,49 @@ const ModalComponent = (Props: any) => {
 							}
 							rules={[{ required: true, message: '创建菜单需 图标' }]}
 						>
-							{/* <Tooltip
-								overlayStyle={{ maxWidth: 500 }}
-								// classNames="ss"
-								trigger={['focus']}
-								title={
-									<div className="w-[400px] h-[300px]">
-										{ICONS.map(value => {
-											let obj = { name: 'StepBackwardOutlined', className: 'w-[18px] h-[18px]' }
-											return <Icon {...obj} />
-										})}
-									</div>
-								}
-								placement="bottomLeft"
-								className="w-[400px]">
-								<Input onChange={() => {}} placeholder="Input a number" maxLength={16} />
-							</Tooltip> */}
-							<Input variant='filled' placeholder='到antd中选择图标、格式： MenuUnfoldOutlined' maxLength={30} />
+							<Input placeholder='到antd中选择图标、格式： MenuUnfoldOutlined' maxLength={30} />
+						</Form.Item>
+					</Col>
+					<Col>
+						<Form.Item />
+					</Col>
+					<Col span={12}>
+						<Form.Item label='菜单路由路径' name='path' tooltip={{ title: '路由路径必须填写' }} rules={[{ required: true, message: '地址栏中的路由路径 path' }]}>
+							<Input placeholder='path: /home/index' />
 						</Form.Item>
 					</Col>
 					<Col span={12}>
-						<Form.Item label='菜单路由路径' name='path' tooltip={{ title: '路由路径必须填写' }} rules={[{ required: true, message: '创建菜单需 path' }]}>
-							<Input variant='filled' placeholder='path: /home/index' />
+						<Form.Item label='菜单组件路径' name='element' tooltip={{ title: '代码写到哪个文件夹的路径' }}>
+							<Input placeholder='element: /home/index' />
 						</Form.Item>
 					</Col>
 					<Col span={12}>
-						<Form.Item label='菜单组件路径' name='element' tooltip={{ title: '一级菜单无children时填写' }}>
-							<Input variant='filled' placeholder='element: /home/index' />
-						</Form.Item>
+						<Form.Item />
 					</Col>
-					{/* {menuType == '目录' && (
+					{menuType == '目录' ? (
 						<Col span={12}>
-							<Form.Item label="重定向路由路径" name="redirect_path" tooltip={{ title: '一级菜单有children时填写' }}>
-								<Input placeholder="path: /auth" />
+							<Form.Item label='重定向路径' name='redirect' tooltip={{ title: '目录中的菜单有重定向功能' }}>
+								<Input placeholder='redirect: /author/page' />
 							</Form.Item>
 						</Col>
-					)} */}
-					{menuType == '目录' && <Col span={12}></Col>}
-					{menuType == '目录' && (
+					) : (
 						<Col span={12}>
-							<Form.Item label='重定向路径' name='redirect' tooltip={{ title: '一级菜单有children填写' }}>
-								<Input variant='filled' placeholder='redirect: /author/page' />
-							</Form.Item>
+							<Form.Item />
 						</Col>
 					)}
 					<Col span={12}>
 						<Form.Item label='菜单唯一标识' name='key' rules={[{ required: true, message: '创建菜单需 key' }]}>
-							<Input variant='filled' placeholder='home' />
+							<Input placeholder='home' />
 						</Form.Item>
 					</Col>
 					<Col span={12}>
 						<Form.Item label='菜单标题' name='title' rules={[{ required: true, message: '创建菜单需 title' }]}>
-							<Input variant='filled' placeholder='首页' />
+							<Input placeholder='首页' />
 						</Form.Item>
 					</Col>
 					<Col span={12}>
 						<Form.Item label='外链URL' name='isLink'>
-							<Input variant='filled' placeholder='外链链接地址 eg：www.baidu.com' />
+							<Input placeholder='外链链接地址 eg：www.baidu.com' />
 						</Form.Item>
 					</Col>
 					<Col span={12}>
@@ -242,7 +213,7 @@ const ModalComponent = (Props: any) => {
 
 					<Col span={12}>
 						<Form.Item label='显示排序' name='sort' tooltip={{ title: '最小值：1、最大值：999、数值小排在前面' }}>
-							<InputNumber variant='filled' controls min={1} max={999} defaultValue={1} />
+							<InputNumber controls min={1} max={999} defaultValue={1} />
 						</Form.Item>
 					</Col>
 				</Row>

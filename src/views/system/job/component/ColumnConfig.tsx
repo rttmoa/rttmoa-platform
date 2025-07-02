@@ -1,6 +1,6 @@
 import { ProColumns } from '@ant-design/pro-components';
 import { UserList } from '@/api/interface';
-import { Button, Dropdown, Input, Popconfirm, Switch } from 'antd';
+import { Button, Dropdown, Input, Popconfirm, Switch, Tag } from 'antd';
 import { DeleteOutlined, EditOutlined, EyeOutlined, SearchOutlined } from '@ant-design/icons';
 import { IconFont } from '@/components/Icon';
 
@@ -53,13 +53,13 @@ const TableColumnsConfig = (handleOperator: any): ProColumns<UserList>[] => {
 			onFilter: true,
 		},
 		{
-			title: '状态',
+			title: '岗位状态',
 			dataIndex: 'status',
-			// width: 150,
 			sorter: true,
-			tooltip: '指代用户的年纪大小', // * tooltip 提示一些信息
-			render: (data, entity) => {
-				return <Switch value={data == '0' ? false : true} />;
+			tooltip: '指代用户的年纪大小',
+			render: (dom, entity) => {
+				if (dom == '1') return <Tag color='blue'>启用</Tag>;
+				if (dom == '0') return <Tag color='red'>停用</Tag>;
 			},
 		},
 		{

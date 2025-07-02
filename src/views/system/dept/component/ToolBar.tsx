@@ -22,14 +22,14 @@ const ToolBarRender = (props: ToolBarProps) => {
 	const ExportBtn = () => {};
 	const ImportBtn = () => {};
 	return [
-		<Search size='small' placeholder='快捷搜索...' allowClear onSearch={quickSearch} style={{ width: 150 }} />,
-		<Button size='small' type='dashed' key='button' icon={<PlusOutlined />} onClick={CreateBtn}>
+		<Search placeholder='快捷搜索...' allowClear onSearch={quickSearch} style={{ width: 200 }} />,
+		<Button icon={<PlusOutlined />} onClick={CreateBtn}>
 			新建
 		</Button>,
-		<Button size='small' type='dashed' key='button' icon={<ArrowsAltOutlined />} onClick={ExportBtn}>
+		<Button icon={<ArrowsAltOutlined />} onClick={ExportBtn}>
 			导出EXCEL
 		</Button>,
-		<Button size='small' type='dashed' key='button' icon={<ShrinkOutlined />} onClick={ImportBtn}>
+		<Button icon={<ShrinkOutlined />} onClick={ImportBtn}>
 			导入EXCEL
 		</Button>,
 		<Tooltip title={!openSearch ? '关闭表单搜索' : '开启表单搜索'} className='text-lg'>

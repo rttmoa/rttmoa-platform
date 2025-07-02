@@ -149,7 +149,7 @@ const useProTable = () => {
 				request={async (params, sort, filter) => {
 					SetLoading(true);
 					const res: any = await findDept({});
-					// console.log('获取菜单：', res);
+					console.log('获取部门：', res);
 					let format = {
 						list: res.data,
 						current: res.page || 1,

@@ -19,19 +19,19 @@ const ModalComponent = (Props: any) => {
 	const [isTop, setIsTop] = useState('是');
 	const [value, setValue] = useState<string>('');
 
-	// & 这里优化
 	useEffect(() => {
 		form.setFieldsValue({
-			isTop: type === 'create' ? '是' : '否',
-			parent_id: data?.name,
-			email: type === 'create' ? '' : data?.email,
-			leader: type === 'create' ? '' : data?.leader,
-			name: type === 'create' ? '' : data?.name,
-			phone: type === 'create' ? '' : data?.phone,
-			sort: type === 'create' ? '' : data?.sort,
-			status: type === 'create' ? '' : data?.status,
+			isTop: type === 'create' ? '是' : data?.parent_id == 0 ? '是' : '否',
+			parent_id: type === 'create' ? null : data?.parent_id,
+			email: type === 'create' ? null : data?.email,
+			leader: type === 'create' ? null : data?.leader,
+			name: type === 'create' ? null : data?.name,
+			phone: type === 'create' ? null : data?.phone,
+			sort: type === 'create' ? null : data?.sort,
+			status: type === 'create' ? '启用' : data?.status,
 		});
-		setIsTop(type === 'create' ? '是' : '否');
+		setIsTop(type === 'create' ? '是' : data?.parent_id == 0 ? '是' : '否');
+		setValue(type === 'create' ? '' : data?.parent_id);
 	}, [data, type]);
 
 	// & 这里可以提取 公共
@@ -60,7 +60,7 @@ const ModalComponent = (Props: any) => {
 	};
 	// * Form 提交
 	const FormOnFinish = () => {
-		console.log('提交');
+		// console.log('提交');
 		const formList = form.getFieldsValue();
 		formList.isTop = isTop; // 是否 是顶级上级
 		if (isTop == '是') formList.parent_id = 0; // 父 id
@@ -95,7 +95,7 @@ const ModalComponent = (Props: any) => {
 					</Col>
 					<Col span={12}>
 						<Form.Item label='部门排序' name='sort' rules={[{ required: true, message: '必填：部门排序' }]}>
-							<InputNumber variant='outlined' placeholder='请输入部门排序' maxLength={30} />
+							<InputNumber variant='outlined' placeholder='请输入' maxLength={30} />
 						</Form.Item>
 					</Col>
 					<Col span={12}>

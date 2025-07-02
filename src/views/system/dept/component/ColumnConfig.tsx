@@ -1,6 +1,6 @@
 import { ProColumns } from '@ant-design/pro-components';
 import { UserList } from '@/api/interface';
-import { Button, Dropdown, Input, Popconfirm } from 'antd';
+import { Button, Dropdown, Input, Popconfirm, Tag } from 'antd';
 import { DeleteOutlined, EditOutlined, EyeOutlined, SearchOutlined } from '@ant-design/icons';
 import { IconFont } from '@/components/Icon';
 
@@ -56,6 +56,10 @@ const TableColumnsConfig = (handleOperator: any): ProColumns<UserList>[] => {
 			dataIndex: 'status',
 			filters: true,
 			onFilter: true,
+			render: (dom, entity) => {
+				if (dom == '启用') return <Tag color='blue'>启用</Tag>;
+				if (dom == '停用') return <Tag color='red'>停用</Tag>;
+			},
 		},
 		{
 			title: '部门负责人',
