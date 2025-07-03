@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.42](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.41...v2.3.42) (2025-07-03)
+
+
+### Features
+
+* **excel:** 🚀 更新excel导入导出 ([130f619](https://github.com/rttmoa/rttmoa-platform/commit/130f619a8d9cfe3474a9f9ffefa7f79bb09a076d))
+
 ### [2.3.41](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.40...v2.3.41) (2025-07-02)
 
 
