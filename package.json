@@ -158,6 +158,7 @@
 		"cz-git": "^1.7.1",
 		"czg": "^1.7.1",
 		"dotenv": "^16.4.5",
+		"cssnano": "^6.0.5",
 		"eslint": "^8.47.0",
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-prettier": "^5.0.0",
