@@ -3,7 +3,7 @@ import { useDispatch } from '@/redux';
 import { setToken } from '@/redux/modules/user';
 import { setAuthButtonList, setAuthMenuList } from '@/redux/modules/auth';
 import { getAuthMenuListApi, getAuthButtonListApi } from '@/api/modules/login';
-import { FindAllMenu } from '@/api/modules/upack/common';
+import { FindAllMenu } from '@/api/modules/system/common';
 
 // * 登陆/刷新页面时；将用户按钮权限和菜单权限存到 redux
 const usePermissions = () => {

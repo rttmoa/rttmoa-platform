@@ -1,93 +1,94 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Space, Table, Tag, Tooltip } from 'antd'
-import type { TableProps } from 'antd'
-import './index.less'
-import axios from 'axios'
-import { GetShelfStock } from '@/api/modules/upack/common'
-import { ProSkeleton } from '@ant-design/pro-components'
-import { RedoOutlined } from '@ant-design/icons'
+import React, { useEffect, useState } from 'react';
+import { Button, Space, Table, Tag, Tooltip } from 'antd';
+import type { TableProps } from 'antd';
+import './index.less';
+import axios from 'axios';
+import { GetShelfStock } from '@/api/modules/system/common';
+import { ProSkeleton } from '@ant-design/pro-components';
+import { RedoOutlined } from '@ant-design/icons';
 
 // ! http://localhost:9527/#/module/storage
 
 interface DataType {
-	key?: string
-	lane: number
-	row: number
-	layer: number
-	column1: number
-	column2: number
-	column3: number
-	column4: number
-	column5: number
-	column6: number
-	column7: number
-	column8: number
-	column9: number
-	column10: number
-	column12: number
-	column13: number
-	column14: number
-	column15: number
-	column16: number
-	column17: number
-	column18: number
-	column19: number
-	column20: number
-	column21: number
-	column22: number
-	column23: number
-	column24: number
-	column25: number
-	column26: number
-	column27: number
-	column28: number
-	column29: number
-	column30: number
-	column31: number
-	column32: number
-	column33: number
-	column34: number
-	column35: number
-	column36: number
-	column37: number
-	column38: number
+	key?: string;
+	lane: number;
+	row: number;
+	layer: number;
+	column1: number;
+	column2: number;
+	column3: number;
+	column4: number;
+	column5: number;
+	column6: number;
+	column7: number;
+	column8: number;
+	column9: number;
+	column10: number;
+	column12: number;
+	column13: number;
+	column14: number;
+	column15: number;
+	column16: number;
+	column17: number;
+	column18: number;
+	column19: number;
+	column20: number;
+	column21: number;
+	column22: number;
+	column23: number;
+	column24: number;
+	column25: number;
+	column26: number;
+	column27: number;
+	column28: number;
+	column29: number;
+	column30: number;
+	column31: number;
+	column32: number;
+	column33: number;
+	column34: number;
+	column35: number;
+	column36: number;
+	column37: number;
+	column38: number;
 }
 
 //* 表格提示框，鼠标悬停时显示的内容  ——  货位信息：货品名词、生产日期、在库整数总数
 function titleFN(data: string, record?: any, index?: number, apiData?: any) {
 	// console.log('titleFN', data, record, index, apiData)
 	// return
-	if (!data) return null
-	const lane = record?.lane__c ?? ''
-	const row = record?.row__c ?? ''
-	const layer = record?.lay__c ?? ''
-	const str = `${row}排 - ${layer}层 - ${data}列`
+	if (!data) return null;
+	const lane = record?.lane__c ?? '';
+	const row = record?.row__c ?? '';
+	const layer = record?.lay__c ?? '';
+	const str = `${row}排 - ${layer}层 - ${data}列`;
 
-	let color = data === '空闲' ? '#B4EEB4' : '#FF6A6A' // 绿色 / 红色
-	color = '#FFF'
+	let color = data === '空闲' ? '#B4EEB4' : '#FF6A6A'; // 绿色 / 红色
+	color = '#FFF';
 
 	return (
 		<Tooltip
-			placement="top"
-			color="#fff"
+			placement='top'
+			color='#fff'
 			title={
-				<table className="w-full border-collapse  text-slate-700 ">
+				<table className='w-full border-collapse  text-slate-700 '>
 					<tr>
-						<th className="w-[250px] text-[12px] text-center">货品名词</th>
-						<th className="w-[150px] text-[12px] text-center">生产日期</th>
-						<th className="w-[350px] text-[12px] text-center">在库整数总数</th>
+						<th className='w-[250px] text-[12px] text-center'>货品名词</th>
+						<th className='w-[150px] text-[12px] text-center'>生产日期</th>
+						<th className='w-[350px] text-[12px] text-center'>在库整数总数</th>
 					</tr>
 					<tr>
-						<td className="  text-[12px] text-center">食品火腿肠</td>
-						<td className="  text-[12px] text-center">2020-11-19 12:32:00</td>
-						<td className="w-[350px] text-[12px] text-center">500箱0根</td>
+						<td className='  text-[12px] text-center'>食品火腿肠</td>
+						<td className='  text-[12px] text-center'>2020-11-19 12:32:00</td>
+						<td className='w-[350px] text-[12px] text-center'>500箱0根</td>
 					</tr>
 				</table>
-			}>
+			}
+		>
 			{/* {str} */}
 			<div style={{ backgroundColor: color, padding: '4px 8px', textAlign: 'center' }}>{str}</div>
 		</Tooltip>
-	)
+	);
 }
 
 const columns = (apiData: any) => [
@@ -97,7 +98,7 @@ const columns = (apiData: any) => [
 		width: 80,
 		fixed: 'left',
 		render: (value: any, record: any, index: any) => {
-			return <b>{value}</b>
+			return <b>{value}</b>;
 		},
 	},
 	{
@@ -108,30 +109,30 @@ const columns = (apiData: any) => [
 		fixed: 'left',
 		render: (value: any, row: any, index: number) => {
 			// 拿到当前行
-			const currentRow = row.row__c
+			const currentRow = row.row__c;
 
 			// 查找前面的行
-			const prevRow = groupedData[index - 1]
+			const prevRow = groupedData[index - 1];
 			if (prevRow && prevRow.row__c === currentRow) {
 				// 如果上一行 lane、row 一样，说明应该被合并
 				return {
 					children: null,
 					props: { rowSpan: 0 },
-				}
+				};
 			}
 			// 计算有多少行是需要合并的
-			let rowSpan = 1
+			let rowSpan = 1;
 			for (let i = index + 1; i < groupedData.length; i++) {
 				if (groupedData[i].row__c === currentRow) {
-					rowSpan++
+					rowSpan++;
 				} else {
-					break
+					break;
 				}
 			}
 			return {
 				children: <b>{value}</b>,
 				props: { rowSpan },
-			}
+			};
 		},
 	},
 	{
@@ -141,7 +142,7 @@ const columns = (apiData: any) => [
 		width: 50,
 		fixed: 'left',
 		render: (value: any, record: any, index: any) => {
-			return <b>{value}</b>
+			return <b>{value}</b>;
 		},
 	},
 	{
@@ -372,26 +373,26 @@ const columns = (apiData: any) => [
 		key: 'column38',
 		render: (value: string, record: any, index: number | undefined) => titleFN(value, record, index, apiData),
 	},
-]
-let groupedData: any[] = []
+];
+let groupedData: any[] = [];
 const Lane: React.FC = () => {
-	const [data, setData] = useState<DataType[]>([]) // 处理后的值
-	const [apiData, setApiData] = useState<DataType[]>([]) // 接口返回的值
-	const [loading, setLoading] = useState<Boolean>(true)
-	const [error, setError] = useState<String>('')
+	const [data, setData] = useState<DataType[]>([]); // 处理后的值
+	const [apiData, setApiData] = useState<DataType[]>([]); // 接口返回的值
+	const [loading, setLoading] = useState<Boolean>(true);
+	const [error, setError] = useState<String>('');
 	async function execFunc() {
 		try {
 			// const { data } = await axios.get('http://127.0.0.1:6300/shelf/Warehouse_Report')
-			setLoading(true)
-			const data: any = await GetShelfStock()
+			setLoading(true);
+			const data: any = await GetShelfStock();
 			// console.log('data =====', data)
-			const rawData = data.data.material
-			setApiData(rawData)
+			const rawData = data.data.material;
+			setApiData(rawData);
 			rawData.forEach((item: any) => {
-				const { row__c, lay__c, col__c } = item
-				const key = `${row__c}排 - ${lay__c}层`
+				const { row__c, lay__c, col__c } = item;
+				const key = `${row__c}排 - ${lay__c}层`;
 
-				let existing = groupedData.find(d => d.key === key)
+				let existing = groupedData.find(d => d.key === key);
 				if (!existing) {
 					existing = {
 						key,
@@ -400,64 +401,64 @@ const Lane: React.FC = () => {
 						// column1: null,
 						// column2: null,
 						...item,
-					}
-					groupedData.push(existing)
+					};
+					groupedData.push(existing);
 				}
 				// 按列号填充 column1 ~ columnN
-				existing[`column${col__c}`] = col__c
-			})
+				existing[`column${col__c}`] = col__c;
+			});
 			// console.log('处理后的rawData：', rawData) //* 总共24条
-			console.log('合并 groupedData', groupedData) //* 总共8条    将库位数据合并
+			console.log('合并 groupedData', groupedData); //* 总共8条    将库位数据合并
 
 			// 📌 2️⃣ 处理 rowSpan，合并相同行
-			const rowSpanMap = new Map<string, number>()
+			const rowSpanMap = new Map<string, number>();
 			groupedData.forEach((item, index) => {
-				const key = `${item.row__c}-${item.lay__c}`
-				if (!rowSpanMap.has(key)) rowSpanMap.set(key, groupedData.filter(d => d.row__c === item.row__c && d.lay__c === item.lay__c).length)
-			})
+				const key = `${item.row__c}-${item.lay__c}`;
+				if (!rowSpanMap.has(key)) rowSpanMap.set(key, groupedData.filter(d => d.row__c === item.row__c && d.lay__c === item.lay__c).length);
+			});
 			// console.log('处理排序后 groupedData', groupedData)
 
 			// * 这里排序是因为按照货架的样子、从一层到四层
 			groupedData.sort((a, b) => {
-				if (a.row__c != b.row__c) return a.row__c - b.row__c // 按 row 升序
-				return b.lay__c - a.lay__c // 按 layer 降序
-			})
+				if (a.row__c != b.row__c) return a.row__c - b.row__c; // 按 row 升序
+				return b.lay__c - a.lay__c; // 按 layer 降序
+			});
 			// console.log('排序 groupedData', groupedData)
-			setData(groupedData)
-			setLoading(false)
+			setData(groupedData);
+			setLoading(false);
 		} catch (error) {
-			console.log('error Line', error)
-			setLoading(false)
+			console.log('error Line', error);
+			setLoading(false);
 		}
 	}
 	useEffect(() => {
-		execFunc()
-	}, [])
+		execFunc();
+	}, []);
 
 	if (loading) {
-		return <ProSkeleton type="list" />
+		return <ProSkeleton type='list' />;
 	}
 
 	// console.log('巷道一 ==================================================================')
 	let Header = (
-		<div className="flex flex-row justify-between">
-			<div className="flex flex-row">
-				<div className="w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-slate-100">空库位</div>
-				<div className="w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-pink-300">预占用库位</div>
-				<div className="w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-green-400">有库存库位</div>
-				<div className="w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-slate-100 text-red-500">选中库位</div>
+		<div className='flex flex-row justify-between'>
+			<div className='flex flex-row'>
+				<div className='w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-slate-100'>空库位</div>
+				<div className='w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-pink-300'>预占用库位</div>
+				<div className='w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-green-400'>有库存库位</div>
+				<div className='w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-slate-100 text-red-500'>选中库位</div>
 			</div>
 			<div>
-				<Button type="text" icon={<RedoOutlined />} onClick={execFunc}>
+				<Button type='text' icon={<RedoOutlined />} onClick={execFunc}>
 					刷新
 				</Button>
 			</div>
 		</div>
-	)
+	);
 	// console.log('结果： ', data)
 	return (
 		<Table<DataType>
-			className="cusTable"
+			className='cusTable'
 			title={() => Header}
 			columns={apiData ? (columns(apiData) as any) : []}
 			dataSource={data}
@@ -465,7 +466,7 @@ const Lane: React.FC = () => {
 			scroll={{ x: columns(data).length * 150, y: 55 * 11 }}
 			pagination={false}
 		/>
-	)
-}
+	);
+};
 
-export default Lane
+export default Lane;

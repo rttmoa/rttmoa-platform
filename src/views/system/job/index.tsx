@@ -7,7 +7,7 @@ import type { ActionType, FormInstance } from '@ant-design/pro-components';
 import { message } from '@/hooks/useMessage';
 import TableColumnsConfig from './component/ColumnConfig';
 import ToolBarRender from './component/ToolBar';
-import { addJob, delJob, delMoreJob, findJob, modifyJob } from '@/api/modules/upack/common';
+import { addJob, delJob, delMoreJob, findJob, modifyJob } from '@/api/modules/system/common';
 import './index.less';
 import ModalComponent from './component/Modal';
 import DrawerComponent from './component/Drawer';

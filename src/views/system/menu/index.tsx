@@ -7,7 +7,7 @@ import type { ActionType, FormInstance, ProDescriptionsItemProps } from '@ant-de
 import { message } from '@/hooks/useMessage';
 import TableColumnsConfig from './component/ColumnConfig';
 import ToolBarRender from './component/ToolBar';
-import { addJob, delJob, DelMenu, delMoreJob, DelMoreUser, DelUser, FindAllMenu, findJob, GetProTableUser, InsNewMenu, modifyJob, UpMenu } from '@/api/modules/upack/common';
+import { addJob, delJob, DelMenu, delMoreJob, DelMoreUser, DelUser, FindAllMenu, findJob, GetProTableUser, InsNewMenu, modifyJob, UpMenu } from '@/api/modules/system/common';
 import './index.less';
 import ModalComponent from './component/Modal';
 import DrawerComponent from './component/Drawer';

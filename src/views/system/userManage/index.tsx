@@ -9,7 +9,7 @@ import './index.less';
 import { columnConfig } from './components/Table_Column_Config';
 import TableHeader from './components/TableHeader';
 import AdvancedSearchForm from '@/components/AdvancedSearchForm';
-import { DelMoreUser, DelUser, GetUserManagerList } from '@/api/modules/upack/common';
+import { DelMoreUser, DelUser, GetUserManagerList } from '@/api/modules/system/common';
 
 interface UserListResults {
 	code?: number;

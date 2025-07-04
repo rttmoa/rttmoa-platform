@@ -1,4 +1,4 @@
-import { FindAllMenu } from '@/api/modules/upack/common';
+import { FindAllMenu } from '@/api/modules/system/common';
 import { Button, Checkbox, Col, Form, Input, InputNumber, Modal, Radio, Row, Space, Switch, Tree } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { useEffect, useState } from 'react';

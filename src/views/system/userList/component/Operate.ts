@@ -1,4 +1,4 @@
-import { DelMoreProTableUser } from '@/api/modules/upack/common';
+import { DelMoreProTableUser } from '@/api/modules/system/common';
 import { message } from '@/hooks/useMessage';
 
 /**

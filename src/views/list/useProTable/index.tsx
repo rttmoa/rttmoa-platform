@@ -10,7 +10,7 @@ import { addRule, updateRule } from '@/api/modules/api_useProTable_eg/api';
 import UpdateForm from './component/UpdateForm';
 import TableColumnsConfig, { TableColumnsParams } from './component/ColumnConfig';
 import ToolBarRender from './component/ToolBar';
-import { DelMoreUser, DelUser, GetProTableUser } from '@/api/modules/upack/common';
+import { DelMoreUser, DelUser, GetProTableUser } from '@/api/modules/system/common';
 import './index.less';
 import { DeleteOutlined } from '@ant-design/icons';
 import handle from './component/Operate';
