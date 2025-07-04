@@ -1,17 +1,17 @@
-import { Form, Table, Tag } from 'antd'
-import React, { useEffect, useState } from 'react'
+import { Form, Table, Tag } from 'antd';
+import React, { useEffect, useState } from 'react';
 
 export default function OperationLog() {
-	const [ip, setIp] = useState('')
-	console.log(navigator.appVersion)
+	const [ip, setIp] = useState('');
+	console.log(navigator.appVersion);
 	// console.log(useLocation());
 
 	useEffect(() => {
 		fetch('https://api.ipify.org?format=json')
 			.then(response => response.json())
 			.then(data => setIp(data.ip))
-			.catch(error => console.error('Error fetching IP: ', error))
-	})
+			.catch(error => console.error('Error fetching IP: ', error));
+	});
 
 	// 表头：
 	// 行为 action、IP ip、IP来源 ipSource、浏览器 browser、请求耗时 reqTime、创建时间 createTime
@@ -24,7 +24,7 @@ export default function OperationLog() {
 			reqTime: '42ms', // 请求耗时
 			createTime: '2021-01-01 00:00:00', // 创建时间
 		},
-	]
+	];
 
 	const columns = [
 		{
@@ -52,7 +52,7 @@ export default function OperationLog() {
 			dataIndex: 'reqTime',
 			key: 'reqTime',
 			render: (text: string, record: any) => {
-				return <Tag>{record.reqTime}</Tag>
+				return <Tag>{record.reqTime}</Tag>;
 			},
 		},
 		{
@@ -60,12 +60,12 @@ export default function OperationLog() {
 			dataIndex: 'createTime',
 			key: 'createTime',
 		},
-	]
+	];
 
 	return (
 		<>
-			<h2 className="text-lg">操作日志</h2>
+			<h2 className='text-lg'>操作日志</h2>
 			<Table dataSource={data} columns={columns} />
 		</>
-	)
+	);
 }

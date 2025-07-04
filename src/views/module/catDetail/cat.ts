@@ -106,4 +106,4 @@ export default [
 	'https://cdn.pixabay.com/photo/2017/03/06/09/16/cat-2120915__480.jpg',
 	'https://cdn.pixabay.com/photo/2017/05/23/09/01/cat-2336605__480.jpg',
 	'https://cdn.pixabay.com/photo/2016/11/21/12/52/animal-1845248__480.jpg',
-]
+];
