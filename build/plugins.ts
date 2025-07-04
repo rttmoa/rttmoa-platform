@@ -8,7 +8,6 @@ import react from '@vitejs/plugin-react';
 import checker from 'vite-plugin-checker';
 import viteCompression from 'vite-plugin-compression';
 import requireTransform from 'vite-plugin-require-transform';
-import legacyPlugin from '@vitejs/plugin-legacy';
 
 const path = require('path');
 const fs = require('fs');
