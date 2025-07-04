@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.43](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.42...v2.3.43) (2025-07-04)
+
+
+### Bug Fixes
+
+* **view:** 🧩 更新菜单结构、删除目录结构 ([b23b51b](https://github.com/rttmoa/rttmoa-platform/commit/b23b51bef45fd8d04b4a18a91f77e615e0a8524f))
+
 ### [2.3.42](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.41...v2.3.42) (2025-07-03)
 
 
