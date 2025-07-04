@@ -1,2 +1,0 @@
-import{bn as i,r as t,bo as c,aF as m}from"./index-423f46ac.js";var f=function(a,e,r){r===void 0&&(r={});var n=i(a),s=t.useRef(null),u=t.useCallback(function(){s.current&&clearInterval(s.current)},[]);return t.useEffect(function(){if(!(!c(e)||e<0))return r.immediate&&n(),s.current=setInterval(n,e),u},[e,r.immediate]),u};const l=f,v=()=>{const[a,e]=t.useState(m().format("YYYY年MM月DD HH:mm:ss"));return l(()=>{e(m().format("YYYY年MM月DD HH:mm:ss"))},1e3),a};export{v as default};
-//# sourceMappingURL=index-3880e89d.js.map

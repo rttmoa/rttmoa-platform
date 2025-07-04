@@ -1,0 +1,2 @@
+import{aZ as t,a_ as s}from"./index-f751f953.js";const a=(e={})=>t.get(s+"/dept/list",e),c=(e={})=>t.get(s+"/user/list2",e),n=(e={})=>t.get(s+"/user/detail",e),u=(e={})=>t.get(s+"/user/delete",e),o=(e={})=>t.get(s+"/user/changeStatus",e),h=(e={})=>t.post(s+"/user/detailUpdate",e),d=(e={})=>t.post(s+"/user/add",e),f=(e={})=>t.post(s+"/user/set/role",e);export{h as a,d as b,a as c,c as d,n as e,f,o as g,u as h};
+//# sourceMappingURL=userManage2-f3ffcc58.js.map

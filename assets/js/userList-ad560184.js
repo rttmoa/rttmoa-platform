@@ -1,2 +1,0 @@
-import{j as e}from"./index-423f46ac.js";import{D as r}from"./index-93a6c7a7.js";const t=({user:s})=>{const a=[{key:"1",label:"name",children:s.name},{key:"2",label:"age",children:s.age},{key:"3",label:"address",children:s.address}];return e.jsx(e.Fragment,{children:e.jsx(r,{title:"USERINFO",items:a})})},l=()=>e.jsx(t,{user:{name:"Dail",age:16,address:"Shanghai"}});export{l as default};
-//# sourceMappingURL=userList-ad560184.js.map

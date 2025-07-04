@@ -1,2 +1,0 @@
-import{u as a,j as r,B as i,a9 as t}from"./index-423f46ac.js";import{C as s}from"./index-0d157159.js";import{T as l}from"./index-f84480cc.js";import"./styleChecker-6489d3a7.js";import"./index-353b5bfa.js";const{Title:n}=l,u=()=>{const e=a();return r.jsxs(s,{children:[r.jsxs(n,{level:4,className:"mb15",children:["层级模式：/children ","->"," /children/detail"]}),r.jsx(i,{type:"primary",icon:r.jsx(t,{}),onClick:()=>e("/feat/breadcrumb/children/detail"),children:"打开详情页"})]})};export{u as default};
-//# sourceMappingURL=index-819a07a7.js.map
