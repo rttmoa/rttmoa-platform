@@ -1,24 +1,24 @@
-import { resolve } from 'path'
-import { PluginOption } from 'vite'
-import { VitePWA } from 'vite-plugin-pwa'
-import { visualizer } from 'rollup-plugin-visualizer'
-import { createHtmlPlugin } from 'vite-plugin-html'
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
-import react from '@vitejs/plugin-react'
-import checker from 'vite-plugin-checker'
-import viteCompression from 'vite-plugin-compression'
-import requireTransform from 'vite-plugin-require-transform'
-import legacyPlugin from '@vitejs/plugin-legacy'
+import { resolve } from 'path';
+import { PluginOption } from 'vite';
+import { VitePWA } from 'vite-plugin-pwa';
+import { visualizer } from 'rollup-plugin-visualizer';
+import { createHtmlPlugin } from 'vite-plugin-html';
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
+import react from '@vitejs/plugin-react';
+import checker from 'vite-plugin-checker';
+import viteCompression from 'vite-plugin-compression';
+import requireTransform from 'vite-plugin-require-transform';
+import legacyPlugin from '@vitejs/plugin-legacy';
 
-const path = require('path')
-const fs = require('fs')
+const path = require('path');
+const fs = require('fs');
 
 /**
  * Create vite plugin
  * @param viteEnv
  */
 export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOption[])[] => {
-	const { VITE_GLOB_APP_TITLE, VITE_REPORT, VITE_PWA } = viteEnv
+	const { VITE_GLOB_APP_TITLE, VITE_REPORT, VITE_PWA } = viteEnv;
 	// console.log('VITE_GLOB_APP_TITLE', VITE_GLOB_APP_TITLE); // rttmoa
 	return [
 		// react(),
@@ -49,37 +49,22 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
 			// .ts文件中使用 commonjs require()
 			fileRegex: /.ts$/,
 		}),
-		// reactVirtualized(),
 		// 低版本浏览器兼容
 		// legacyPlugin({
 		// 	targets: ['chrome 52', 'Android &gt; 39', 'iOS &gt;= 10.3', 'iOS &gt;= 10.3'], // 需要兼容的目标列表，可以设置多个
 		// 	additionalLegacyPolyfills: ['regenerator-runtime/runtime'] // 面向IE11时需要此插件
 		// })
-	]
-}
-
-// FIXME: react-virtualized: vite构建阶段react-virtualized报错
-const WRONG_CODE = `import { bpfrpt_proptype_WindowScroller } from "../WindowScroller.js";`
-export function reactVirtualized() {
-	return {
-		name: 'my:react-virtualized',
-		configResolved() {
-			const file = path.resolve('react-virtualized').replace(path.join('dist', 'commonjs', 'index.js'), path.join('dist', 'es', 'WindowScroller', 'utils', 'onScroll.js'))
-			const code = fs.readFileSync(file, 'utf-8')
-			const modified = code.replace(WRONG_CODE, '')
-			fs.writeFileSync(file, modified)
-		},
-	}
-}
+	];
+};
 
 /**
  * 根据压缩配置生成不同的压缩规则
  * @param viteEnv
  */
 const createCompression = (viteEnv: ViteEnv): PluginOption | PluginOption[] => {
-	const { VITE_BUILD_COMPRESS = 'none', VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE } = viteEnv
-	const compressList = VITE_BUILD_COMPRESS.split(',')
-	const plugins: PluginOption[] = []
+	const { VITE_BUILD_COMPRESS = 'none', VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE } = viteEnv;
+	const compressList = VITE_BUILD_COMPRESS.split(',');
+	const plugins: PluginOption[] = [];
 	if (compressList.includes('gzip')) {
 		plugins.push(
 			viteCompression({
@@ -87,7 +72,7 @@ const createCompression = (viteEnv: ViteEnv): PluginOption | PluginOption[] => {
 				algorithm: 'gzip',
 				deleteOriginFile: VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE,
 			})
-		)
+		);
 	}
 	if (compressList.includes('brotli')) {
 		plugins.push(
@@ -96,17 +81,17 @@ const createCompression = (viteEnv: ViteEnv): PluginOption | PluginOption[] => {
 				algorithm: 'brotliCompress',
 				deleteOriginFile: VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE,
 			})
-		)
+		);
 	}
-	return plugins
-}
+	return plugins;
+};
 
 /**
  * @description VitePwa
  * @param viteEnv
  */
 const createVitePwa = (viteEnv: ViteEnv): PluginOption | PluginOption[] => {
-	const { VITE_GLOB_APP_TITLE } = viteEnv
+	const { VITE_GLOB_APP_TITLE } = viteEnv;
 	return VitePWA({
 		registerType: 'autoUpdate',
 		manifest: {
@@ -132,5 +117,5 @@ const createVitePwa = (viteEnv: ViteEnv): PluginOption | PluginOption[] => {
 				},
 			],
 		},
-	})
-}
+	});
+};

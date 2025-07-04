@@ -3,17 +3,23 @@ import { Card, Typography } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { ContainerStyled, MasonicStyled, HeaderStyled, CardStyled } from './styled';
 import { Masonry } from 'masonic';
-import catName from 'cat-names';
 import catArr from './cat';
 import UseLazyLoadImage from '@/hooks/useLazyloadImage';
 import './index.less';
+
+const catNames = ['Mimi', 'Luna', 'Kitty', 'Tiger', 'Simba', 'Coco', 'Neko', 'Shadow', 'Smokey', 'Garfield', 'Pumpkin', 'Oreo', 'Fluffy', 'Snowball', 'Mocha', 'Chai'];
+
+export function getRandomCatName(): string {
+	const index = Math.floor(Math.random() * catNames.length);
+	return catNames[index];
+}
 
 const CatDetail: React.FC = () => {
 	const [item, setItem] = useState(() => {
 		let id = 0;
 		return Array.from(Array(120), () => ({
 			id: id++,
-			name: catName.random(),
+			name: getRandomCatName(),
 			src: catArr[Math.floor(Math.random() * catArr.length)],
 		}));
 	});

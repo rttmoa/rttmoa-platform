@@ -1,20 +1,20 @@
-import type { ProxyOptions } from 'vite'
+import type { ProxyOptions } from 'vite';
 
-type ProxyItem = [string, string]
+type ProxyItem = [string, string];
 
-type ProxyList = ProxyItem[]
+type ProxyList = ProxyItem[];
 
-type ProxyTargetList = Record<string, ProxyOptions>
+type ProxyTargetList = Record<string, ProxyOptions>;
 
 /**
  * 创建代理用于解析 .env.development 代理配置
  * @param list
  */
 export function createProxy(list: ProxyList = []) {
-	const ret: ProxyTargetList = {}
+	const ret: ProxyTargetList = {};
 	for (const [prefix, target] of list) {
-		const httpsRE = /^https:\/\//
-		const isHttps = httpsRE.test(target)
+		const httpsRE = /^https:\/\//;
+		const isHttps = httpsRE.test(target);
 
 		// https://github.com/http-party/node-http-proxy#options
 		ret[prefix] = {
@@ -24,10 +24,10 @@ export function createProxy(list: ProxyList = []) {
 			rewrite: path => path.replace(new RegExp(`^${prefix}`), ''),
 			// https is require secure=false
 			...(isHttps ? { secure: false } : {}),
-		}
+		};
 	}
 	// console.log('ret_createProxy', ret)
-	return ret
+	return ret;
 	// proxy: {
 	// 	'/api': {
 	// 		target: 'https://mock.apifox.com/m1/3219319-0-default/',
