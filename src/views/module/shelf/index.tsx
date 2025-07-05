@@ -3,15 +3,15 @@ import { Button, Drawer } from 'antd';
 import { formatDataForProTable } from '@/utils';
 import { pagination as paginationConfig } from '@/config/proTable';
 import { UserList } from '@/api/interface';
-import { FooterToolbar, LightFilter, ModalForm, ProDescriptions, ProFormDatePicker, ProFormText, ProFormTextArea, ProTable } from '@ant-design/pro-components';
-import type { ActionType, FormInstance, ProColumns, ProDescriptionsItemProps } from '@ant-design/pro-components';
+import { FooterToolbar, ModalForm, ProDescriptions, ProFormText, ProFormTextArea, ProTable } from '@ant-design/pro-components';
+import type { ActionType, FormInstance, ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { message } from '@/hooks/useMessage';
 import { addRule, removeRule, updateRule } from '@/api/modules/api_useProTable_eg/api';
 import UpdateForm from './component/_UpdateForm';
 import './index.less';
 import TableColumnsConfig, { TableColumnsParams } from './component/Table_Column_Config';
 import ToolBarRender from './component/ToolBarRender';
-import { GetAllShelf } from '@/api/modules/system/common';
+import { GetAllShelf, GetShelfStock } from '@/api/modules/module/common';
 
 export type FormValueType = {
 	target?: string;

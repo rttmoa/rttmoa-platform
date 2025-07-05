@@ -43,6 +43,13 @@ const TableColumnsConfig = (handleOperator: any): ProColumns<UserList>[] => {
 			fieldProps: (form, config) => {}, // 查询表单的 props，会透传给表单项，
 		},
 		{
+			title: '排序',
+			width: 80,
+			dataIndex: ['meta', 'sort'],
+			filters: true,
+			onFilter: true,
+		},
+		{
 			title: '菜单图标',
 			dataIndex: ['meta', 'icon'],
 			width: 80,
@@ -58,13 +65,6 @@ const TableColumnsConfig = (handleOperator: any): ProColumns<UserList>[] => {
 			onFilter: true,
 		},
 
-		{
-			title: '排序',
-			width: 80,
-			dataIndex: ['meta', 'sort'],
-			filters: true,
-			onFilter: true,
-		},
 		{
 			title: '菜单标识',
 			dataIndex: ['meta', 'key'],

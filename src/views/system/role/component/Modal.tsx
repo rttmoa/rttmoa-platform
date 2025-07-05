@@ -26,30 +26,16 @@ const ModalComponent = (Params: any) => {
 	useEffect(() => {
 		FindAllMenu({}).then((res: any) => {
 			setMenuList(transformRoutes(res.data || []) as any);
-			if (modalType == 'create') {
-				setExpandedKeys([]);
-				setCheckedKeys([]);
-				form.setFieldsValue({
-					role_name: '',
-					permission_str: '',
-					level: 1,
-					sort: 1,
-					status: false,
-					desc: '',
-				});
-			}
-			if (modalType == 'edit') {
-				setExpandedKeys([]);
-				setCheckedKeys(userInfo.permission_menu);
-				form.setFieldsValue({
-					role_name: userInfo.role_name,
-					permission_str: userInfo.permission_str,
-					level: userInfo.level,
-					sort: userInfo.sort,
-					status: userInfo.status,
-					desc: userInfo.desc,
-				});
-			}
+			setExpandedKeys([]);
+			setCheckedKeys(modalType == 'create' ? '' : userInfo.permission_menu);
+			form.setFieldsValue({
+				role_name: modalType == 'create' ? '' : userInfo.role_name,
+				permission_str: modalType == 'create' ? '' : userInfo.permission_str,
+				level: modalType == 'create' ? 1 : userInfo.level,
+				sort: modalType == 'create' ? 1 : userInfo.sort,
+				status: modalType == 'create' ? false : userInfo.status,
+				desc: modalType == 'create' ? '' : userInfo.desc,
+			});
 		});
 	}, [modalType, userInfo]);
 
@@ -58,9 +44,6 @@ const ModalComponent = (Params: any) => {
 		setExpandedKeys([]);
 		setCheckedKeys([]);
 		setModalIsVisible(false);
-	};
-	const OnReset = () => {
-		form.resetFields();
 	};
 
 	// * 提交最终数据 （将菜单处理为menu格式、为每个角色可以直接使用的菜单结构）
@@ -134,15 +117,6 @@ const ModalComponent = (Params: any) => {
 			setCheckedKeys([]);
 		}
 	};
-	// // 父子联动
-	// const LinkageFunc = (e: any) => {
-	// 	const isTrue = e.target.checked;
-	// 	if (isTrue) {
-	// 		setLinkage(true);
-	// 	} else {
-	// 		setLinkage(false);
-	// 	}
-	// };
 	const OnSubmit = () => {
 		form.submit();
 	};
@@ -190,7 +164,7 @@ const ModalComponent = (Params: any) => {
 						</Form.Item>
 					</Col>
 					<Col span={24}>
-						<Form.Item label='菜单权限' name='permission_menu' rules={[{ required: false, message: '必填：菜单权限' }]}>
+						<Form.Item label='菜单分配' name='permission_menu' rules={[{ required: false, message: '必填：菜单权限' }]}>
 							<div className='mt-[6px] px-3 w-full flex justify-between'>
 								<div>
 									<Checkbox onChange={ExpandedFunc}>展开/折叠</Checkbox>

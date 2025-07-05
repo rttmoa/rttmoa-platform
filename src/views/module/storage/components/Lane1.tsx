@@ -3,7 +3,7 @@ import { Button, Space, Table, Tag, Tooltip } from 'antd';
 import type { TableProps } from 'antd';
 import './index.less';
 import axios from 'axios';
-import { GetShelfStock } from '@/api/modules/system/common';
+import { GetShelfStock } from '@/api/modules/module/common';
 import { ProSkeleton } from '@ant-design/pro-components';
 import { RedoOutlined } from '@ant-design/icons';
 

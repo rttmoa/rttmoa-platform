@@ -80,12 +80,20 @@ const TableColumnsConfig = (handleOperator: any): ProColumns<UserList>[] => {
 		{
 			title: '负责人邮箱',
 			dataIndex: 'email',
+
 			ellipsis: true,
 			width: 180,
 			filters: true,
 			onFilter: true,
 		},
-
+		{
+			title: '部门描述',
+			dataIndex: 'desc',
+			ellipsis: true,
+			width: 180,
+			filters: true,
+			onFilter: true,
+		},
 		{
 			title: '操作',
 			key: 'option',

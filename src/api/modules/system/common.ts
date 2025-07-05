@@ -1,22 +1,9 @@
 import http from '@/api/upack';
 
-// * http://localhost:9527/upack/shelf/Warehouse_Report // upack为代理地址
-
-// 功能模块 > 库位库存报表 —— 仓库货架表（nb_shelf__c）
-export const GetShelfStock = () => http.get(`/shelf/Warehouse_Report`);
-
 type Params = { [key: string]: any };
-
 type Modify = { id: string; data: any };
 
-// 列表页面 — 使用ProTable — 获取用户表（_a_user）
-export const GetProTableUser = (params: Params) => http.get(`/userp/find_user_protable`, params);
-
-// 列表页面 — 使用ProTable — 删除多个用户（_a_user）
-export const DelMoreProTableUser = (ids: Params) => http.post('/userp/del_more_User/123', { data: ids });
-
-// 功能模块 — 库位库存报表 — 获取仓库货架表
-export const GetAllShelf = (params: Params) => http.get(`/shelf/Warehouse_All_Shelf`, params);
+// * http://localhost:9527/upack/shelf/Warehouse_Report // upack为代理地址
 
 // * System
 // * 系统管理 — 菜单管理
@@ -26,9 +13,11 @@ export const UpMenu = (params: Params) => http.post(`/menu/modMenu`, params);
 export const DelMenu = (params: Params) => http.post(`/menu/delMenu`, params);
 
 // * 系统管理 — 用户管理
-export const GetUserManagerList = (params: Params) => http.get(`/userp/find_User_Manager`, params);
-export const DelUser = (id: string) => http.delete(`/userp/del_User`, { id });
-export const DelMoreUser = (ids: string[]) => http.post(`/userp/dels`, { ids });
+export const GetUserManagerList = (params: Params) => http.get(`/userp/users2`, params);
+export const DelUser = (id: string) => http.delete(`/userp/users`, { id });
+export const GetProTableUser = (params: Params) => http.get(`/userp/users1`, params);
+export const DelMoreUser = (ids: string[]) => http.post(`/userp/delMoreUsers`, { ids });
+export const DelMoreProTableUser = (ids: Params) => http.post('/userp/delMoreUsers', { data: ids });
 
 // * 系统管理 — 岗位管理
 export const findJob = (params: Params) => http.get(`/job/allJob`, params);
