@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.44](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.43...v2.3.44) (2025-07-05)
+
+
+### Bug Fixes
+
+* **api:** 🧩 修改api文件、更新代码 ([b8ab3d2](https://github.com/rttmoa/rttmoa-platform/commit/b8ab3d2fecbe49b33eedf59ac5e793ab444e537b))
+* **package.json:** 🧩 删除不常用的模块 ([16ad38f](https://github.com/rttmoa/rttmoa-platform/commit/16ad38f0d80599948fc95380f9fb523e0b1b6aa4))
+* **package.json:** 🧩 删除了cssnano模块、并还原 ([8d3390c](https://github.com/rttmoa/rttmoa-platform/commit/8d3390ca8e743571b5fdff4804e222be6317e1f5))
+* **package.json:** 🧩 删除package.json中不常用的模板 ([1333637](https://github.com/rttmoa/rttmoa-platform/commit/1333637e29f339682f05aa86b4f93a7849c20a32))
+* **view:** 🧩 修改ColumnConfig组件的配置信息 ([037870c](https://github.com/rttmoa/rttmoa-platform/commit/037870c000af517576eac216dc00c74dad201e97))
+
 ### [2.3.43](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.42...v2.3.43) (2025-07-04)
 
 

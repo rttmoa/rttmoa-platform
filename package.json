@@ -1,7 +1,7 @@
 {
 	"name": "rttmoa-platform",
 	"private": true,
-	"version": "2.3.43",
+	"version": "2.3.44",
 	"description": "rttmoa-platform open source management system",
 	"author": {
 		"name": "rttmoa",
