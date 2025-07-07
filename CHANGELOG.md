@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.45](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.44...v2.3.45) (2025-07-07)
+
+
+### Bug Fixes
+
+* **api:** 🧩 axios ([38e64bd](https://github.com/rttmoa/rttmoa-platform/commit/38e64bd08b6e8550aab3b8931877df879dfeac10))
+
 ### [2.3.44](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.43...v2.3.44) (2025-07-05)
 
 
