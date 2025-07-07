@@ -119,6 +119,9 @@ class RequestHttp {
 				if (error.message.indexOf('Network Error') !== -1) {
 					message.error('网络错误！请您稍后重试');
 				}
+				if (error.message.indexOf('failed') !== -1) {
+					message.error(error.message);
+				}
 				// 根据服务器响应的错误状态代码进行不同处理
 				if (response) checkStatus(response.status, error.response?.data);
 				// 服务器不返回任何结果（可能是服务器出错或客户端断开了网络连接），断开连接处理：您可以跳转到断开连接页面
