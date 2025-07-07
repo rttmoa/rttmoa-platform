@@ -1,0 +1,2 @@
+import{r as y}from"./index-71b6a372.js";const M=(r,e,u)=>{const t=y.useRef({});function o(p){var s;if(!t.current||t.current.data!==r||t.current.childrenColumnName!==e||t.current.getRowKey!==u){let c=function(f){f.forEach((n,i)=>{const v=u(n,i);a.set(v,n),n&&typeof n=="object"&&e in n&&c(n[e]||[])})};const a=new Map;c(r),t.current={data:r,childrenColumnName:e,kvMap:a,getRowKey:u}}return(s=t.current.kvMap)===null||s===void 0?void 0:s.get(p)}return[o]},g=M;export{g as u};
+//# sourceMappingURL=useLazyKVMap-79dc305d.js.map
