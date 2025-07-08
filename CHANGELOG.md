@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.46](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.45...v2.3.46) (2025-07-08)
+
+
+### Bug Fixes
+
+* 🧩 添加了一个#region注释信息、添加一个package.json中RELEASES命令 ([d7bb546](https://github.com/rttmoa/rttmoa-platform/commit/d7bb546917e443186d73358e8b6dd31914fd0aed))
+
 ### [2.3.45](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.44...v2.3.45) (2025-07-07)
 
 
