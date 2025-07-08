@@ -61,7 +61,8 @@
 		"push": "git push --follow-tags origin main",
 		"commit_release_patch": "npm run commit && npm run releasePatch && npm run push",
 		"predeploy": "npm run build:production",
-		"deploy": "gh-pages -d dist -b gh-pages"
+		"deploy": "gh-pages -d dist -b gh-pages",
+		"RELEASES": "npm run commit && npm run releasePatch && npm run push && npm run predeploy && npm run deploy"
 	},
 	"browserslist": {
 		"production": [

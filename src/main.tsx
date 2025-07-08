@@ -1,16 +1,16 @@
-import App from './App.tsx'
-import ReactDOM from 'react-dom/client'
-import { Provider } from 'react-redux'
-import { store, persistor } from '@/redux'
-import { PersistGate } from 'redux-persist/integration/react'
-import '@/styles/tailwind.css'
-import 'antd/dist/reset.css'
-import '@/styles/index.less'
-import '@/assets/fonts/font.less' // font
-import '@/assets/iconfont/iconfont.less' // iconfont
-import '@/components/Common/Markdown/markdown.css' // markdown css
-import 'virtual:svg-icons-register' // svg
-import '@/assets/iconfont-Fonts/iconfontFonts.less'
+import App from './App.tsx';
+import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { store, persistor } from '@/redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import '@/styles/tailwind.css';
+import 'antd/dist/reset.css';
+import '@/styles/index.less';
+import '@/assets/fonts/font.less'; // font
+import '@/assets/iconfont/iconfont.less'; // iconfont
+import '@/components/Common/Markdown/markdown.css'; // markdown css
+import 'virtual:svg-icons-register'; // svg
+import '@/assets/iconfont-Fonts/iconfontFonts.less';
 
 // todo
 // todo redux | redux持久化
@@ -23,4 +23,10 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 			{/* </React.StrictMode> */}
 		</PersistGate>
 	</Provider>
-)
+);
+// #region
+
+// 项目注释
+// 开发文档
+
+// #endregion
