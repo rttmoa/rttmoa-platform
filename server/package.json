@@ -1,60 +1,83 @@
 {
-  "name": "server",
-  "version": "1.0.0",
-  "description": "server",
+  "name": "jwt-demo",
+  "version": "0.1.0",
   "private": true,
-  "egg": {
-    "declarations": true
-  },
   "scripts": {
-    "start": "egg-scripts start --daemon --env prod",
-    "start:server": "egg-scripts start --daemon --title=egg-server-server",
-    "stop": "egg-scripts stop --title=egg-server-server",
-    "dev": "egg-bin dev --trace-warnings",
-    "debug": "egg-bin debug",
-    "test": "npm run lint -- --fix && npm run test-local",
-    "test-local": "egg-bin test",
-    "cov": "egg-bin cov",
-    "lint": "eslint .",
-    "ci": "npm run lint && npm run cov",
-    "autod": "autod",
-    "rimraf": "rimraf node_modules"
-  },
-  "dependencies": {
-    "bcrypt": "^5.0.1",
-    "egg": "^2.15.1",
-    "egg-jwt": "^3.1.7",
-    "egg-mongoose": "^3.3.1",
-    "egg-scripts": "^2.11.0",
-    "egg-validate": "^2.0.2",
-    "egg-view-assets": "^1.9.0",
-    "egg-view-nunjucks": "^2.3.0",
-    "fs": "^0.0.1-security",
-    "md5": "^2.3.0",
-    "moment": "^2.29.1",
-    "path": "^0.12.7",
-    "qiniu": "^7.4.0",
-    "roadhog": "^0.6.1"
-  },
-  "devDependencies": {
-    "autod": "^3.0.1",
-    "autod-egg": "^1.1.0",
-    "egg-bin": "^4.11.0",
-    "egg-ci": "^1.11.0",
-    "egg-mock": "^3.21.0",
-    "eslint": "^5.13.0",
-    "eslint-config-egg": "^7.1.0"
+    "start": "nodemon src/app.ts",
+    "start:dev": "cross-env NODE_ENV=development && nodemon src/app.ts",
+    "start:prod": "cross-env NODE_ENV=production && nodemon src/app.ts",
+    "koaMysql": "nodemon koa-mysql.js",
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "dev_run_all": "npm-run-all --parallel client:dev server:dev server:start",
+    "server_start": "cross-env NODE_ENV=development supervisor -i ./dist/client/ -w ./dist/ ./dist/app.js"
   },
   "engines": {
-    "node": ">=10.0.0"
+    "node": ">=20.18.0"
   },
-  "ci": {
-    "version": "10"
+  "dependencies": {
+    "@koa/cors": "^5.0.0",
+    "@koa/router": "^12.0.1",
+    "axios": "^0.18.0",
+    "chalk": "^4.1.2",
+    "class-validator": "^0.14.1",
+    "cron": "^4.1.0",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.7",
+    "koa": "^2.5.2",
+    "koa-body": "^4.1.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-helmet": "6.1.0",
+    "koa-json": "^2.0.2",
+    "koa-jwt": "^3.3.2",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "koa-swagger-decorator": "^1.8.7",
+    "mockjs": "^1.1.0",
+    "mongodb": "^5.9.2",
+    "mongoose": "^5.13.21",
+    "mysql": "^2.17.1",
+    "node-gyp": "^10.0.1",
+    "nodemon": "^3.0.1",
+    "nodes7": "^0.3.18",
+    "ping": "^0.4.4",
+    "reflect-metadata": "^0.2.2",
+    "register-service-worker": "^1.0.0",
+    "supervisor": "^0.12.0",
+    "systeminformation": "^5.27.6",
+    "ts-node": "^10.9.1", 
+    "typeorm": "^0.3.21",
+    "typescript": "^5.2.2",
+    "underscore": "^1.13.6",
+    "vue": "^2.5.17",
+    "vue-router": "^3.0.1",
+    "vue2-toast": "^2.0.0",
+    "vuetify": "^1.1.10",
+    "winston": "^3.17.0"
   },
-  "repository": {
-    "type": "git",
-    "url": ""
+  "devDependencies": {
+    "@mdi/font": "^2.6.95",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/koa": "^2.13.11",
+    "@types/koa__router": "^12.0.4",
+    "@types/koa-bodyparser": "^4.3.12",
+    "@types/koa-json": "^2.0.23",
+    "@types/koa-static": "^4.0.4",
+    "@types/node": "^20.9.0",
+    "@types/underscore": "^1.11.14",
+    "@vue/cli-plugin-babel": "^3.0.0-rc.11",
+    "@vue/cli-plugin-pwa": "^3.0.0-rc.11",
+    "@vue/cli-service": "^3.0.0-rc.11",
+    "vue-template-compiler": "^2.5.17"
   },
-  "author": "never",
-  "license": "MIT"
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
 }

@@ -1,15 +1,22 @@
-# 日志
-logs/
+# Xcode 
+build/ 
+
+# Android/IntelliJ 
+build/ 
+
+# OSX
+.DS_Store 
+ 
+
+# node.js 
+node_modules/
 npm-debug.log
 yarn-error.log
-node_modules/
-package-lock.json
 yarn.lock
-coverage/
-.idea/
-run/
-.DS_Store
-*.sw*
-*.un~
-typings/
-.nyc_output/
+package-lock.json
+
+# .env
+# .env.development.local
+# .env.test.local
+# .env.production.local
+# .env.local 

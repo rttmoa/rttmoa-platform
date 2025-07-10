@@ -1,0 +1,2034 @@
+﻿{
+  "swagger": "2.0",
+  "info": {
+    "description": "探花交友",
+    "version": "1.0.0",
+    "title": "探花交友",
+    "termsOfService": "/"
+  },
+  "tags": [
+    {
+      "name": "user",
+      "description": "主要负责用户管理",
+      "externalDocs": {
+        "description": "请求内容",
+        "url": "http://127.0.0.1"
+      }
+    },
+    {
+      "name": "friends",
+      "description": "交友",
+      "externalDocs": {
+        "description": "请求内容",
+        "url": "http://127.0.0.1"
+      }
+    },
+    {
+      "name": "qz",
+      "description": "圈子",
+      "externalDocs": {
+        "description": "请求内容",
+        "url": "http://127.0.0.1"
+      }
+    },
+    {
+      "name": "message",
+      "description": "消息",
+      "externalDocs": {
+        "description": "请求内容",
+        "url": "http://127.0.0.1"
+      }
+    },
+    {
+      "name": "my",
+      "description": "我的",
+      "externalDocs": {
+        "description": "请求内容",
+        "url": "http://127.0.0.1"
+      }
+    }
+  ],
+  "paths": {
+    "/message/starlist": {
+      "get": {
+        "tags": [
+          "message"
+        ],
+        "summary": "点赞列表",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6IjE4NjY1NzExOTc4IiwiaWF0IjoxNTc2NDkwMzY1LCJleHAiOjE2MDI0MTAzNjV9.FiJZEDw5PAiE5htTtTAge3yTwZsHeu7nOUCMf8ojSd0"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "description": "当前页数",
+            "schema": {
+              "type": "int",
+              "example": "1"
+            }
+          },
+          {
+            "in": "query",
+            "name": "pagesize",
+            "description": "页尺寸",
+            "schema": {
+              "type": "int",
+              "example": "10"
+            }
+          }
+        ],
+        "responses": {
+          "": {
+            "description": "数据请求成功后的响应",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "example": "10000：正常 10001:逻辑处理异常  10002:服务器错误 "
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "服务器处理响应描述!"
+                },
+                "counts": {
+                  "type": "string",
+                  "example": "数据总条数!"
+                },
+                "pagesize": {
+                  "type": "string",
+                  "example": "页容量!"
+                },
+                "pages": {
+                  "type": "string",
+                  "example": "总页数!"
+                },
+                "page": {
+                  "type": "string",
+                  "example": "页码!"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "example": "编号"
+                      },
+                      "avatar": {
+                        "type": "string",
+                        "example": "头像地址"
+                      },
+                      "nick_name": {
+                        "type": "string",
+                        "example": "昵称"
+                      },
+                      "mobile": {
+                        "type": "string",
+                        "example": "手机号"
+                      },
+                      "updateDate": {
+                        "type": "string",
+                        "example": "点赞日期"
+                      },
+                      "content": {
+                        "type": "string",
+                        "example": "点赞内容"
+                      },
+                      "star_uid": {
+                        "type": "string",
+                        "example": "点赞用户id"
+                      },
+                      "unReadMsgCount": {
+                        "type": "string",
+                        "example": "未读消息数"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "获取验证码",
+        "operationId": "login",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "获取验证码",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "phone": {
+                  "type": "string",
+                  "example": "13828459782"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "请求成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "msg": {
+                  "type": "string",
+                  "example": "请求成功!"
+                },
+                "data": {
+                  "type": "string",
+                  "example": "短信验证码默认为：888888"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/user/loginVerification": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "验证码校验",
+        "operationId": "loginVerification",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "验证码校验",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "phone": {
+                  "type": "string",
+                  "example": "13828459782"
+                },
+                "vcode": {
+                  "type": "string",
+                  "example": "888888"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "请求成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "msg": {
+                  "type": "string",
+                  "example": "请求成功!"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "list": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "example": "张飞"
+                          },
+                          "password": {
+                            "type": "string",
+                            "example": "123456"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/user/loginReginfo": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "新用户---填写资料",
+        "operationId": "loginReginfo",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "验证码校验",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nickname": {
+                  "type": "string",
+                  "example": "张三"
+                },
+                "gender": {
+                  "type": "string",
+                  "example": "男"
+                },
+                "birthday": {
+                  "type": "string",
+                  "example": "2019-12-26"
+                },
+                "city": {
+                  "type": "string",
+                  "example": "广州市"
+                },
+                "header": {
+                  "type": "string",
+                  "example": "/upload/13828459787.jpg"
+                },
+                "lng": {
+                  "type": "string",
+                  "example": ""
+                },
+                "lat": {
+                  "type": "string",
+                  "example": ""
+                },
+                "address": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "请求成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "msg": {
+                  "type": "string",
+                  "example": "请求成功!"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/qz/recommend": {
+      "get": {
+        "tags": [
+          "qz"
+        ],
+        "summary": "推荐动态",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI4MjkzMzYsInVzZXJfaWQiOiIxIn0.Mbzn6LzsLrkVWEbhexR3lTYDZjxqIcqW11rJxDQ6Ewk"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "description": "当前页数",
+            "schema": {
+              "type": "int",
+              "example": "1"
+            }
+          },
+          {
+            "in": "query",
+            "name": "pagesize",
+            "description": "页尺寸",
+            "schema": {
+              "type": "int",
+              "example": "10"
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "数据请求成功"
+          }
+        }
+      }
+    },
+    "/qz/newtrends": {
+      "get": {
+        "tags": [
+          "qz"
+        ],
+        "summary": "最新动态",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI4MjkzMzYsInVzZXJfaWQiOiIxIn0.Mbzn6LzsLrkVWEbhexR3lTYDZjxqIcqW11rJxDQ6Ewk"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "description": "当前页数",
+            "schema": {
+              "type": "int",
+              "example": "1"
+            }
+          },
+          {
+            "in": "query",
+            "name": "pagesize",
+            "description": "页尺寸",
+            "schema": {
+              "type": "int",
+              "example": "10"
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "数据请求成功"
+          }
+        }
+      }
+    },
+    "/qz/comment/{id}": {
+      "get": {
+        "tags": [
+          "qz"
+        ],
+        "summary": "单条动态-评论列表",
+        "description": "单条动态-评论列表",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "动态id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "7"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI4MjkzMzYsInVzZXJfaWQiOiIxIn0.Mbzn6LzsLrkVWEbhexR3lTYDZjxqIcqW11rJxDQ6Ewk"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "description": "当前页数",
+            "schema": {
+              "type": "int",
+              "example": "1"
+            }
+          },
+          {
+            "in": "query",
+            "name": "pagesize",
+            "description": "页尺寸",
+            "schema": {
+              "type": "int",
+              "example": "10"
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "数据请求成功"
+          }
+        }
+      }
+    },
+    "/qz/star/{id}": {
+      "get": {
+        "tags": [
+          "qz"
+        ],
+        "summary": "动态-点赞&取消点赞",
+        "description": "动态-点赞&取消点赞",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "动态id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "7"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI4MjkzMzYsInVzZXJfaWQiOiIxIn0.Mbzn6LzsLrkVWEbhexR3lTYDZjxqIcqW11rJxDQ6Ewk"
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "数据请求成功"
+          }
+        }
+      }
+    },
+    "/qz/like/{id}": {
+      "get": {
+        "tags": [
+          "qz"
+        ],
+        "summary": "动态-喜欢&取消喜欢",
+        "description": "动态-喜欢&取消喜欢",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "动态id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "7"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI4MjkzMzYsInVzZXJfaWQiOiIxIn0.Mbzn6LzsLrkVWEbhexR3lTYDZjxqIcqW11rJxDQ6Ewk"
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "数据请求成功"
+          }
+        }
+      }
+    },
+    "/qz/noInterest/{id}": {
+      "get": {
+        "tags": [
+          "qz"
+        ],
+        "summary": "动态-不感兴趣",
+        "description": "动态-不感兴趣",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "动态id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "7"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI4MjkzMzYsInVzZXJfaWQiOiIxIn0.Mbzn6LzsLrkVWEbhexR3lTYDZjxqIcqW11rJxDQ6Ewk"
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "数据请求成功"
+          }
+        }
+      }
+    },
+    "/qz/comments/star/{id}": {
+      "get": {
+        "tags": [
+          "qz"
+        ],
+        "summary": "评论-点赞",
+        "description": "评论-点赞",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "评论id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "7"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI4MjkzMzYsInVzZXJfaWQiOiIxIn0.Mbzn6LzsLrkVWEbhexR3lTYDZjxqIcqW11rJxDQ6Ewk"
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "数据请求成功"
+          }
+        }
+      }
+    },
+    "/qz/comments/submit/{id}": {
+      "post": {
+        "tags": [
+          "qz"
+        ],
+        "summary": "评论-提交",
+        "operationId": "commentsSubmit",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "评论id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "7"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI4MjkzMzYsInVzZXJfaWQiOiIxIn0.Mbzn6LzsLrkVWEbhexR3lTYDZjxqIcqW11rJxDQ6Ewk"
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "评论-提交",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "comment": {
+                  "type": "string",
+                  "example": "非常赞同你！"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "请求成功"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/qz/trend/submit": {
+      "post": {
+        "tags": [
+          "qz"
+        ],
+        "summary": "动态-发布",
+        "operationId": "trendSubmit",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI4MjkzMzYsInVzZXJfaWQiOiIxIn0.Mbzn6LzsLrkVWEbhexR3lTYDZjxqIcqW11rJxDQ6Ewk"
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "动态-发布",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "textContent": {
+                  "type": "string",
+                  "example": "发布内容"
+                },
+                "longitude": {
+                  "type": "string",
+                  "example": "113.428247"
+                },
+                "latitude": {
+                  "type": "string",
+                  "example": "23.129183"
+                },
+                "location": {
+                  "type": "string",
+                  "example": "天河区珠吉津安创意园(吉山西新村新街西)"
+                },
+                "imageContent": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "headImgShortPath": {
+                        "type": "string",
+                        "example": "/upload/album/18665711978/1576633170560_0.9746430185850421.jpg"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "请求成功"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/qz/trends/image/upload": {
+      "post": {
+        "tags": [
+          "qz"
+        ],
+        "summary": "动态-图片-上传",
+        "operationId": "qztrendsimageupload",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI4MjkzMzYsInVzZXJfaWQiOiIxIn0.Mbzn6LzsLrkVWEbhexR3lTYDZjxqIcqW11rJxDQ6Ewk"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "images",
+            "description": "Upload multiple files",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "File"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "请求成功"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/friends/recommendation": {
+      "get": {
+        "tags": [
+          "friends"
+        ],
+        "summary": "推荐朋友",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI4MjkzMzYsInVzZXJfaWQiOiIxIn0.Mbzn6LzsLrkVWEbhexR3lTYDZjxqIcqW11rJxDQ6Ewk"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "description": "当前页数",
+            "required": true,
+            "schema": {
+              "type": "int",
+              "example": "1"
+            }
+          },
+          {
+            "in": "query",
+            "name": "pagesize",
+            "description": "页尺寸",
+            "required": true,
+            "schema": {
+              "type": "int",
+              "example": "10"
+            }
+          },
+          {
+            "in": "query",
+            "name": "gender",
+            "description": "性别 传入男或者女",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "男"
+            }
+          },
+          {
+            "in": "query",
+            "name": "lastLogin",
+            "description": "近期登陆时间  15分钟，1天，1小时，不限制 四个类型 ",
+            "schema": {
+              "type": "string",
+              "example": "1天"
+            }
+          },
+          {
+            "in": "query",
+            "name": "distance",
+            "required": true,
+            "description": "距离，单位：米",
+            "schema": {
+              "type": "int",
+              "example": "2000"
+            }
+          },
+          {
+            "in": "query",
+            "name": "city",
+            "description": "居住地",
+            "schema": {
+              "type": "string",
+              "example": "天河区"
+            }
+          },
+          {
+            "in": "query",
+            "name": "education",
+            "description": "学历",
+            "schema": {
+              "type": "string",
+              "example": "本科"
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "数据请求成功"
+          }
+        }
+      }
+    },
+    "/friends/cards": {
+      "get": {
+        "tags": [
+          "friends"
+        ],
+        "summary": "探花-左滑右滑",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI4MjkzMzYsInVzZXJfaWQiOiIxIn0.Mbzn6LzsLrkVWEbhexR3lTYDZjxqIcqW11rJxDQ6Ewk"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "description": "页索引",
+            "required": true,
+            "schema": {
+              "type": "int",
+              "example": "1"
+            }
+          },
+          {
+            "in": "query",
+            "name": "pagesize",
+            "description": " 页容量 ",
+            "required": true,
+            "schema": {
+              "type": "int",
+              "example": "10"
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "数据请求成功"
+          }
+        }
+      }
+    },
+    "/friends/visitors": {
+      "get": {
+        "tags": [
+          "friends"
+        ],
+        "summary": "最近来访",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI4MjkzMzYsInVzZXJfaWQiOiIxIn0.Mbzn6LzsLrkVWEbhexR3lTYDZjxqIcqW11rJxDQ6Ewk"
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "数据请求成功"
+          }
+        }
+      }
+    },
+    "/friends/search": {
+      "get": {
+        "tags": [
+          "friends"
+        ],
+        "summary": "搜附近",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI4MjkzMzYsInVzZXJfaWQiOiIxIn0.Mbzn6LzsLrkVWEbhexR3lTYDZjxqIcqW11rJxDQ6Ewk"
+            }
+          },
+          {
+            "in": "query",
+            "name": "gender",
+            "description": "性别 男 女",
+            "schema": {
+              "type": "string",
+              "example": "女"
+            }
+          },
+          {
+            "in": "query",
+            "name": "distance",
+            "required": true,
+            "description": "距离，单位：米",
+            "schema": {
+              "type": "int",
+              "example": "2000"
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "数据请求成功"
+          }
+        }
+      }
+    },
+    "/friends/like/{id}/{type}": {
+      "get": {
+        "tags": [
+          "friends"
+        ],
+        "summary": "探花-喜欢和不喜欢",
+        "description": "探花-喜欢和不喜欢",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "被喜欢的用户id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "7"
+            }
+          },
+          {
+            "in": "path",
+            "name": "type",
+            "description": "like:喜欢操作   dislike:不喜欢操作",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "like"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI4MjkzMzYsInVzZXJfaWQiOiIxIn0.Mbzn6LzsLrkVWEbhexR3lTYDZjxqIcqW11rJxDQ6Ewk"
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "数据请求成功"
+          }
+        }
+      }
+    },
+    "/friends/personalInfo/{id}": {
+      "get": {
+        "tags": [
+          "friends"
+        ],
+        "summary": "朋友信息（点击朋友进入）",
+        "description": "朋友信息（点击朋友进入）",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "用户id填写 7 才有完整的数据",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "7"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI4MjkzMzYsInVzZXJfaWQiOiIxIn0.Mbzn6LzsLrkVWEbhexR3lTYDZjxqIcqW11rJxDQ6Ewk"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "description": "当前页数",
+            "schema": {
+              "type": "int",
+              "example": "1"
+            }
+          },
+          {
+            "in": "query",
+            "name": "pagesize",
+            "description": "默认可以给5",
+            "schema": {
+              "type": "int",
+              "example": "5"
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "数据请求成功"
+          }
+        }
+      }
+    },
+    "/friends/questions": {
+      "get": {
+        "tags": [
+          "friends"
+        ],
+        "summary": "测灵魂-问卷列表",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI4MjkzMzYsInVzZXJfaWQiOiIxIn0.Mbzn6LzsLrkVWEbhexR3lTYDZjxqIcqW11rJxDQ6Ewk"
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "数据请求成功"
+          }
+        }
+      }
+    },
+    "/friends/questionsAns/{id}": {
+      "post": {
+        "tags": [
+          "friends"
+        ],
+        "summary": "测灵魂-提交问卷获得鉴定单信息",
+        "description": "测灵魂-提交问卷获得鉴定单信息",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "问卷id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI4MjkzMzYsInVzZXJfaWQiOiIxIn0.Mbzn6LzsLrkVWEbhexR3lTYDZjxqIcqW11rJxDQ6Ewk"
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "作答,固定格式为：A,B,C",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "answers": {
+                  "type": "string",
+                  "example": "A"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "数据请求成功"
+          }
+        }
+      }
+    },
+    "/friends/todayBest": {
+      "get": {
+        "tags": [
+          "friends"
+        ],
+        "summary": "今日佳人",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI4MjkzMzYsInVzZXJfaWQiOiIxIn0.Mbzn6LzsLrkVWEbhexR3lTYDZjxqIcqW11rJxDQ6Ewk"
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "数据请求成功"
+          }
+        }
+      }
+    },
+    "/friends/questionSection/{id}": {
+      "get": {
+        "tags": [
+          "friends"
+        ],
+        "summary": "测灵魂- 问卷试题",
+        "description": "测灵魂- 问卷试题",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "问卷id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI4MjkzMzYsInVzZXJfaWQiOiIxIn0.Mbzn6LzsLrkVWEbhexR3lTYDZjxqIcqW11rJxDQ6Ewk"
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "数据请求成功"
+          }
+        }
+      }
+    },
+    "/my/userinfo": {
+      "get": {
+        "tags": [
+          "my"
+        ],
+        "summary": "我的个人信息",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI4MjkzMzYsInVzZXJfaWQiOiIxIn0.Mbzn6LzsLrkVWEbhexR3lTYDZjxqIcqW11rJxDQ6Ewk"
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "数据请求成功"
+          }
+        }
+      }
+    },
+    "/my/trends": {
+      "get": {
+        "tags": [
+          "my"
+        ],
+        "summary": "我的动态",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI4MjkzMzYsInVzZXJfaWQiOiIxIn0.Mbzn6LzsLrkVWEbhexR3lTYDZjxqIcqW11rJxDQ6Ewk"
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "数据请求成功"
+          }
+        }
+      }
+    },
+    "/my/counts": {
+      "get": {
+        "tags": [
+          "my"
+        ],
+        "summary": "互相喜欢，喜欢，粉丝 - 统计",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI4MjkzMzYsInVzZXJfaWQiOiIxIn0.Mbzn6LzsLrkVWEbhexR3lTYDZjxqIcqW11rJxDQ6Ewk"
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "数据请求成功"
+          }
+        }
+      }
+    },
+    "/my/likelist": {
+      "get": {
+        "tags": [
+          "my"
+        ],
+        "summary": "互相喜欢，喜欢，粉丝 - 列表数据",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI4MjkzMzYsInVzZXJfaWQiOiIxIn0.Mbzn6LzsLrkVWEbhexR3lTYDZjxqIcqW11rJxDQ6Ewk"
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "数据请求成功"
+          }
+        }
+      }
+    },
+    "/my/submitUserInfo": {
+      "post": {
+        "tags": [
+          "my"
+        ],
+        "summary": "保存个人信息",
+        "operationId": "submitUserInfo",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "description": "请求头内容类型 application/json",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI4MjkzMzYsInVzZXJfaWQiOiIxIn0.Mbzn6LzsLrkVWEbhexR3lTYDZjxqIcqW11rJxDQ6Ewk"
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "保存个人信息",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "string",
+                  "example": "/upload/13828459782.png"
+                },
+                "nickname": {
+                  "type": "string",
+                  "example": "雾霭朦胧"
+                },
+                "birthday": {
+                  "type": "string",
+                  "example": "1997-12-19"
+                },
+                "age": {
+                  "type": "string",
+                  "example": "21"
+                },
+                "gender": {
+                  "type": "string",
+                  "example": "女"
+                },
+                "city": {
+                  "type": "string",
+                  "example": "广州市"
+                },
+                "address": {
+                  "type": "string",
+                  "example": "广州市天河区珠吉路58号"
+                },
+                "xueli": {
+                  "type": "string",
+                  "example": "本科"
+                },
+                "marry": {
+                  "type": "string",
+                  "example": "单身"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "10000": {
+            "description": "请求成功"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "securityDefinitions": {
+    "petstore_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:pets": "modify pets in your account",
+        "read:pets": "read your pets"
+      }
+    },
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "User": {
+      "registered": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "test2"
+          },
+          "password": {
+            "type": "string",
+            "example": "test2"
+          }
+        }
+      },
+      "login": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "test2"
+          },
+          "password": {
+            "type": "string",
+            "example": "test2"
+          }
+        }
+      },
+      "getUserData": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "admin"
+          }
+        }
+      },
+      "update": {
+        "type": "object",
+        "properties": {
+          "avatar": {
+            "type": "string",
+            "example": "",
+            "description": "用户头像"
+          },
+          "gender": {
+            "type": "string",
+            "example": "",
+            "description": "用户的性别"
+          },
+          "nickname": {
+            "type": "string",
+            "example": "",
+            "description": "用户昵称"
+          },
+          "phone": {
+            "type": "string",
+            "example": "",
+            "description": "用户手机"
+          }
+        }
+      },
+      "collection": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "5c9fc2e1665b23039a22e89b"
+          }
+        }
+      },
+      "addHouse": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "整租 · 豪华小区 精装修出租 小区环境幽静"
+          },
+          "description": {
+            "type": "string",
+            "example": "【装修描述】 装修简洁，家电配齐，通风采光效果良好，格局方正。"
+          },
+          "houseImg": {
+            "type": "string",
+            "example": "img1|im2|img3"
+          },
+          "oriented": {
+            "type": "string",
+            "example": "ORIEN|caa6f80b-b764-c2df"
+          },
+          "supporting": {
+            "type": "array",
+            "example": "空调|洗衣机"
+          },
+          "price": {
+            "type": "string",
+            "example": "1234"
+          },
+          "roomType": {
+            "type": "string",
+            "example": "ROOM|ce2a5daa-811d-2f49"
+          },
+          "size": {
+            "type": "string",
+            "example": "123"
+          },
+          "floor": {
+            "type": "string",
+            "example": "FLOOR|1"
+          },
+          "community": {
+            "type": "string",
+            "example": "AREA|93cbbe43-741d-de54"
+          }
+        }
+      }
+    },
+    "Plugin": {
+      "base64": {
+        "type": "string",
+        "properties": {
+          "base64": {
+            "type": "string",
+            "example": ""
+          }
+        }
+      }
+    }
+  }
+}
