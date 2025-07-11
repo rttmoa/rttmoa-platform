@@ -128,7 +128,7 @@
 		".husky",
 		".vscode",
 		// "**/*.js",
-		"server",
+		"service",
 		"server2"
 	],
   

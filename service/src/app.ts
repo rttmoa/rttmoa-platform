@@ -9,9 +9,9 @@ import { protect, unprotect } from "./routes/index.ts";
 import _crossDomain from "./middlewares/app/app_crossDomain.ts";
 import _public from "./middlewares/app/app_public.ts";
 import _security from "./middlewares/app/app_security.ts";
-import { cron } from "./schedule/cron.ts";
 import { logger as _logger } from "./middlewares/logger.ts";
 import _middleware from "./middlewares/_middleware.ts";
+import './schedule'
 import ping from "./utils/ping.ts";
 const app = new koa();
 require("dotenv").config({ path: `.env.${process.env.NODE_ENV || "development"}` });
@@ -24,7 +24,6 @@ app.use(_logger(winston)); //* 请求日志
 _crossDomain.INIT(app); //* 跨域
 _public(app); //* 静态资源
 _security(app); //* 安全头	
-cron.start(); //* 定时任务
 
 unprotect(app) // & router
 app.use(errorHandle); // 异常中间件

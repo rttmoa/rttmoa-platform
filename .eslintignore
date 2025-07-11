@@ -14,5 +14,4 @@ dist
 /src/mock/*
 stats.html
  
-server
-server2
+service/

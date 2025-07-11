@@ -1,5 +1,5 @@
 {
-  "name": "jwt-demo",
+  "name": "server",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -17,13 +17,8 @@
   },
   "dependencies": {
     "@koa/cors": "^5.0.0",
-    "@koa/router": "^12.0.1",
-    "axios": "^0.18.0",
     "chalk": "^4.1.2",
-    "class-validator": "^0.14.1",
     "cron": "^4.1.0",
-    "cross-env": "^7.0.3",
-    "dotenv": "^16.4.7",
     "koa": "^2.5.2",
     "koa-body": "^4.1.1",
     "koa-bodyparser": "^4.2.1",
@@ -37,43 +32,29 @@
     "mongodb": "^5.9.2",
     "mongoose": "^5.13.21",
     "mysql": "^2.17.1",
-    "node-gyp": "^10.0.1",
-    "nodemon": "^3.0.1",
     "nodes7": "^0.3.18",
     "ping": "^0.4.4",
-    "reflect-metadata": "^0.2.2",
-    "register-service-worker": "^1.0.0",
-    "supervisor": "^0.12.0",
     "systeminformation": "^5.27.6",
-    "ts-node": "^10.9.1", 
-    "typeorm": "^0.3.21",
-    "typescript": "^5.2.2",
     "underscore": "^1.13.6",
-    "vue": "^2.5.17",
-    "vue-router": "^3.0.1",
-    "vue2-toast": "^2.0.0",
-    "vuetify": "^1.1.10",
     "winston": "^3.17.0"
   },
   "devDependencies": {
+    "@koa/router": "^12.0.1",
     "@mdi/font": "^2.6.95",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/koa": "^2.13.11",
-    "@types/koa__router": "^12.0.4",
     "@types/koa-bodyparser": "^4.3.12",
     "@types/koa-json": "^2.0.23",
     "@types/koa-static": "^4.0.4",
+    "@types/koa__router": "^12.0.4",
     "@types/node": "^20.9.0",
     "@types/underscore": "^1.11.14",
-    "@vue/cli-plugin-babel": "^3.0.0-rc.11",
-    "@vue/cli-plugin-pwa": "^3.0.0-rc.11",
-    "@vue/cli-service": "^3.0.0-rc.11",
-    "vue-template-compiler": "^2.5.17"
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.7",
+    "nodemon": "^3.0.1",
+    "supervisor": "^0.12.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.2.2"
   },
   "browserslist": [
     "> 1%",

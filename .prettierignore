@@ -8,5 +8,4 @@
 /public/*
 stats.html
 
-server
-server2
+service/

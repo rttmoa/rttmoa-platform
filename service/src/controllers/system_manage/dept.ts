@@ -1,7 +1,8 @@
-import { Context } from "koa";
-import Basic from "../basic";
-import DeptSchema from "../../model/system_manage/dept";
-    
+/* eslint-disable no-inner-declarations */
+import { Context } from 'koa';
+import Basic from '../basic';
+import DeptSchema from '../../model/system_manage/dept';
+
 // * 部门管理
 // ✅ 一、核心功能需求
 // 支持多级部门（树状结构）
@@ -93,12 +94,12 @@ class Dept extends Basic {
 			}
 
 			// ✅ 主控制逻辑
-			const flatMenu = await ctx.mongo.find("__dept"); // 或 "__dept"
+			const flatMenu = await ctx.mongo.find('__dept'); // 或 "__dept"
 			console.log('flatMenu', flatMenu);
 			const tree = flatToTree(flatMenu);
 			removeEmptyChildren(tree);
 			const sortedTree = sortTreeBySort(tree);
-			return ctx.send(sortedTree, "获取菜单树结构成功");
+			return ctx.send(sortedTree, '获取菜单树结构成功');
 		} catch (err) {
 			return ctx.sendError(500, err.message, 500);
 		}
@@ -109,21 +110,19 @@ class Dept extends Basic {
 	addDept = async (ctx: Context) => {
 		try {
 			let data: any = ctx.request.body;
-			console.log("新增部门参数：", data);
+			console.log('新增部门参数：', data);
 			// * 1、校验
 			// * 做一下字段校验、无问题写入到数据库中：比如element与redirect不能同时存在
-			if (!data || typeof data !== "object") return ctx.sendError(400, "请求格式错误：无参数", 400);
-			if (!data.name) return ctx.sendError(400, "请求参数错误：无部门名称", 400);
+			if (!data || typeof data !== 'object') return ctx.sendError(400, '请求格式错误：无参数', 400);
+			if (!data.name) return ctx.sendError(400, '请求参数错误：无部门名称', 400);
 			// if (!data.name) throw new Error("新增部门操作：请求参数错误，无部门名称")
-			
-
 
 			// * 3、如果新增的是菜单、需要注意父iD是什么、需要修改 parent_id
 			// * 4、编辑菜单对象
 
 			function delStr(str: string) {
-				const handleStr = String(str || "").trim();
-				if (str == "") return null;
+				const handleStr = String(str || '').trim();
+				if (str == '') return null;
 				else return handleStr;
 			}
 			let newDept: any = {
@@ -139,18 +138,18 @@ class Dept extends Basic {
 
 				// subCount: 2,
 				// hasChildren: true,
-				createBy: "admin",
+				createBy: 'admin',
 				createTime: new Date(),
 				updateBy: null,
 				updateTime: null,
 			};
 
 			// * 5、写入数据库
-			const result = await ctx.mongo.insertOne("__dept", newDept);
-			console.log("写入菜单结果：", result);
+			const result = await ctx.mongo.insertOne('__dept', newDept);
+			console.log('写入菜单结果：', result);
 
 			// * 6、返回前端信息
-			return ctx.send("新增菜单成功");
+			return ctx.send('新增菜单成功');
 		} catch (err) {
 			return ctx.sendError(500, err.message, 500);
 		}
@@ -162,19 +161,19 @@ class Dept extends Basic {
 		try {
 			const id = ctx.params.id;
 			const data: any = ctx.request.body;
-			console.log("新增部门参数：", data);
+			console.log('新增部门参数：', data);
 			// * 1、校验
 			// * 做一下字段校验、无问题写入到数据库中：比如element与redirect不能同时存在
-			if (!data || typeof data !== "object") return ctx.sendError(400, "请求格式错误：无参数", 400);
-			if (!id) return ctx.sendError(400, "请求参数错误：无iD", 400);
-			if (!data.name) return ctx.sendError(400, "请求参数错误：无部门名称", 400);
+			if (!data || typeof data !== 'object') return ctx.sendError(400, '请求格式错误：无参数', 400);
+			if (!id) return ctx.sendError(400, '请求参数错误：无iD', 400);
+			if (!data.name) return ctx.sendError(400, '请求参数错误：无部门名称', 400);
 
 			// * 3、如果新增的是菜单、需要注意父iD是什么、需要修改 parent_id
 			// * 4、编辑菜单对象
 
 			function delStr(str: string) {
-				const handleStr = String(str || "").trim();
-				if (str == "") return null;
+				const handleStr = String(str || '').trim();
+				if (str == '') return null;
 				else return handleStr;
 			}
 			let newDept: any = {
@@ -197,11 +196,11 @@ class Dept extends Basic {
 			};
 
 			// * 5、写入数据库
-			const result = await ctx.mongo.updateOne("__dept", id, newDept);
-			console.log("写入菜单结果：", result);
+			const result = await ctx.mongo.updateOne('__dept', id, newDept);
+			console.log('写入菜单结果：', result);
 
 			// * 6、返回前端信息
-			return ctx.send("修改菜单成功");
+			return ctx.send('修改菜单成功');
 		} catch (err) {
 			return ctx.sendError(500, err.message, 500);
 		}
@@ -209,77 +208,70 @@ class Dept extends Basic {
 
 	// * 删除部门
 	DelDept = async (ctx: Context) => {
-		try { 
+		try {
 			const id = ctx.params.id;
-			console.log("删除部门", id);
+			console.log('删除部门', id);
 
-			if (!id) return ctx.sendError(400, "无iD", 400);
-			const data = await ctx.mongo.find("__dept", { query: { _id: id } });
-			if (!data.length){
-				 return ctx.sendError(400, "未找到数据", 400);
+			if (!id) return ctx.sendError(400, '无iD', 400);
+			const data = await ctx.mongo.find('__dept', { query: { _id: id } });
+			if (!data.length) {
+				return ctx.sendError(400, '未找到数据', 400);
 			}
-			const findChildren = await ctx.mongo.find("__dept", { query: { parent_id: data[0].name } });
+			const findChildren = await ctx.mongo.find('__dept', { query: { parent_id: data[0].name } });
 			console.log('findChildren', findChildren.length);
 			if (findChildren.length > 0) {
-				return ctx.sendError(400, "需要先删除子菜单", 400);
+				return ctx.sendError(400, '需要先删除子菜单', 400);
 			}
-			const delRes = await ctx.mongo.deleteOne("__dept", data[0]._id);
+			const delRes = await ctx.mongo.deleteOne('__dept', data[0]._id);
 			return ctx.send(`删除部门 ${data[0].name} 成功`);
 		} catch (err) {
-			console.error('删除部门错误：', err)
+			console.error('删除部门错误：', err);
 			return ctx.sendError(500, err.message, 500);
 		}
 	};
 
-
 	// * 测试业务
 	TestData = async (ctx: Context) => {
-
 		try {
 			const query = ctx.query;
-		console.log('测试', query);
-		
-		// try { 
-		// 	const id = ctx.params.id;
-		// 	console.log("删除部门", id);
+			console.log('测试', query);
 
-		// 	if (!id) return ctx.sendError(400, "无iD", 400);
-		// 	const data = await ctx.mongo.find("__dept", { query: { _id: id } });
-		// 	if (!data.length){
-		// 		 return ctx.sendError(400, "未找到数据", 400);
-		// 	}
-		// 	const findChildren = await ctx.mongo.find("__dept", { query: { parent_id: data[0].name } });
-		// 	console.log('findChildren', findChildren.length);
-		// 	if (findChildren.length > 0) {
-		// 		return ctx.sendError(400, "需要先删除子菜单", 400);
-		// 	}
-		// 	const delRes = await ctx.mongo.deleteOne("__dept", data[0]._id);
-		// 	return ctx.send(`删除部门 ${data[0].name} 成功`);
-		// } catch (err) {
-		// 	console.error('删除部门错误：', err)
-		// 	return ctx.sendError(500, err.message, 500);
-		// }
+			// try {
+			// 	const id = ctx.params.id;
+			// 	console.log("删除部门", id);
 
+			// 	if (!id) return ctx.sendError(400, "无iD", 400);
+			// 	const data = await ctx.mongo.find("__dept", { query: { _id: id } });
+			// 	if (!data.length){
+			// 		 return ctx.sendError(400, "未找到数据", 400);
+			// 	}
+			// 	const findChildren = await ctx.mongo.find("__dept", { query: { parent_id: data[0].name } });
+			// 	console.log('findChildren', findChildren.length);
+			// 	if (findChildren.length > 0) {
+			// 		return ctx.sendError(400, "需要先删除子菜单", 400);
+			// 	}
+			// 	const delRes = await ctx.mongo.deleteOne("__dept", data[0]._id);
+			// 	return ctx.send(`删除部门 ${data[0].name} 成功`);
+			// } catch (err) {
+			// 	console.error('删除部门错误：', err)
+			// 	return ctx.sendError(500, err.message, 500);
+			// }
 
-		const dept  = new DeptSchema({
-			parent_id: 0,
-			name: 1123,
-			label: "aaaa",
-			// noON: true,
-		})
-		const res = await dept.save()
-		console.log('结果：',res);
+			const dept = new DeptSchema({
+				parent_id: 0,
+				name: 1123,
+				label: 'aaaa',
+				// noON: true,
+			});
+			const res = await dept.save();
+			console.log('结果：', res);
 
-
-		return ctx.send(`router ok`);
+			return ctx.send(`router ok`);
 		} catch (error) {
-				console.error('删除测试业务错误：', error)
+			console.error('删除测试业务错误：', error);
 			return ctx.sendError(500, error.message, 500);
 		}
 	};
-
-
-
 }
 
 export default new Dept();
