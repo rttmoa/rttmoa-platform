@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@koa/cors": "^5.0.0",
+    "bcrypt": "^6.0.0",
     "chalk": "^4.1.2",
     "cron": "^4.1.0",
     "koa": "^2.5.2",

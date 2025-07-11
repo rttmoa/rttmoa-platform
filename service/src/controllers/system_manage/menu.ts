@@ -1,3 +1,4 @@
+/* eslint-disable no-inner-declarations */
 import { Context } from "koa";
 import { config } from "../../config/config";
 import Basic from "../basic";

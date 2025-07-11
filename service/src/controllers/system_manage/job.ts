@@ -31,9 +31,9 @@ class Job extends Basic {
 			};
 			const data: Parmas = ctx.request.body;
 			console.log("新增岗位参数：", data);
-			if (!data) return ctx.sendError(400, `未获取到参数`, 400);
-			if (!data?.job_name) return ctx.sendError(400, `未获取到岗位名称`, 400);
-			if (!data?.job_sort) return ctx.sendError(400, `未获取到岗位排序`, 400);
+			if (!data) return ctx.sendError(400, `新增岗位操作：未获取到参数`, 400);
+			if (!data?.job_name) return ctx.sendError(400, `新增岗位操作：未获取到岗位名称`, 400);
+			if (!data?.job_sort) return ctx.sendError(400, `新增岗位操作：未获取到岗位排序`, 400);
 
 			// * 先查询岗位名称是否重复
 			const newJob: any = {
@@ -87,10 +87,10 @@ class Job extends Basic {
 			};
 			const data: Parmas = ctx.request.body;
 			console.log("修改岗位参数：", data);
-			if (!data) return ctx.sendError(400, `未获取到参数`, 400);
-			if (!data._id) return ctx.sendError(400, `无iD`, 400);
-			if (!data?.job_name) return ctx.sendError(400, `未获取到岗位名称`, 400);
-			if (typeof Number(data?.job_sort) != "number") return ctx.sendError(400, `岗位排序不是数字`, 400);
+			if (!data) return ctx.sendError(400, `修改岗位操作：未获取到参数`, 400);
+			if (!data._id) return ctx.sendError(400, `修改岗位操作：无iD`, 400);
+			if (!data?.job_name) return ctx.sendError(400, `修改岗位操作：未获取到岗位名称`, 400);
+			if (typeof Number(data?.job_sort) != "number") return ctx.sendError(400, `修改岗位操作：岗位排序不是数字`, 400);
 
 			// * 先查询岗位名称是否重复
 			const newJob: any = {
@@ -115,7 +115,7 @@ class Job extends Basic {
 	delJob = async (ctx: Context) => {
 		try { 
 			const { id } = ctx.request.query as { id: string };
-			if (!id) return ctx.sendError(400, `未获取到iD`, 400);
+			if (!id) return ctx.sendError(400, `删除岗位操作：未获取到iD`, 400);
 
 			const ins = await ctx.mongo.deleteOne("__job", id);
 			return ctx.send(ins);
@@ -131,7 +131,7 @@ class Job extends Basic {
 			const data: any = ctx.request.body;
 			const ids = data.ids;
 			if (!ids) {
-				return ctx.sendError(400, `未获取到iD`, 400);
+				return ctx.sendError(400, `删除岗位操作：未获取到iD`, 400);
 			}
 			console.log("删除多个岗位 参数：", data);
 			for (const _id of ids) {

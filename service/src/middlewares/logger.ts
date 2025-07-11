@@ -40,12 +40,13 @@ const logger = (winstonInstance: any): any => {
 		}
 
 		ctx.set("X-Response-Time", `${ms}ms`)
-		console.log('ctx', ctx.response);
-		console.log('ctx', ctx.response.message); 
+		// console.log('middlewares/logger/ctx.message', ctx.message);
+		// console.log('middlewares/logger/ctx.body', ctx.body); 
 
 		const msg = `${ctx.method} - ${ctx.originalUrl} - ${ctx.status} - ${ms}ms`;
 		winstonInstance.log(logLevel, msg);
 	};
 };
 
-export { logger };
+// export { logger };
+export default logger

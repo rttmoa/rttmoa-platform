@@ -18,6 +18,9 @@ class Dept extends Basic {
 
 	findDept = async (ctx: Context) => {
 		try {
+			const payload = ctx.state.user; // 这就是你的载荷信息
+			console.log('Authenticated user ID:', payload);
+
 			// const param = ctx.query;
 			// if (!param) return ctx.sendError(400, `未获取到参数`, 400);
 			// if (!param._id) return ctx.sendError(400, `查询部门操作：未获取到iD`, 400);
@@ -95,7 +98,7 @@ class Dept extends Basic {
 
 			// ✅ 主控制逻辑
 			const flatMenu = await ctx.mongo.find('__dept'); // 或 "__dept"
-			console.log('flatMenu', flatMenu);
+			// console.log('flatMenu', flatMenu);
 			const tree = flatToTree(flatMenu);
 			removeEmptyChildren(tree);
 			const sortedTree = sortTreeBySort(tree);
@@ -113,8 +116,8 @@ class Dept extends Basic {
 			console.log('新增部门参数：', data);
 			// * 1、校验
 			// * 做一下字段校验、无问题写入到数据库中：比如element与redirect不能同时存在
-			if (!data || typeof data !== 'object') return ctx.sendError(400, '请求格式错误：无参数', 400);
-			if (!data.name) return ctx.sendError(400, '请求参数错误：无部门名称', 400);
+			if (!data || typeof data !== 'object') return ctx.sendError(400, '新增部门操作：无参数');
+			if (!data.name) return ctx.sendError(400, '新增部门操作：无部门名称');
 			// if (!data.name) throw new Error("新增部门操作：请求参数错误，无部门名称")
 
 			// * 3、如果新增的是菜单、需要注意父iD是什么、需要修改 parent_id
@@ -146,10 +149,10 @@ class Dept extends Basic {
 
 			// * 5、写入数据库
 			const result = await ctx.mongo.insertOne('__dept', newDept);
-			console.log('写入菜单结果：', result);
+			// console.log('写入菜单结果：', result);
 
 			// * 6、返回前端信息
-			return ctx.send('新增菜单成功');
+			return ctx.send('新增部门成功');
 		} catch (err) {
 			return ctx.sendError(500, err.message, 500);
 		}
@@ -197,7 +200,7 @@ class Dept extends Basic {
 
 			// * 5、写入数据库
 			const result = await ctx.mongo.updateOne('__dept', id, newDept);
-			console.log('写入菜单结果：', result);
+			// console.log('写入菜单结果：', result);
 
 			// * 6、返回前端信息
 			return ctx.send('修改菜单成功');
@@ -218,7 +221,7 @@ class Dept extends Basic {
 				return ctx.sendError(400, '未找到数据', 400);
 			}
 			const findChildren = await ctx.mongo.find('__dept', { query: { parent_id: data[0].name } });
-			console.log('findChildren', findChildren.length);
+			// console.log('findChildren', findChildren.length);
 			if (findChildren.length > 0) {
 				return ctx.sendError(400, '需要先删除子菜单', 400);
 			}
@@ -264,7 +267,7 @@ class Dept extends Basic {
 				// noON: true,
 			});
 			const res = await dept.save();
-			console.log('结果：', res);
+			// console.log('结果：', res);
 
 			return ctx.send(`router ok`);
 		} catch (error) {
