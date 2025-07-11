@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.47](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.46...v2.3.47) (2025-07-11)
+
+
+### Features
+
+* **server:** 🚀 server ([69ceecb](https://github.com/rttmoa/rttmoa-platform/commit/69ceecb7e6c01152e527df15c781a41d948b1151))
+
+
+### Bug Fixes
+
+* 🧩 rename service ([a05df7e](https://github.com/rttmoa/rttmoa-platform/commit/a05df7efb5d1b2cd2869901723ec25afa108ed62))
+
 ### [2.3.46](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.45...v2.3.46) (2025-07-08)
 
 
