@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.49](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.48...v2.3.49) (2025-07-12)
+
+
+### Bug Fixes
+
+* **view:** 🧩 修改登陆模块、修改api返回值状态为401、修改服务端登陆接口 ([8d07997](https://github.com/rttmoa/rttmoa-platform/commit/8d07997ff0f2e43ff0b7c2e4494fc803017a0317))
+
 ### [2.3.48](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.47...v2.3.48) (2025-07-11)
 
 
