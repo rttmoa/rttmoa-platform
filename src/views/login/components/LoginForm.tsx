@@ -11,9 +11,9 @@ import { ReqLogin } from '@/api/interface';
 import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { message } from '@/hooks/useMessage';
 import type { FormInstance, FormProps } from 'antd/es/form';
-import { LockOutlined, UserOutlined, CloseCircleOutlined, CheckCircleFilled, PhoneOutlined } from '@ant-design/icons';
+import { LockOutlined, UserOutlined, CheckCircleFilled, PhoneOutlined, UserAddOutlined, BulbOutlined } from '@ant-design/icons';
 import usePermissions from '@/hooks/usePermissions';
-// import md5 from 'md5'
+import { userLogin, userRegister } from '@/api/modules/system/login';
 
 /* 自定义表单校验规则 （手机号、验证码） */
 const validate = {
@@ -60,7 +60,6 @@ const LoginForm: React.FC = () => {
 	// 7、提示用户进入系统中了
 	// 8、跳转到首页
 	// 9、取消加载状态 & 取消提示的消息
-	const md5 = (pwd: string) => `${pwd}ghh`;
 	const onFinish = async (values: ReqLogin) => {
 		try {
 			await formRef?.current?.validateFields();
@@ -69,22 +68,25 @@ const LoginForm: React.FC = () => {
 			setLoading(true);
 			message.open({ type: 'loading', content: '登录中...' });
 
-			const { data } = await loginApi({
-				...values,
-				password: values.password ? md5(values.password) : '',
-			}); // 得到 {access_token: 'bqddxxwqmfncffacvbpkuxvwvqrhln'}
-			console.log(data);
+			const { code, data }: any = type === 'account' ? await userLogin(getValues) : await userRegister(getValues);
+			console.log('data', data);
+			if (code != 200) {
+				message.error('请求失败');
+				setLoading(false);
+				return null;
+			}
 
-			dispatch(setToken(data.access_token));
+			formRef?.current?.resetFields();
+			// const { data } = await loginApi({ ...values, 	password: values.password }); // 得到 {access_token: 'bqddxxwqmfncffacvbpkuxvwvqrhln'}
+
 			// 存储Token + 派发任务存储redux
-			// _.storage.set('tk', token)
-			// await queryUserInfoAsync()
+			dispatch(setToken(data.token));
 
 			// 清除最后一个帐户选项卡
 			dispatch(setTabsList([]));
 
 			// * 初始化权限： 获取用户按钮权限 && 获取用户菜单权限
-			await initPermissions(data.access_token);
+			await initPermissions(data.token);
 
 			notification.success({
 				message: getTimeState(),
@@ -105,10 +107,7 @@ const LoginForm: React.FC = () => {
 	};
 	const onFinishFailed: FormProps['onFinishFailed'] = errorInfo => {
 		console.log('Failed:', errorInfo);
-	};
-
-	const onReset = () => {
-		formRef.current?.resetFields();
+		// message.error('失败');
 	};
 
 	// ! 监听 回车 document.onKeydown
@@ -139,10 +138,12 @@ const LoginForm: React.FC = () => {
 		}
 		setSendText(`${num}秒后重发`);
 	};
-
 	const sendCode = async () => {
 		try {
-			await formRef.current?.validateFields(['username']);
+			if (type == 'register') {
+				await formRef.current?.validateFields(['username']);
+			}
+			await formRef.current?.validateFields(['phone']);
 			// let userName = formRef.current?.getFieldValue('username')
 			// if (userName !== '18888888888') return
 			// 模拟调用后台接口 成功
@@ -168,50 +169,103 @@ const LoginForm: React.FC = () => {
 		<div className='login-form-content'>
 			<Form name='login' size='large' autoComplete='off' ref={formRef} onFinish={onFinish} onFinishFailed={onFinishFailed}>
 				<Tabs
+					size='small'
 					activeKey={type}
-					onChange={setType}
-					centered
+					onChange={type => {
+						formRef.current?.resetFields();
+						setType(type);
+					}}
+					centered={false}
 					items={[
-						{ key: 'account', label: '账户密码登陆' },
-						{ key: 'mobile', label: '手机号登陆' },
+						{ key: 'account', label: '账户登陆' },
+						{ key: 'register', label: '注册账号' },
+						{ key: 'forget', label: '忘记密码' },
 					]}
 				/>
 				{type === 'account' && (
 					<>
-						<Form.Item name='username' initialValue='admin' rules={[{ required: true, message: 'Please input your username!' }]}>
-							<Input prefix={<UserOutlined />} placeholder='User:  admin / user' />
+						<Form.Item name='username' rules={[{ required: true, message: '必填：用户名称或手机号' }]}>
+							<Input className='text-[14px]' prefix={<UserOutlined />} placeholder='请输入用户名称 / 手机号' />
 						</Form.Item>
-						<Form.Item name='password' initialValue='123456' rules={[{ required: true, message: 'Please input your password!' }]}>
-							<Input prefix={<LockOutlined />} placeholder='Password:  123456' />
+						<Form.Item name='password' rules={[{ required: true, message: '必填：密码' }]}>
+							<Input.Password className='text-[14px]' prefix={<LockOutlined />} placeholder='请输入登陆密码' />
 						</Form.Item>
 					</>
 				)}
-				{type === 'mobile' && (
+				{type === 'register' && (
 					<>
-						<Form.Item name='phone' initialValue='18888888888' rules={[{ required: true, message: 'Please input your username!' }]}>
-							<Input prefix={<UserOutlined />} placeholder='User：18888888888' />
+						<Form.Item name='username' rules={[{ required: true, message: '必填：用户名称！' }]}>
+							<Input className='text-[14px]' prefix={<UserOutlined />} placeholder='请输入用户名称' />
 						</Form.Item>
-						<Form.Item name='code' initialValue='123456' rules={[{ required: true, message: 'Please input your Code!' }]}>
+						<Form.Item name='phone' rules={[{ required: true, message: '必填：手机号！' }]}>
+							<Input className='text-[14px]' prefix={<PhoneOutlined />} placeholder='请输入手机号码' />
+						</Form.Item>
+						<Form.Item name='code' rules={[{ required: true, message: '必填：验证码！' }]}>
 							<Input
+								className='text-[14px]'
+								prefix={<BulbOutlined />}
+								suffix={
+									<Button type='primary' size='small' onClick={sendCode} disabled={disabled}>
+										<span className='text-white'>{sendText}</span>
+									</Button>
+								}
+							/>
+						</Form.Item>
+						<Form.Item name='password' rules={[{ required: true, message: '必填：密码！' }]}>
+							{/* <Input
+								className='text-[14px]'
 								prefix={<PhoneOutlined />}
 								suffix={
 									<Button type='primary' size='small' onClick={sendCode} disabled={disabled}>
 										{sendText}
 									</Button>
 								}
-							/>
+							/> */}
+							<Input.Password className='text-[14px]' prefix={<LockOutlined />} placeholder='请输入密码' />
 						</Form.Item>
 					</>
 				)}
-				<Form.Item className='login-form-button'>
-					<Button shape='round' icon={<CloseCircleOutlined />} onClick={onReset}>
-						Reset
-					</Button>
-					<Button type='primary' shape='round' icon={<UserOutlined />} loading={loading} htmlType='submit'>
-						Submit
+				{type === 'forget' && (
+					<>
+						<Form.Item name='phone' rules={[{ required: true, message: '必填：手机号！' }]}>
+							<Input className='text-[14px]' prefix={<PhoneOutlined />} placeholder='请输入手机号码' />
+						</Form.Item>
+						<Form.Item name='code' rules={[{ required: true, message: '必填：验证码！' }]}>
+							<Input
+								className='text-[14px]'
+								prefix={<BulbOutlined />}
+								suffix={
+									<Button type='primary' size='small' onClick={sendCode} disabled={disabled}>
+										<span className='text-white'>{sendText}</span>
+									</Button>
+								}
+							/>
+						</Form.Item>
+						<Form.Item name='password' rules={[{ required: true, message: '必填：密码！' }]}>
+							<Input.Password className='text-[14px]' prefix={<LockOutlined />} placeholder='请输入密码' />
+						</Form.Item>
+					</>
+				)}
+				<Form.Item className='w-full login-form-button pt-[5px]  '>
+					<Button
+						className='w-full text-[14px] '
+						type={type == 'account' ? 'primary' : 'default'}
+						shape='default'
+						icon={type == 'account' ? <UserOutlined /> : <UserAddOutlined />}
+						loading={loading}
+						htmlType='submit'
+					>
+						{type == 'account' && '登陆'}
+						{type == 'register' && '注册'}
+						{type == 'forget' && '提交'}
 					</Button>
 				</Form.Item>
 			</Form>
+			{/* {type == 'account' && (
+				<div className='pl-[12px] text-[12px]'>
+					<span>忘记密码</span>
+				</div>
+			)} */}
 		</div>
 	);
 };

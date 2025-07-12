@@ -14,10 +14,10 @@ class User extends Basic {
 
 	Login = async (ctx: Context) => {
 		try {
-			const { user, password } = ctx.request.body as any;
-			if (!user) return ctx.sendError(400, '登陆操作：无用户名');
+			const { username, password } = ctx.request.body as any;
+			if (!username) return ctx.sendError(400, '登陆操作：无用户名');
 			if (!password) return ctx.sendError(400, '登陆操作：无密码');
-			const findUser = await ctx.mongo.find('__user', { query: { username: user } });
+			const findUser = await ctx.mongo.find('__user', { query: { username: username } });
 			if (!findUser.length) {
 				return ctx.sendError(400, '登陆操作：用户名错误');
 			}
@@ -35,17 +35,16 @@ class User extends Basic {
 				const token = jwt.sign(
 					{
 						id: findUser[0]._id,
-						name: user,
+						name: username,
 					},
 					config.jwtkey,
 					{ expiresIn: '1h' } // 有效期365天
 				);
-
 				const up = await ctx.mongo.updateOne('__user', findUser[0]._id, { token });
 
-				return ctx.send({ message: '查询成功', list: findUser, token });
+				return ctx.send({ list: findUser, token  });
 			} else {
-				return ctx.sendError(400, '登陆操作：密码错误！');
+				return ctx.sendError(400, '登陆操作失败：密码错误！');
 			}
 		} catch (err) {
 			return ctx.sendError(config.resCodes.serverError, err.message);
@@ -54,62 +53,54 @@ class User extends Basic {
 
 	Logout = async (ctx: Context) => {
 		// 查询用户、将用户token为空
+		const user = ctx.state.user;
 		// const up = await ctx.mongo.updateOne('__user', findUser[0]._id, { token });
 		return ctx.send({ message: '退出成功' });
 	};
 
 	register = async (ctx: Context) => {
 		try {
-			const { user, password } = ctx.request.body as any;
-			if (!user) return ctx.sendError(400, '登陆操作：无用户名');
+			const { username, password, phone } = ctx.request.body as any;
+			if (!username) return ctx.sendError(400, '登陆操作：无用户名');
 			if (!password) return ctx.sendError(400, '登陆操作：无密码');
+			if (!phone) return ctx.sendError(400, '登陆操作：无手机号');
 
-			const findUser = await ctx.mongo.find('__user', { query: { username: user } });
+			const findUser = await ctx.mongo.find('__user', { query: { username: username } });
 			if (findUser.length) {
-				return ctx.sendError(400, '注册操作：已存在用户');
+				return ctx.sendError(400, '注册操作失败：已存在用户');
 			}
 
 			const saltRounds = 10; // 建议值在 10-12 之间
 			const hash = await bcrypt.hash(password, saltRounds);
 
 			let newUser = {
-				'id|+1': 1,
-				username: '@cname', // 用户名
-				'sex|0-1': 1, // 性别：1男0女
-				'marriage|1': ['未婚', '已婚', '离异'],
-				phone: /^1[3-9]\d{9}$/, // 手机号
-				email: '@string("lower", 6, 10)@qq.com', // 邮箱
-				avatar: '@image("100x100", "#4A7BF7", "white", "User")', // 头像
-				// head: catHead(),
-				city: '@county(true)', // 城市
-				'age|18-50': 1, // 年龄在18-60之间
-				createdAt: '@datetime', // 注册时间
-				'progress|1-100': 1, // 执行进度 1-100
-				'progress_status|0-3': 1,
-				date: '@date', // 例如："2024-07-15"
-				time: '@time', // 例如："14:23:45"
-				dateTime: '@datetime', // 例如："2024-07-15 14:23:45"
-				'status|1': ['隐身', '在线', '离线', '异常'], // 在线状态
-
+				username: username, // 用户名
 				password: hash, // 密码
+				phone: phone, // 手机号
+
 				job: '', // 岗位
 				dept: '', // 部门
+				role: "普通用户", // 角色
 				token: '', // 新token存储起来
 				is_use: 1, // 是否冻结：1 正常，0 冻结
+
+				created_at: new Date(), // 创建时间
+				updated_at: new Date(), // 更新时间
 			};
 
-			const ins: any = await ctx.mongo.insertOne('__user', newUser);
+			const insId: any = await ctx.mongo.insertOne('__user', newUser);
+			// console.log('ins', insId);
 
 			const token = jwt.sign(
 				{
-					id: ins._id,
-					name: user,
+					id: insId,
+					name: username,
 				},
 				config.jwtkey,
 				{ expiresIn: 60 * 60 * 24 * 365 } // 有效期365天
 			);
 
-			return ctx.send({ message: '注册成功', token: token });
+			return ctx.send({ token });
 		} catch (err) {
 			return ctx.sendError(config.resCodes.serverError, err.message);
 		}
@@ -158,7 +149,7 @@ class User extends Basic {
 	InsUser = async (ctx: Context) => {
 		try {
 			let query = ctx.request.query;
-			let newUser = {
+			let user = {
 				username: '', // 用户名：张三
 				password: '', // 密码：pwd
 				phone: '', // 电话：14443322133
@@ -175,7 +166,7 @@ class User extends Basic {
 				created_at: new Date(), // 创建时间
 				updated_at: new Date(), // 更新时间
 			};
-			const ins = await ctx.mongo.insertOne('__user', newUser);
+			const ins = await ctx.mongo.insertOne('__user', user);
 
 			return ctx.send({ message: '新增用户成功' });
 		} catch (err) {

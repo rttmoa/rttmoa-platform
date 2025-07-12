@@ -7,7 +7,10 @@ import { ResultEnum } from '@/enums/httpEnum';
 import { message } from '@/hooks/useMessage';
 import { setToken } from '@/redux/modules/user'; // 用户：Token
 import { checkStatus } from './helper/checkStatus'; // 状态码：checkStatus
-import { store } from '@/redux'; // redux：Store
+import { store, useDispatch } from '@/redux'; // redux：Store
+import { logoutApi } from './modules/login';
+import { setAuthMenuList } from '@/redux/modules/auth';
+import { useNavigate } from 'react-router-dom';
 
 export interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
 	loading?: boolean;
@@ -110,7 +113,7 @@ class RequestHttp {
 				console.log('响应错误拦截: ', error);
 				console.log('响应错误拦截信息: ', error.response?.data);
 
-				const { response } = error;
+				const { response }: any = error;
 				tryHideFullScreenLoading();
 				// 分别判断请求超时 & 网络错误，无响应   ——    "timeout of 2000ms exceeded"
 				if (error.message.indexOf('timeout') !== -1) {
@@ -119,9 +122,16 @@ class RequestHttp {
 				if (error.message.indexOf('Network Error') !== -1) {
 					message.error('网络错误！请您稍后重试');
 				}
-				if (error.message.indexOf('failed') !== -1) {
-					message.error(error.message);
+
+				// ! login failure （401）
+				if (+response.data.code === ResultEnum.OVERDUE) {
+					console.log('code=401');
+					store.dispatch(setToken(''));
+					message.error(response.data.msg);
+					window.$navigate(LOGIN_URL);
+					return Promise.reject(response.data);
 				}
+
 				// 根据服务器响应的错误状态代码进行不同处理
 				if (response) checkStatus(response.status, error.response?.data);
 				// 服务器不返回任何结果（可能是服务器出错或客户端断开了网络连接），断开连接处理：您可以跳转到断开连接页面
