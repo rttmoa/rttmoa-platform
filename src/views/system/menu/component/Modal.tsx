@@ -22,7 +22,7 @@ const ModalComponent = (Props: any) => {
 	const [value, setValue] = useState<string>('');
 	const [menuType, SetmenuType] = useState('目录');
 
-	console.log('data', data);
+	// console.log('data', data);
 	useEffect(() => {
 		form.setFieldsValue({
 			isTop: type === 'create' ? '是' : data?.parent_id == 0 ? '是' : '否',
@@ -80,7 +80,7 @@ const ModalComponent = (Props: any) => {
 	return (
 		<Modal
 			title={modalTitle}
-			width={1000}
+			width={1200}
 			loading={false}
 			open={modalIsVisible}
 			onCancel={OnCancel}
@@ -93,7 +93,15 @@ const ModalComponent = (Props: any) => {
 				</Button>,
 			]}
 		>
-			<Form className='h-[650px]  overflow-auto' layout='horizontal' size='middle' form={form} onFinish={FormOnFinish} labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
+			<Form
+				className='mt-[40px] mb-[100px] px-[20px] max-h-[500px] overflow-auto'
+				layout='horizontal'
+				size='middle'
+				form={form}
+				onFinish={FormOnFinish}
+				labelCol={{ span: 6 }}
+				wrapperCol={{ span: 16 }}
+			>
 				<Row gutter={16}>
 					<Col span={12}>
 						<Form.Item label='是否顶级部门' name='isTop' rules={[{ required: true, message: '' }]}>

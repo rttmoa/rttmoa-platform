@@ -32,10 +32,8 @@ const ModalComponent = (Params: any) => {
 	};
 	return (
 		<Modal
-			className='relative'
 			title={modalTitle}
-			width={600}
-			// loading={false}
+			width={800}
 			open={modalIsVisible}
 			onCancel={OnCancel}
 			footer={[
@@ -48,7 +46,14 @@ const ModalComponent = (Params: any) => {
 				</Button>,
 			]}
 		>
-			<Form className='mb-[60px] max-h-[500px] overflow-auto' layout='horizontal' form={form} labelCol={{ span: 4 }} wrapperCol={{ span: 18 }} onFinish={FormOnFinish}>
+			<Form
+				className='mt-[40px] mb-[100px] px-[20px] max-h-[500px] overflow-auto'
+				layout='horizontal'
+				form={form}
+				labelCol={{ span: 4 }}
+				wrapperCol={{ span: 18 }}
+				onFinish={FormOnFinish}
+			>
 				<Row gutter={16}>
 					<Col span={24}>
 						<Form.Item label='岗位名称' name='job_name' rules={[{ required: true, message: '必填：岗位名称' }]}>

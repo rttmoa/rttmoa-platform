@@ -7,10 +7,7 @@ import { ResultEnum } from '@/enums/httpEnum';
 import { message } from '@/hooks/useMessage';
 import { setToken } from '@/redux/modules/user'; // 用户：Token
 import { checkStatus } from './helper/checkStatus'; // 状态码：checkStatus
-import { store, useDispatch } from '@/redux'; // redux：Store
-import { logoutApi } from './modules/login';
-import { setAuthMenuList } from '@/redux/modules/auth';
-import { useNavigate } from 'react-router-dom';
+import { store } from '@/redux'; // redux：Store
 
 export interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
 	loading?: boolean;

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Form } from 'antd';
 import { formatDataForProTable } from '@/utils';
 import { UserList } from '@/api/interface';
@@ -21,6 +21,9 @@ export type FormValueType = {
 	frequency?: string;
 } & Partial<UserList>;
 
+// & 表格待实现：
+// * 表头：排序、筛选、过滤
+// * 待实现：列拖拽排序、可编辑行、可编辑单元格、响应式、随页面滚动的固定表头和滚动条
 const useProTable = () => {
 	const actionRef = useRef<ActionType>(); // 表格 ref
 	const formRef = useRef<FormInstance>(); // 表单 ref
@@ -28,6 +31,7 @@ const useProTable = () => {
 	const [form] = Form.useForm();
 
 	const [openSearch, SetOpenSearch] = useState<boolean>(false); // 工具栏：开启关闭表单搜索
+	// const [dataSource, setdataSource] = useState([]);
 	const [loading, SetLoading] = useState<boolean>(false); // Loading：加载Loading
 	const [pagination, SetPagination] = useState<any>({ page: 1, pageSize: 10, total: 0 }); // 分页数据
 	const [selectedRows, setSelectedRows] = useState<any[]>([]); // 表格：选择行数据
@@ -43,6 +47,22 @@ const useProTable = () => {
 	const [modalUserInfo, setModalUserInfo] = useState({});
 
 	const quickSearch = () => {};
+
+	// async function GetData() {
+	// 	SetLoading(true);
+	// 	const params = {
+	// 		page: pagination.page,
+	// 		pageSize: pagination.pageSize,
+	// 	};
+	// 	const { data }: any = await GetProTableUser({ ...params });
+	// 	console.log('data', data);
+	// 	SetLoading(false);
+	// 	SetPagination({ ...pagination, page: data.page, pageSize: data.pageSize, total: data.total });
+	// 	setdataSource(data.list);
+	// }
+	// useEffect(() => {
+	// 	GetData();
+	// }, [pagination.page, pagination.pageSize]);
 
 	// * 操作 — 员工： 新建、编辑、详情、删除  按钮
 	const handleOperator = async (type: string, item: any) => {
@@ -130,16 +150,18 @@ const useProTable = () => {
 		SetOpenSearch, // 工具栏：开启表单搜索
 		handleOperator,
 	};
+	const allWidth = TableColumnsConfig(handleOperator).reduce((sum: any, col: any) => sum + (col.width || 0), 0);
+
 	return (
 		<>
 			<ProTable<UserList>
 				rowKey='_id'
 				className='ant-pro-table-scroll'
-				scroll={{ x: 2500, y: '100vh' }} // 100vh
+				scroll={{ x: allWidth, y: '100vh' }} // 100vh
 				bordered
 				cardBordered
 				dateFormatter='string'
-				headerTitle='使用 ProTable'
+				headerTitle='用户列表'
 				defaultSize='small'
 				loading={loading}
 				columns={TableColumnsConfig(handleOperator)}
@@ -154,15 +176,17 @@ const useProTable = () => {
 				request={async (params, sort, filter) => {
 					SetLoading(true);
 					console.log('request请求参数：', params, sort, filter);
-					// const { data } = await getUserList(params)
-					const { data }: any = await GetProTableUser({ ...params, page: params.current });
+					const Param = {};
+					const { data }: any = await GetProTableUser(Param);
+					// console.log('用户列表数据：', data);
 					SetLoading(false);
 					SetPagination({ ...pagination, total: data.total });
 					return formatDataForProTable<UserList>({ ...data, current: params.current });
 				}}
 				pagination={{
+					size: 'default',
 					...pagination,
-					pageSizeOptions: [10, 20, 30, 50, 100],
+					pageSizeOptions: [10, 20, 30, 50],
 					onChange: (page, pageSize) => {
 						SetPagination({ ...pagination, page, pageSize });
 					},
@@ -172,9 +196,10 @@ const useProTable = () => {
 						setSelectedRows(selectedRows);
 					},
 				}}
-				ghost={false}
 				onSizeChange={() => {}} // Table 尺寸发生改变、将尺寸存储到数据库中
-				onRequestError={(error: any) => {}} // 数据加载失败时触发
+				onRequestError={(error: any) => {
+					message.error(`数据加载失败！ ${error}`);
+				}} // 数据加载失败时触发
 				editable={{ type: 'multiple' }}
 				columnsState={{
 					// 持久化列的 key，用于判断是否是同一个 table

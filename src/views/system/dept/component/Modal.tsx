@@ -86,7 +86,15 @@ const ModalComponent = (Props: any) => {
 				</Button>,
 			]}
 		>
-			<Form form={form} onFinish={FormOnFinish} layout='horizontal' size='middle' labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
+			<Form
+				className='mt-[40px] mb-[100px] px-[20px] max-h-[500px] overflow-auto'
+				form={form}
+				onFinish={FormOnFinish}
+				layout='horizontal'
+				size='middle'
+				labelCol={{ span: 6 }}
+				wrapperCol={{ span: 16 }}
+			>
 				<Row gutter={16}>
 					<Col span={12}>
 						<Form.Item label='部门名称' name='name' rules={[{ required: true, message: '必填：部门名称' }]}>

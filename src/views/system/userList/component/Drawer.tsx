@@ -23,19 +23,19 @@ const DrawerComponent: React.FC<DrawerComponentProps> = Params => {
 			}}
 			closable={true}
 		>
-			{drawerCurrentRow?.name && (
+			{drawerCurrentRow?.username && (
 				<ProDescriptions<UserList>
 					// extra='extra'
 					bordered
 					size='small'
 					layout='horizontal'
 					column={1}
-					title={drawerCurrentRow?.name}
+					title={drawerCurrentRow?.username}
 					request={async () => ({
 						data: drawerCurrentRow || {},
 					})}
 					params={{
-						id: drawerCurrentRow?.name,
+						id: drawerCurrentRow?.username,
 					}}
 					columns={TableColumnsConfig(handleOperator) as ProDescriptionsItemProps<UserList>[]}
 				/>

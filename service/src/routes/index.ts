@@ -6,7 +6,7 @@ import my from "./tanhua/my";
 import friends from "./tanhua/friends";
 import qz from "./tanhua/qz";
 import message from "./tanhua/message";
-import Shelf from "./shelf";
+import Shelf from "./business_module/shelf";
 import User from "./system_manage/user";
 import Menu from "./system_manage/menu";
 import Monitor from "./system_monitor/system_monitor";
@@ -30,6 +30,7 @@ export const unprotect = (app: any) => {
 	router.use("/role", Role.routes());
 	app.use(router.routes()).use(router.allowedMethods());
 };
+
 const jwtMiddleware = koajwt({ secret: config.jwtkey }).unless({
 	path: ['/user/login', '/userp/login', '/user/loginVerification', '/swagger.html'] as any,
 });

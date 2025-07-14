@@ -57,7 +57,7 @@ const TableColumnsConfig = (handleOperator: any): ProColumns<UserList>[] => {
 		{
 			title: '性别',
 			dataIndex: 'sex',
-			width: 150,
+			width: 80,
 			initialValue: '全部', // * initialValue 查询表单项初始值
 			filters: true,
 			onFilter: true,
@@ -70,13 +70,14 @@ const TableColumnsConfig = (handleOperator: any): ProColumns<UserList>[] => {
 		{
 			title: '年龄',
 			dataIndex: 'age',
-			width: 150,
+			width: 80,
 			sorter: true,
 			tooltip: '指代用户的年纪大小', // * tooltip 提示一些信息
 		},
 		{
 			title: '状态',
 			dataIndex: 'status',
+			width: 100,
 			hideInForm: true, // * hideInForm 在Form中不展示此列, 不可搜索
 			filters: true,
 			onFilter: true,
@@ -113,18 +114,21 @@ const TableColumnsConfig = (handleOperator: any): ProColumns<UserList>[] => {
 		{
 			title: '邮箱',
 			dataIndex: 'email',
+			width: 150,
 			hideInSearch: true,
 			ellipsis: true, // * ellipsis 是否自动缩略
 		},
 		{
 			title: '手机号',
 			dataIndex: 'phone',
+			width: 120,
 			ellipsis: true,
 			copyable: true,
 		},
 		{
 			title: '地址',
 			dataIndex: 'city',
+			width: 200,
 			// hideInSearch: true,
 			ellipsis: true,
 			copyable: true,
@@ -133,6 +137,7 @@ const TableColumnsConfig = (handleOperator: any): ProColumns<UserList>[] => {
 			title: '时间',
 			key: 'time',
 			dataIndex: 'time',
+			width: 100,
 			valueType: 'time',
 			sorter: true,
 			// hideInSearch: true,
@@ -141,6 +146,7 @@ const TableColumnsConfig = (handleOperator: any): ProColumns<UserList>[] => {
 		{
 			title: '日期',
 			key: 'date',
+			width: 120,
 			dataIndex: 'date',
 			valueType: 'date',
 			sorter: true,
@@ -150,6 +156,7 @@ const TableColumnsConfig = (handleOperator: any): ProColumns<UserList>[] => {
 		{
 			title: '日期时间',
 			key: 'dateTime',
+			width: 150,
 			dataIndex: 'dateTime',
 			valueType: 'dateTime',
 			sorter: true,
@@ -160,6 +167,7 @@ const TableColumnsConfig = (handleOperator: any): ProColumns<UserList>[] => {
 			title: '日期时间',
 			key: 'dateTime',
 			dataIndex: 'dateTime',
+			width: 150,
 			valueType: 'dateTime',
 			sorter: true,
 			// hideInSearch: true,
@@ -169,6 +177,7 @@ const TableColumnsConfig = (handleOperator: any): ProColumns<UserList>[] => {
 			title: '日期时间',
 			key: 'dateTime',
 			dataIndex: 'dateTime',
+			width: 150,
 			valueType: 'dateTime',
 			sorter: true,
 			// hideInSearch: true,
@@ -178,6 +187,7 @@ const TableColumnsConfig = (handleOperator: any): ProColumns<UserList>[] => {
 			title: '日期时间',
 			key: 'dateTime',
 			dataIndex: 'dateTime',
+			width: 150,
 			valueType: 'dateTime',
 			sorter: true,
 			// hideInSearch: true,
@@ -187,6 +197,7 @@ const TableColumnsConfig = (handleOperator: any): ProColumns<UserList>[] => {
 			title: '日期时间',
 			key: 'dateTime',
 			dataIndex: 'dateTime',
+			width: 150,
 			valueType: 'dateTime',
 			sorter: true,
 			// hideInSearch: true,
@@ -197,6 +208,7 @@ const TableColumnsConfig = (handleOperator: any): ProColumns<UserList>[] => {
 			title: '日期时间',
 			key: 'dateTime',
 			dataIndex: 'dateTime',
+			width: 150,
 			valueType: 'dateTime',
 			sorter: true,
 			// hideInSearch: true,
@@ -206,6 +218,7 @@ const TableColumnsConfig = (handleOperator: any): ProColumns<UserList>[] => {
 		{
 			title: '创建时间',
 			dataIndex: 'createTime',
+			width: 150,
 			valueType: 'dateRange',
 			hideInTable: false, // 隐藏在表格
 			search: { transform: value => ({ startTime: value[0], endTime: value[1] }) },
