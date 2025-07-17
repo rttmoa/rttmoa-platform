@@ -1,2 +1,0 @@
-import{u as i,g as n,j as s,A as o,h as c,B as r,i as u,l as m,s as p,k as d,n as h,c as l}from"./index-c0009a61.js";import{C as g}from"./index-72244b08.js";const A=()=>{const e=i(),a=n(),t=async()=>{await m(),a(p("")),a(d([])),e(h),l.success("退出登录成功！")};return s.jsxs(g,{children:[s.jsx(o,{message:"页面权限采用 React-Router 动态路由实现，根据不同用户角色返回对应路由菜单。登录不同账号观察左侧菜单变化（admin 账号可查看所有菜单、user 账号只可查看部分菜单）",type:"success",showIcon:!0}),s.jsx(c,{}),s.jsx(r,{type:"primary",icon:s.jsx(u,{}),onClick:t,children:"登录其他账号"})]})};export{A as default};
-//# sourceMappingURL=index-a845a7c2.js.map

@@ -1,2 +1,0 @@
-import{j as u}from"./index-c0009a61.js";function c({className:e,seconds:t}){return u.jsx("time",{dateTime:`P${Math.round(t)}S`,className:e,children:i(t)})}function i(e){const t=new Date(e*1e3),n=t.getUTCHours(),r=t.getUTCMinutes(),o=s(t.getUTCSeconds());return n?`${n}:${s(r)}:${o}`:`${r}:${o}`}function s(e){return("0"+e).slice(-2)}export{c as default};
-//# sourceMappingURL=Duration-b1aa2f32.js.map
