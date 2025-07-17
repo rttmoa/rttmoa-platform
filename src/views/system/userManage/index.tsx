@@ -206,11 +206,9 @@ const UserManage: React.FC = () => {
 				}}
 				SetIsExpand={SetIsExpand}
 			/>
-			<div className='h-full flex-1  mt-[12px] rounded-lg bg-white'>
+			<div className='h-full flex-1  mt-[12px] px-[24px] rounded-lg bg-white'>
 				<div className='flex justify-between px-[18px] py-[10px]' ref={toolBarRef}>
-					<span className='text-[14px] font-mono'>
-						<b>用户列表</b>
-					</span>
+					<span className='text-[14px] font-mono'>用户列表</span>
 					<TableHeader {...TableHeaderConfig} />
 				</div>
 				<MultiTable<any> // Table 👈
@@ -252,7 +250,7 @@ const UserManage: React.FC = () => {
 					pageSize={pagination.pageSize}
 					pageSizeOptions={[5, 10, 15, 20, 50, 100, 500, 1000]}
 					total={pagination.totalCount}
-					showTotal={() => `第${pagination.page}页， 共 ${pagination.totalCount} 条`} // 	第 31-40 条 || 总共 27469 条
+					showTotal={() => `第 ${pagination.page} 页， 共 ${pagination.totalCount} 条`} // 	第 31-40 条 || 总共 27469 条
 				/>
 			</div>
 

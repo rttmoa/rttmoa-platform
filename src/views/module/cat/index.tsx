@@ -1,11 +1,11 @@
 /* eslint-disable prettier/prettier */
-import { Card, Typography } from 'antd';
-import React, { useEffect, useRef, useState } from 'react';
-import { ContainerStyled, MasonicStyled, HeaderStyled, CardStyled } from './styled';
+
+import { Card } from 'antd';
+import React, { useState } from 'react';
 import { Masonry } from 'masonic';
-import catArr from './cat';
+
 import UseLazyLoadImage from '@/hooks/useLazyloadImage';
-import './index.less';
+import catArr from './cat';
 
 const catNames = ['Mimi', 'Luna', 'Kitty', 'Tiger', 'Simba', 'Coco', 'Neko', 'Shadow', 'Smokey', 'Garfield', 'Pumpkin', 'Oreo', 'Fluffy', 'Snowball', 'Mocha', 'Chai'];
 
@@ -25,30 +25,23 @@ const CatDetail: React.FC = () => {
 	});
 
 	return (
-		<>
-			<Card className='rootCard max-w-full relative'>
-				<HeaderStyled className='m-0' minify={'false'}>
-					<span role='img' aria-hidden='true'>
-						🧱
-					</span>
-					MASONIC
-				</HeaderStyled>
-				<ContainerStyled>
-					<MasonicStyled>
-						<Masonry items={item} columnGutter={6} columnWidth={272} overscanBy={5} render={FakeCard} />
-					</MasonicStyled>
-				</ContainerStyled>
-			</Card>
-		</>
+		<Card className='relative w-full'>
+			<h1 className='text-center font-quantico text-2xl font-extrabold tracking-tight z-[999] transition-all py-4 rounded-xl text-white bg-black'>🧱 MASONIC</h1>
+			<main className='w-full'>
+				<div className='p-2 w-full mx-auto box-border'>
+					<Masonry items={item} columnGutter={6} columnWidth={272} overscanBy={5} render={FakeCard} />
+				</div>
+			</main>
+		</Card>
 	);
 };
 
 function FakeCard({ data: { id, name, src } }: any) {
 	return (
-		<CardStyled>
+		<div className='flex flex-col justify-center items-center w-full min-h-[100px] bg-[#1d2326] rounded-2xl transition-transform duration-500 hover:scale-110 hover:z-50 hover:bg-white shadow-lg'>
 			<UseLazyLoadImage src={src || ''} alt='正在加载...' />
-			<span children={name} />
-		</CardStyled>
+			<span className='text-white hover:text-[#1d2326] p-2'>{name}</span>
+		</div>
 	);
 }
 

@@ -149,7 +149,6 @@ rttmoa-platform
 - git commit
 - conventional-changelog-cli
 - standard-version
-
     - changes
     - git add . / git cz
     - npm run release
@@ -188,7 +187,6 @@ rttmoa-platform
 
 2. "type-enum": ["build", "chore", "ci", "docs", "feat", "fix", "perf", "refactor", "revert", "style", "test"]
 3. type-enum 说明文档：
-
     - build: 依赖调整
       影响构建系统或外部依赖的更改 (示例作用域：gulp, broccoli, npm）
     - chore: 杂务处理

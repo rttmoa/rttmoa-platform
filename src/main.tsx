@@ -8,7 +8,6 @@ import 'antd/dist/reset.css';
 import '@/styles/index.less';
 import '@/assets/fonts/font.less'; // font
 import '@/assets/iconfont/iconfont.less'; // iconfont
-import '@/components/Common/Markdown/markdown.css'; // markdown css
 import 'virtual:svg-icons-register'; // svg
 import '@/assets/iconfont-Fonts/iconfontFonts.less';
 

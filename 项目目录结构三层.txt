@@ -1,0 +1,252 @@
+rttmoa-platform
+├── CHANGELOG.md
+├── LICENSE
+├── OAuth
+├── README.md                             # 项目描述文件
+├── _start__client.bat
+├── build                                 # 打包项目时的配置文件
+│   ├── getEnv.ts
+│   ├── plugins.ts
+│   └── proxy.ts
+├── build.css
+├── commitlint.config.cjs                 # 
+├── dist                                  # 打包后的项目文件
+│   ├── assets
+│   │   ├── css
+│   │   ├── gif
+│   │   ├── jpg
+│   │   ├── js
+│   │   ├── png
+│   │   ├── svg
+│   │   └── ttf
+│   ├── favicon.ico
+│   ├── index.html
+│   ├── manifest.webmanifest
+│   ├── react.svg
+│   ├── registerSW.js
+│   ├── rttmoa-128x128.png
+│   ├── rttmoa-192x192.png
+│   ├── rttmoa-512x512.png
+│   ├── rttmoa.svg
+│   ├── sw.js
+│   ├── sw.js.map
+│   ├── vite.svg
+│   ├── workbox-5ffe50d4.js
+│   └── workbox-5ffe50d4.js.map
+├── example.http
+├── index.css
+├── index.html
+├── lint-staged.config.cjs
+├── out.md
+├── out.txt
+├── package.json
+├── postcss.config.cjs
+├── project-structure.txt
+├── public
+│   ├── favicon.ico
+│   ├── react.svg
+│   ├── rttmoa-128x128.png
+│   ├── rttmoa-192x192.png
+│   ├── rttmoa-512x512.png
+│   ├── rttmoa.svg
+│   └── vite.svg
+├── service
+│   ├── README.md
+│   ├── _start_server.bat
+│   ├── _、desc.txt
+│   ├── errorLog.log
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── public
+│   │   ├── swagger
+│   │   ├── swagger.html
+│   │   └── upload
+│   ├── server-mysql
+│   │   ├── app.ts
+│   │   ├── config
+│   │   ├── middlewares
+│   │   ├── mysql 练习题.ts
+│   │   └── router.ts
+│   ├── src
+│   │   ├── app.ts
+│   │   ├── config
+│   │   ├── controllers
+│   │   ├── global.d.ts
+│   │   ├── jwt.ts
+│   │   ├── koa.d.ts
+│   │   ├── middlewares
+│   │   ├── model
+│   │   ├── objectql
+│   │   ├── packages
+│   │   ├── prototype
+│   │   ├── routes
+│   │   ├── schedule
+│   │   ├── status.ts
+│   │   └── utils
+│   ├── tanhua 20200630 0858.sql
+│   ├── tsconfig.json
+│   └── yarn.lock
+├── src
+│   ├── App.tsx
+│   ├── api
+│   │   ├── config
+│   │   ├── helper
+│   │   ├── i.tsx
+│   │   ├── index.ts
+│   │   ├── interface
+│   │   ├── modules
+│   │   └── upack.ts
+│   ├── apiFetch
+│   │   ├── axios.ts
+│   │   ├── fetch.ts
+│   │   ├── index.ts
+│   │   ├── useAsyncFetch.ts
+│   │   └── useFetch.ts
+│   ├── assets
+│   │   ├── api
+│   │   ├── dangerouslySetInnerHTML
+│   │   ├── documents
+│   │   ├── fonts
+│   │   ├── iconfont
+│   │   ├── iconfont-Fonts
+│   │   ├── icons
+│   │   ├── images
+│   │   └── json
+│   ├── components
+│   │   ├── AdvancedSearchForm
+│   │   ├── AuthButton
+│   │   ├── Common
+│   │   ├── Echarts
+│   │   ├── Error
+│   │   ├── Forms
+│   │   ├── Grid
+│   │   ├── Icon
+│   │   ├── Lazy
+│   │   ├── Loading
+│   │   ├── Modals
+│   │   ├── ProTable
+│   │   ├── SearchForm
+│   │   ├── SelectFilter
+│   │   ├── SvgIcon
+│   │   ├── SvgIconLibrary
+│   │   ├── SwitchDark
+│   │   ├── TableReducer
+│   │   ├── Tables
+│   │   ├── components.md
+│   │   └── stateless
+│   ├── config
+│   │   ├── index.ts
+│   │   ├── nprogress.ts
+│   │   ├── proTable.ts
+│   │   └── regular.ts
+│   ├── context
+│   │   └── Refresh.tsx
+│   ├── enums
+│   │   ├── httpEnum.ts
+│   │   └── wmsEnum.ts
+│   ├── hooks
+│   │   ├── ReactHooks
+│   │   ├── aHooks
+│   │   ├── useApiCallOnMount
+│   │   ├── useAuthButton.ts
+│   │   ├── useCallbackState
+│   │   ├── useClipboard.ts
+│   │   ├── useCopyToClipboard
+│   │   ├── useDebounce
+│   │   ├── useEcharts.ts
+│   │   ├── useEntranceExcle
+│   │   ├── useErrorBoundary
+│   │   ├── useErrorBoundary.tsx
+│   │   ├── useEventListener.ts
+│   │   ├── useExportExcle.ts
+│   │   ├── useEyeDropper.ts
+│   │   ├── useFetchReducer
+│   │   ├── useInitialRender
+│   │   ├── useInterval
+│   │   ├── useIsMount
+│   │   ├── useLazyloadImage.tsx
+│   │   ├── useLazyloadImg.tsx
+│   │   ├── useLocalStorage
+│   │   ├── useMessage.ts
+│   │   ├── useMousePosition
+│   │   ├── useNetworkStatus.ts
+│   │   ├── useOnlineStatus.ts
+│   │   ├── usePermissions.ts
+│   │   ├── usePersistedState
+│   │   ├── useRefVariable
+│   │   ├── useTableScroll.ts
+│   │   ├── useTheme.ts
+│   │   ├── useThrottle
+│   │   ├── useTime.ts
+│   │   ├── useViewport
+│   │   └── useWindowSize.ts
+│   ├── languages
+│   │   ├── index.ts
+│   │   └── modules
+│   ├── layouts
+│   │   ├── LayoutClassic
+│   │   ├── LayoutColumns
+│   │   ├── LayoutTransverse
+│   │   ├── LayoutVertical
+│   │   ├── components
+│   │   ├── index.tsx
+│   │   └── indexAsync.tsx
+│   ├── main.tsx
+│   ├── redux
+│   │   ├── index.ts
+│   │   ├── interface
+│   │   └── modules
+│   ├── routers
+│   │   ├── helper
+│   │   ├── index.tsx
+│   │   ├── interface
+│   │   └── modules
+│   ├── styles
+│   │   ├── common.less
+│   │   ├── index.less
+│   │   ├── init
+│   │   ├── proTable.less
+│   │   ├── reset.less
+│   │   ├── tailwind.css
+│   │   ├── theme
+│   │   ├── themeHook.tsx
+│   │   └── transition.less
+│   ├── typings
+│   │   ├── asset.d.ts
+│   │   ├── declaration.d.ts
+│   │   ├── global.d.ts
+│   │   ├── plugins.d.ts
+│   │   ├── react-app-env.d.ts
+│   │   ├── style.d.ts
+│   │   ├── utils.d.ts
+│   │   └── window.d.ts
+│   ├── utils
+│   │   ├── color.ts
+│   │   ├── common
+│   │   ├── decimals.ts
+│   │   ├── index.ts
+│   │   ├── is.ts
+│   │   └── public.ts
+│   ├── views
+│   │   ├── assembly
+│   │   ├── auth
+│   │   ├── dataScreen
+│   │   ├── database
+│   │   ├── feat
+│   │   ├── form
+│   │   ├── home
+│   │   ├── isHide
+│   │   ├── list
+│   │   ├── login
+│   │   ├── menu
+│   │   ├── module
+│   │   ├── monitor
+│   │   └── system
+│   └── vite-env.d.ts
+├── stats.html
+├── tailwind.config.js
+├── tsconfig.json
+├── vite.config.ts
+└── yarn.lock
+
+
