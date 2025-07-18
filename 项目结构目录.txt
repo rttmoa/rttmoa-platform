@@ -1,48 +1,25 @@
 rttmoa-platform
-├── CHANGELOG.md
-├── LICENSE
-├── OAuth
-├── README.md                             # 项目描述文件
-├── _start__client.bat
-├── build                                 # 打包项目时的配置文件
+├── CHANGELOG.md                          # 提交代码的提交内容
+├── LICENSE                               # 许可证文件
+├── OAuth     
+├── README.md                             # 项目说明文件
+├── _start__client.bat                    # 双击文件可直接启动项目的文件
+├── build                                 # yarn deploy & vite 打包项目的配置文件
 │   ├── getEnv.ts
 │   ├── plugins.ts
 │   └── proxy.ts
-├── build.css
-├── commitlint.config.cjs                 # 
-├── dist                                  # 打包后的项目文件
-│   ├── assets
-│   │   ├── css
-│   │   ├── gif
-│   │   ├── jpg
-│   │   ├── js
-│   │   ├── png
-│   │   ├── svg
-│   │   └── ttf
-│   ├── favicon.ico
-│   ├── index.html
-│   ├── manifest.webmanifest
-│   ├── react.svg
-│   ├── registerSW.js
-│   ├── rttmoa-128x128.png
-│   ├── rttmoa-192x192.png
-│   ├── rttmoa-512x512.png
-│   ├── rttmoa.svg
-│   ├── sw.js
-│   ├── sw.js.map
-│   ├── vite.svg
-│   ├── workbox-5ffe50d4.js
-│   └── workbox-5ffe50d4.js.map
-├── example.http
+├── build.css                             # tailwindcss 文件
+├── commitlint.config.cjs                 # yarn commit & 提交代码时的配置文件
+├── dist                                  # yarn deploy & 打包项目文件的产物、在index.html中查看打包后的效果 
+│   ├── index.html                        # 在此文件查看运行效果 
+│   ├── ..........                        # 其他打包文件 
+├── example.http                          
 ├── index.css
-├── index.html
+├── index.html                            # 打包项目的html模板、必要文件
 ├── lint-staged.config.cjs
-├── out.md
-├── out.txt
-├── package.json
-├── postcss.config.cjs
-├── project-structure.txt
-├── public
+├── package.json                          # 运行文件、必要文件
+├── postcss.config.cjs                    # 处理css：自动处理css前缀、打包时压缩css代码
+├── public                                # 公共文件夹：存放图标、图片等静态资源
 │   ├── favicon.ico
 │   ├── react.svg
 │   ├── rttmoa-128x128.png
@@ -50,34 +27,41 @@ rttmoa-platform
 │   ├── rttmoa-512x512.png
 │   ├── rttmoa.svg
 │   └── vite.svg
-├── service
+├── service                               # 服务端代码
 │   ├── README.md
 │   ├── _start_server.bat
 │   ├── _、desc.txt
 │   ├── errorLog.log
+│   ├── objectql
+│   │   ├── History.md
+│   │   ├── README.md
+│   │   ├── _、desc.txt
+│   │   ├── nodemon.json
+│   │   ├── package.json
+│   │   ├── src
+│   │   ├── steedos-config.yml            #
+│   │   └── tsconfig.json
 │   ├── package-lock.json
 │   ├── package.json
-│   ├── public
+│   ├── packages
+│   │   ├── accounts
+│   │   ├── client
+│   │   ├── metadata-api
+│   │   ├── metadata-registrar
+│   │   ├── objectql
+│   │   └── router
+│   ├── public                             # 存放前端打包后的产物、服务端运行前端项目
 │   │   ├── swagger
 │   │   ├── swagger.html
 │   │   └── upload
-│   ├── server-mysql
-│   │   ├── app.ts
-│   │   ├── config
-│   │   ├── middlewares
-│   │   ├── mysql 练习题.ts
-│   │   └── router.ts
 │   ├── src
 │   │   ├── app.ts
 │   │   ├── config
 │   │   ├── controllers
 │   │   ├── global.d.ts
-│   │   ├── jwt.ts
 │   │   ├── koa.d.ts
 │   │   ├── middlewares
 │   │   ├── model
-│   │   ├── objectql
-│   │   ├── packages
 │   │   ├── prototype
 │   │   ├── routes
 │   │   ├── schedule
@@ -86,8 +70,8 @@ rttmoa-platform
 │   ├── tanhua 20200630 0858.sql
 │   ├── tsconfig.json
 │   └── yarn.lock
-├── src
-│   ├── App.tsx
+├── src                                     # 前端代码               
+│   ├── App.tsx                             # 项目根目录
 │   ├── api
 │   │   ├── config
 │   │   ├── helper
@@ -231,7 +215,6 @@ rttmoa-platform
 │   │   ├── assembly
 │   │   ├── auth
 │   │   ├── dataScreen
-│   │   ├── database
 │   │   ├── feat
 │   │   ├── form
 │   │   ├── home
@@ -246,7 +229,6 @@ rttmoa-platform
 ├── stats.html
 ├── tailwind.config.js
 ├── tsconfig.json
-├── vite.config.ts
-└── yarn.lock
-
-
+├── vite.config.ts                    
+├── yarn.lock
+└── 项目创建表案例.docx

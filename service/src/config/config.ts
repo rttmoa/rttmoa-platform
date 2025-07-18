@@ -17,7 +17,7 @@ export interface Config {
 const isDevMode = process.env.NODE_ENV == "development";
 
 const config: Config = {
-	jwtkey: "tanhua", // jwt 密钥（secret），这个密钥非常重要，必须保密！
+	jwtkey: "Upack-Secret", // jwt 密钥（secret），这个密钥非常重要，必须保密！
 	resCodes: {
 		ok: 10000, // 正常
 		customerError: 10001, // 业务异常
@@ -28,7 +28,7 @@ const config: Config = {
 	dbsslconn: !isDevMode,
 	cronJobExpression: "* * * * *", // 每小时；0 * * * *  || 每分钟：* * * * *
 	port: +(process.env.PORT || 3000),
-	jwtSecret: process.env.JWT_SECRET || "node-typescript-koa-rest",
+	jwtSecret: process.env.JWT_SECRET || "Upack-Secret",
 	databaseUrl: process.env.DATABASE_URL || "postgres://postgres:root@localhost:5432/apidb",
 };
 

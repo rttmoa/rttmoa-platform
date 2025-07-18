@@ -1,8 +1,9 @@
-& 这个后台更适合 tanhuajiaoyou 服务端
+
 
 、功能： 获取前端获取的参数并解析去查询
 、功能： 根据cookie 与 session判断用户是否登陆过期
 、功能： redis、mongodb、cors、email
+
 cool-admin：
   、字典管理：某个配置项、名称及值、码垛类型与码垛数值   https://show.cool-admin.com/dict/list
   、请求日志：某人新增、删除的表名记录：https://show.cool-admin.com/sys/log
@@ -10,8 +11,8 @@ cool-admin：
   、角色管理：参考 https://show.cool-admin.com/sys/role
 
 soybean：
-  角色管理：https://soybeanjs.cn/manage/role
-  菜单管理：https://soybeanjs.cn/manage/menu
+  、角色管理：https://soybeanjs.cn/manage/role
+  、菜单管理：https://soybeanjs.cn/manage/menu
 
 
 docker：docker配置 & Docker客户端 & Docker启动 

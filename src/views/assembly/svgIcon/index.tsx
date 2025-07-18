@@ -43,7 +43,7 @@ const SvgIconPage = () => {
 					<Descriptions.Item label='iconStyle'> 图标的样式，默认样式为 {'{ width: 100px, height: 100px }'} </Descriptions.Item>
 				</Descriptions>
 			</Card>
-			<Card className='mb-6' title='iconFont 矢量图标 <SvgIcon />'>
+			<Card className='mb-6' title='iconFont 矢量图标 <SvgIcon name=`fangda` />'>
 				<Alert
 					type='info'
 					description={
@@ -56,7 +56,7 @@ const SvgIconPage = () => {
 					}
 				/>
 			</Card>
-			<Card className='mb-6' title='iconFont 字体图标 <i />'>
+			<Card className='mb-6' title='iconFont 字体图标 <i className=`iconfont icon-zhuti` />'>
 				<Alert
 					type='info'
 					description={

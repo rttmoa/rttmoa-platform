@@ -20,4 +20,13 @@ export default class CommonTest extends Common implements WCS {
 		console.log(this.uname);
 		console.log(this.getId(2));
 	}
+	time?: string;
+	pallet: string;
+	taskNo: string;
+	loc_start?: string;
+	loc_end?: string;
+	Priority?: number;
+	teck?: () => {};
+	conveyingLine: (line: number) => {};
+	stackerFN: (stack: number) => {};
 }

@@ -1,14 +1,14 @@
-import { Card } from 'antd'
-import React from 'react'
-import ReactPlayer from 'react-player'
+import { Card } from 'antd';
+import React from 'react';
+import ReactPlayer from 'react-player';
 
 // Render a YouTube video player
 
 const Index = () => {
 	return (
-		<Card>
+		<Card className='w-full h-full'>
 			<ReactPlayer
-				url="https://www.youtube.com/watch?v=LXb3EKWsInQ"
+				url='https://www.youtube.com/watch?v=LXb3EKWsInQ'
 				playing
 				controls
 				loop={true} // 调试阶段为true
@@ -16,6 +16,6 @@ const Index = () => {
 				volume={0.5}
 			/>
 		</Card>
-	)
-}
-export default Index
+	);
+};
+export default Index;

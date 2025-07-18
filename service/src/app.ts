@@ -3,14 +3,14 @@ import json from 'koa-json';
 import bodyparser from 'koa-bodyparser';
 import winston from 'winston';
 import { errorHandle, sendHandle, dbHandle } from './middlewares/index.ts';
- import { protect, unprotect } from './routes/index.ts';
+import { protect, unprotect } from './routes/index.ts';
 import _crossDomain from './middlewares/app/app_crossDomain.ts';
 import _public from './middlewares/app/app_public.ts';
 import _security from './middlewares/app/app_security.ts';
 import _logger from './middlewares/logger.ts';
-import _middleware from './middlewares/_middleware.ts';
-import './schedule';
-import ping from './utils/ping.ts';
+import _middleware from './middlewares/_middleware.ts'; // # 在全局 ctx 上挂载 mongo 服务
+import './schedule';   // # 定时任务
+
 const app = new koa();
 require('dotenv').config({ path: `.env.${process.env.NODE_ENV || 'development'}` });
 app.use(json()); // json中间件

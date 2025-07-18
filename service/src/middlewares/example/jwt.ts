@@ -3,8 +3,8 @@
 // 生成 token
 // 验证 token
 
+import { config } from "@/src/config/config";
 import jwt from "jsonwebtoken";
-import { config } from "./config/config";
  
 
 //& 生成 token、 验证token   如果没有token或者token过期，返回错误信息

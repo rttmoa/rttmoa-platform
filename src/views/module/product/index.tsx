@@ -1,46 +1,46 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Card, Popconfirm, Table, TableColumnsType, message, Image } from 'antd'
-import { useNavigate } from 'react-router-dom'
-import defaultImg from '@/assets/images/defaultImg.jpg'
-import { productList } from '@/api/modules/module/product'
+import React, { useEffect, useState } from 'react';
+import { Button, Card, Popconfirm, Table, TableColumnsType, message, Image } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import defaultImg from '@/assets/images/defaultImg.jpg';
+import { productList } from '@/api/modules/module/product';
 
 export interface listProps {
-	list?: any
-	total?: number
-	page?: number
-	pageSize?: number
+	list?: any;
+	total?: number;
+	page?: number;
+	pageSize?: number;
 }
 
 // coverImg: "http://localhost:3009/uploads/20230406/1680794476636.jpg"
-export const serverUrl = 'http://localhost:3009'
+export const serverUrl = 'http://localhost:3009';
 
 const List = () => {
-	const navigate = useNavigate()
-	const [loading, setLoading] = useState(false)
-	const [searchName, setsearchName] = useState('')
-	const [searchType, setsearchType] = useState('productName')
-	const [data, setData] = useState<listProps>({ list: [], total: 0, page: 1, pageSize: 5 })
-	const { list, total, page, pageSize } = data
+	const navigate = useNavigate();
+	const [loading, setLoading] = useState(false);
+	const [searchName, setsearchName] = useState('');
+	const [searchType, setsearchType] = useState('productName');
+	const [data, setData] = useState<listProps>({ list: [], total: 0, page: 1, pageSize: 5 });
+	const { list, total, page, pageSize } = data;
 
 	// 发送请求 | 通过redux去处理
 	const loadData = async (page: number, pageSize: number) => {
-		setData({ page: page })
-		setLoading(true)
-		let result: any
+		setData({ page: page });
+		setLoading(true);
+		let result: any;
 		if (searchName) {
-			result = await productList(page, pageSize, searchName, searchType)
+			result = await productList(page, pageSize, searchName, searchType);
 		} else {
-			result = await productList(page, pageSize)
+			result = await productList(page, pageSize);
 		}
 		if (result.code == 200) {
-			setLoading(false)
-			setData(result.data)
+			setLoading(false);
+			setData(result.data);
 		}
-	}
+	};
 
 	useEffect(() => {
-		loadData(page!, pageSize!)
-	}, [])
+		loadData(page!, pageSize!);
+	}, []);
 
 	const columns: TableColumnsType = [
 		{
@@ -66,7 +66,7 @@ const List = () => {
 			title: '价格',
 			dataIndex: 'price',
 			render(price) {
-				return `￥${price}`
+				return `￥${price}`;
 			},
 		},
 		{
@@ -84,63 +84,68 @@ const List = () => {
 				return (
 					<div>
 						<Button
-							type="primary"
-							size="small"
+							type='primary'
+							size='small'
 							onClick={() => {
-								navigate(`/module/product/detail?id=${record._id}`)
-							}}>
+								navigate(`/module/product/detail?id=${record._id}`);
+							}}
+						>
 							修改
 						</Button>
 						<Popconfirm
-							title="确定删除此项"
+							title='确定删除此项'
 							onCancel={() => {
-								console.log('用户取消删除')
+								console.log('用户取消删除');
 							}}
 							onConfirm={() => {
 								// todo 此处调用api接口进行删除
 								// delOne(record._id).then(res => {
 								//   loadData();
 								// });
-								message.info(`删除： _id=${record._id}`)
-							}}>
-							<Button type="dashed" size="small" style={{ margin: '0 1rem' }}>
+								message.info(`删除： _id=${record._id}`);
+							}}
+						>
+							<Button type='dashed' size='small' style={{ margin: '0 1rem' }}>
 								删除
 							</Button>
 						</Popconfirm>
 						<Button
-							size="small"
+							size='small'
 							onClick={() => {
 								// modifyOne(record._id, { onSale: !record.onSale }).then(res => {
 								//   重新拿参数去请求：页码，请求参数，信息去请求
 								//   loadData(page!, pageSize!);
 								// });
-								message.info(`修改在售： _id=${record._id}`)
-							}}>
+								message.info(`修改在售： _id=${record._id}`);
+							}}
+						>
 							{record.onSale ? '下架' : '上架'}
 						</Button>
 					</div>
-				)
+				);
 			},
 		},
-	]
+	];
 
 	return (
 		<div>
 			<Card
-				title="商品列表"
+				title='商品列表'
 				extra={
 					<Button
-						type="primary"
-						size="small"
+						type='primary'
+						size='small'
 						onClick={() => {
-							navigate('/module/product/detail')
-						}}>
+							navigate('/module/product/detail');
+						}}
+					>
 						新增
 					</Button>
-				}>
+				}
+			>
 				<Table
 					bordered
-					rowKey="_id"
+					rowKey='_id'
 					loading={loading}
 					rowClassName={(record: any) => (record?.onSale ? '' : 'bg-red')}
 					columns={columns}
@@ -155,14 +160,14 @@ const List = () => {
 						onChange: loadData, // 页码改变的回调，参数是改变后的页码及每页条数
 						onShowSizeChange: (current, size) => {
 							// console.log('pageSize 变化的回调', current, size);
-							setData({ pageSize: size })
-							loadData(page!, size)
+							setData({ pageSize: size });
+							loadData(page!, size);
 						},
 					}}
 				/>
 			</Card>
 		</div>
-	)
-}
+	);
+};
 
-export default List
+export default List;

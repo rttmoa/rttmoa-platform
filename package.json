@@ -56,7 +56,7 @@
 		"release:minor": "standard-version --release-as minor",
 		"release:major": "standard-version --release-as major",
 		"rimraf": "rimraf node_modules",
-		"tree": "npx tree-node-cli -L 3 -I node_modules > out.md",
+		"tree": "npx tree-node-cli -L 3 -I node_modules > OUT.txt",
 		"commit": "git add -A && czg && git push",
 		"releasePatch": "standard-version --release-as patch",
 		"push": "git push --follow-tags origin main",

@@ -22,6 +22,19 @@ data = {
 // },
 
 
+// 返回客户端格式：
+data = {
+	code: 200,
+	msg: "请求成功",
+	data: {
+		list: [{a:1}, {a:1}, {a:1}],
+ 		page: 1,
+		pagesize: 5,
+		count: 24,
+	}
+};
+
+
 
 
 
