@@ -3,7 +3,7 @@ import Dept from "../../controllers/system_manage/dept";
 const router = new Router();
 
  
-router.get("/departments/:id"); // 查询单个部门详情
+// router.get("/departments/:id"); // 查询单个部门详情
 router.get("/departments", Dept.findDept); // 获取部门树列表
 
 router.post("/department", Dept.addDept); // 新增部门

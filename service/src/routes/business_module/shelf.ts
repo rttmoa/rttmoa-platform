@@ -1,5 +1,5 @@
 import Router = require("@koa/router")
-import Shelf from '../../controllers/shelf'
+import Shelf from '../../controllers/business_module/shelf'
 const router = new Router();
 
 // * 这几个接口为测试 mongodb 使用

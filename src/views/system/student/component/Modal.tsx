@@ -73,33 +73,18 @@ const ModalComponent = (Params: any) => {
 						</Form.Item>
 					</Col>
 					<Col span={12}>
-						<Form.Item label='年龄' name='age' rules={[{ required: false, message: '请输入姓名' }]}>
+						<Form.Item label='班级' name='class' rules={[{ required: false, message: '请输入姓名' }]}>
 							<Input placeholder='请输入年龄' />
 						</Form.Item>
 					</Col>
 					<Col span={12}>
-						<Form.Item label='状态' name='status' rules={[{ required: false, message: '请输入年龄' }]}>
+						<Form.Item label='学号' name='studentno' rules={[{ required: false, message: '请输入年龄' }]}>
 							<Input placeholder='请选择状态' />
 						</Form.Item>
 					</Col>
 					<Col span={12}>
-						<Form.Item label='邮箱' name='email' rules={[{ required: false, message: '请输入姓名' }]}>
+						<Form.Item label='专业' name='specialty' rules={[{ required: false, message: '请输入姓名' }]}>
 							<Input placeholder='请输入邮箱' />
-						</Form.Item>
-					</Col>
-					<Col span={12}>
-						<Form.Item label='手机号' name='phone' rules={[{ required: false, message: '请输入年龄' }]}>
-							<Input placeholder='请输入手机号' />
-						</Form.Item>
-					</Col>
-					<Col span={12}>
-						<Form.Item label='地址' name='city' rules={[{ required: false, message: '请输入年龄' }]}>
-							<Input placeholder='请输入地址' />
-						</Form.Item>
-					</Col>
-					<Col span={12}>
-						<Form.Item label='时间' name='time' rules={[{ required: false, message: '请输入年龄' }]}>
-							<Input placeholder='请选择时间' />
 						</Form.Item>
 					</Col>
 				</Row>
