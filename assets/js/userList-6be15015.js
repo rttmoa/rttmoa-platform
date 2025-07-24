@@ -1,0 +1,2 @@
+import{j as s}from"./index-ce305ae4.js";import{D as r}from"./index-59f06b40.js";const t=({user:e})=>{const a=[{key:"1",label:"name",children:e.name},{key:"2",label:"age",children:e.age},{key:"3",label:"address",children:e.address}];return s.jsx(r,{title:"USERINFO",items:a})},l=()=>s.jsx(t,{user:{name:"Dail",age:16,address:"Shanghai"}});export{l as default};
+//# sourceMappingURL=userList-6be15015.js.map
