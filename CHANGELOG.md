@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.56](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.55...v2.3.56) (2025-07-24)
+
+
+### Bug Fixes
+
+* 🧩 增加service下node-opcua、student ([bb474d2](https://github.com/rttmoa/rttmoa-platform/commit/bb474d29b55fb8330f9f59a342a7e51059253700))
+
 ### [2.3.55](https://github.com/rttmoa/rttmoa-platform/compare/v2.3.54...v2.3.55) (2025-07-20)
 
 
