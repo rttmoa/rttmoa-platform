@@ -1,0 +1,2 @@
+import{j as r,A as e}from"./index-0666d363.js";import{C as s}from"./index-01f41a9d.js";import{I as o}from"./index-cd255991.js";import"./addEventListener-9bcea0ef.js";const t=""+new URL("../png/opear-ee752636.png",import.meta.url).href,i=()=>r.jsxs(s,{children:[r.jsx(e,{message:"示例：",type:"info",showIcon:!0}),r.jsx("br",{}),r.jsx(o,{width:1600,src:t})]});export{i as default};
+//# sourceMappingURL=index-cb705652.js.map

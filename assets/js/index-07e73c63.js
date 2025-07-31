@@ -1,2 +1,0 @@
-import{a as l,av as s,j as p,aw as r}from"./index-42a344e0.js";import{P as a}from"./index-02d4cce4.js";var n=["fieldProps","unCheckedChildren","checkedChildren","proFieldProps"],P=l.forwardRef(function(e,o){var d=e.fieldProps,i=e.unCheckedChildren,c=e.checkedChildren,h=e.proFieldProps,t=s(e,n);return p.jsx(a,r({valueType:"switch",fieldProps:r({unCheckedChildren:i,checkedChildren:c},d),ref:o,valuePropName:"checked",proFieldProps:h,filedConfig:{valuePropName:"checked",ignoreWidth:!0,customLightMode:!0}},t))});const m=P;export{m as P};
-//# sourceMappingURL=index-07e73c63.js.map
