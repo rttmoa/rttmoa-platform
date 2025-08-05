@@ -1,2 +1,0 @@
-import{j as r}from"./index-0666d363.js";import m from"./fileUpload-7fa1db04.js";import e from"./userList-6a5d0e64.js";import{C as s}from"./index-01f41a9d.js";import"./index-fe563e57.js";const x=()=>r.jsx(r.Fragment,{children:r.jsxs(s,{className:"w-full h-full",children:[r.jsx(s,{children:r.jsx(m,{})}),r.jsx(s,{className:"mt-[20px]",children:r.jsx(e,{})})]})});export{x as default};
-//# sourceMappingURL=index-4e9d2df0.js.map

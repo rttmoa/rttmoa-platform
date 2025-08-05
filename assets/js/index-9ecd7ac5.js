@@ -1,0 +1,2 @@
+import{u as r,j as t,B as e,S as s}from"./index-8aeee37e.js";import{C as i}from"./index-aeec5ea8.js";import{T as l}from"./index-e8593c62.js";import"./styleChecker-c3ace4a7.js";import"./index-c0729554.js";const{Title:o}=l,d=()=>{const a=r();return t.jsxs(i,{children:[t.jsxs(o,{level:4,className:"mb15",children:["平级模式：/flat ","->"," /flatDetail"]}),t.jsx(e,{type:"primary",icon:t.jsx(s,{}),onClick:()=>a("/feat/breadcrumb/flatDetail"),children:"打开详情页"})]})};export{d as default};
+//# sourceMappingURL=index-9ecd7ac5.js.map
