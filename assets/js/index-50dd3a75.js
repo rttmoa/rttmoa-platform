@@ -1,0 +1,2 @@
+import{j as r,A as e}from"./index-d95c6b3e.js";import{C as s}from"./index-fbae8af5.js";import{I as t}from"./index-1b0cbb00.js";import"./addEventListener-fc68868f.js";const o=""+new URL("../png/online-e94e9753.png",import.meta.url).href,p=()=>r.jsxs(s,{children:[r.jsx(e,{message:"示例：",type:"info",showIcon:!0}),r.jsx("br",{}),r.jsx(t,{width:1600,src:o})]});export{p as default};
+//# sourceMappingURL=index-50dd3a75.js.map

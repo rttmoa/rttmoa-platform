@@ -1,0 +1,2 @@
+import{j as s,aW as e,aX as a}from"./index-d95c6b3e.js";const t=()=>s.jsxs("div",{className:"login-logo flex   items-center",children:[s.jsx("span",{className:"font-mono text-[12px] text-slate-900 mr-3",children:"Other login methods"}),s.jsx("span",{className:"mr-4",children:s.jsx("a",{href:"#",children:s.jsx(e,{})})}),s.jsx("span",{children:s.jsx("a",{href:"#",children:s.jsx(a,{})})})]});export{t as default};
+//# sourceMappingURL=LoginLogo-bf82e6fa.js.map
