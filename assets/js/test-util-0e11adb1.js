@@ -1,0 +1,1 @@
+import{r}from"./react-46e94dd5.js";import"./antd-c7a0e718.js";import"./antd-pro-b8701217.js";import"./lodash-b74d7d7b.js";const f=()=>{function u(t,e){if(typeof window<"u")return e}return((t,e)=>{const[o,a]=r.useState(()=>u(t,e));return r.useEffect(()=>{},[t,o]),[o,a]})("zs",33),null};export{f as default};
