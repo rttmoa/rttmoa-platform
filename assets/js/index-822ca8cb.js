@@ -1,1 +1,0 @@
-import{r as a}from"./react-46e94dd5.js";import{b as c,i as f}from"./index-344ee99f.js";var m=function(n,r,e){e===void 0&&(e={});var u=c(n),t=a.useRef(null),i=a.useCallback(function(){t.current&&clearInterval(t.current)},[]);return a.useEffect(function(){if(!(!f(r)||r<0))return e.immediate&&u(),t.current=setInterval(u,r),i},[r,e.immediate]),i};const v=m;export{v as u};

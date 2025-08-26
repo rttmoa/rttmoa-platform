@@ -1,0 +1,1 @@
+import{j as r}from"./react-46e94dd5.js";import"./index-28a657f8.js";import{a$ as t}from"./antd-c7a0e718.js";import"./antd-pro-b8701217.js";import"./lodash-b74d7d7b.js";const i=()=>r.jsx(t,{children:r.jsx("span",{className:"text",children:"我是 Menu 1"})});export{i as default};
