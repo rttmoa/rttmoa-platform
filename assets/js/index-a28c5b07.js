@@ -1,1 +1,0 @@
-import{j as r}from"./react-46e94dd5.js";import{a$ as e,b0 as s,af as t}from"./antd-c7a0e718.js";import"./antd-pro-b8701217.js";import"./lodash-b74d7d7b.js";const n=""+new URL("../png/online-e94e9753.png",import.meta.url).href,p=()=>r.jsxs(e,{children:[r.jsx(s,{message:"示例：",type:"info",showIcon:!0}),r.jsx("br",{}),r.jsx(t,{width:1600,src:n})]});export{p as default};
