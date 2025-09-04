@@ -1,0 +1,1 @@
+import{c as r,j as e}from"./index-742cb489.js";const i=s=>{const{name:t,prefix:o="icon",iconStyle:n={width:"100px",height:"100px"}}=s,c=`#${o}-${t}`;return e.jsx("svg",{"aria-hidden":"true",style:n,children:e.jsx("use",{href:c})})},a=r.memo(i);export{a as S};
