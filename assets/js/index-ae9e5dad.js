@@ -1,1 +1,0 @@
-import{r,n as t}from"./index-742cb489.js";import{u as m}from"./index-5cd03226.js";const Y=()=>{const[e,s]=r.useState(t().format("YYYY年MM月DD HH:mm:ss"));return m(()=>{s(t().format("YYYY年MM月DD HH:mm:ss"))},1e3),e};export{Y as default};
