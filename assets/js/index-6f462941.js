@@ -1,0 +1,1 @@
+import{j as r}from"./index-1c8b50a0.js";import e from"./fileUpload-a3b9678b.js";import{C as s}from"./index-0fc4a591.js";const t=()=>r.jsx(r.Fragment,{children:r.jsx(s,{className:"w-full h-full",children:r.jsx(s,{children:r.jsx(e,{})})})});export{t as default};
