@@ -7,6 +7,7 @@
     "types": [
       "./src/koa.d.ts"
     ],
+    "ignoreDeprecations": "6.0",
     "baseUrl": ".", /* Base directory to resolve non-absolute module names. */
     "paths": {
       // "*": [ "node_modules/*" ]

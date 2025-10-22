@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
-import { message } from '@/hooks/useMessage'
-import { LoadingOutlined, StarOutlined, UploadOutlined } from '@ant-design/icons'
-import { Button, Card, Modal, Upload } from 'antd'
-import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface'
-import React, { useState } from 'react'
+import { message } from '@/hooks/useMessage';
+import { LoadingOutlined, StarOutlined, UploadOutlined } from '@ant-design/icons';
+import { Button, Card, Modal, Upload } from 'antd';
+import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
+import React, { useState } from 'react';
 
 let defaultFileList: any = [
 	{
@@ -26,21 +26,21 @@ let defaultFileList: any = [
 		response: 'Server Error 500', // custom error message to show
 		url: '	https://designer.mocky.io/static/media/chi-hang-leong-hehYcAGhbmY-unsplash.6914f9ac.jpg',
 	},
-]
+];
 let getBase64 = (file: RcFile): Promise<string> => {
 	return new Promise((resolve, reject) => {
-		const reader = new FileReader()
-		reader.readAsDataURL(file)
-		reader.onload = () => resolve(reader.result as string)
-		reader.onerror = error => reject(error)
-	})
-}
+		const reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onload = () => resolve(reader.result as string);
+		reader.onerror = error => reject(error);
+	});
+};
 const FileUpload: React.FC = () => {
-	const [previewOpen, setPreviewOpen] = useState(false)
-	const [previewImage, setPreviewImage] = useState('')
-	const [previewTitle, setPreviewTitle] = useState('')
-	const [fileList, setFileList] = useState<UploadFile[]>(defaultFileList)
-	const [loading, setLoading] = useState<boolean>(false)
+	const [previewOpen, setPreviewOpen] = useState(false);
+	const [previewImage, setPreviewImage] = useState('');
+	const [previewTitle, setPreviewTitle] = useState('');
+	const [fileList, setFileList] = useState<UploadFile[]>(defaultFileList);
+	const [loading, setLoading] = useState<boolean>(false);
 	// upload: https://ant.design/components/upload-cn
 	const uploadProps: UploadProps = {
 		fileList: fileList,
@@ -50,60 +50,60 @@ const FileUpload: React.FC = () => {
 			authorization: 'authorization-text',
 		},
 		onChange(info) {
-			setFileList(info.fileList)
+			setFileList(info.fileList);
 			if (info.file.status == 'uploading') {
-				setLoading(true)
+				setLoading(true);
 				// console.log("a", info.file, info.fileList);
-				return
+				return;
 			}
 			if (info.file.status === 'done') {
-				setLoading(false)
-				message.success(`${info.file.name} file uploaded successfully`)
+				setLoading(false);
+				message.success(`${info.file.name} file uploaded successfully`);
 			} else if (info.file.status === 'error') {
-				setLoading(false)
-				message.error(`${info.file.name} file upload failed.`)
+				setLoading(false);
+				message.error(`${info.file.name} file upload failed.`);
 			}
 		},
 		onRemove(file) {
-			const index = fileList.indexOf(file)
-			const newFileList = fileList.slice(index)
-			newFileList.splice(index, 1)
-			setFileList(newFileList)
+			const index = fileList.indexOf(file);
+			const newFileList = fileList.slice(index);
+			newFileList.splice(index, 1);
+			setFileList(newFileList);
 		},
 		// 上传前校验 & 上传前转换文件
 		beforeUpload(file: RcFile, FileList) {
-			const isJpgOrPng = file.type === 'image/jpg' || file.type === 'image/png'
+			const isJpgOrPng = file.type === 'image/jpg' || file.type === 'image/png';
 			if (!isJpgOrPng) {
-				console.log('仅接收传递的 jpg|png')
+				console.log('仅接收传递的 jpg|png');
 			}
-			const isLt2M = file.size / 1024 / 1024 < 2
+			const isLt2M = file.size / 1024 / 1024 < 2;
 			if (!isLt2M) {
-				console.log('上传的文件必须小于 2M')
-				return
+				console.log('上传的文件必须小于 2M');
+				return;
 			}
 			if (file.type.includes('image')) {
 				return new Promise((resolve: any) => {
-					const reader = new FileReader()
-					reader.readAsDataURL(file)
+					const reader = new FileReader();
+					reader.readAsDataURL(file);
 					reader.onload = () => {
-						const img = document.createElement('img')
-						img.src = reader.result as string
+						const img = document.createElement('img');
+						img.src = reader.result as string;
 						img.onload = () => {
-							const canvas = document.createElement('canvas')
-							canvas.width = img.naturalWidth
-							canvas.height = img.naturalHeight
-							const ctx = canvas.getContext('2d')!
-							ctx.drawImage(img, 0, 0)
-							ctx.fillStyle = 'red'
-							ctx.textBaseline = 'middle'
-							ctx.font = '33px Arial'
-							ctx.fillText('Watermark', 20, 20)
-							canvas.toBlob(result => resolve(result as any))
-						}
-					}
-				})
+							const canvas = document.createElement('canvas');
+							canvas.width = img.naturalWidth;
+							canvas.height = img.naturalHeight;
+							const ctx = canvas.getContext('2d')!;
+							ctx.drawImage(img, 0, 0);
+							ctx.fillStyle = 'red';
+							ctx.textBaseline = 'middle';
+							ctx.font = '33px Arial';
+							ctx.fillText('Watermark', 20, 20);
+							canvas.toBlob(result => resolve(result as any));
+						};
+					};
+				});
 			}
-			return true // 任何都可以
+			return true; // 任何都可以
 			// return isJpgOrPng && isLt2M; // 为图片&文件大小
 		},
 		progress: {
@@ -126,14 +126,14 @@ const FileUpload: React.FC = () => {
 		},
 		onPreview: async function (file: UploadFile) {
 			if (!file.url && !file.preview) {
-				file.preview = await getBase64(file.originFileObj as RcFile)
+				file.preview = await getBase64(file.originFileObj as RcFile);
 			}
-			setPreviewImage(file.url || (file.preview as string))
-			setPreviewOpen(true)
-			setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1))
+			setPreviewImage(file.url || (file.preview as string));
+			setPreviewOpen(true);
+			setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1));
 		},
-	}
-	const handleCancel = () => setPreviewOpen(false)
+	};
+	const handleCancel = () => setPreviewOpen(false);
 	return (
 		<>
 			<div>
@@ -144,11 +144,11 @@ const FileUpload: React.FC = () => {
 					<Button icon={loading ? <LoadingOutlined /> : <UploadOutlined />}></Button>
 				</Upload>
 				<Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
-					<img alt="example" style={{ width: '100%' }} src={previewImage} />
+					<img alt='example' style={{ width: '100%' }} src={previewImage} />
 				</Modal>
 			</div>
 		</>
-	)
-}
+	);
+};
 
-export default FileUpload
+export default FileUpload;

@@ -276,6 +276,7 @@ class Menu extends Basic {
 			console.log('更新菜单参数：', data);
 
 			const findMenu = await ctx.mongo.find('__menu', { query: { _id: data?._id } });
+			// console.log('findMenu', findMenu);
 			if (!findMenu.length) return ctx.sendError(400, '修改菜单失败：数据错误，根据id查找、数据未找到');
 
 			// 通用唯一性校验函数
@@ -311,12 +312,16 @@ class Menu extends Basic {
 			}
 
 			// ! 更新菜单时、如果最顶级菜单为关闭时、那么子菜单无法开启、除非顶级菜单先开启
-			const superStatus = findMenu[0].parent_id; // 获取当前节点、寻找上级
-			if (superStatus != 0) {
-				const KeyArr = await ctx.mongo.find('__menu', { query: { key: superStatus } });
-				if (KeyArr.length) {
-					for (const element of KeyArr) {
-						if (element.enable != '开启') return ctx.sendError(400, '更新菜单：开启当前节点，需要将上级节点修改为开启状态');
+			// 如何子菜单开启时、上级菜单必须开启才行。
+			if (findMenu[0].enable == '开启') {
+				const superStatus = findMenu[0].parent_id; // 获取当前节点、寻找上级
+				if (superStatus != 0) {
+					const KeyArr = await ctx.mongo.find('__menu', { query: { key: superStatus } });
+					console.log('KeyArr', KeyArr);
+					if (KeyArr.length) {
+						for (const element of KeyArr) {
+							if (element.enable != '开启') return ctx.sendError(400, '更新菜单：开启当前节点，需要将上级节点修改为开启状态');
+						}
 					}
 				}
 			}

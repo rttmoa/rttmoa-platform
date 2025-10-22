@@ -1,6 +1,7 @@
 import Router from '@koa/router';
 import koajwt from 'koa-jwt';
 const router = new Router();
+import { config } from '../config/config';
 import user from './tanhua/user';
 import my from './tanhua/my';
 import friends from './tanhua/friends';
@@ -15,7 +16,6 @@ import Job from './system_manage/job';
 import Role from './system_manage/role';
 import Dept from './system_manage/dept';
 import restApi from './system_manage/restApi';
-import { config } from '../config/config';
 import Operate from './system_monitor/operate';
 import ErrorLog from './system_monitor/errorLog'; 
 import Login from './system_manage/login'; 

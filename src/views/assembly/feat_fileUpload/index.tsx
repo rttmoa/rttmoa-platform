@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from 'antd';
-import FileUpload from './components/fileUpload';
+import FileUpload from './fileUpload';
 
 const Demo: React.FC = () => {
 	return (

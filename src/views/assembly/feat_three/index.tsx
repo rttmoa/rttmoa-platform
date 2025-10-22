@@ -30,7 +30,6 @@ function inSphere(array: Float32Array, radius: number = 1.0): Float32Array {
 	return array;
 }
 function Stars(props: any) {
-	// const ref: any = useRef(null); // Error
 	const ref: any = useRef({ rotation: { x: 0, y: 0, z: 0 } });
 	const [sphere] = useState(() => inSphere(new Float32Array(5000), 1.5));
 	useFrame((state: any, delta: number) => {

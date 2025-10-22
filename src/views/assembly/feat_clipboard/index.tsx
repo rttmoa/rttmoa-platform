@@ -19,7 +19,7 @@ const Clipboard: React.FC = () => {
 
 	const antMessage = (
 		<span>
-			Ant Design Paragraph copyable ：
+			Ant Design Paragraph copyable：
 			<Link href='https://ant.design/components/typography-cn#components-typography-demo-interactive' target='_blank'>
 				Paragraph 组件 — copyable 可复制属性
 			</Link>
