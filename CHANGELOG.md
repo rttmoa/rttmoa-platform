@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.18](https://github.com/rttmoa/rttmoa-platform/compare/v2.4.17...v2.4.18) (2025-10-22)
+
+
+### Features
+
+* 🚀 增加业务功能 ([4df09d5](https://github.com/rttmoa/rttmoa-platform/commit/4df09d505f4283e48b02f7fd915d52a4c0925ba3))
+* 🚀 module/storage_kd ([118b130](https://github.com/rttmoa/rttmoa-platform/commit/118b1306930445014e501b445d1ebcdda6a472f1))
+* 🚀 xx ([c0b0b53](https://github.com/rttmoa/rttmoa-platform/commit/c0b0b53e9ebcf73e9e616638147bf547d3f199e0))
+
+
+### Bug Fixes
+
+* 🧩 更新 hooks 下的文件 ([60e8aa6](https://github.com/rttmoa/rttmoa-platform/commit/60e8aa644f4d14372d6904d1b74aa30074d2ca7f))
+* 🧩 优化新建弹窗样式 ([b3f4d9c](https://github.com/rttmoa/rttmoa-platform/commit/b3f4d9c28ef9ad26af66c91c83d2e280d9c685d6))
+* 🧩 mm ([49c8537](https://github.com/rttmoa/rttmoa-platform/commit/49c8537162b4c2ae1c4e2ff68aea47b7d9b3ec03))
+
 ### [2.4.17](https://github.com/rttmoa/rttmoa-platform/compare/v2.4.16...v2.4.17) (2025-09-25)
 
 
