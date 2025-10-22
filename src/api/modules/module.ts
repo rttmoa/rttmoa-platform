@@ -14,13 +14,18 @@ export class moduleAPI {
 
 	static PEFRESH_API_URL = `${this.AUTH_API_PREFIX}/refresh`;
 
-	// 库位库存 报表
+	// 宁波 库位库存可视化
 	static getStock(params: Params) {
 		return httpUpack.get(`/shelf/storages`, params);
 	}
 
-	// 库位库存 表格
+	// 宁波 库位库存可视化
 	static getShelf(params: Params) {
 		return httpUpack.get(`/shelf/shelfs`, params);
+	}
+
+	// 克东 保温库450个货位
+	static getShelf_kd(params: Params) {
+		return httpUpack.get(`/storage_kd/shelfs`, params);
 	}
 }

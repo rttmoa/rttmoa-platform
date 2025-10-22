@@ -21,9 +21,9 @@
 		"node": ">=14"
 	},
 	"scripts": {
-		"start:server": "cd service && yarn start",
+		"server": "cd service && yarn start",
 		"start:client": "cd . && yarn start",
-		"dev": "concurrently \"yarn start:server\" \"yarn start:client\"",
+		"dev": "concurrently -n server,client -c blue,green \"yarn server\" \"yarn start\"",
 		"start": "vite",
 		"serve": "serve -s dist -l 9889",
 		"build": "vite build",

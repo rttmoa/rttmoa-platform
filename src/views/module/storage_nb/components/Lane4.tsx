@@ -1,17 +1,17 @@
-import React from 'react'
-import { Space, Table, Tag, Tooltip } from 'antd'
-import type { TableProps } from 'antd'
-import './index.less'
+import React from 'react';
+import { Space, Table, Tag, Tooltip } from 'antd';
+import type { TableProps } from 'antd';
+import './index.less';
 
 interface DataType {
-	key?: string
-	lane: number
-	row: number
-	layer: number
-	column1: number
-	column2: number
-	column3: number
-	column4: number
+	key?: string;
+	lane: number;
+	row: number;
+	layer: number;
+	column1: number;
+	column2: number;
+	column3: number;
+	column4: number;
 }
 
 const columns: TableProps<DataType>['columns'] = [
@@ -35,7 +35,7 @@ const columns: TableProps<DataType>['columns'] = [
 		dataIndex: 'column1',
 		key: 'column1',
 		render: element => (
-			<Tooltip placement="topLeft" title={element}>
+			<Tooltip placement='topLeft' title={element}>
 				{element}
 			</Tooltip>
 		),
@@ -80,7 +80,7 @@ const columns: TableProps<DataType>['columns'] = [
 		dataIndex: 'column9',
 		key: 'column9',
 	},
-]
+];
 
 const data: DataType[] = [
 	{
@@ -204,19 +204,19 @@ const data: DataType[] = [
 		column3: 23,
 		column4: 15,
 	},
-]
+];
 
 const Lane: React.FC = () => {
-	console.log('巷道一')
+	console.log('巷道一');
 	let Header = (
-		<div className="flex">
-			<div className="w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-slate-100">空库位</div>
-			<div className="w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-pink-300">预占用库位</div>
-			<div className="w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-green-400">有库存库位</div>
-			<div className="w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-slate-100 text-red-500">选中库位</div>
+		<div className='flex'>
+			<div className='w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-slate-100'>空库位</div>
+			<div className='w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-pink-300'>预占用库位</div>
+			<div className='w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-green-400'>有库存库位</div>
+			<div className='w-[80px] px-[4px] py-[6px]  text-center text-[12px] bg-slate-100 text-red-500'>选中库位</div>
 		</div>
-	)
-	return <Table<DataType> className="cusTable" title={() => Header} columns={columns} dataSource={data} />
-}
+	);
+	return <Table<DataType> className='cusTable' title={() => Header} columns={columns} dataSource={data} />;
+};
 
-export default Lane
+export default Lane;

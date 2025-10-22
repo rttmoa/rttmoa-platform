@@ -6,7 +6,8 @@ import my from './tanhua/my';
 import friends from './tanhua/friends';
 import qz from './tanhua/qz';
 import message from './tanhua/message';
-import Shelf from './business_module/shelf';
+import Storage_nb from './business_module/storage_nb';
+import Storage_kd from './business_module/storage_kd';
 import User from './system_manage/user';
 import Menu from './system_manage/menu';
 import Monitor from './system_monitor/monitor';
@@ -21,7 +22,8 @@ import Login from './system_manage/login';
 
 export const unprotect = (app: any) => {
 	router.use('/restApi', restApi.routes()); // RESTful 格式的 API
-	router.use('/shelf', Shelf.routes());
+	router.use('/shelf', Storage_nb.routes());
+	router.use('/storage_kd', Storage_kd.routes());
 	router.use('/userp', User.routes());
 	router.use('/login', Login.routes());
 	router.use('/role', Role.routes());
