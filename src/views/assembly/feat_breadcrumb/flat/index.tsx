@@ -8,7 +8,7 @@ const BreadcrumbFlat: React.FC = () => {
 	const navigate = useNavigate();
 	return (
 		<Card>
-			<Title level={4} className='mb15'>
+			<Title level={4} className='mb-[15px]'>
 				平级模式：/flat {'->'} /flatDetail
 			</Title>
 			<Button type='primary' icon={<SmileOutlined />} onClick={() => navigate('/feat/breadcrumb/flatDetail')}>

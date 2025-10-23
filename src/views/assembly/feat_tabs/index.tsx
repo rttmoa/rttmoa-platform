@@ -37,7 +37,7 @@ const Tabs: React.FC = () => {
 
 	return (
 		<React.Fragment>
-			<Card className='mb10'>
+			<Card className='mb-[15px]'>
 				<Typography.Title level={5} className='mb20'>
 					Tab 标题
 				</Typography.Title>
@@ -55,7 +55,7 @@ const Tabs: React.FC = () => {
 				</Space.Compact>
 			</Card>
 
-			<Card className='mb10'>
+			<Card className='mb-[15px]'>
 				<Typography.Title level={5} className='mb20'>
 					Tab 操作
 				</Typography.Title>
@@ -91,7 +91,7 @@ const Tabs: React.FC = () => {
 				</Space>
 			</Card>
 
-			<Card className='mb10'>
+			<Card className='mb-[15px]'>
 				<Typography.Title level={4}>Tab 跳转</Typography.Title>
 				<Space className='text'>
 					<Button type='primary' icon={<SmileOutlined />} onClick={() => handleToDetail('1')}>
@@ -109,7 +109,7 @@ const Tabs: React.FC = () => {
 				</Space>
 			</Card>
 
-			<Card className='mb10'>
+			<Card className='mb-[15px]'>
 				<Typography.Title level={5} className='mb20'>
 					跳转 空白页
 				</Typography.Title>

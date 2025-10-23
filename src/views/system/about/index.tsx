@@ -65,7 +65,7 @@ const About: React.FC = () => {
 			</Card>
 
 			<Card className='mb-[10px]'>
-				<Typography.Title level={4} className='mb15'>
+				<Typography.Title level={4} className='mb-[15px]'>
 					项目信息
 				</Typography.Title>
 				<Descriptions column={2} bordered size='middle' labelStyle={{ width: '280px' }}>
@@ -94,7 +94,7 @@ const About: React.FC = () => {
 			</Card>
 
 			<Card className='mb-[10px] '>
-				<Typography.Title level={4} className='mb15'>
+				<Typography.Title level={4} className='mb-[15px]'>
 					生产环境依赖
 				</Typography.Title>
 				<Descriptions column={3} bordered size='small' labelStyle={{ width: '280px' }}>
@@ -111,7 +111,7 @@ const About: React.FC = () => {
 			</Card>
 
 			<Card className=''>
-				<Typography.Title level={4} className='mb15'>
+				<Typography.Title level={4} className='mb-[15px]'>
 					开发环境依赖
 				</Typography.Title>
 				<Descriptions column={3} bordered size='small' labelStyle={{ width: '280px' }}>

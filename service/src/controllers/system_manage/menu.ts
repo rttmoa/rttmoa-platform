@@ -300,14 +300,16 @@ class Menu extends Basic {
 			} catch (err: any) {
 				return ctx.sendError(400, err.message);
 			}
-
+			
 			// ! 更新菜单时、如果最顶级菜单为关闭时、那么子菜单全部关闭才可以
-			const currentKey = findMenu[0].key; // auth 获取当前key、寻找下级
-			const KeyArr = await ctx.mongo.find('__menu', { query: { parent_id: currentKey } });
-			if (KeyArr.length) {
-				for (const element of KeyArr) {
-					console.log('element.enable', element.enable);
-					if (element.enable && element.enable != '关闭') return ctx.sendError(400, '更新菜单：当前节点下，将子节点修改为关闭状态');
+			if (findMenu[0].enable == '关闭') {
+				const currentKey = findMenu[0].key; // auth 获取当前key、寻找下级
+				const KeyArr = await ctx.mongo.find('__menu', { query: { parent_id: currentKey } });
+				if (KeyArr.length) {
+					for (const element of KeyArr) {
+						// console.log('element.enable', element.enable);
+						if (element.enable && element.enable != '关闭') return ctx.sendError(400, '更新菜单：当前节点下，将子节点修改为关闭状态');
+					}
 				}
 			}
 

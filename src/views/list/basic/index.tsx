@@ -46,8 +46,8 @@ const basicProgress: BasicProgress[] = [
 const BasicDetails: React.FC = () => {
 	return (
 		<React.Fragment>
-			<Card className='mb10'>
-				<Title level={4} className='mb15'>
+			<Card className='mb-[15px]'>
+				<Title level={4} className='mb-[15px]'>
 					基础详情页
 				</Title>
 				<Text>基础详情页常用于展示特定实体或项目的详细信息。</Text>

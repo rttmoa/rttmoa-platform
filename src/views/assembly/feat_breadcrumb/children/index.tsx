@@ -8,7 +8,7 @@ const BreadcrumbChildren: React.FC = () => {
 
 	return (
 		<Card>
-			<Title level={4} className='mb15'>
+			<Title level={4} className='mb-[15px]'>
 				层级模式：/children {'->'} /children/detail
 			</Title>
 			<Button type='primary' icon={<SmileOutlined />} onClick={() => navigate('/feat/breadcrumb/children/detail')}>

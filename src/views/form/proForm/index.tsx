@@ -1,17 +1,5 @@
 import { AlipayCircleOutlined, LockOutlined, PlusOutlined, TaobaoCircleOutlined, UserOutlined, WeiboCircleOutlined } from '@ant-design/icons';
-import {
-	DrawerForm,
-	LightFilter,
-	LoginForm,
-	ModalForm,
-	ProForm,
-	ProFormDateRangePicker,
-	ProFormRadio,
-	ProFormSelect,
-	ProFormText,
-	QueryFilter,
-	StepsForm,
-} from '@ant-design/pro-components';
+import { DrawerForm, LightFilter, LoginForm, ModalForm, ProForm, ProFormDateRangePicker, ProFormRadio, ProFormSelect, ProFormText, QueryFilter, StepsForm } from '@ant-design/pro-components';
 import { Button, Card, Space, message } from 'antd';
 import { useState } from 'react';
 
@@ -43,9 +31,11 @@ export default () => {
 	};
 	const [type, setType] = useState<keyof typeof Components>('ProForm');
 
+	// 返回步骤表单：第一步、第二步、第三步
 	if (type === 'StepsForm') {
 		return (
 			<Card>
+				<div className='mb-[25px] font-mono from-neutral-900 text-base font-semibold  '>pro-components {'>'} ProForm高级表单</div>
 				<ProFormRadio.Group
 					style={{
 						margin: 16,
@@ -113,9 +103,11 @@ export default () => {
 
 	const FormComponents = Components[type as 'LoginForm'];
 
+	// 返回登陆表单
 	if (type === 'LoginForm') {
 		return (
 			<Card>
+				<div className='mb-[25px] font-mono from-neutral-900 text-base font-semibold  '>pro-components {'>'} ProForm高级表单</div>
 				<ProFormRadio.Group
 					style={{
 						margin: 16,
@@ -174,6 +166,7 @@ export default () => {
 
 	return (
 		<Card>
+			<div className='mb-[25px] font-mono from-neutral-900 text-base font-semibold  '>pro-components {'>'} ProForm高级表单</div>
 			<ProFormRadio.Group
 				style={{
 					margin: 16,
@@ -185,18 +178,14 @@ export default () => {
 				}}
 				options={['LightFilter', 'ProForm', 'ModalForm', 'DrawerForm', 'QueryFilter', 'StepsForm', 'LoginForm']}
 			/>
-			<div
-				style={{
-					margin: 24,
-				}}
-			>
+			<div style={{ margin: 24 }}>
 				<FormComponents
 					// @ts-ignore
 					labelWidth='auto'
 					trigger={
 						<Button type='primary'>
 							<PlusOutlined />
-							表单 浮层表单
+							{type == 'ModalForm' ? 'Modal 表单' : 'Drawer 表单'}
 						</Button>
 					}
 					onFinish={async (values: any) => {

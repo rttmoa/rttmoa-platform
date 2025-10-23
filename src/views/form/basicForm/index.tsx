@@ -6,8 +6,8 @@ import { TabItems } from './components/TabsItem';
 const App: React.FC = () => {
 	return (
 		<div className='w-full h-full overflow-hidden pb-[120px]'>
-			<Card className='mb10'>
-				<Title level={4} className='mb15'>
+			<Card className='mb-[15px]'>
+				<Title level={4} className='mb-[15px]'>
 					基础表单 Ant.design
 				</Title>
 				<a className='font-mono text-sky-500 font-bold' href='https://ant.design/components/tabs-cn#tabs-demo-slide' target='_blank' rel='noopener noreferrer'>
