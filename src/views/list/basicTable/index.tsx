@@ -50,7 +50,7 @@ const BasicTable: React.FC = () => {
 		<>
 			<Card className='mb-[15px]'>
 				<Space size={'middle'}>
-					<b>基础表格</b> - <SelectComp handleChange={handleChange} initValue={initValue} />
+					<b>基础表格</b> —— <SelectComp handleChange={handleChange} initValue={initValue} />
 				</Space>
 			</Card>
 			<Card className='mb-[15px]'>

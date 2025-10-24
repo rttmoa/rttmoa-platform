@@ -14,7 +14,7 @@ export function getRandomCatName(): string {
 	return catNames[index];
 }
 
-const CatDetail: React.FC = () => {
+const CatDetail = () => {
 	const [item, setItem] = useState(() => {
 		let id = 0;
 		return Array.from(Array(120), () => ({
