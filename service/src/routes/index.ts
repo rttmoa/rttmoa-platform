@@ -19,6 +19,7 @@ import restApi from './system_manage/restApi';
 import Operate from './system_monitor/operate';
 import ErrorLog from './system_monitor/errorLog'; 
 import Login from './system_manage/login'; 
+import Sys from './system_manage/sys'; 
 
 export const unprotect = (app: any) => {
 	router.use('/restApi', restApi.routes()); // RESTful 格式的 API
@@ -31,6 +32,8 @@ export const unprotect = (app: any) => {
 	router.use('/error', ErrorLog.routes());
 	router.use('/monitor', Monitor.routes());
 	router.use('/operate', Operate.routes()); // * 操作日志
+	router.use('/sys', Sys.routes()); // * 操作日志
+	
 	app.use(router.routes()).use(router.allowedMethods());
 };
 

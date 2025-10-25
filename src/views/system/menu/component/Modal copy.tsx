@@ -95,7 +95,7 @@ const ModalComponent = (Props: any) => {
 		<>
 			<Modal
 				title={modalTitle}
-				width={950}
+				width={1200}
 				loading={false}
 				open={modalIsVisible}
 				onCancel={OnCancel}
@@ -108,18 +108,10 @@ const ModalComponent = (Props: any) => {
 					</Button>,
 				]}
 			>
-				<Form
-					className='mt-[40px] mb-[50px] px-[20px] max-h-[650px] overflow-auto'
-					layout='vertical' // horizontal | vertical
-					size='middle'
-					form={form} // form
-					onFinish={FormOnFinish}
-					// labelCol={{ span: 6 }}
-					// wrapperCol={{ span: 16 }}
-				>
+				<Form className='mt-[20px] mb-[50px] px-[20px] max-h-[650px] overflow-auto' layout='horizontal' size='middle' form={form} onFinish={FormOnFinish} labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
 					<Row gutter={16}>
 						<Col span={12}>
-							<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>是否顶级部门</span>} name='isTop' rules={[{ required: true, message: '' }]}>
+							<Form.Item label='是否顶级部门' name='isTop' rules={[{ required: true, message: '' }]}>
 								<Radio.Group
 									options={['是', '否']}
 									defaultValue='是'
@@ -131,8 +123,8 @@ const ModalComponent = (Props: any) => {
 							</Form.Item>
 						</Col>
 						{isTop == '否' && (
-							<Col span={12} pull={0}>
-								<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>上级部门</span>} name='parent_id' rules={[{ required: true, message: '必须：上级部门' }]}>
+							<Col span={12} pull={3}>
+								<Form.Item label='上级部门' name='parent_id' rules={[{ required: true, message: '必须：上级部门' }]}>
 									<TreeSelect
 										style={{ width: '100%' }}
 										value={value}
@@ -149,8 +141,8 @@ const ModalComponent = (Props: any) => {
 								</Form.Item>
 							</Col>
 						)}
-						<Col span={24} pull={0}>
-							<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>菜单类型</span>} name='type' rules={[{ required: true, message: '创建菜单需 type' }]}>
+						<Col span={24} pull={3}>
+							<Form.Item label='菜单类型' name='type' rules={[{ required: true, message: '创建菜单需 type' }]}>
 								<Radio.Group
 									options={['目录', '菜单', '按钮']}
 									defaultValue='目录'
@@ -163,8 +155,7 @@ const ModalComponent = (Props: any) => {
 						</Col>
 						<Col span={12}>
 							<Form.Item
-								className='!mb-[8px]'
-								label={<span className='text-[12px]'>菜单图标</span>}
+								label='菜单图标'
 								name='icon'
 								tooltip={
 									<a href='https://ant.design/components/icon-cn' target='_blank'>
@@ -173,6 +164,7 @@ const ModalComponent = (Props: any) => {
 								}
 								rules={[{ required: true, message: '创建菜单需 图标' }]}
 							>
+								{/* <Input placeholder='到antd中选择图标、格式： MenuUnfoldOutlined' maxLength={30} /> */}
 								<Input
 									disabled
 									addonBefore={
@@ -191,18 +183,12 @@ const ModalComponent = (Props: any) => {
 							<Form.Item />
 						</Col>
 						<Col span={12}>
-							<Form.Item
-								className='!mb-[8px]'
-								label={<span className='text-[12px]'>菜单路由路径</span>}
-								name='path'
-								tooltip={{ title: '路由路径必须填写' }}
-								rules={[{ required: true, message: '地址栏中的路由路径 path' }]}
-							>
+							<Form.Item label='菜单路由路径' name='path' tooltip={{ title: '路由路径必须填写' }} rules={[{ required: true, message: '地址栏中的路由路径 path' }]}>
 								<Input placeholder='path: /home/index' />
 							</Form.Item>
 						</Col>
 						<Col span={12}>
-							<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>菜单组件路径</span>} name='element' tooltip={{ title: '代码写到哪个文件夹的路径' }}>
+							<Form.Item label='菜单组件路径' name='element' tooltip={{ title: '代码写到哪个文件夹的路径' }}>
 								<Input placeholder='element: /home/index' />
 							</Form.Item>
 						</Col>
@@ -211,7 +197,7 @@ const ModalComponent = (Props: any) => {
 						</Col>
 						{menuType == '目录' ? (
 							<Col span={12}>
-								<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>重定向路径</span>} name='redirect' tooltip={{ title: '目录中的菜单有重定向功能' }}>
+								<Form.Item label='重定向路径' name='redirect' tooltip={{ title: '目录中的菜单有重定向功能' }}>
 									<Input placeholder='redirect: /author/page' />
 								</Form.Item>
 							</Col>
@@ -221,49 +207,49 @@ const ModalComponent = (Props: any) => {
 							</Col>
 						)}
 						<Col span={12}>
-							<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>菜单唯一标识</span>} name='key' rules={[{ required: true, message: '创建菜单需 key' }]}>
+							<Form.Item label='菜单唯一标识' name='key' rules={[{ required: true, message: '创建菜单需 key' }]}>
 								<Input placeholder='home' />
 							</Form.Item>
 						</Col>
 						<Col span={12}>
-							<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>菜单标题</span>} name='title' rules={[{ required: true, message: '创建菜单需 title' }]}>
+							<Form.Item label='菜单标题' name='title' rules={[{ required: true, message: '创建菜单需 title' }]}>
 								<Input placeholder='首页' />
 							</Form.Item>
 						</Col>
 						<Col span={12}>
-							<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>外链URL</span>} name='isLink'>
+							<Form.Item label='外链URL' name='isLink'>
 								<Input placeholder='外链链接地址 eg：www.baidu.com' />
 							</Form.Item>
 						</Col>
 						<Col span={12}>
-							<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>是否隐藏菜单项</span>} name='isHide' rules={[{ required: true, message: '创建菜单需 isHide' }]}>
+							<Form.Item label='是否隐藏菜单项' name='isHide' rules={[{ required: true, message: '创建菜单需 isHide' }]}>
 								<Radio.Group options={['是', '否']} defaultValue='否' />
 							</Form.Item>
 						</Col>
 						<Col span={12}>
-							<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>是否全屏显示</span>} name='isFull' rules={[{ required: true, message: '创建菜单需 isFull' }]}>
-								<Radio.Group options={['是', '否']} defaultValue='否' />
-							</Form.Item>
-						</Col>
-
-						<Col span={12}>
-							<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>是否固定标签页</span>} name='isAffix' rules={[{ required: true, message: '创建菜单需 isAffix' }]}>
+							<Form.Item label='是否全屏显示' name='isFull' rules={[{ required: true, message: '创建菜单需 isFull' }]}>
 								<Radio.Group options={['是', '否']} defaultValue='否' />
 							</Form.Item>
 						</Col>
 
 						<Col span={12}>
-							<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>显示排序</span>} name='sort' tooltip={{ title: '最小值：1、最大值：999、数值小排在前面' }}>
+							<Form.Item label='是否固定标签页' name='isAffix' rules={[{ required: true, message: '创建菜单需 isAffix' }]}>
+								<Radio.Group options={['是', '否']} defaultValue='否' />
+							</Form.Item>
+						</Col>
+
+						<Col span={12}>
+							<Form.Item label='显示排序' name='sort' tooltip={{ title: '最小值：1、最大值：999、数值小排在前面' }}>
 								<InputNumber controls min={1} max={999} defaultValue={1} />
 							</Form.Item>
 						</Col>
 						<Col span={12}>
-							<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>是否启用菜单</span>} name='enable' rules={[{ required: true, message: '创建菜单需 enable' }]}>
+							<Form.Item label='是否启用菜单' name='enable' rules={[{ required: true, message: '创建菜单需 enable' }]}>
 								<Radio.Group options={['开启', '关闭']} defaultValue='开启' />
 							</Form.Item>
 						</Col>
 					</Row>
-					<Card className='mt-[25px]' title={<span className='text-[14px]'>菜单结构 JSON 数据、参考如何创建菜单</span>} bodyStyle={{ height: 400, overflow: 'auto' }}>
+					<Card title={<span className='text-[14px]'>菜单结构 JSON 数据、参考如何创建菜单</span>} bodyStyle={{ height: 400, overflow: 'auto' }}>
 						<pre style={{ backgroundColor: '#f5f5f5', padding: '12px', borderRadius: '6px', overflow: 'auto', fontSize: 13 }}>
 							<code>{JSON.stringify(menu, null, 2)}</code>
 						</pre>

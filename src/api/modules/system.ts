@@ -34,6 +34,14 @@ export const delMoreJob = (data: string[]) => httpUpack.post(`/jb/jobDel`, data)
 export const modifyJob = (id: string, params: Params) => httpUpack.put(`/jb/job/${id}`, params);
 export const ExJob = (params: Params) => httpUpack.post(`/jb/jobEx`, params);
 
+// * 系统管理 — Sys 模板
+export const findSys = (params: Params) => httpUpack.post(`/sys/job`, params);
+export const addSys = (params: Params) => httpUpack.post(`/sys/jobAdd`, params);
+export const delSys = (id: string) => httpUpack.delete(`/sys/job/${id}`);
+export const delMoreSys = (data: string[]) => httpUpack.post(`/sys/jobDel`, data);
+export const modifySys = (id: string, params: Params) => httpUpack.put(`/sys/job/${id}`, params);
+export const ExSys = (params: Params) => httpUpack.post(`/sys/jobEx`, params);
+
 // * 系统管理 — 角色管理
 export const findRole = (params: Params) => httpUpack.get(`/role/findRole`, params);
 export const addRole = (params: Params) => httpUpack.post(`/role/addRole`, params);

@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Select, Space, Typography } from 'antd'
+import { Select, Space, Typography } from 'antd';
 
 export const selectOption = [
 	{ label: '表格基本用法 Basic', value: 'TableBasic' },
@@ -10,27 +10,27 @@ export const selectOption = [
 	{ label: '表头自定义筛选的搜索 FilterSearch', value: 'TableFilterSearch' },
 	{ label: '表头自定义筛选菜单 FilterPanel', value: 'TableFilterPanel' },
 	{ label: '表头远程加载数据 Ajax', value: 'TableAjax' },
-	{ label: '树形数据展示 TreeData', value: 'TableTreeData' },
+	{ label: '** 树形数据展示 TreeData', value: 'TableTreeData' },
 	{ label: '固定表头 FixedHeader', value: 'TableFixedHeader' },
 	{ label: '固定列 FixedColumns', value: 'TableFixedColumns' },
 	{ label: '固定头和列 FixedHeaderColumns', value: 'TableFixedHeaderColumns' },
-	{ label: '隐藏列 HiddenColumns', value: 'TableHiddenColumns' },
+	{ label: '** 隐藏列 HiddenColumns', value: 'TableHiddenColumns' },
 	{ label: '表头分组 Grouping', value: 'TableGrouping' },
 	{ label: '可编辑单元格 EditCell', value: 'TableEditCell' },
-	{ label: '可编辑行 EditRow', value: 'TableEditRow' },
+	{ label: '** 可编辑行 EditRow', value: 'TableEditRow' },
 	{ label: '嵌套子表格 Sub', value: 'TableSub' },
 	{ label: '拖拽排序', value: '1' },
 	{ label: '拖拽手柄列', value: '2' },
 	{ label: '总结栏', value: '3' },
 	{ label: '单元格省略提示 Ellipsis', value: 'TableEllipsis' },
-	{ label: '虚拟列表 Virtual', value: 'TableVirtual' },
-	{ label: '响应式 Responsive', value: 'TableResponsive' },
+	{ label: '** 虚拟列表 Virtual', value: 'TableVirtual' },
+	{ label: '** 响应式 Responsive', value: 'TableResponsive' },
 	{ label: '随页面滚动的固定表头和滚动条 Sticky', value: 'TableSticky' },
 	{ label: '动态控制表格属性 Dynamic', value: 'TableDynamic' },
-]
+];
 interface Params {
-	handleChange: (value: string) => void
-	initValue: string
+	handleChange: (value: string) => void;
+	initValue: string;
 }
 const SelectComp = ({ handleChange, initValue }: Params) => {
 	return (
@@ -56,7 +56,7 @@ const SelectComp = ({ handleChange, initValue }: Params) => {
 			// allowClear
 			// onClear={() => {console.log("清除内容时回调");}}
 		/>
-	)
-}
+	);
+};
 
-export default SelectComp
+export default SelectComp;
