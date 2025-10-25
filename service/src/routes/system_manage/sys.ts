@@ -1,21 +1,20 @@
 import Router = require("@koa/router");
-import Sys from "../../controllers/system_manage/sys";
+import routes from "../../controllers/system_manage/sys";
 const router = new Router();
 
+// Sys 测试模块
 
+router.post("/query", routes.Query);  // 查询
 
-router.post("/job", Sys.findJob);  // 查询
+router.post("/add", routes.Add); // 增加
 
-router.post("/jobAdd", Sys.addJob); // 增加
+router.put("/mod/:id", routes.Mod); // 修改
 
-router.put("/job/:id", Sys.modifyJob); // 修改
+router.delete("/del/:id", routes.Del);  // 删除
 
-router.delete("/job/:id", Sys.delJob);  // 删除
+router.post("/delMore", routes.DelMore);  // 删除更多
 
-router.post("/jobDel", Sys.delMoreJob);  // 删除更多
-
-
-router.post("/jobEx", Sys.ExJob);  // 删除更多
+router.post("/importEx", routes.ImportEx);  // 导入Excel表格
 
  
 export default router;

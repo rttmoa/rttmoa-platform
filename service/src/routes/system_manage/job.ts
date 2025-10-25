@@ -1,21 +1,17 @@
-import Router = require("@koa/router");
-import Job from "../../controllers/system_manage/job";
+import Router = require('@koa/router');
+import routes from '../../controllers/system_manage/job';
 const router = new Router();
 
+router.post('/query', routes.Query); // 查询
 
+router.post('/add', routes.Add); // 增加
 
-router.post("/job", Job.findJob);  // 查询
+router.put('/mod/:id', routes.Mod); // 修改
 
-router.post("/jobAdd", Job.addJob); // 增加
+router.delete('/del/:id', routes.Del); // 删除
 
-router.put("/job/:id", Job.modifyJob); // 修改
+router.post('/delMore', routes.DelMore); // 删除更多
 
-router.delete("/job/:id", Job.delJob);  // 删除
+router.post('/importEx', routes.ImportEx); // 导入Excel表格
 
-router.post("/jobDel", Job.delMoreJob);  // 删除更多
-
-
-router.post("/jobEx", Job.ExJob);  // 删除更多
-
- 
 export default router;

@@ -64,7 +64,7 @@ class Job extends Basic {
 	};
 
 	// * 查询岗位
-	findJob = async (ctx: Context) => {
+	Query = async (ctx: Context) => {
 		try {
 			const data: any = ctx.request.body;
 			// console.log('查询参数：', data);
@@ -105,7 +105,7 @@ class Job extends Basic {
 	};
 
 	// * 新增岗位
-	addJob = async (ctx: Context) => {
+	Add = async (ctx: Context) => {
 		try {
 			const data: JobParams = ctx.request.body;
 			console.log('新增岗位参数：', data);
@@ -127,7 +127,7 @@ class Job extends Basic {
 	};
 
 	// * 修改岗位
-	modifyJob = async (ctx: Context) => {
+	Mod = async (ctx: Context) => {
 		try {
 			const id = ctx.params.id;
 			const data: JobParams = ctx.request.body;
@@ -152,7 +152,7 @@ class Job extends Basic {
 	};
 
 	// * Excel 表格数据导入
-	ExJob = async (ctx: Context) => {
+	ImportEx = async (ctx: Context) => {
 		try {
 			const data: any = ctx.request.body;
 			// console.log('Excel 数据', data);
@@ -184,7 +184,7 @@ class Job extends Basic {
 	};
 
 	// * 删除岗位
-	delJob = async (ctx: Context) => {
+	Del = async (ctx: Context) => {
 		try {
 			const id = ctx.params.id;
 			if (id) {
@@ -202,7 +202,7 @@ class Job extends Basic {
 	};
 
 	// * 删除多个岗位
-	delMoreJob = async (ctx: Context) => {
+	DelMore = async (ctx: Context) => {
 		try {
 			const data: any = ctx.request.body;
 			if (data && data.length) {

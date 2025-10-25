@@ -5,7 +5,7 @@ import Role from './role';
 import Dept from './dept';
 import restApi from './restApi';
 import Login from './login';
-import Sys from './sys';
+import sys from './sys';
 
 // 系统管理模块路由聚合器
 export default {
@@ -16,5 +16,5 @@ export default {
   dept: Dept,
   restApi,
   login: Login,
-  sys: Sys
+  sys
 };
