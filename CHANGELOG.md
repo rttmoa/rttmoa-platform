@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.24](https://github.com/rttmoa/rttmoa-platform/compare/v2.4.23...v2.4.24) (2025-10-25)
+
+
+### Features
+
+* 🚀 更新sys模块、可复用sys模块 ([f67da7c](https://github.com/rttmoa/rttmoa-platform/commit/f67da7cccce0544f15ceee01c06e20e75e70fbc8))
+
 ### [2.4.23](https://github.com/rttmoa/rttmoa-platform/compare/v2.4.22...v2.4.23) (2025-10-25)
 
 
