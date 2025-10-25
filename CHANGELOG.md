@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.23](https://github.com/rttmoa/rttmoa-platform/compare/v2.4.22...v2.4.23) (2025-10-25)
+
+
+### Bug Fixes
+
+* 🧩 更新服务端router.js文件 ([31949cc](https://github.com/rttmoa/rttmoa-platform/commit/31949cc2168a14ab53a60d995c9ec2e5a5b48edc))
+
 ### [2.4.22](https://github.com/rttmoa/rttmoa-platform/compare/v2.4.21...v2.4.22) (2025-10-25)
 
 
