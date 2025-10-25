@@ -112,7 +112,7 @@ const ModalComponent = (Props: any) => {
 					className='mt-[40px] mb-[50px] px-[20px] max-h-[650px] overflow-auto'
 					layout='vertical' // horizontal | vertical
 					size='middle'
-					form={form} // form
+					form={form}
 					onFinish={FormOnFinish}
 					// labelCol={{ span: 6 }}
 					// wrapperCol={{ span: 16 }}
@@ -120,6 +120,10 @@ const ModalComponent = (Props: any) => {
 					<Row gutter={16}>
 						<Col span={12}>
 							<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>是否顶级部门</span>} name='isTop' rules={[{ required: true, message: '' }]}>
+								{/* <Radio.Group defaultValue='是' size='small'>
+									<Radio.Button value='是'>是</Radio.Button>
+									<Radio.Button value='否'>否</Radio.Button> 
+								</Radio.Group> */}
 								<Radio.Group
 									options={['是', '否']}
 									defaultValue='是'
@@ -152,6 +156,7 @@ const ModalComponent = (Props: any) => {
 						<Col span={24} pull={0}>
 							<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>菜单类型</span>} name='type' rules={[{ required: true, message: '创建菜单需 type' }]}>
 								<Radio.Group
+									buttonStyle='solid'
 									options={['目录', '菜单', '按钮']}
 									defaultValue='目录'
 									onChange={(item: any) => {

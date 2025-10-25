@@ -2,37 +2,29 @@ import Router from '@koa/router';
 import koajwt from 'koa-jwt';
 const router = new Router();
 import { config } from '../config/config';
-import user from './tanhua/user';
-import my from './tanhua/my';
-import friends from './tanhua/friends';
-import qz from './tanhua/qz';
-import message from './tanhua/message';
-import Storage_nb from './business_module/storage_nb';
-import Storage_kd from './business_module/storage_kd';
-import User from './system_manage/user';
-import Menu from './system_manage/menu';
-import Monitor from './system_monitor/monitor';
-import Job from './system_manage/job';
-import Role from './system_manage/role';
-import Dept from './system_manage/dept';
-import restApi from './system_manage/restApi';
-import Operate from './system_monitor/operate';
-import ErrorLog from './system_monitor/errorLog'; 
-import Login from './system_manage/login'; 
-import Sys from './system_manage/sys'; 
+
+// 导入模块路由聚合器
+import tanhuaRoutes from './tanhua';
+import businessRoutes from './business_module';
+import systemManageRoutes from './system_manage';
+import systemMonitorRoutes from './system_monitor';
 
 export const unprotect = (app: any) => {
-	router.use('/restApi', restApi.routes()); // RESTful 格式的 API
-	router.use('/shelf', Storage_nb.routes());
-	router.use('/storage_kd', Storage_kd.routes());
-	router.use('/userp', User.routes());
-	router.use('/login', Login.routes());
-	router.use('/role', Role.routes());
-
-	router.use('/error', ErrorLog.routes());
-	router.use('/monitor', Monitor.routes());
-	router.use('/operate', Operate.routes()); // * 操作日志
-	router.use('/sys', Sys.routes()); // * 操作日志
+	// 系统管理模块路由 - 未受保护部分
+	router.use('/restApi', systemManageRoutes.restApi.routes());
+	router.use('/userp', systemManageRoutes.user.routes());
+	router.use('/login', systemManageRoutes.login.routes());
+	router.use('/role', systemManageRoutes.role.routes());
+	router.use('/sys', systemManageRoutes.sys.routes());
+	
+	// 业务模块路由
+	router.use('/shelf', businessRoutes.storage_nb.routes());
+	router.use('/storage_kd', businessRoutes.storage_kd.routes());
+	
+	// 系统监控模块路由
+	router.use('/error', systemMonitorRoutes.errorLog.routes());
+	router.use('/monitor', systemMonitorRoutes.monitor.routes());
+	router.use('/operate', systemMonitorRoutes.operate.routes());
 	
 	app.use(router.routes()).use(router.allowedMethods());
 };
@@ -46,15 +38,17 @@ export const protect = (app: any) => {
 	});
 	router.use(jwtMiddleware);
 
-	router.use('/user', user.routes());
-	router.use('/friends', friends.routes());
-	router.use('/qz', qz.routes());
-	router.use('/message', message.routes());
-	router.use('/my', my.routes());
-
-	router.use('/dept', Dept.routes()); // 部门
-	router.use('/jb', Job.routes()); // * 岗位模板
-	router.use('/menu', Menu.routes());
+	// tanhua模块路由 - 受保护部分
+	router.use('/user', tanhuaRoutes.user.routes());
+	router.use('/friends', tanhuaRoutes.friends.routes());
+	router.use('/qz', tanhuaRoutes.qz.routes());
+	router.use('/message', tanhuaRoutes.message.routes());
+	router.use('/my', tanhuaRoutes.my.routes());
+	
+	// 系统管理模块路由 - 受保护部分
+	router.use('/dept', systemManageRoutes.dept.routes());
+	router.use('/jb', systemManageRoutes.job.routes());
+	router.use('/menu', systemManageRoutes.menu.routes());
 
 	app.use(router.routes()).use(router.allowedMethods());
 };

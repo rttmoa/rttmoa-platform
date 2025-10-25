@@ -1,9 +1,8 @@
 import { ProColumns } from '@ant-design/pro-components';
-import { Steps, Tag } from 'antd';
+import { Tag } from 'antd';
 import dayjs from 'dayjs';
 import { TableRenderAction } from '@/components/TableAction';
 import Link from 'antd/lib/typography/Link';
-import { LoadingOutlined, SmileOutlined, SolutionOutlined, UserOutlined } from '@ant-design/icons';
 
 export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<any>[] => {
 	// * 这里 dataIndex 唯一索引不可以重复
@@ -16,6 +15,7 @@ export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<a
 			width: 40,
 			fixed: 'left',
 			align: 'center',
+			responsive: ['sm'],
 		},
 		{
 			title: '岗位名称',
@@ -40,6 +40,7 @@ export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<a
 			render: (dom, entity: any) => {
 				return <Link onClick={e => modalOperate('detail', entity)}>{entity?.postName}</Link>;
 			},
+			responsive: ['sm'],
 		},
 		{
 			title: '岗位排序',
@@ -53,6 +54,7 @@ export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<a
 			ellipsis: true, // 省略提示
 			tooltip: '岗位排序：postSort',
 			fieldProps: { placeholder: '请输入岗位排序' },
+			responsive: ['sm'],
 		},
 		{
 			title: '岗位状态',
@@ -80,6 +82,7 @@ export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<a
 				else tagContent = <Tag color='red'>停用</Tag>;
 				return <span>{tagContent}</span>;
 			},
+			responsive: ['md'],
 		},
 		{
 			title: '运行状态',
@@ -96,25 +99,6 @@ export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<a
 				启用: { text: '已上线', status: 'Success' },
 				停用: { text: '异常', status: 'Error' },
 			},
-			responsive: ['lg'],
-		},
-		{
-			title: '运行状态',
-			dataIndex: 'process',
-			ellipsis: true, // 省略
-			align: 'center',
-			render: (_, record) => (
-				<Steps
-					size='small'
-					// className='mb30'
-					items={[
-						{ title: '任务已创建', status: 'finish', icon: <UserOutlined /> },
-						{ title: '未执行', status: 'finish', icon: <SolutionOutlined /> },
-						{ title: '正在执行', status: 'process', icon: <LoadingOutlined /> },
-						{ title: '已完成', status: 'wait', icon: <SmileOutlined /> },
-					]}
-				/>
-			),
 			responsive: ['lg'],
 		},
 		{
