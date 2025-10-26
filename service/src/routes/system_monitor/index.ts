@@ -1,10 +1,13 @@
+import Router from '@koa/router';
+const router = new Router();
 import Monitor from './monitor';
 import Operate from './operate';
 import ErrorLog from './errorLog';
 
-// 系统监控模块路由聚合器
-export default {
-  monitor: Monitor,
-  operate: Operate,
-  errorLog: ErrorLog
+export default (app: any) => {
+	router.use('/error', ErrorLog.routes());
+	router.use('/monitor', Monitor.routes());
+	router.use('/operate', Operate.routes());
+
+	app.use(router.routes()).use(router.allowedMethods());
 };

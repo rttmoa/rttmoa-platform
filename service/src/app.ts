@@ -3,7 +3,7 @@ import json from 'koa-json';
 import bodyparser from 'koa-bodyparser';
 import winston from 'winston';
 import { _errorHandle, _sendHandle, _dbHandle, _logger, _CrossDomain, _Security, _Public, _Mongo } from './middlewares/index.ts';
-import { protect, unprotect } from './routes/index.ts';
+import RouterManager from './routes/index.ts';
 import './schedule';   // # 定时任务
 
 const app = new koa();
@@ -20,8 +20,10 @@ app.use(_sendHandle()); // 挂载 ctx.sendError
 app.use(_logger(winston)); //* 请求日志
 app.use(_errorHandle); // * 异常中间件
  
-unprotect(app); // & Router  
-protect(app);
+// unprotect(app); // & Router  
+// protect(app);
+
+RouterManager(app)
 
 
 app.listen(6300, () => {
