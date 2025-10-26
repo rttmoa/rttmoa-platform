@@ -16,12 +16,12 @@ export class systemAPI {
 	static PEFRESH_API_URL = `${this.AUTH_API_PREFIX}/refresh`;
 
 	// Sys 测试模块
-	static sysFind() {}
-	static sysAdd() {}
-	static sysDel() {}
-	static sysDelMore() {}
-	static sysMod() {}
-	static sysImportEx() {}
+	static sysFind = () => {};
+	static sysAdd = () => {};
+	static sysMod = () => {};
+	static sysDel = () => {};
+	static sysDelMore = () => {};
+	static sysImportEx = () => {};
 }
 
 // * System

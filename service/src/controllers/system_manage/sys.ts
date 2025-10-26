@@ -2,28 +2,9 @@ import { Context } from 'koa';
 import Basic from '../basic';
 import _ from 'lodash';
 
-interface JobParams {
-	job_name?: string;
-	job_sort?: string;
-	status?: string;
-	desc?: string;
-}
-
-// * 岗位管理
-// 字段：
-// 创建人：admin
-// 创建时间：2025-05-27
-// 修改人：user
-// 修改时间
-// 标记：remark
-// 职位id：1
-// 职位代码：ceo
-// 职位名称：董事长
-// 职位排序：1
-// 状态：0
-// flag：false
-
 // * 新增 + 更新 + 导入表格 都要统一表字段
+
+// ** 前端传递参数时、需要告知服务端哪个字段可查询、并且知道字段的类型是字符串还是选择框
 class Sys extends Basic {
 	constructor() {
 		super();
@@ -63,19 +44,17 @@ class Sys extends Basic {
 		return query;
 	};
 
-	// * 查询岗位
 	Query = async (ctx: Context) => {
 		try {
 			const data: any = ctx.request.body;
-			// console.log('查询参数：', data);
 
 			const query = this.JobQuery(data);
 
 			// 分页参数
 			const page = _.clamp(_.toInteger(_.get(data, 'pagination.page', 1)), 1, Number.MAX_SAFE_INTEGER);
-			const pageSize = _.clamp(_.toInteger(_.get(data, 'pagination.pageSize', 10)), 1, 100); // 限制最大 100
+			const pageSize = _.clamp(_.toInteger(_.get(data, 'pagination.pageSize', 10)), 1, 100);
 
-			// 排序参数，默认按 postSort 升序 + createTime 降序
+			// 排序参数
 			const sort = _.get(data, 'sort', { postSort: 1, createTime: -1 });
 
 			// 并行查询
@@ -87,103 +66,85 @@ class Sys extends Basic {
 		}
 	};
 
+	// * 新增和修改和导入表格时的字段
 	private addAndModifyField = (data: any) => {
 		return {
-			postCode: this.normalize(data?.job_name, ['string'], null),
-			postName: this.normalize(data?.job_name, ['string'], null), // 产品经理 | 前端开发 | 会计
-			postSort: this.normalize(data?.job_sort, ['number'], 1), // 排序
+			postCode: this.normalize(data?.postName, ['string'], null),
+			postName: this.normalize(data?.postName, ['string'], null), // 产品经理 | 前端开发 | 会计
+			postSort: this.normalize(data?.postSort, ['number'], 1), // 排序
 			status: this.normalize(data?.status, ['string'], null), // 开关：开启/关闭
 			desc: this.normalize(data?.desc, ['string'], null),
 			flag: false,
 		};
 	};
 
-	// 检查岗位名称是否已存在
-	private checkPostName = async (ctx: Context, postName: string) => {
-		const existing = await ctx.mongo.find('__sys', { query: { postName: _.trim(postName) } });
-		return !!existing.length;
-	};
-
-	// * 新增岗位
 	Add = async (ctx: Context) => {
 		try {
-			const data: JobParams = ctx.request.body;
-			console.log('新增岗位参数：', data);
+			const data: any = ctx.request.body;
 
-			const check = await this.checkPostName(ctx, data?.job_name);
-			if (check) return ctx.sendError(400, '已存在岗位名称');
+			const exist = await ctx.mongo.find('__sys', { query: { postName: _.trim(data?.postName) } });
+			if (exist.length) return ctx.sendError(400, `修改错误：已存在${data?.postName}`);
 
 			const job = this.addAndModifyField(data);
-			const newJob: any = {
+			const doc: any = {
 				...job,
 				createBy: 'admin',
 				createTime: new Date(),
 			};
-			const ins = await ctx.mongo.insertOne('__sys', newJob);
+			const ins = await ctx.mongo.insertOne('__sys', doc);
 			return ctx.send(`新增数据成功!`);
 		} catch (err) {
-			return ctx.sendError(500, err.message, 500);
+			return ctx.sendError(500, err.message);
 		}
 	};
 
-	// * 修改岗位
 	Mod = async (ctx: Context) => {
 		try {
 			const id = ctx.params.id;
-			const data: JobParams = ctx.request.body;
-			// console.log('修改岗位参数：', data);
+			const data: any = ctx.request.body;
 
 			if (!id) return ctx.sendError(400, `修改岗位操作：无iD`);
 
-			const check = await this.checkPostName(ctx, data?.job_name);
-			if (check) return ctx.sendError(400, '已存在岗位名称');
-
+			const exist = await ctx.mongo.find('__sys', { query: { postName: _.trim(data?.postName) } });
+			if (exist.length) return ctx.sendError(400, `修改错误：已存在${data?.postName}`);
 			const job = this.addAndModifyField(data);
-			const newJob: any = {
+			const doc: any = {
 				...job,
 				updateBy: null,
 				updateTime: null,
 			};
-			await ctx.mongo.updateOne('__sys', id, newJob);
-			return ctx.send('修改岗位成功');
+			await ctx.mongo.updateOne('__sys', id, doc);
+			return ctx.send('修改成功');
 		} catch (err) {
-			return ctx.sendError(500, err.message, 500);
+			return ctx.sendError(500, err.message);
 		}
 	};
 
-	// * Excel 表格数据导入
 	ImportEx = async (ctx: Context) => {
 		try {
 			const data: any = ctx.request.body;
-			// console.log('Excel 数据', data);
 
 			// 这个字段与上面导入新增的字段不同
 			if (data && data.length) {
 				for (const element of data) {
-					const check = await this.checkPostName(ctx, element.postName);
-					if (!check) {
+					const exist = await ctx.mongo.find('__sys', { query: { postName: _.trim(element.postName) } });
+					if (exist.length == 0) {
+						const job = this.addAndModifyField(data);
 						const newJob: any = {
-							postCode: 'ceo',
-							postName: _.trim(_.toString(element.postName)), // 产品经理 | 前端开发 | 会计
-							postSort: _.toNumber(element.postSort), // 排序
-							status: _.trim(_.toString(element.status)), // 开关：开启/关闭
-							desc: _.trim(_.toString(element?.desc)),
-							flag: false,
-
+							...job,
 							createBy: 'admin',
 							createTime: new Date(),
 						};
 						await ctx.mongo.insertOne('__sys', newJob);
 					}
 				}
-				return ctx.send('岗位数据导入成功');
+				return ctx.send('数据导入成功');
 			} else return ctx.sendError(400, `服务端未获取到数据`);
 		} catch (err) {
-			return ctx.sendError(500, err.message, 500);
+			return ctx.sendError(500, err.message);
 		}
 	};
 
-	// * 删除岗位
 	Del = async (ctx: Context) => {
 		try {
 			const id = ctx.params.id;
@@ -193,15 +154,14 @@ class Sys extends Basic {
 					await ctx.mongo.deleteOne('__sys', docs[0]._id);
 					return ctx.send('删除成功');
 				} else {
-					return ctx.sendError(400, `删除岗位操作：删除任务失败！`);
+					return ctx.sendError(400, `删除操作：删除任务失败！根据id未找到数据`);
 				}
-			} else return ctx.sendError(400, `删除岗位操作：前端未传递id！`);
+			} else return ctx.sendError(400, `删除操作：前端未传递id！`);
 		} catch (err) {
-			return ctx.sendError(500, err.message, 500);
+			return ctx.sendError(500, err.message);
 		}
 	};
 
-	// * 删除多个岗位
 	DelMore = async (ctx: Context) => {
 		try {
 			const data: any = ctx.request.body;
@@ -213,9 +173,9 @@ class Sys extends Basic {
 					}
 				}
 				return ctx.send('全部删除完成');
-			} else return ctx.sendError(400, `删除岗位操作：前端传递的参数不正确！`);
+			} else return ctx.sendError(400, `删除更多操作：前端传递的参数不正确！`);
 		} catch (err) {
-			return ctx.sendError(500, err.message, 500);
+			return ctx.sendError(500, err.message);
 		}
 	};
 }
