@@ -16,12 +16,12 @@ export class systemAPI {
 	static PEFRESH_API_URL = `${this.AUTH_API_PREFIX}/refresh`;
 
 	// Sys 测试模块
-	static sysFind = () => {};
-	static sysAdd = () => {};
-	static sysMod = () => {};
-	static sysDel = () => {};
-	static sysDelMore = () => {};
-	static sysImportEx = () => {};
+	static sysFind = (params: Params) => http.post(`/sys/query`, params);
+	static sysAdd = (params: Params) => http.post(`/sys/add`, params);
+	static sysMod = (id: string, params: Params) => http.put(`/sys/mod/${id}`, params);
+	static sysDel = (id: string) => http.delete(`/sys/del/${id}`);
+	static sysDelMore = (data: string[]) => http.post(`/sys/delMore`, data);
+	static sysImportEx = (params: Params) => http.post(`/sys/importEx`, params);
 }
 
 // * System
@@ -47,14 +47,6 @@ export const delJob = (id: string) => http.delete(`/jb/del/${id}`);
 export const delMoreJob = (data: string[]) => http.post(`/jb/delMore`, data);
 export const modifyJob = (id: string, params: Params) => http.put(`/jb/mod/${id}`, params);
 export const ExJob = (params: Params) => http.post(`/jb/importEx`, params);
-
-// * 系统管理 — Sys 模板
-export const findSys = (params: Params) => http.post(`/sys/query`, params);
-export const addSys = (params: Params) => http.post(`/sys/add`, params);
-export const delSys = (id: string) => http.delete(`/sys/del/${id}`);
-export const delMoreSys = (data: string[]) => http.post(`/sys/delMore`, data);
-export const modifySys = (id: string, params: Params) => http.put(`/sys/mod/${id}`, params);
-export const ExSys = (params: Params) => http.post(`/sys/importEx`, params);
 
 // * 系统管理 — 角色管理
 export const findRole = (params: Params) => http.get(`/role/findRole`, params);

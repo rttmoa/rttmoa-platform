@@ -1,8 +1,9 @@
 import { ProColumns } from '@ant-design/pro-components';
-import { Tag } from 'antd';
+import { Avatar, Progress, Tag } from 'antd';
 import dayjs from 'dayjs';
 import { TableRenderAction } from '@/components/TableAction';
 import Link from 'antd/lib/typography/Link';
+import { UserOutlined } from '@ant-design/icons';
 
 export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<any>[] => {
 	// * 这里 dataIndex 唯一索引不可以重复
@@ -11,17 +12,19 @@ export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<a
 	return [
 		{
 			dataIndex: 'index',
-			valueType: 'indexBorder',
+			valueType: 'index',
 			width: 40,
 			fixed: 'left',
 			align: 'center',
+			render: (text, entity, index) => <Link onClick={() => modalOperate('detail', entity)}>{index + 1}</Link>,
 			responsive: ['sm'],
 		},
 		{
 			title: '岗位名称',
 			dataIndex: 'postName',
 			valueType: 'text',
-			ellipsis: true, // 省略
+			ellipsis: true,
+			editable: () => true,
 			// copyable: true,
 			width: 150,
 			fixed: 'left',
@@ -37,21 +40,20 @@ export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<a
 			// tooltip: 'The title', // 省略提示
 			sorter: true, // 排序
 			// readonly: true,
-			render: (dom, entity: any) => {
-				return <Link onClick={e => modalOperate('detail', entity)}>{entity?.postName}</Link>;
-			},
+			// render: (dom, entity: any) => {
+			// 	return <Link onClick={e => modalOperate('detail', entity)}>{entity?.postName}</Link>;
+			// },
 			responsive: ['sm'],
 		},
 		{
 			title: '岗位排序',
 			dataIndex: 'postSort',
 			valueType: 'digit', // * digit 输入为数字类型  |  color
+			editable: () => true,
 			align: 'center',
 			width: 120,
-			// filters: true, // 表格内过滤
-			// onFilter: true,
 			sorter: true,
-			ellipsis: true, // 省略提示
+			ellipsis: true,
 			tooltip: '岗位排序：postSort',
 			fieldProps: { placeholder: '请输入岗位排序' },
 			responsive: ['sm'],
@@ -59,7 +61,7 @@ export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<a
 		{
 			title: '岗位状态',
 			dataIndex: 'flag',
-			valueType: 'select',
+			valueType: 'select', // 表头搜索是选择
 			align: 'center',
 			ellipsis: true, // 省略
 			sorter: true,
@@ -76,20 +78,20 @@ export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<a
 			],
 			tooltip: '岗位状态：flag',
 			fieldProps: { placeholder: '请输入岗位状态' },
-			render: (_, record) => {
-				let tagContent: any = '';
-				if (_) tagContent = <Tag color='blue'>启用</Tag>;
-				else tagContent = <Tag color='red'>停用</Tag>;
-				return <span>{tagContent}</span>;
-			},
+			// render: (_, record) => {
+			// 	let tagContent: any = '';
+			// 	if (_) tagContent = <Tag color='blue'>启用</Tag>;
+			// 	else tagContent = <Tag color='red'>停用</Tag>;
+			// 	return <span>{tagContent}</span>;
+			// },
 			responsive: ['md'],
 		},
 		{
 			title: '运行状态',
 			dataIndex: 'status',
 			valueType: 'select',
-			ellipsis: true, // 省略
 			align: 'center',
+			ellipsis: true, // 省略
 			tooltip: '运行状态：status',
 			fieldProps: { placeholder: '请输入岗位状态' },
 			valueEnum: {
@@ -102,15 +104,51 @@ export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<a
 			responsive: ['lg'],
 		},
 		{
+			title: '进度条',
+			dataIndex: 'progress',
+			valueType: 'progress',
+			editable: () => false,
+			hideInSearch: true,
+			responsive: ['lg'],
+			render: (_, record) => {
+				return <Progress percent={78} size='small' status='active' />;
+			},
+		},
+		{
+			title: '头像',
+			dataIndex: 'Avatar',
+			editable: () => false,
+			hideInSearch: true,
+			align: 'center',
+			responsive: ['lg'],
+			render: (_, record) => {
+				return <Avatar size={24} icon={<UserOutlined />} />;
+			},
+		},
+		{
 			title: '创建日期',
 			dataIndex: 'createTime',
-			valueType: 'dateRange', // date | dateWeek | dateMonth | dateTime | dateRange | dateTimeRange
+			// date | dateWeek | dateMonth | dateTime | dateRange | dateTimeRange
+			// valueType: 'dateRange',
+			valueType: 'dateTimeRange',
+			editable: () => false,
 			align: 'center',
+			ellipsis: true,
 			tooltip: '创建日期：createTime',
 			fieldProps: { placeholder: '选择日期' },
-			ellipsis: true, // 省略
 			render: (_, record) => <span>{dayjs(record.createTime).format('YYYY-MM-DD HH:mm:ss')}</span>,
 			responsive: ['lg'],
+		},
+		{
+			title: '行内编辑',
+			valueType: 'option',
+			align: 'center',
+			width: 150,
+			render: (text, record, _, action) => [
+				<a className='w-full flex justify-center text-center' key='edit' onClick={() => action?.startEditable?.(record._id)}>
+					编辑
+				</a>,
+			],
 		},
 		{
 			key: 'option',
@@ -118,6 +156,7 @@ export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<a
 			align: 'center',
 			fixed: 'right',
 			width: 135,
+			editable: () => false,
 			tooltip: '操作按钮分别是：详情、编辑、删除',
 			hideInSearch: true,
 			// render: renderAction,

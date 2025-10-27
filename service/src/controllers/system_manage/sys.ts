@@ -3,23 +3,27 @@ import Basic from '../basic';
 import _ from 'lodash';
 
 // * 新增 + 更新 + 导入表格 都要统一表字段
-
 // ** 前端传递参数时、需要告知服务端哪个字段可查询、并且知道字段的类型是字符串还是选择框
+// * 查询时：传递需要查询的参数
+// * 新增或修改时：新增某个字段
+// 字段类型：字符串、数值、选择框
 class Sys extends Basic {
 	constructor() {
 		super();
 	}
 
-	// * 抽离 Job 查询条件
-	// * 字符串、数字、日期查询  |  选择框、复选框、日期时间
+	// * 抽离 查询条件
+	// * 字段类型：字符串、数字、日期查询  |  选择框、复选框、日期时间
 	private JobQuery = (data: any) => {
 		const query: Record<string, any> = {};
 
+		// 文本查询 — "222"
 		const postName = _.trim(_.get(data, 'search.postName', ''));
 		if (!_.isEmpty(postName)) {
 			query.postName = { $regex: postName, $options: 'i' };
 		}
 
+		// 数值查询 — 22
 		const postSort = _.toNumber(_.get(data, 'search.postSort'));
 		if (!_.isNaN(postSort)) {
 			query.postSort = postSort;
@@ -30,6 +34,7 @@ class Sys extends Basic {
 			query.status = new RegExp(status);
 		}
 
+		// 时间：可以根据选择时间 或 可以根据字符串模糊搜索
 		const createTime = _.get(data, 'search.createTime', []);
 		if (_.isArray(createTime) && createTime.length === 2) {
 			const [start, end] = createTime;
@@ -49,6 +54,7 @@ class Sys extends Basic {
 			const data: any = ctx.request.body;
 
 			const query = this.JobQuery(data);
+			console.log('query', query);
 
 			// 分页参数
 			const page = _.clamp(_.toInteger(_.get(data, 'pagination.page', 1)), 1, Number.MAX_SAFE_INTEGER);
@@ -105,7 +111,10 @@ class Sys extends Basic {
 
 			if (!id) return ctx.sendError(400, `修改岗位操作：无iD`);
 
-			const exist = await ctx.mongo.find('__sys', { query: { postName: _.trim(data?.postName) } });
+			// 修改时、需排序修改内容的postName
+			const exist = await ctx.mongo.find('__sys', {
+				query: { postName: _.trim(data?.postName), _id: { $ne: id } },
+			});
 			if (exist.length) return ctx.sendError(400, `修改错误：已存在${data?.postName}`);
 			const job = this.addAndModifyField(data);
 			const doc: any = {

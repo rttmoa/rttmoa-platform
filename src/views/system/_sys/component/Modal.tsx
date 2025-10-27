@@ -1,8 +1,25 @@
-import { Button, Col, Form, Input, Modal, Radio, Row, Space, Switch } from 'antd';
+import { Button, Col, Form, Input, Modal, Radio, Row, Select, Space, Switch } from 'antd';
 import { useEffect } from 'react';
 
 const ModalComponent = (Params: any) => {
 	const { form, modalIsVisible, setModalIsVisible, modalTitle, modalType, modalUserInfo, modalResult } = Params;
+
+	useEffect(() => {
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === 'Enter') {
+				e.preventDefault(); // 阻止默认提交行为
+				Submit(); // 调用提交函数
+			}
+		};
+		if (modalIsVisible) {
+			window.addEventListener('keydown', handleKeyDown);
+		} else {
+			window.removeEventListener('keydown', handleKeyDown);
+		}
+		return () => {
+			window.removeEventListener('keydown', handleKeyDown);
+		};
+	}, [modalIsVisible]);
 
 	useEffect(() => {
 		form.setFieldsValue({
@@ -51,110 +68,26 @@ const ModalComponent = (Params: any) => {
 					</Col>
 					<Col span={12}>
 						<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>状态</span>} name='status' rules={[{ required: false }]}>
-							<Radio.Group options={['启用', '停用']} />
+							{/* <Radio.Group options={['启用', '停用']} /> */}
+							<Radio.Group defaultValue='a' size='middle'>
+								<Radio.Button value='a'>启动</Radio.Button>
+								<Radio.Button value='b'>停用</Radio.Button>
+							</Radio.Group>
 						</Form.Item>
 					</Col>
 					<Col span={12}>
-						<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>岗位描述</span>} name='desc' rules={[{ required: false }]}>
-							<Input placeholder='岗位说明' />
-						</Form.Item>
-					</Col>
-					<Col span={12}>
-						<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>岗位描述</span>} name='desc' rules={[{ required: false }]}>
-							<Input placeholder='岗位说明' />
-						</Form.Item>
-					</Col>
-
-					<Col span={12}>
-						<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>岗位描述</span>} name='desc' rules={[{ required: false }]}>
-							<Input placeholder='岗位说明' />
-						</Form.Item>
-					</Col>
-
-					<Col span={12}>
-						<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>岗位描述</span>} name='desc' rules={[{ required: false }]}>
-							<Input placeholder='岗位说明' />
-						</Form.Item>
-					</Col>
-					<Col span={12}>
-						<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>岗位描述</span>} name='desc' rules={[{ required: false }]}>
-							<Input placeholder='岗位说明' />
-						</Form.Item>
-					</Col>
-
-					<Col span={12}>
-						<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>岗位描述</span>} name='desc' rules={[{ required: false }]}>
-							<Input placeholder='岗位说明' />
-						</Form.Item>
-					</Col>
-					<Col span={12}>
-						<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>岗位描述</span>} name='desc' rules={[{ required: false }]}>
-							<Input placeholder='岗位说明' />
-						</Form.Item>
-					</Col>
-					<Col span={12}>
-						<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>岗位描述</span>} name='desc' rules={[{ required: false }]}>
-							<Input placeholder='岗位说明' />
-						</Form.Item>
-					</Col>
-					<Col span={12}>
-						<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>岗位描述</span>} name='desc' rules={[{ required: false }]}>
-							<Input placeholder='岗位说明' />
-						</Form.Item>
-					</Col>
-					<Col span={12}>
-						<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>岗位描述</span>} name='desc' rules={[{ required: false }]}>
-							<Input placeholder='岗位说明' />
-						</Form.Item>
-					</Col>
-					<Col span={12}>
-						<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>岗位描述</span>} name='desc' rules={[{ required: false }]}>
-							<Input placeholder='岗位说明' />
-						</Form.Item>
-					</Col>
-					<Col span={12}>
-						<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>岗位描述</span>} name='desc' rules={[{ required: false }]}>
-							<Input placeholder='岗位说明' />
-						</Form.Item>
-					</Col>
-					<Col span={12}>
-						<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>岗位描述</span>} name='desc' rules={[{ required: false }]}>
-							<Input placeholder='岗位说明' />
-						</Form.Item>
-					</Col>
-					<Col span={12}>
-						<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>岗位描述</span>} name='desc' rules={[{ required: false }]}>
-							<Input placeholder='岗位说明' />
-						</Form.Item>
-					</Col>
-					<Col span={12}>
-						<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>岗位描述</span>} name='desc' rules={[{ required: false }]}>
-							<Input placeholder='岗位说明' />
-						</Form.Item>
-					</Col>
-					<Col span={12}>
-						<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>岗位描述</span>} name='desc' rules={[{ required: false }]}>
-							<Input placeholder='岗位说明' />
-						</Form.Item>
-					</Col>
-					<Col span={12}>
-						<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>岗位描述</span>} name='desc' rules={[{ required: false }]}>
-							<Input placeholder='岗位说明' />
-						</Form.Item>
-					</Col>
-					<Col span={12}>
-						<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>岗位描述</span>} name='desc' rules={[{ required: false }]}>
-							<Input placeholder='岗位说明' />
-						</Form.Item>
-					</Col>
-					<Col span={12}>
-						<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>岗位描述</span>} name='desc' rules={[{ required: false }]}>
-							<Input placeholder='岗位说明' />
-						</Form.Item>
-					</Col>
-					<Col span={12}>
-						<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>岗位描述</span>} name='desc' rules={[{ required: false }]}>
-							<Input placeholder='岗位说明' />
+						<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>运行状态</span>} name='status' rules={[{ required: false }]}>
+							<Select
+								defaultValue='lucy'
+								style={{ width: 120 }}
+								options={[
+									{ value: '全部', label: '全部' },
+									{ value: '启用', label: '启用' },
+									{ value: '运行中', label: '运行中' },
+									{ value: '关闭', label: '关闭' },
+									{ value: '已上线', label: '已上线' },
+								]}
+							/>
 						</Form.Item>
 					</Col>
 					<Col span={12}>
