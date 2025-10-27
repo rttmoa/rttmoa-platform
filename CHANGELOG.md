@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.27](https://github.com/rttmoa/rttmoa-platform/compare/v2.4.26...v2.4.27) (2025-10-27)
+
+
+### Features
+
+* 🚀 增加功能：1、编辑Modal时回车提交  2、搜索条件界面宽度控制span数量  3、表格行内编辑和删除 ([24b6233](https://github.com/rttmoa/rttmoa-platform/commit/24b6233cb76204f557086cab883ac0d2608ea4f5))
+
 ### [2.4.26](https://github.com/rttmoa/rttmoa-platform/compare/v2.4.25...v2.4.26) (2025-10-26)
 
 
