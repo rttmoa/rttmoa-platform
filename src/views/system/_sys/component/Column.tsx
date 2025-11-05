@@ -1,7 +1,7 @@
 import { ProColumns } from '@ant-design/pro-components';
 import { Avatar, Progress, Tag } from 'antd';
 import dayjs from 'dayjs';
-import { TableRenderAction } from '@/components/TableAction';
+import { TableEditIcon, TableRenderAction } from '@/components/TableAction';
 import Link from 'antd/lib/typography/Link';
 import { UserOutlined } from '@ant-design/icons';
 
@@ -59,25 +59,29 @@ export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<a
 			responsive: ['sm'],
 		},
 		{
-			title: '岗位状态',
-			dataIndex: 'flag',
-			valueType: 'select', // 表头搜索是选择
+			title: '运行状态',
+			dataIndex: 'status',
+			valueType: 'select',
 			align: 'center',
 			ellipsis: true, // 省略
 			sorter: true,
-			// 筛选栏中是筛选
+			tooltip: '运行状态：status',
+			fieldProps: { placeholder: '请输入运行状态' },
 			valueEnum: {
-				all: { text: '全部', status: 'Default' },
-				true: { text: '启用', status: 'Default' },
-				false: { text: '停用', status: 'Default' },
+				全部: { text: '全部', status: 'Default' },
+				关闭: { text: '关闭', status: 'Default' },
+				运行中: { text: '运行中', status: 'Processing' },
+				启用: { text: '启用', status: 'Success' },
+				异常: { text: '异常', status: 'Error' },
 			},
 			// 表格内筛选
 			filters: [
+				{ text: '全部', value: '全部' },
+				{ text: '关闭', value: '关闭' },
+				{ text: '运行中', value: '运行中' },
 				{ text: '启用', value: '启用' },
-				{ text: '停用', value: '停用' },
+				{ text: '异常', value: '异常' },
 			],
-			tooltip: '岗位状态：flag',
-			fieldProps: { placeholder: '请输入岗位状态' },
 			// render: (_, record) => {
 			// 	let tagContent: any = '';
 			// 	if (_) tagContent = <Tag color='blue'>启用</Tag>;
@@ -85,23 +89,6 @@ export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<a
 			// 	return <span>{tagContent}</span>;
 			// },
 			responsive: ['md'],
-		},
-		{
-			title: '运行状态',
-			dataIndex: 'status',
-			valueType: 'select',
-			align: 'center',
-			ellipsis: true, // 省略
-			tooltip: '运行状态：status',
-			fieldProps: { placeholder: '请输入岗位状态' },
-			valueEnum: {
-				all: { text: '全部', status: 'Default' },
-				close: { text: '关闭', status: 'Default' },
-				1: { text: '运行中', status: 'Processing' },
-				启用: { text: '已上线', status: 'Success' },
-				停用: { text: '异常', status: 'Error' },
-			},
-			responsive: ['lg'],
 		},
 		{
 			title: '进度条',
@@ -144,11 +131,7 @@ export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<a
 			valueType: 'option',
 			align: 'center',
 			width: 150,
-			render: (text, record, _, action) => [
-				<a className='w-full flex justify-center text-center' key='edit' onClick={() => action?.startEditable?.(record._id)}>
-					编辑
-				</a>,
-			],
+			render: (text, record, _, action) => TableEditIcon(record, action),
 		},
 		{
 			key: 'option',

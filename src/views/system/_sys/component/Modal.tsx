@@ -69,9 +69,9 @@ const ModalComponent = (Params: any) => {
 					<Col span={12}>
 						<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>状态</span>} name='status' rules={[{ required: false }]}>
 							{/* <Radio.Group options={['启用', '停用']} /> */}
-							<Radio.Group defaultValue='a' size='middle'>
-								<Radio.Button value='a'>启动</Radio.Button>
-								<Radio.Button value='b'>停用</Radio.Button>
+							<Radio.Group defaultValue='启动' size='middle'>
+								<Radio.Button value='启动'>启动</Radio.Button>
+								<Radio.Button value='停用'>停用</Radio.Button>
 							</Radio.Group>
 						</Form.Item>
 					</Col>

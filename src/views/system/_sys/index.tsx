@@ -16,7 +16,6 @@ import { systemAPI } from '@/api/modules/system';
 // 	3、弹窗字段修改 — Modal.tsx
 // 常用字段：文本、数值、选择框、日期
 
-// 25-10-27：增加功能：1、编辑Modal时回车提交  2、搜索条件界面宽度控制span数量  3、表格行内编辑和删除
 const useProTable = () => {
 	const tableName = '岗位管理';
 	const tablePersistence = 'system_sys'; // 持久化 Key
