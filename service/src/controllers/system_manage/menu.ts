@@ -302,7 +302,7 @@ class Menu extends Basic {
 			}
 			
 			// ! 更新菜单时、如果最顶级菜单为关闭时、那么子菜单全部关闭才可以
-			if (findMenu[0].enable == '关闭') {
+			if (data.enable == '关闭') {
 				const currentKey = findMenu[0].key; // auth 获取当前key、寻找下级
 				const KeyArr = await ctx.mongo.find('__menu', { query: { parent_id: currentKey } });
 				if (KeyArr.length) {
@@ -315,7 +315,7 @@ class Menu extends Basic {
 
 			// ! 更新菜单时、如果最顶级菜单为关闭时、那么子菜单无法开启、除非顶级菜单先开启
 			// 如何子菜单开启时、上级菜单必须开启才行。
-			if (findMenu[0].enable == '开启') {
+			if (data.enable == '开启') {
 				const superStatus = findMenu[0].parent_id; // 获取当前节点、寻找上级
 				if (superStatus != 0) {
 					const KeyArr = await ctx.mongo.find('__menu', { query: { key: superStatus } });
