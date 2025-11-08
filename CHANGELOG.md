@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.29](https://github.com/rttmoa/rttmoa-platform/compare/v2.4.28...v2.4.29) (2025-11-08)
+
+
+### Features
+
+* 🚀 菜单中更新操作修改错误 findMenu[0].enable 修改为 data.enable ([174e091](https://github.com/rttmoa/rttmoa-platform/commit/174e09104998e59a7a4f620e8c1724106eb9d33f))
+
 ### [2.4.28](https://github.com/rttmoa/rttmoa-platform/compare/v2.4.27...v2.4.28) (2025-11-05)
 
 
