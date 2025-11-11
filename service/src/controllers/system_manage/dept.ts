@@ -18,8 +18,7 @@ class Dept extends Basic {
 
 	findDept = async (ctx: Context) => {
 		try {
-			const payload = ctx.state.user; // 这就是你的载荷信息
-			// console.log('Authenticated user ID:', payload);
+			const payload = ctx.state.user;  
  
 
 			/** 将扁平结构转换为树结构 */
