@@ -1,6 +1,5 @@
-/* eslint-disable prettier/prettier */
 import { useEffect, useMemo, useState } from 'react';
-import { Menu, MenuProps } from 'antd';
+import { Menu, MenuProps, Tooltip } from 'antd';
 import { useLocation, useNavigate, useMatches } from 'react-router-dom';
 import { RouteObjectType, MetaProps } from '@/routers/interface';
 import { RootState, useSelector } from '@/redux';
@@ -40,35 +39,51 @@ const LayoutMenu: React.FC<LayoutMenuProps> = ({ mode, menuList, menuSplit }) =>
 	const [selectedKeys, setSelectedKeys] = useState<string[]>([]); // todo 当前选中的菜单项 key 数组
 	const [splitSelectedKeys, setSplitSelectedKeys] = useState<string[]>([]); // todo 当分割时，当前选中菜单项的key数组
 
+	// 生成 label 的封装，统一给所有菜单加 Tooltip + 省略号
+	function renderLabel(title: any) {
+		return (
+			<Tooltip title={title}>
+				<span
+					style={{
+						maxWidth: 150, // 控制菜单项的最大宽度，可调整
+						display: 'inline-block',
+						overflow: 'hidden',
+						whiteSpace: 'nowrap',
+						textOverflow: 'ellipsis',
+						verticalAlign: 'middle',
+					}}
+				>
+					{title}
+				</span>
+			</Tooltip>
+		);
+	}
+
 	type MenuItem = Required<MenuProps>['items'][number];
 	function getItem(label: React.ReactNode, key?: React.Key | null, icon?: React.ReactNode, children?: MenuItem[], type?: 'group'): MenuItem {
 		return {
 			key,
 			icon,
 			children,
-			label,
+			label: renderLabel(label),
 			type,
 		} as MenuItem;
 	}
 	const AsAntdMenu = (list: RouteObjectType[]): MenuItem[] => {
-		// console.log(list); // (13)[{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
 		return list.map(item => {
-			return !item?.children?.length
-				? getItem(item.meta?.title, item.path, <Icon name={item.meta!.icon!} />)
-				: getItem(item.meta?.title, item.path, <Icon name={item.meta!.icon!} />, AsAntdMenu(item.children!)); // 递归
+			const title = item.meta?.title ?? '';
+			const icon = <Icon name={item.meta!.icon!} />;
+			return !item.children?.length ? getItem(title, item.path, icon) : getItem(title, item.path, icon, AsAntdMenu(item.children)); // 递归
 		});
 	};
-	// ! Menu['items']：Menu列表结构  (处理Menu为Antd所需要的格式)
-	// 菜单列表是 ? 父组件传递的 ? 后台传递的
-	// console.log(menuList, showMenuList); // 经典和分栏传递菜单
+
+	//  Menu['items']：Menu列表结构  (处理Menu为Antd所需要的格式)
 	const antdMenuList = useMemo(() => AsAntdMenu(menuList ?? showMenuList), [menuList, showMenuList]);
 
 	useEffect(() => {
 		const meta = matches[matches.length - 1].data as MetaProps;
 		const path = meta?.activeMenu ?? pathname;
 		setSelectedKeys([path]);
-		// console.log(showMenuList);
-		// console.log("path：", path);
 
 		const splitPath = `/${path.split('/')[1]}`; // ['', 'home', 'index'] || ['', 'assembly', 'guide']
 		// console.log(path.split("/"));
@@ -82,8 +97,6 @@ const LayoutMenu: React.FC<LayoutMenuProps> = ({ mode, menuList, menuSplit }) =>
 	// ! Menu['onOpenChange']： SubMenu 展开/关闭的回调
 	// ! Menu['openKeys']：当前展开的 SubMenu 菜单项 key 数组
 	const onOpenChange: MenuProps['onOpenChange'] = openKeys => {
-		// console.log("SubMenu 展开/关闭的回调");
-		// console.log(openKeys);
 		if (openKeys.length === 0 || openKeys.length === 1) return setOpenKeys(openKeys);
 		const latestOpenKey = openKeys[openKeys.length - 1];
 		if (latestOpenKey.includes(openKeys[0])) return setOpenKeys(openKeys);
