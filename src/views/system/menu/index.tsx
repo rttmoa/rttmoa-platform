@@ -12,6 +12,8 @@ import './index.less';
 import ModalComponent from './component/Modal';
 import FooterComponent from '@/components/TableFooter';
 import DrawerComponent from '@/components/TableDrawer';
+import usePermissions from '@/hooks/usePermissions';
+import { RootState, useSelector } from '@/redux';
 
 export type FormValueType = {
 	target?: string;
@@ -22,6 +24,9 @@ export type FormValueType = {
 } & Partial<UserList>;
 
 const useProTable = () => {
+	const globalToken = useSelector((state: RootState) => state.user.token);
+	const { initPermissions } = usePermissions();
+
 	const actionRef = useRef<ActionType>(); // 表格 ref
 	const formRef = useRef<FormInstance>(); // 表单 ref
 
@@ -47,7 +52,7 @@ const useProTable = () => {
 
 	const quickSearch = () => {};
 
-	// * 操作 — 员工： 新建、编辑、详情、删除  按钮
+	// * 操作 — 新建、编辑、详情、删除  按钮
 	const handleOperator = (type: 'create' | 'edit' | 'detail', item?: any) => {
 		setModalType(type);
 		if (type === 'detail') {
@@ -85,6 +90,7 @@ const useProTable = () => {
 						message.success(`成功删除${type === 'delete' ? ` ${item?.postName}` : '多条'}记录`);
 					}
 				}
+				await initPermissions(globalToken);
 			} catch (error: any) {
 				message.error(error.message || '操作失败，请重试！');
 			}
@@ -94,9 +100,9 @@ const useProTable = () => {
 
 	// * 工具栏 ToolBar
 	let ToolBarParams: any = {
-		quickSearch, // 工具栏：快捷搜索
+		quickSearch,
 		openSearch,
-		SetOpenSearch, // 工具栏：开启表单搜索
+		SetOpenSearch,
 		handleOperator,
 		setRowKeys,
 		SetLoading,
@@ -163,7 +169,6 @@ const useProTable = () => {
 			/>
 			{selectedRows?.length > 0 && <FooterComponent selectedRows={selectedRows} modalResult={handleModalSubmit} />}
 
-			{/* 新建 / 编辑 Modal弹窗 */}
 			<ModalComponent
 				form={form}
 				menuList={menuList}
