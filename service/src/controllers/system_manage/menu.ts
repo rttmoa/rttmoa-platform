@@ -218,6 +218,7 @@ class Menu extends Basic {
 			// * 2、查询数据库有无相同key和path、必须保证key和apth唯一
 			const p = _.trim(_.get(data, 'path', ''));
 			const path = String.raw`${p}`.replace(/\\/g, '/');
+
 			const key = _.trim(_.get(data, 'key', ''));
 			const exists = await ctx.mongo.find('__menu', { query: { $or: [{ path }, { key }] } });
 			if (exists.length > 0) {
@@ -228,10 +229,12 @@ class Menu extends Basic {
 			// * 新增时、如果上一级状态是关闭、那么新增的子菜单状态也是关闭状态
 			// console.log('上级菜单：', data?.parent_id); // 0 | auth
 			let enableStatus = data?.enable;
+			let sortPlus = 1;
 			if (data?.parent_id != 0) {
 				// 当不是顶级菜单时
-				const exists = await ctx.mongo.find('__menu', { query: { key: data?.parent_id } });
+				const exists = await ctx.mongo.find('__menu', { query: { key: data?.parent_id }, sort: { sort: -1 } });
 				if (exists.length) {
+					sortPlus = exists[0].sort + 10;
 					if (exists[0].enable == '关闭') enableStatus = '关闭';
 				}
 			}
@@ -241,7 +244,7 @@ class Menu extends Basic {
 			// * 4、编辑菜单对象
 			function delStr(str: string) {
 				const handleStr = String(str || '').trim();
-				if (handleStr == '') return null;
+				if (handleStr == '') return "";
 				else {
 					if (str.includes('\\')) {
 						return str.replace(/\\/g, '/');
@@ -250,12 +253,13 @@ class Menu extends Basic {
 					}
 				}
 			}
+
 			let fDoc: any = {
 				parent_id: data?.parent_id, // 父级菜单 ID（顶层为 0）
 				type: delStr(data?.type), // 菜单类型： 目录 | 菜单 | 按钮
-				path: delStr(String.raw`${data?.path}`), // 路由路径 /home/index |  /auth/button
-				element: delStr(String.raw`${data?.element}`), // 组件路径 /home/index | /auth/button/index
-				redirect: delStr(String.raw`${data?.redirect}`), // 重定向路径，如 /auth/page
+				path: delStr(data?.path ? String.raw`${data?.path}` : ''), // 路由路径 /home/index |  /auth/button
+				element: delStr(data?.element ? String.raw`${data?.element}` : ''), // 组件路径 /home/index | /auth/button/index
+				redirect: delStr(data?.redirect ? String.raw`${data?.redirect}` : ''), // 重定向路径，如 /auth/page
 				key: delStr(data?.key), // 菜单唯一标识，如 authButton
 				title: delStr(data?.title), // 菜单标题
 				icon: delStr(data?.icon), // 图标名，如 LockOutlined
@@ -263,7 +267,7 @@ class Menu extends Basic {
 				is_hide: data?.isHide == '是' ? 1 : 0, // 是否隐藏菜单项（0 否，1 是）
 				is_full: data?.isFull == '是' ? 1 : 0, // 是否全屏显示页面
 				is_affix: data?.isAffix == '是' ? 1 : 0, // 是否固定标签页
-				sort: +data?.sort || 1, // 显示排序: 1-9999
+				sort: +data?.sort == 1 ? sortPlus : +data?.sort, // 显示排序: 1-9999
 				enable: enableStatus, // 是否开启菜单
 				created_at: new Date(),
 				updated_at: new Date(),
@@ -335,7 +339,7 @@ class Menu extends Basic {
 			}
 
 			// * 3、如果修改了菜单、从二级菜单变到了其他二级菜单、需要修改 parent_id
-				function delStr(str: string) {
+			function delStr(str: string) {
 				const handleStr = String(str || '').trim();
 				if (handleStr == '') return null;
 				else {
@@ -345,15 +349,15 @@ class Menu extends Basic {
 						return handleStr;
 					}
 				}
-			}
+			} 
 			let fDoc: any = {
 				// * 注意：新增与修改传递的top数组不一致、修改时、传递的是当前菜单、不是上一级菜单
 				parent_id: data?.parent_id,
 
 				type: delStr(data?.type),
-				path: delStr(String.raw`${data?.path}`),  
-				element: delStr(String.raw`${data?.element}`),  
-				redirect: delStr(String.raw`${data?.redirect}`),  
+				path: delStr(data?.path ? String.raw`${data?.path}` : ''), // 路由路径 /home/index |  /auth/button
+				element: delStr(data?.element ? String.raw`${data?.element}` : ''), // 组件路径 /home/index | /auth/button/index
+				redirect: delStr(data?.redirect ? String.raw`${data?.redirect}` : ''), // 重定向路径，如 /auth/page
 				key: delStr(data?.key),
 				title: delStr(data?.title),
 				icon: delStr(data?.icon),
@@ -364,7 +368,7 @@ class Menu extends Basic {
 				sort: +data?.sort || 1,
 				enable: delStr(data?.enable),
 				updated_at: new Date(),
-			};
+			}; 
 			await ctx.mongo.updateOne('__menu', findMenu[0]._id, fDoc);
 			return ctx.send('更新菜单成功');
 		} catch (err) {
