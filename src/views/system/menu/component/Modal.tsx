@@ -25,6 +25,25 @@ const ModalComponent = (Props: any) => {
 	const [value, setValue] = useState<string>('');
 	const [menuType, SetmenuType] = useState('目录');
 	const [iconVisibel, setIconVisibel] = useState(false);
+
+	// 回车键提交数据
+	useEffect(() => {
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === 'Enter') {
+				e.preventDefault();
+				form.submit();
+			}
+		};
+		if (modalIsVisible) {
+			window.addEventListener('keydown', handleKeyDown);
+		} else {
+			window.removeEventListener('keydown', handleKeyDown);
+		}
+		return () => {
+			window.removeEventListener('keydown', handleKeyDown);
+		};
+	}, [modalIsVisible]);
+
 	useEffect(() => {
 		form.setFieldsValue({
 			isTop: type === 'create' ? '是' : data?.parent_id == 0 ? '是' : '否',
