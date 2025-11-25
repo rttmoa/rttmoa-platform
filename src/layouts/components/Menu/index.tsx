@@ -65,7 +65,8 @@ const LayoutMenu: React.FC<LayoutMenuProps> = ({ mode, menuList, menuSplit }) =>
 			key,
 			icon,
 			children,
-			label: renderLabel(label),
+			// label: renderLabel(label),
+			label,
 			type,
 		} as MenuItem;
 	}
