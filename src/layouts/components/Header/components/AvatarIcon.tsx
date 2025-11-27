@@ -93,7 +93,7 @@ const AvatarIcon: React.FC = () => {
 
 	return (
 		<>
-			<Dropdown menu={{ items }} trigger={['click']} placement='bottom' arrow>
+			<Dropdown menu={{ items }} trigger={['click']} placement='bottom' arrow overlayStyle={{ minWidth: 150 }}>
 				<Avatar className='avatar' size={42} src={avatar} />
 			</Dropdown>
 
