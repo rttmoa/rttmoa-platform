@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"steedos_nbzy_v2.__student"}],"uuid":"ffcc014ff3744904b83c61d8b6bfb0f6"}

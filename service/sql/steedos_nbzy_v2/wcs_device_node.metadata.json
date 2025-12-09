@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"steedos_nbzy_v2.wcs_device_node"}],"uuid":"3ed606b74b274235b9906e37198fd9b1"}
