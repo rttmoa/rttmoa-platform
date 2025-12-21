@@ -7,7 +7,7 @@ import type { ActionType, FormInstance } from '@ant-design/pro-components';
 import { message } from '@/hooks/useMessage';
 import ColumnsConfig from './component/Column';
 import ToolBarRender from './component/ToolBar';
-import { DelMenu, delMoreJob, FindAllMenu, InsNewMenu, UpMenu } from '@/api/modules/system';
+import { DelMenu, FindAllMenu, InsNewMenu, UpMenu } from '@/api/modules/system';
 import './index.less';
 import ModalComponent from './component/Modal';
 import FooterComponent from '@/components/TableFooter';
@@ -35,7 +35,8 @@ const useProTable = () => {
 	const [openSearch, SetOpenSearch] = useState<boolean>(false); // 工具栏：开启关闭表单搜索
 	const [loading, SetLoading] = useState<boolean>(false); // Loading：加载Loading
 	const [pagination, SetPagination] = useState<any>({ page: 1, pageSize: 10, total: 0 }); // 分页数据
-	const [menuList, setMenuList] = useState<[]>([]);
+	const [menuList, setMenuList] = useState<[]>([]); // 菜单全部
+	const [menuOpen, setMenuOpen] = useState<[]>([]); // 菜单开启部分
 	const [selectedRows, setSelectedRows] = useState<any[]>([]); // 表格：选择行数据
 
 	// Drawer
@@ -46,26 +47,31 @@ const useProTable = () => {
 	const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
 	const [modalTitle, setModalTitle] = useState<string>('');
 	const [modalType, setModalType] = useState<string>('');
+	const [modalSubMenu, setModalSubMenu] = useState<string>(''); // key
 	const [modalUserInfo, setModalUserInfo] = useState({});
 
 	const [rowKeys, setRowKeys] = useState([]);
 
 	const quickSearch = () => {};
 
-	// * 操作 — 新建、编辑、详情、删除  按钮
-	const handleOperator = (type: 'create' | 'edit' | 'detail', item?: any) => {
+	const handleOperator = (type: 'create' | 'edit' | 'detail' | 'createSubMenu', item?: any) => {
 		setModalType(type);
 		if (type === 'detail') {
 			setDrawerIsVisible(true);
 			setDrawerCurrentRow(item || {});
+		} else if (type == 'createSubMenu') {
+			setModalUserInfo(item || {});
+			setModalTitle('新建菜单');
+			// 设置顶级部门是当前这个 key
+			setModalSubMenu(item?.meta?.key);
+			setModalIsVisible(true);
 		} else {
 			setModalIsVisible(true);
 			setModalUserInfo(item || {});
-			setModalTitle(type === 'create' ? '新建岗位' : '编辑岗位	');
+			setModalTitle(type === 'create' ? '新建菜单' : '编辑菜单');
 		}
 	};
 
-	// * 操作 — 员工： 新建、编辑、详情  弹窗内容提交
 	const handleModalSubmit = useCallback(
 		async (type: string, item: any) => {
 			try {
@@ -117,7 +123,6 @@ const useProTable = () => {
 				className='ant-pro-table-scroll'
 				scroll={{ y: '100vh' }} // 100vh
 				bordered
-				// cardBordered
 				dateFormatter='string'
 				headerTitle='使用 ProTable'
 				defaultSize='small'
@@ -128,17 +133,21 @@ const useProTable = () => {
 				formRef={formRef} // 可以获取到查询表单的 form 实例
 				request={async (params, sort, filter) => {
 					SetLoading(true);
-					const res: any = await FindAllMenu({ name: 'all' });
+					const res: any = await FindAllMenu({ name: '全部' });
 					// console.log('获取菜单结果：', res);
 					let format = {
-						list: res.data,
-						current: res.page,
-						pageSize: res.pageSise,
-						total: res.total,
+						list: res?.data,
+						current: res?.page,
+						pageSize: res?.pageSise,
+						total: res?.total,
 					};
-					setMenuList(res.data);
-					SetLoading(false);
+					setMenuList(res?.data);
 					SetPagination({ ...pagination, total: format.total });
+
+					const open: any = await FindAllMenu({ name: '开启' });
+					setMenuOpen(open?.data);
+
+					SetLoading(false);
 					return formatDataForProTable<any>({ ...format });
 				}}
 				expandable={{
@@ -171,10 +180,11 @@ const useProTable = () => {
 
 			<ModalComponent
 				form={form}
-				menuList={menuList}
+				menuOpen={menuOpen}
 				modalTitle={modalTitle} // 标题
 				modalType={modalType} // 类型
 				modalIsVisible={modalIsVisible} // 显示
+				modalSubMenu={modalSubMenu}
 				modalMenuInfo={modalUserInfo} // 菜单信息
 				setModalIsVisible={setModalIsVisible} // 设置显示
 				handleModalSubmit={handleModalSubmit}

@@ -1,0 +1,22 @@
+{
+	"name": "node-red-project",
+	"description": "A Node-RED Project",
+	"version": "0.0.1",
+	"private": true,
+	"dependencies": {
+		"@bitpoolos/edge-modbus": "~1.5.9",
+		"@blokcert/node-red-contrib-modbus": "~5.43.0-blokcert.13",
+		"@opcua/for-node-red": "~3.17.0",
+		"axios": "^1.7.9",
+		"chalk": "^5.4.1",
+		"child_process": "^1.0.2",
+		"iconv-lite": "^0.6.3",
+		"ioredis": "^5.6.0",
+		"moment": "^2.30.1",
+		"mongodb": "^6.12.0",
+		"mongoose": "^8.9.3",
+		"node-red-contrib-opcua": "~0.2.340",
+		"node-red-node-ping": "~0.3.3",
+		"ping": "^0.4.4"
+	}
+}

@@ -14,4 +14,9 @@ dist
 /src/mock/*
 stats.html
  
+
+# eslint 忽略 service 下文件
 service/
+
+# eslint 忽略 @upack-kdfh@2.1.85 下文件
+@upack-kdfh@2.1.85/

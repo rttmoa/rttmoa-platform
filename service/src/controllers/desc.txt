@@ -1,0 +1,157 @@
+
+
+【保温库货位层分配管理（优先）】
+我发送一下FieldSchema要修改的字段：下面是所有字段需要修改成FieldSchema里面、保持name、createTime、updateTime不变
+选择框：其中开启关闭状态的显示名显示值和背景颜色为：开启、99ff99|关闭、ff8989
+
+层管理	lay_manage__c	text
+开启/关闭	open__c	select
+层（数值）	lay__c	number
+描述	desc__c	text
+
+修改完FieldSchema字段之后、需要在routes文件夹中创建文件夹和文件还有接口、根据service\src\controllers\keepwarm_doc模式创建此文件的接口、并且在前端对应的文件夹名、修改请求接口、完成前后端的交互。
+
+
+
+【保温库货位分配规则（滞后）】
+我发送一下FieldSchema要修改的字段：下面是所有字段需要修改成FieldSchema里面、保持name、createTime、updateTime不变
+选择框：其中物料类型的显示名和显示值是：原料
+物料类型	material_type__c	select
+列	col__c	number
+起始层	start_lay__c	number
+目标层	target_lay__c	number
+起始排	start_row__c	number
+目标排	target_row__c	number
+描述	desc__c	text
+修改完FieldSchema字段之后、需要在routes文件夹中创建文件夹和文件还有接口、根据service\src\controllers\keepwarm_doc模式创建此文件的接口、并且在前端对应的文件夹名、修改请求接口、完成前后端的交互。
+
+
+
+【保温库列升序降序】
+我发送一下FieldSchema要修改的字段：下面是所有字段需要修改成FieldSchema里面、保持name、createTime、updateTime不变
+选择框：其中排序方式的显示名和显示值是：升序（按照列从小到大排序）、66ff66|降序（按照列从大到小排序）、ffa489
+类别	category__c	text
+排序方式	sort__c	select
+描述	desc__c	text
+字典	dictionary__c	text
+修改完FieldSchema字段之后、需要在routes文件夹中创建文件夹和文件还有接口、根据service\src\controllers\keepwarm_doc模式创建此文件的接口、并且在前端对应的文件夹名、修改请求接口、完成前后端的交互。
+
+
+
+
+【保温库移库任务】
+我发送一下FieldSchema要修改的字段：下面是所有字段需要修改成FieldSchema里面、保持name、createTime、updateTime不变
+
+选择框：其中排序方式的显示名和显示值是：未执行、创建成功、创建失败
+是否执行字段：立即执行、取消任务、正在执行（不可选）、任务完成（不可选）
+任务状态字段：未执行、正在执行、已完成、任务异常
+
+时间	time__c	text
+起始列	start_col__c	number
+起始层	start_lay__c	number
+从起始排	start_row1__c	number
+到起始排	start_row2__c	number
+目标列	dest_col__c	number
+目标层	dest_lay__c	number
+从目标排	dest_row1__c	number
+到目标排	dest_row2__c	number
+是否创建？	status__c	select
+描述	desc__c	text
+是否执行？	execute__c	select
+起始托盘个数	start_pallet_num__c	number
+目标库位个数	dest_empty_num__c	number
+指令号	instruct_no__c	text
+任务状态	task_status__c	select
+
+修改完FieldSchema字段之后、需要在routes文件夹中创建文件夹和文件还有接口、根据service\src\controllers\keepwarm_doc模式创建此文件的接口、并且在前端对应的文件夹名、修改请求接口、完成前后端的交互。
+
+
+
+
+【保温库世仓接口记录】
+我发送一下FieldSchema要修改的字段：下面是所有字段需要修改成FieldSchema里面、保持name、createTime、updateTime不变
+选择框：其中排序方式的显示名和显示值是：成功、99ff99|失败、ff8989
+
+请求时间	time__c	text
+响应状态码	status_code__c	text
+响应码	response_code__c	text
+响应消息	response_message__c	text
+请求地址	req_address__c	text
+请求名称	req_name__c	text
+是否请求成功	is_success__c	select
+任务指令号	instruct_no__c	text
+
+修改完FieldSchema字段之后、需要在routes文件夹中创建文件夹和文件还有接口、根据service\src\controllers\keepwarm_doc模式创建此文件的接口、并且在前端对应的文件夹名、修改请求接口、完成前后端的交互。
+
+
+
+
+
+【保温库世仓队列任务】
+我发送一下FieldSchema要修改的字段：下面是所有字段需要修改成FieldSchema里面、保持name、createTime、updateTime不变
+选择框：其中任务状态的显示名和显示值是：已下发世仓、99ff99|未下发世仓、ffa489|任务已完成、bbffee|任务已取消|手动完成任务（人工选择）|任务异常（不可选）、fd3534
+
+时间	time__c	text
+指令号	instruct_no__c	text
+托盘号	pallet__c	text
+出入库任务类型	instruct_type__c	text
+起始位置	loc_start__c	text
+终点位置	loc_dest__c	text
+任务来源	instruct_origin__c	text
+起始位置WCS	sc_start__c	text
+终点位置WCS	sc_dest__c	text
+任务状态	send_sc__c	select
+下发任务时间	send_time__c	text
+下发世仓任务号	send_sc_taskno__c	text
+描述	desc__c	text
+主子表—主任务	main__c	text
+任务来源	task_source__c	select
+主子表—移库任务	move_task__c	text
+手动处理	manual_handle__c	select
+修改完FieldSchema字段之后、需要在routes文件夹中创建文件夹和文件还有接口、根据service\src\controllers\keepwarm_doc模式创建此文件的接口、并且在前端对应的文件夹名、修改请求接口、完成前后端的交互。
+
+
+
+
+
+
+
+
+【保温库出入库总任务】
+我发送一下FieldSchema要修改的字段：下面是所有字段需要修改成FieldSchema里面、保持name、createTime、updateTime不变
+选择框：其中出入库类型的显示名和显示值是：入库任务|出库任务
+指令来源字段：上位自动|WCS手动
+任务状态字段：未执行、dddddd | 正在执行、99ff99|已完成、abffef|创建任务错误、ffa489|任务取消|重新执行、dddddd
+托盘到位字段：未到达入口、ff8989|已到达入口、99ff99|重新获取托盘状态、dddddd
+分配货位字段：未分配货位、ff8989|已分配货位、99ff99|重新分配货位、dddddd
+生成世仓任务字段：未生成世仓任务、ff8989|已生成世仓任务、99ff99|重新生成任务、dddddd
+下发世仓字段：未下发世仓、ff8989|已下发世仓、99ff99|重新下发世仓、dddddd
+托盘入库完成字段：未入库完成、ff8989|已入库完成、99ff99|重新执行
+
+
+时间	time__c	text
+指令号	instruct_no__c	text
+托盘号	pallet__c	text
+任务号	taskno__c	text
+出入库类型	instruct_type__c	select
+起始位置	loc_start__c	text
+终点位置	loc_dest__c	text
+优先级	priority__c	number
+指令来源	instruct_origin__c	select
+任务状态	status__c	select
+描述	desc__c	text
+起始位置WCS	sc_start__c	text
+终点位置WCS	sc_dest__c	text
+物料名称	material_name__c	text
+批号	batch__c	text
+生产日期	production_date__c	text
+入库数量	enter_num__c	number
+出库数量	out_num__c	number
+创建提示	create_info__c	text
+托盘到位	pallet_arrive__c	select
+分配货位	distribution__c	select
+生成世仓任务	generate_sc_task__c	select
+下发世仓	send_sc__c	select
+托盘入库完成	enter_finish__c	select
+
+修改完FieldSchema字段之后、需要在routes文件夹中创建文件夹和文件还有接口、根据service\src\controllers\keepwarm_doc模式创建此文件的接口、并且在前端对应的文件夹名、修改请求接口、完成前后端的交互。

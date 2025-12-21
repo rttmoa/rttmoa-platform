@@ -48,7 +48,7 @@ const DataScreen = () => {
 					</div>
 					<div className='header-ct'>
 						<div className='header-ct-title'>
-							<span>双汇智慧仓储可视化大数据展示平台</span>
+							<span>克东飞鹤智慧仓储可视化大数据展示平台</span>
 							{/* <div className='header-ct-warning'>平台高峰预警信息（2条）</div> */}
 						</div>
 					</div>

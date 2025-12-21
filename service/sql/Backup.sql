@@ -9,4 +9,4 @@
 
 导入数据库：
 
-mongorestore --host=127.0.0.1 --port=27017  -d steedos_nbzy_v2 C:\
+  mongorestore --host=127.0.0.1 --port=27017  -d steedos_nbzy_v2 C:\

@@ -1,8 +1,8 @@
 import { ProColumns } from '@ant-design/pro-components';
 import { UserList } from '@/api/interface';
 import { Icon } from '@/components/Icon';
-import { TableRenderAction } from '@/components/TableAction';
-import { Tag } from 'antd';
+import { TableRenderAction, TableRowEdit } from '@/components/TableAction';
+import { Button, Tag } from 'antd';
 
 const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProColumns<UserList>[] => {
 	return [
@@ -22,7 +22,10 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 			// hideInForm: true,
 			// hideInDescriptions: true,
 			sorter: true,
-			render: (dom, entity) => {
+			editable: () => true,
+			render: (dom, entity: any) => {
+				const enable = entity?.meta?.enable;
+				const title = entity?.meta?.title;
 				return (
 					<a
 						href='javascript:void(0)'
@@ -30,18 +33,10 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 							handleOperator('detail', entity);
 						}}
 					>
-						{dom}
+						{enable == '关闭' ? <span className='text-gray-400'>{title}</span> : title}
 					</a>
 				);
 			},
-			// 自定义筛选项功能具体实现请参考 https://ant.design/components/table-cn/#components-table-demo-custom-filter-panel
-			// filterDropdown: () => (
-			// 	<div style={{ padding: 2 }}>
-			// 		<Input style={{ width: 150, marginBlockEnd: 8, display: 'block', fontSize: '14px' }} placeholder='请输入' />
-			// 	</div>
-			// ),
-			// filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
-			// fieldProps: (form, config) => {}, // 查询表单的 props，会透传给表单项，
 		},
 		{
 			title: '排序',
@@ -50,6 +45,7 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 			align: 'center',
 			filters: true,
 			onFilter: true,
+			editable: () => true,
 		},
 		{
 			title: '菜单图标',
@@ -58,6 +54,7 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 			align: 'center',
 			filters: true,
 			onFilter: true,
+			editable: () => false,
 			render: (text, record: any) => <Icon name={record?.meta?.icon} />,
 		},
 		{
@@ -67,15 +64,17 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 			align: 'center',
 			filters: true,
 			onFilter: true,
+			editable: () => true,
 		},
 		{
 			title: '菜单标识',
 			dataIndex: ['meta', 'key'],
 			ellipsis: true,
-			width: 100,
+			width: 150,
 			align: 'center',
 			filters: true,
 			onFilter: true,
+			editable: () => true,
 		},
 		{
 			title: '开启菜单',
@@ -156,11 +155,38 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 		},
 
 		{
+			title: '行内编辑',
+			valueType: 'option',
+			align: 'center',
+			fixed: 'right',
+			width: 150,
+			render: (text, record, index, action) => TableRowEdit(record, index, action),
+		},
+		{
+			title: '操作',
+			valueType: 'option',
+			align: 'center',
+			fixed: 'right',
+			width: 150,
+			render: (text, record, index, action) => {
+				return (
+					<Button
+						onClick={() => {
+							handleOperator('createSubMenu', record);
+						}}
+					>
+						新建子菜单
+					</Button>
+				);
+			},
+		},
+		{
 			title: '操作',
 			key: 'option',
 			align: 'center',
 			fixed: 'right',
 			hideInSearch: true,
+			editable: () => false,
 			// render: (data, entity) => action(entity, handleOperator),
 			width: 135,
 			render: (_, record) => TableRenderAction(record, handleOperator, handleModalSubmit),

@@ -12,7 +12,6 @@ const suffix = (object = {}) => {
 
 export class systemAPI {
 	private static AUTH_API_PREFIX = '/auth';
-
 	static PEFRESH_API_URL = `${this.AUTH_API_PREFIX}/refresh`;
 
 	// Sys 测试模块
@@ -22,6 +21,33 @@ export class systemAPI {
 	static sysDel = (id: string) => http.delete(`/sys/del/${id}`);
 	static sysDelMore = (data: string[]) => http.post(`/sys/delMore`, data);
 	static sysImportEx = (params: Params) => http.post(`/sys/importEx`, params);
+}
+
+// 用户管理
+export class user_manageAPI {
+	private static userApi = '/user_manage';
+
+	static find = (params: Params) => http.post(`${this.userApi}/query`, params);
+	static add = (params: Params) => http.post(`${this.userApi}/add`, params);
+	static mod = (id: string, params: Params) => http.put(`${this.userApi}/mod/${id}`, params);
+	static del = (id: string) => http.delete(`${this.userApi}/del/${id}`);
+	static delMore = (data: string[]) => http.post(`${this.userApi}/delMore`, data);
+	// static importEx = (params: Params) => http.post(`${this.userApi}/importEx`, params);
+}
+
+// * 系统管理 — 角色管理
+export class roleAPI {
+	private static api = '/role';
+	// ======= Operate =======
+	static find = (params: Params) => http.post(`${this.api}/findRole`, params);
+	static add = (params: Params) => http.post(`${this.api}/addRole`, params);
+	static mod = (id: string, params: Params) => http.put(`${this.api}/modifyRole/${id}`, params);
+	static del = (id: string) => http.delete(`${this.api}/delRole/${id}`);
+	static delMore = (data: string[]) => http.post(`${this.api}/delMore`, data);
+	static importEx = (params: Params) => http.post(`${this.api}/importEx`, params);
+
+	static roleList = () => httpApi.get(`${PORT1}/role/list`); // 获取角色列表
+	static roleTransferList = (id: number) => httpApi.get(PORT1 + `/role/transfer/list`); // 获取角色转换列表
 }
 
 // * System
@@ -47,15 +73,6 @@ export const delJob = (id: string) => http.delete(`/jb/del/${id}`);
 export const delMoreJob = (data: string[]) => http.post(`/jb/delMore`, data);
 export const modifyJob = (id: string, params: Params) => http.put(`/jb/mod/${id}`, params);
 export const ExJob = (params: Params) => http.post(`/jb/importEx`, params);
-
-// * 系统管理 — 角色管理
-export const findRole = (params: Params) => http.get(`/role/findRole`, params);
-export const addRole = (params: Params) => http.post(`/role/addRole`, params);
-export const modifyRole = (params: Params) => http.post(`/role/modifyRole`, params);
-export const delRole = (id: string) => http.delete(`/role/delRole`, { id });
-
-export const roleList = () => httpApi.get(PORT1 + `/role/list`); // 获取角色列表
-export const roleTransferList = (id: number) => httpApi.get(PORT1 + `/role/transfer/list`); // 获取角色转换列表
 
 // * 系统管理 — 部门管理
 export const findDept = (params: Params) => http.get(`/dept/departments`, params);

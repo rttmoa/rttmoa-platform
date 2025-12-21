@@ -1,4 +1,4 @@
-import { roleTransferList } from '@/api/modules/system';
+import { roleAPI } from '@/api/modules/system';
 import { Form, Input, Modal, Transfer } from 'antd';
 import { useEffect, useImperativeHandle, useRef, useState } from 'react';
 
@@ -38,7 +38,7 @@ const ModalAuth = (Props: any) => {
 
 	const GetData = async () => {
 		// 获取角色用户列表 > 筛选目标用户
-		const results: any = await roleTransferList(selectedItem.id); // 根据iD获取该角色原有用户
+		const results: any = await roleAPI.roleTransferList(selectedItem.id); // 根据iD获取该角色原有用户
 		const transferData: any = [];
 		const targetKeys: any = [];
 		if (results.data.length > 0) {

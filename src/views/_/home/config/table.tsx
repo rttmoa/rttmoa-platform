@@ -37,21 +37,21 @@ export const columns: ColumnsType<DataType> = [
 			</React.Fragment>
 		),
 	},
-	{
-		title: 'Action',
-		key: 'action',
-		ellipsis: true,
-		render: (_, record) => (
-			<Space size='large' className='flex justify-between'>
-				<Button type='text' size='small'>
-					Invite {record.name}
-				</Button>
-				<Button type='text' size='small'>
-					Delete
-				</Button>
-			</Space>
-		),
-	},
+	// {
+	// 	title: 'Action',
+	// 	key: 'action',
+	// 	ellipsis: true,
+	// 	render: (_, record) => (
+	// 		<Space size='large' className='flex justify-between'>
+	// 			<Button type='text' size='small'>
+	// 				Invite {record.name}
+	// 			</Button>
+	// 			<Button type='text' size='small'>
+	// 				Delete
+	// 			</Button>
+	// 		</Space>
+	// 	),
+	// },
 ];
 
 export const data: DataType[] = [

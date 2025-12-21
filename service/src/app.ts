@@ -7,7 +7,9 @@ import RouterManager from './routes/index.ts';
 import './schedule';   // # 定时任务
 
 const app = new koa();
-require('dotenv').config({ path: `.env.${process.env.NODE_ENV || 'development'}` });
+// require('dotenv').config({ path: `.env.${process.env.NODE_ENV || 'development'}` });
+require('dotenv').config({ path: `.env` });
+
 app.use(json()); // json中间件
 app.use(bodyparser()); // body参数解析中间价
 app.use(_Security()); // 安全头 
@@ -25,7 +27,7 @@ app.use(_errorHandle); // * 异常中间件
 
 RouterManager(app)
 
-
+ 
 app.listen(6300, () => {
 	console.dir('---------------------------------- koa is listening in http://127.0.0.1:6300 -------------------------------------');
 });

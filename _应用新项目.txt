@@ -1,16 +1,15 @@
 
-
-
-
-
-
  
-导入：
+
+
+
+
+导入全部：
 mongorestore --host=127.0.0.1 --port=27017  -d steedos_qqhrs C:\steedos
 
 
 
-导出：
+导出全部：
 mongodump -h 127.0.0.1 --port 27017 -d steedos_nbzy_v2 -o E:\Project\upack\upack-nbzy@2.1.85\@sql
 
 
@@ -19,8 +18,11 @@ mongodump -h 127.0.0.1 --port 27017 -d steedos_nbzy_v2 -o E:\Project\upack\upack
 
 导出数据库steedos_nbzy_v2时：
   0、导出steedos_nbzy_v2全部数据库、但是只保留 rttmoa 项目中需要的数据库即可
-  1、复制 dept、sys、job、menu、role、user数据库 到 steedos文件夹中、
+  1、复制 dept、sys、job、menu、role、user数据库 到 steedos文件夹中
   2、将steedos复制到C盘中： C:\steedos、
   3、导入到目标数据库即可 steedos_kedongFH
 
-! 备份使用mongodb命令导出、不要使用navicat中导出数据
+! 将steedos_nbzy_v2中部分数据库使用mongodump导出、并将部分数据库导入mongorestore至Steedos_kedongFH中
+
+
+! 注意：备份使用mongodb命令导出、不要使用navicat中导出数据

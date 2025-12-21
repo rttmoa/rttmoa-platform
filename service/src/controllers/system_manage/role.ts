@@ -1,56 +1,80 @@
 import { Context } from 'koa';
 import Basic from '../basic';
 import _ from 'lodash';
+import { FieldSchema } from '@/src/types/schema';
 
-// * 角色管理
-// 注：权限字符、新增时和编辑时操作不想同
 class Role extends Basic {
 	constructor() {
 		super();
 	}
 
-	addAndModifyField = async (ctx: Context, data: any) => {
-		const menu = await ctx.mongo.find('__menu');
-		let roleMenu = [];
-		for (const ItemPermission of data?.menuList || []) {
-			for (const ItemMenu of menu) {
-				if (ItemPermission == ItemMenu.key) {
-					roleMenu.push(ItemMenu);
-				}
-			}
-		}
-		return {
-			role_name: this.normalize(data?.role_name, ['string'], null), // 管理员 | 普通用户
-			permission_str: this.normalize(data?.permission_str, ['string'], null), // 权限字符： admin / user
-			level: this.normalize(data?.level, ['number'], null), // 角色级别  1
-			sort: this.normalize(data?.sort, ['number'], null), // 角色排序  1
-			status: this.normalize(data?.status, ['boolean'], false),
-			permission_menu: this.normalize(data?.permission_menu, ['array'], []), // 菜单数组：树结构  ['menu', 'menu2', 'menu22', 'menu221', 'menu222']
-			menuList: this.normalize(roleMenu, ['array'], []), // 菜单数组：角色菜单
+	private readonly tableName = '角色管理';
+	private readonly Collection = '__role';
 
-			dataScope: '全部', // 数据范围
-			depts: [] as any, // 数据权限：部门
-			desc: data?.desc, // 角色描述
-
-			createTime: new Date(),
-			updateBy: 'admin',
-			updateTime: new Date(),
-		};
+	private FieldSchema: FieldSchema = {
+		role_name: { label: '角色名称', type: 'string', query: true, editable: true },
+		permission_str: { label: '权限字符', type: 'string', query: true, editable: true },
+		level: { label: '角色级别', type: 'number', query: false, editable: true },
+		sort: { label: '排序', type: 'number', query: false, editable: true },
+		status: {
+			label: '角色状态',
+			type: 'select',
+			query: true,
+			editable: true,
+			options: [
+				{ label: '启用', value: '启用' },
+				{ label: '停用', value: '停用' },
+			],
+		},
+		desc: { label: '角色描述', type: 'string', query: false, editable: true },
 	};
+
+	private async mapPermissions(ctx: Context, data: any) {
+		const menuIds: string[] = Array.isArray(data?.menuList) ? data.menuList : [];
+		const checkedIds: string[] = Array.isArray(data?.permission_ids) ? data.permission_ids : [];
+		const menusOfChecked = checkedIds.length ? await ctx.mongo.find('__menu', { query: { _id: { $in: checkedIds } } }) : [];
+		console.log('menusOfChecked', menusOfChecked);
+		const permissionKeys = menusOfChecked.map((m: any) => m.key);
+		return {
+			menuList: menuIds || [],
+			permission_ids: checkedIds || [],
+			permission_menu: permissionKeys || [], // 根据 data?.permission_ids中的 _id 去获取菜单中的 key
+		};
+	}
+
+	private async buildRoleDoc(ctx: Context, data: any) {
+		const doc = this.addAndModField(data, this.FieldSchema);
+		const perms = await this.mapPermissions(ctx, data);
+		return {
+			...doc,
+			...perms,
+			dataScope: '全部',
+			depts: [] as any,
+		};
+	}
+
+	private async validatePermissionStrUnique(ctx: Context, value: string, excludeId?: string) {
+		const permission_str = _.trim(value);
+		if (_.isEmpty(permission_str)) return;
+		const query: Record<string, any> = { permission_str };
+		if (excludeId) query._id = { $ne: excludeId };
+		const exists = await ctx.mongo.find(this.Collection, { query });
+		if (exists.length > 0) throw new Error('权限字符已存在');
+	}
 
 	// * 新增角色：角色中带菜单
 	addRole = async (ctx: Context) => {
 		try {
 			const data: any = ctx.request.body;
-			// console.log('添加角色：', data);
+			console.log('添加角色：', data);
 
-			// ! 权限字符 （新增时、判断是否有该字符）
-			const permission_str = _.trim(_.get(data, 'permission_str', ''));
-			if (!_.isEmpty(permission_str)) {
-				const role = await ctx.mongo.find('__role', { query: { permission_str: permission_str } });
-				if (role.length) return ctx.sendError(400, '新增角色错误：权限字符不可以重复');
+			try {
+				await this.validatePermissionStrUnique(ctx, _.get(data, 'permission_str', ''));
+			} catch (e: any) {
+				return ctx.sendError(400, `新增角色错误：${e.message}`);
 			}
-			const role = await this.addAndModifyField(ctx, data);
+
+			const role = await this.buildRoleDoc(ctx, data);
 			const newRole: any = {
 				...role,
 				createTime: new Date(),
@@ -58,7 +82,7 @@ class Role extends Basic {
 				updateBy: 'admin',
 				updateTime: new Date(),
 			};
-			await ctx.mongo.insertOne('__role', newRole);
+			await ctx.mongo.insertOne(this.Collection, newRole);
 			return ctx.send('新增角色成功');
 		} catch (err) {
 			return ctx.sendError(500, err.message);
@@ -69,28 +93,27 @@ class Role extends Basic {
 	modifyRole = async (ctx: Context) => {
 		try {
 			// 1、获取前端参数并校验：
+			const id = ctx.params.id;
 			const data: any = ctx.request.body;
-			console.log('添加角色：', data);
 
-			// ! 权限字符 （更新时、判断除了自己的字符还有别的字符吗）
-			const permission_str = _.trim(_.get(data, 'permission_str', ''));
-			if (!_.isEmpty(permission_str)) {
-				const query: Record<string, any> = { permission_str };
-				// 编辑时需要排除自己
-				if (data._id) query._id = { $ne: data._id }; // $ne = not equal
-				const exists = await ctx.mongo.find('__role', { query });
-				if (exists.length > 0) {
-					return ctx.sendError(400, '操作失败：权限字符已存在');
-				}
+			console.log('编辑角色：', data);
+
+			if (!id) return ctx.sendError(400, `修改岗位操作：无iD`);
+
+			try {
+				await this.validatePermissionStrUnique(ctx, _.get(data, 'permission_str', ''), id);
+			} catch (e: any) {
+				return ctx.sendError(400, `操作失败：${e.message}`);
 			}
 
-			const role = await this.addAndModifyField(ctx, data);
+			const role = await this.buildRoleDoc(ctx, data);
 			const newRole: any = {
 				...role,
 				updateBy: 'admin',
 				updateTime: new Date(),
 			};
-			await ctx.mongo.updateOne('__role', data._id, newRole);
+			console.log('更新后的对象', newRole);
+			await ctx.mongo.updateOne(this.Collection, id, newRole);
 			return ctx.send('更新角色成功');
 		} catch (err) {
 			return ctx.sendError(500, err.message);
@@ -105,9 +128,16 @@ class Role extends Basic {
 			// 3、接收的菜单是 ['menu', 'menu2', 'menu22', 'menu221', 'menu222'] 结构、处理后写入到库中
 			const data = ctx.request.query;
 
-			const find = await ctx.mongo.find('__role');
-
-			return ctx.send({ list: find, page: 1, pageSize: 10, total: find.length });
+			const find = await ctx.mongo.find(this.Collection);
+			// 动态映射 permission_menu keys，确保与当前 menu 表一致
+			const list = [] as any[];
+			for (const role of find) {
+				const ids: string[] = Array.isArray(role.permission_ids) ? role.permission_ids : [];
+				const menus = ids.length ? await ctx.mongo.find('__menu', { query: { _id: { $in: ids } } }) : [];
+				const keys = menus.map((m: any) => m.key);
+				list.push({ ...role, permission_menu: keys });
+			}
+			return ctx.send({ list, page: 1, pageSize: 10, total: list.length });
 		} catch (err) {
 			return ctx.sendError(500, err.message);
 		}
@@ -116,12 +146,10 @@ class Role extends Basic {
 	// * 删除角色
 	delRole = async (ctx: Context) => {
 		try {
-			const data = ctx.request.query;
-			console.log('删除角色 参数：', data);
-			const { id } = data as { id: string };
-			if (!id) return ctx.sendError(400, '未获取到id', 400);
-
-			const del = await ctx.mongo.deleteOne('__role', id);
+			const id = ctx.params.id;
+			console.log('删除角色 参数：', id);
+			if (!id) return ctx.sendError(400, '未获取到id');
+			const del = await ctx.mongo.deleteOne(this.Collection, id);
 			return ctx.send(del);
 		} catch (err) {
 			return ctx.sendError(500, err.message);

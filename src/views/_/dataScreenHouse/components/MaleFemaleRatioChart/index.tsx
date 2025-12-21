@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { CLIENT_RENEG_LIMIT } from 'tls';
 import './index.less';
 import FakeData from './FakeData';
+import { screen_API } from '@/api/modules/screen';
 
 const MaleFemaleRatioChart: React.FC = () => {
 	const scrollRef = useRef(null);
@@ -25,11 +26,11 @@ const MaleFemaleRatioChart: React.FC = () => {
 			}, 1000); // 控制滚动速度
 		};
 
-		// startScroll();
+		startScroll();
 
 		// 鼠标悬停暂停滚动
-		// scrollContainer.addEventListener('mouseenter', () => clearInterval(intervalId));
-		// scrollContainer.addEventListener('mouseleave', startScroll);
+		scrollContainer.addEventListener('mouseenter', () => clearInterval(intervalId));
+		scrollContainer.addEventListener('mouseleave', startScroll);
 
 		return () => clearInterval(intervalId);
 	}, []);
@@ -65,14 +66,25 @@ const MaleFemaleRatioChart: React.FC = () => {
 	// 		setdataSource(key)
 	// 	})
 	// }, []);
-	function GetData() {
-		fetch('http://127.0.0.1:1880/wait_enter')
-			.then(res => res.json())
-			.then(value => {
-				// console.log('data', value.data)
-				const key = value.data.map((value: any, key: any) => ({ ...value, key: key + 1 }));
-				setdataSource(key);
-			});
+	// const api = {
+	// 		find: keepwarm_stock_detail_API.find,
+	// 		add: keepwarm_stock_detail_API.add,
+	// 		modify: keepwarm_stock_detail_API.mod,
+	// 		del: keepwarm_stock_detail_API.del,
+	// 		delMore: keepwarm_stock_detail_API.delMore,
+	// 		importEx: keepwarm_stock_detail_API.importEx,
+	// 	};
+	async function GetData() {
+		// fetch('http://127.0.0.1:1880/wait_enter')
+		// 	.then(res => res.json())
+		// 	.then(value => {
+		// 		// console.log('data', value.data)
+		// 		const key = value.data.map((value: any, key: any) => ({ ...value, key: key + 1 }));
+		// 		setdataSource(key);
+		// 	});
+
+		const data: any = await screen_API.find({});
+		console.log('datassss', data?.data?.list);
 	}
 
 	const timerRef = useRef<any>(null); // 保存定时器ID

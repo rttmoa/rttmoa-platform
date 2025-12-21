@@ -25,11 +25,11 @@ const MaleFemaleRatioChart: React.FC = () => {
 			}, 1000); // 控制滚动速度
 		};
 
-		// startScroll();
+		startScroll();
 
 		// 鼠标悬停暂停滚动
-		// scrollContainer.addEventListener('mouseenter', () => clearInterval(intervalId));
-		// scrollContainer.addEventListener('mouseleave', startScroll);
+		scrollContainer.addEventListener('mouseenter', () => clearInterval(intervalId));
+		scrollContainer.addEventListener('mouseleave', startScroll);
 
 		return () => clearInterval(intervalId);
 	}, []);

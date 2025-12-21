@@ -1,9 +1,10 @@
 import { ProColumns } from '@ant-design/pro-components';
 import { Avatar, Progress, Tag } from 'antd';
 import dayjs from 'dayjs';
-import { TableEditIcon, TableRenderAction } from '@/components/TableAction';
+import { TableRowEdit, TableRenderAction } from '@/components/TableAction';
 import Link from 'antd/lib/typography/Link';
 import { UserOutlined } from '@ant-design/icons';
+import index from '@/views/rule/check';
 
 export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<any>[] => {
 	// * 这里 dataIndex 唯一索引不可以重复
@@ -131,7 +132,7 @@ export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<a
 			valueType: 'option',
 			align: 'center',
 			width: 150,
-			render: (text, record, _, action) => TableEditIcon(record, action),
+			render: (text, record, index, action) => TableRowEdit(record, index, action),
 		},
 		{
 			key: 'option',

@@ -1,9 +1,8 @@
 import { ProColumns } from '@ant-design/pro-components';
-import { Steps, Tag } from 'antd';
+import { Tag } from 'antd';
 import dayjs from 'dayjs';
 import { TableRenderAction } from '@/components/TableAction';
 import Link from 'antd/lib/typography/Link';
-import { LoadingOutlined, SmileOutlined, SolutionOutlined, UserOutlined } from '@ant-design/icons';
 
 export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<any>[] => {
 	// * 这里 dataIndex 唯一索引不可以重复
@@ -23,7 +22,7 @@ export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<a
 			valueType: 'text',
 			ellipsis: true, // 省略
 			// copyable: true,
-			width: 150,
+			width: 220,
 			fixed: 'left',
 			align: 'center',
 			tooltip: '岗位名称：postName',
@@ -59,6 +58,7 @@ export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<a
 			dataIndex: 'flag',
 			valueType: 'select',
 			align: 'center',
+			width: 150,
 			ellipsis: true, // 省略
 			sorter: true,
 			// 筛选栏中是筛选
@@ -81,47 +81,29 @@ export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<a
 				return <span>{tagContent}</span>;
 			},
 		},
-		{
-			title: '运行状态',
-			dataIndex: 'status',
-			valueType: 'select',
-			ellipsis: true, // 省略
-			align: 'center',
-			tooltip: '运行状态：status',
-			fieldProps: { placeholder: '请输入岗位状态' },
-			valueEnum: {
-				all: { text: '全部', status: 'Default' },
-				close: { text: '关闭', status: 'Default' },
-				1: { text: '运行中', status: 'Processing' },
-				启用: { text: '已上线', status: 'Success' },
-				停用: { text: '异常', status: 'Error' },
-			},
-			responsive: ['lg'],
-		},
-		{
-			title: '运行状态',
-			dataIndex: 'process',
-			ellipsis: true, // 省略
-			align: 'center',
-			render: (_, record) => (
-				<Steps
-					size='small'
-					// className='mb30'
-					items={[
-						{ title: '任务已创建', status: 'finish', icon: <UserOutlined /> },
-						{ title: '未执行', status: 'finish', icon: <SolutionOutlined /> },
-						{ title: '正在执行', status: 'process', icon: <LoadingOutlined /> },
-						{ title: '已完成', status: 'wait', icon: <SmileOutlined /> },
-					]}
-				/>
-			),
-			responsive: ['lg'],
-		},
+		// {
+		// 	title: '运行状态',
+		// 	dataIndex: 'status',
+		// 	valueType: 'select',
+		// 	ellipsis: true, // 省略
+		// 	align: 'center',
+		// 	tooltip: '运行状态：status',
+		// 	fieldProps: { placeholder: '请输入岗位状态' },
+		// 	valueEnum: {
+		// 		all: { text: '全部', status: 'Default' },
+		// 		close: { text: '关闭', status: 'Default' },
+		// 		1: { text: '运行中', status: 'Processing' },
+		// 		启用: { text: '已上线', status: 'Success' },
+		// 		停用: { text: '异常', status: 'Error' },
+		// 	},
+		// 	responsive: ['lg'],
+		// },
 		{
 			title: '创建日期',
 			dataIndex: 'createTime',
 			valueType: 'dateRange', // date | dateWeek | dateMonth | dateTime | dateRange | dateTimeRange
 			align: 'center',
+			// width: 150,
 			tooltip: '创建日期：createTime',
 			fieldProps: { placeholder: '选择日期' },
 			ellipsis: true, // 省略

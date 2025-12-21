@@ -18,8 +18,16 @@ class Dept extends Basic {
 
 	findDept = async (ctx: Context) => {
 		try {
-			const payload = ctx.state.user;  
- 
+			const payload = ctx.state.user; // 这就是你的载荷信息
+			// console.log('Authenticated user ID:', payload);
+
+			// const param = ctx.query; 
+			// // status：400，查询部门操作：未获取到iD
+			// if (!param._id) return ctx.sendError(400, `查询部门操作：未获取到iD`);
+			
+			// // status：500，服务器错误 
+			// if (!param.name) throw new Error("查询部门操作：请求参数错误，无部门名称")
+	 
 
 			/** 将扁平结构转换为树结构 */
 			function flatToTree(flatList: any[]): any[] {
@@ -110,7 +118,8 @@ class Dept extends Basic {
 			return newDept
 	}
 
-	// * 新增部门：树结构	  —   是否顶级部门 
+	// * 新增部门：树结构	  —   是否顶级部门
+	// POST: /dept/department
 	addDept = async (ctx: Context) => {
 		try {
 			let data: any = ctx.request.body;
@@ -128,8 +137,10 @@ class Dept extends Basic {
 			return ctx.sendError(500, err.message, 500);
 		}
 	};
- 
- 	modifyDept = async (ctx: Context) => {
+
+	// * 更新菜单
+	// * 新增部门：树结构	  —   是否顶级部门
+	modifyDept = async (ctx: Context) => {
 		try {
 			const id = ctx.params.id;
 			const data: any = ctx.request.body;
@@ -148,7 +159,7 @@ class Dept extends Basic {
 		}
 	};
 
-	
+	// * 删除部门
 	DelDept = async (ctx: Context) => {
 		try {
 			const id = ctx.params.id;

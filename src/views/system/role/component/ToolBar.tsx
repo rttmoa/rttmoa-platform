@@ -1,9 +1,7 @@
-import { ArrowsAltOutlined, FullscreenOutlined, PlusOutlined, SearchOutlined, SecurityScanTwoTone, ShrinkOutlined } from '@ant-design/icons';
+import { ArrowsAltOutlined, FullscreenOutlined, PlusOutlined, SearchOutlined, ShrinkOutlined } from '@ant-design/icons';
 import { Button, Tooltip } from 'antd';
-import Search from 'antd/lib/input/Search'; // ! antd/lib/input
 import { useDispatch } from '@/redux';
 import { setGlobalState } from '@/redux/modules/global';
-import { message } from '@/hooks/useMessage';
 
 type ToolBarProps = {
 	quickSearch: () => void;
@@ -29,7 +27,7 @@ const ToolBarRender = (props: ToolBarProps) => {
 	const ExportBtn = () => {};
 	const ImportBtn = () => {};
 	return [
-		<Search placeholder='快捷搜索...' allowClear onSearch={quickSearch} style={{ width: 200 }} />,
+		// <Search placeholder='快捷搜索...' allowClear onSearch={quickSearch} style={{ width: 200 }} />,
 		<Button icon={<PlusOutlined />} onClick={CreateBtn}>
 			新建
 		</Button>,

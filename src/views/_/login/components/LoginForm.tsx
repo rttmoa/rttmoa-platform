@@ -67,7 +67,6 @@ const LoginForm: React.FC = () => {
 
 			setLoading(true);
 			message.open({ type: 'loading', content: '登录中...' });
-			console.log('await loginAPI.userLogin(getValues)', await loginAPI.userLogin(getValues));
 			const { code, data }: any = type === 'account' ? await loginAPI.userLogin(getValues) : await loginAPI.userRegister(getValues);
 			console.log('data', data);
 			if (code != 200) {
@@ -80,13 +79,13 @@ const LoginForm: React.FC = () => {
 			// const { data } = await loginApi({ ...values, 	password: values.password }); // 得到 {access_token: 'bqddxxwqmfncffacvbpkuxvwvqrhln'}
 
 			// 存储Token + 派发任务存储redux
-			dispatch(setToken(data.token));
+			dispatch(setToken(data?.token));
 
 			// 清除最后一个帐户选项卡
 			dispatch(setTabsList([]));
 
 			// * 初始化权限： 获取用户按钮权限 && 获取用户菜单权限     Button & Menu
-			await initPermissions(data.token);
+			await initPermissions(data?.token);
 
 			notification.success({
 				message: getTimeState(),

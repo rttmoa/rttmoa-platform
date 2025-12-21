@@ -1,48 +1,20 @@
-import { Button, Card, Cascader, Col, Form, Input, InputNumber, message, Modal, Radio, Row, TreeSelect } from 'antd';
-import { useEffect, useRef, useState } from 'react';
+import { Button, Card, Col, Form, Input, InputNumber, Modal, Radio, Row, TreeSelect } from 'antd';
+import { useEffect, useState } from 'react';
+import useEnterSubmit from '@/hooks/useTable/useEnterSubmit';
 import { menu } from './menuConfig';
-import { EnterOutlined, SearchOutlined, SettingTwoTone } from '@ant-design/icons';
+import { SettingTwoTone } from '@ant-design/icons';
 import { Icon } from '@/components/Icon';
 import * as Icons from '@ant-design/icons';
 
 const ModalComponent = (Props: any) => {
-	const {
-		form, // form
+	const { form, menuOpen, modalTitle, modalType: type, modalIsVisible, modalSubMenu, modalMenuInfo: data, setModalIsVisible, handleModalSubmit } = Props;
 
-		menuList, // 菜单
-
-		modalTitle, // 标题
-		modalType: type, // 类型
-		modalIsVisible, // 显示
-		modalMenuInfo: data, // 菜单信息
-
-		setModalIsVisible, // 设置显示
-
-		handleModalSubmit, // 提交
-	} = Props;
-	const menuListRef = useRef<HTMLDivElement>(null);
 	const [isTop, setIsTop] = useState('是');
 	const [value, setValue] = useState<string>('');
 	const [menuType, SetmenuType] = useState('目录');
 	const [iconVisibel, setIconVisibel] = useState(false);
 
-	// 回车键提交数据
-	useEffect(() => {
-		const handleKeyDown = (e: KeyboardEvent) => {
-			if (e.key === 'Enter') {
-				e.preventDefault();
-				form.submit();
-			}
-		};
-		if (modalIsVisible) {
-			window.addEventListener('keydown', handleKeyDown);
-		} else {
-			window.removeEventListener('keydown', handleKeyDown);
-		}
-		return () => {
-			window.removeEventListener('keydown', handleKeyDown);
-		};
-	}, [modalIsVisible]);
+	useEnterSubmit(modalIsVisible, () => form.submit()); // * 回车提交表单数据
 
 	useEffect(() => {
 		form.setFieldsValue({
@@ -54,7 +26,7 @@ const ModalComponent = (Props: any) => {
 			type: type === 'create' ? '目录' : data.meta?.type,
 			key: type === 'create' ? null : data.meta?.key,
 			title: type === 'create' ? null : data.meta?.title,
-			icon: type === 'create' ? null : data.meta?.icon,
+			icon: type === 'create' ? 'AppstoreOutlined' : data.meta?.icon,
 			sort: type === 'create' ? 1 : data.meta?.sort || 1,
 			isLink: type === 'create' ? null : data?.meta?.isLink,
 			isHide: type === 'create' ? '否' : data?.meta?.isHide == 1 ? '是' : '否',
@@ -62,8 +34,16 @@ const ModalComponent = (Props: any) => {
 			isAffix: type === 'create' ? '否' : data?.meta?.isAffix == 1 ? '是' : '否',
 			enable: type === 'create' ? '开启' : data?.meta?.enable || '开启',
 		});
+
 		setIsTop(type === 'create' ? '是' : data?.parent_id == 0 ? '是' : '否');
 		setValue(type === 'create' ? '' : data?.parent_id == 0 ? null : data?.parent_id);
+		if (type == 'createSubMenu') {
+			// ! 设置子菜单、其他项应该是空
+			// ! 是否顶级部门 ？？？？
+			form.setFieldsValue({ parent_id: modalSubMenu });
+			setIsTop('否');
+			setValue(modalSubMenu);
+		}
 	}, [type, data]);
 
 	// * 处理菜单结构：递归
@@ -79,7 +59,7 @@ const ModalComponent = (Props: any) => {
 			return option;
 		});
 	};
-	const treeData = handleMenu(menuList, '');
+	const treeData = handleMenu(menuOpen, '');
 
 	const FormOnFinish = () => {
 		const formList = form.getFieldsValue();
@@ -94,22 +74,15 @@ const ModalComponent = (Props: any) => {
 		handleModalSubmit && handleModalSubmit(type, formList);
 	};
 
-	const OnCancel = () => {
-		setModalIsVisible(false);
-	};
-	const OnSubmit = () => {
-		form.submit();
-	};
-	// const iconNames = Object.keys(Icons);
+	const OnCancel = () => setModalIsVisible(false);
+	const OnSubmit = () => form.submit();
 
 	const iconNames: any = [];
 	Object.keys(Icons).forEach(key => {
 		if (key.endsWith('Outlined')) {
-			// iconNames[key] = (Icons as any)[key];
 			iconNames.push(key);
 		}
 	});
-	// console.log('iconNames', iconNames);
 	return (
 		<>
 			<Modal
@@ -127,15 +100,7 @@ const ModalComponent = (Props: any) => {
 					</Button>,
 				]}
 			>
-				<Form
-					className='mt-[40px] mb-[50px] px-[20px] max-h-[650px] overflow-auto'
-					layout='vertical' // horizontal | vertical
-					size='middle'
-					form={form}
-					onFinish={FormOnFinish}
-					// labelCol={{ span: 6 }}
-					// wrapperCol={{ span: 16 }}
-				>
+				<Form className='mt-[40px] mb-[50px] px-[20px] max-h-[650px] overflow-auto' layout='vertical' size='middle' form={form} onFinish={FormOnFinish}>
 					<Row gutter={16}>
 						<Col span={12}>
 							<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>是否顶级部门</span>} name='isTop' rules={[{ required: true, message: '' }]}>
@@ -278,7 +243,7 @@ const ModalComponent = (Props: any) => {
 
 						<Col span={12}>
 							<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>显示排序</span>} name='sort' tooltip={{ title: '最小值：1、最大值：999、数值小排在前面' }}>
-								<InputNumber controls min={1} max={999} defaultValue={1} />
+								<InputNumber controls min={1} max={99999999} defaultValue={1} />
 							</Form.Item>
 						</Col>
 						<Col span={12}>

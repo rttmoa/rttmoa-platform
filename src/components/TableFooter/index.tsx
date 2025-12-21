@@ -4,8 +4,9 @@ import { Button, Popconfirm } from 'antd';
 
 type FooterComponentProps = {
 	selectedRows: any;
-	modalResult: (type: string, data: any) => void;
+	modalResult: (type: any, data: any) => void;
 };
+
 const FooterComponent: React.FC<FooterComponentProps> = props => {
 	const { selectedRows, modalResult } = props;
 	return (
@@ -14,9 +15,6 @@ const FooterComponent: React.FC<FooterComponentProps> = props => {
 			extra={
 				<div className='font-mono'>
 					已选择 <a style={{ fontWeight: 600 }}>{selectedRows.length}</a> 项 &nbsp;&nbsp;&nbsp;&nbsp;
-					{/* <span>
-            总数为 <span className='text-red-600'>{selectedRows.reduce((pre: any, item: { age: any }) => pre + item.age!, 0)}</span> 岁
-          </span> */}
 				</div>
 			}
 		>

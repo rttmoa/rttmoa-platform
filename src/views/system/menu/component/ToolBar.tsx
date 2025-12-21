@@ -47,10 +47,10 @@ const ToolBarRender = (props: ToolBarProps) => {
 			新建菜单
 		</Button>,
 		<Button type='primary' icon={<PlusSquareOutlined />} onClick={menuExpand}>
-			展开全部
+			展开全部菜单
 		</Button>,
 		<Button type='primary' icon={<MinusSquareOutlined />} onClick={menuClosed}>
-			折叠全部
+			折叠全部菜单
 		</Button>,
 
 		<Button icon={<ArrowsAltOutlined />} onClick={ExportBtn}>

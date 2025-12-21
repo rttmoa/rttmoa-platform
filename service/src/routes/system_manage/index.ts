@@ -1,6 +1,7 @@
 import Router from '@koa/router';
 const router = new Router();
 import User from './user';
+import UserManage from './user_manage';
 import Menu from './menu';
 import Job from './job';
 import Role from './role';
@@ -21,6 +22,8 @@ export default (app: any) => {
 	router.use('/userp', User.routes());
 	router.use('/login', Login.routes());
 	router.use('/role', Role.routes());
+
+	router.use('/user_manage', UserManage.routes());
 	
 
 	const jwtMiddleware: any = koajwt({ secret: config.jwtkey }).unless({

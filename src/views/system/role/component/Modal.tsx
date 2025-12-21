@@ -1,46 +1,82 @@
-import { FindAllMenu } from '@/api/modules/system';
-import { Button, Checkbox, Col, Form, Input, InputNumber, Modal, Radio, Row, Space, Switch, Tree } from 'antd';
+import useEnterSubmit from '@/hooks/useTable/useEnterSubmit';
+import { Button, Checkbox, Col, Form, Input, InputNumber, Modal, Row, Select, Tree } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { useEffect, useState } from 'react';
 
 const ModalComponent = (Params: any) => {
-	const { form, modalIsVisible, setModalIsVisible, modalTitle, modalType, modalUserInfo: userInfo, handleModalSubmit } = Params;
+	const { Menus, form, modalIsVisible, setModalIsVisible, modalTitle, modalType, modalUserInfo: userInfo, handleModalSubmit } = Params;
 
-	const [menuList, setMenuList] = useState([]);
-	const [expandedKeys, setExpandedKeys] = useState([]); // 展开
-	const [checkedKeys, setCheckedKeys] = useState<any>([]); // 全选
+	const [treeData, setTreeData] = useState<any[]>([]);
+	const [keyToId, setKeyToId] = useState<Record<string, string>>({});
+	const [expandedKeys, setExpandedKeys] = useState<any[]>([]);
+	const [checkedKeys, setCheckedKeys] = useState<any[]>([]); // 设置 keys
 
-	function transformRoutes(routes: any[]) {
-		return routes.map((route: any) => {
-			const item: any = {
-				title: route.meta?.title || '',
-				key: route.meta?.key || '',
-			};
-			if (Array.isArray(route.children) && route.children.length > 0) {
-				item.children = transformRoutes(route.children);
-			}
-			return item;
-		});
-	}
+	useEnterSubmit(modalIsVisible, () => form.submit()); // * 回车提交表单数据
+
+	const buildTreeAndMaps = (routes: any[]) => {
+		const k2i: Record<string, string> = {};
+		const i2k: Record<string, string> = {};
+		const walk = (nodes: any[]): any[] =>
+			nodes.map((route: any) => {
+				const key = route.meta?.key || '';
+				const id = route.unique || '';
+				if (key && id) {
+					k2i[key] = id;
+					i2k[id] = key;
+				}
+				const item: any = { title: route.meta?.title || '', key };
+				if (Array.isArray(route.children) && route.children.length > 0) {
+					item.children = walk(route.children);
+				}
+				return item;
+			});
+		return { tree: walk(routes), k2i, i2k };
+	};
+
+	const getLeafKeys = (nodes: any[]) => {
+		const list: any[] = [];
+		const walk = (arr: any[]) => {
+			arr.forEach((item: any) => {
+				if (item.children && item.children.length) {
+					walk(item.children);
+				} else {
+					list.push(item.key);
+				}
+			});
+		};
+		walk(nodes);
+		return list;
+	};
 
 	useEffect(() => {
-		FindAllMenu({ name: 'all' }).then((res: any) => {
-			setMenuList(transformRoutes(res.data || []) as any);
-			setExpandedKeys([]);
-			setCheckedKeys(modalType == 'create' ? '' : userInfo.permission_menu);
-			form.setFieldsValue({
-				role_name: modalType == 'create' ? '' : userInfo.role_name,
-				permission_str: modalType == 'create' ? '' : userInfo.permission_str,
-				level: modalType == 'create' ? 1 : userInfo.level,
-				sort: modalType == 'create' ? 1 : userInfo.sort,
-				status: modalType == 'create' ? false : userInfo.status,
-				desc: modalType == 'create' ? '' : userInfo.desc,
-			});
-		});
-	}, [modalType, userInfo]);
+		const { tree, k2i, i2k } = buildTreeAndMaps(Menus || []);
+		setTreeData(tree);
+		setKeyToId(k2i);
+		setExpandedKeys([]);
 
-	// 取消按钮
-	const OnCancel = () => {
+		const initKeysRaw =
+			modalType === 'create'
+				? []
+				: Array.isArray(userInfo.permission_ids)
+					? userInfo.permission_ids.map((id: string) => i2k[id]).filter(Boolean)
+					: Array.isArray(userInfo.menuList)
+						? userInfo.menuList.map((id: string) => i2k[id]).filter(Boolean)
+						: [];
+		const leafSet = new Set(getLeafKeys(tree));
+		const initKeysLeaf = initKeysRaw.filter((k: string) => leafSet.has(k));
+
+		setCheckedKeys(initKeysLeaf.length > 0 ? initKeysLeaf : initKeysRaw);
+		form.setFieldsValue({
+			role_name: modalType === 'create' ? '' : userInfo.role_name,
+			permission_str: modalType === 'create' ? '' : userInfo.permission_str,
+			level: modalType === 'create' ? 1 : userInfo.level,
+			sort: modalType === 'create' ? 1 : userInfo.sort,
+			status: modalType === 'create' ? '启用' : userInfo.status,
+			desc: modalType === 'create' ? '' : userInfo.desc,
+		});
+	}, [Menus, modalType, userInfo]);
+
+	const onCancel = () => {
 		setExpandedKeys([]);
 		setCheckedKeys([]);
 		setModalIsVisible(false);
@@ -48,86 +84,72 @@ const ModalComponent = (Params: any) => {
 
 	// * 提交最终数据 （将菜单处理为menu格式、为每个角色可以直接使用的菜单结构）
 	const FormOnFinish = () => {
-		// 🔧 Step 1：递归查找某个 key 的路径
-		function findPathByKey(tree: any, targetKey: any, path = []) {
-			for (const node of tree) {
-				const currentKey = node.key;
-				const newPath: any = [...path, currentKey];
-				if (currentKey === targetKey) {
-					return newPath;
-				}
-				if (node.children && node.children.length > 0) {
-					const found: any = findPathByKey(node.children, targetKey, newPath);
+		const getPath = (nodes: any[], target: any, path: any[] = []) => {
+			for (const node of nodes) {
+				const current = node.key;
+				const next = [...path, current];
+				if (current === target) return next;
+				if (node.children && node.children.length) {
+					const found: any = getPath(node.children, target, next);
 					if (found) return found;
 				}
 			}
 			return null;
-		}
-		function findPathsForKeys(tree: any, keys: any[]) {
-			const result = new Set(); // 使用 Set 避免重复
-			keys.forEach((key: any) => {
-				const path = findPathByKey(tree, key);
-				if (path) {
-					path.forEach((k: unknown) => result.add(k)); // 父节点也加入
-				}
+		};
+		const collectWithAncestors = (nodes: any[], keys: any[]) => {
+			const set = new Set<any>();
+			keys.forEach(k => {
+				const path = getPath(nodes, k);
+				if (path) path.forEach((p: any) => set.add(p));
 			});
-			return Array.from(result); // 最终返回扁平 key 数组
-		}
-		const flatKeys = findPathsForKeys(menuList, checkedKeys);
-		// console.log('所有菜单：', menuList);
-		// console.log('checkedKeys', checkedKeys);
-		// console.log('flatKeys', flatKeys); // 获取到所有的父子菜单： ['menu', 'menu2', 'menu22', 'menu221', 'menu222']
+			return Array.from(set);
+		};
+		const flat = collectWithAncestors(treeData, checkedKeys);
+		const menuIds = flat.map(k => keyToId[k]).filter(Boolean);
+		const checkedIds = checkedKeys.map(k => keyToId[k]).filter(Boolean);
 		const formList = form.getFieldsValue();
-		if (modalType == 'edit') {
+		if (modalType === 'edit') {
 			formList._id = userInfo._id;
 		}
-		formList.permission_menu = checkedKeys; // 无父节点：['pageMenu']
-		formList.menuList = flatKeys; // 有父节点：['auth', 'pageMenu']
+		formList.permission_menu = checkedKeys;
+		formList.permission_ids = checkedIds;
+		formList.menuList = menuIds;
 		handleModalSubmit && handleModalSubmit(modalType, formList);
 	};
 
-	const getAllKeys = (nodes: any) => {
-		const keys: any[] = [];
-		const traverse = (arr: any[]) => {
-			arr.forEach((item: { key: any; children: any }) => {
-				keys.push(item.key);
-				if (item.children) traverse(item.children);
+	const getAllKeys = (nodes: any[]) => {
+		const list: any[] = [];
+		const walk = (arr: any[]) => {
+			arr.forEach((item: any) => {
+				list.push(item.key);
+				if (item.children) walk(item.children);
 			});
 		};
-		traverse(nodes);
-		return keys;
+		walk(nodes);
+		return list;
 	};
 	// 展开/折叠
 	const ExpandedFunc = (e: any) => {
-		const isTrue = e.target.checked;
-		if (isTrue) {
-			const allKeys: any = getAllKeys(menuList);
-			setExpandedKeys(allKeys);
-		} else {
-			setExpandedKeys([]);
-		}
+		const checked = e.target.checked;
+		setExpandedKeys(checked ? getAllKeys(treeData) : []);
 	};
 	// 全选/全不选
 	const SelectAllFunc = (e: any) => {
-		const isTrue = e.target.checked;
-		if (isTrue) {
-			const allKeys: any = getAllKeys(menuList);
-			setCheckedKeys(allKeys);
-		} else {
-			setCheckedKeys([]);
-		}
+		const checked = e.target.checked;
+		setCheckedKeys(checked ? getAllKeys(treeData) : []);
 	};
 	const OnSubmit = () => {
 		form.submit();
 	};
+
 	return (
 		<Modal
-			title={modalTitle}
-			width={600}
+			title={`${modalTitle} ${userInfo?.role_name || '角色'}`}
+			width={650}
 			open={modalIsVisible}
-			onCancel={OnCancel}
+			onCancel={onCancel}
 			footer={[
-				<Button danger loading={false} onClick={OnCancel}>
+				<Button danger loading={false} onClick={onCancel}>
 					取消
 				</Button>,
 				<Button key='link' type='primary' loading={false} onClick={OnSubmit}>
@@ -135,14 +157,7 @@ const ModalComponent = (Params: any) => {
 				</Button>,
 			]}
 		>
-			<Form
-				className='mt-[40px] mb-[100px] px-[20px] max-h-[500px] overflow-auto'
-				layout='horizontal'
-				form={form}
-				labelCol={{ span: 4 }}
-				wrapperCol={{ span: 18 }}
-				onFinish={FormOnFinish}
-			>
+			<Form className='mt-[20px] mb-[50px] px-[20px] max-h-[850px] overflow-auto' layout='horizontal' form={form} labelCol={{ span: 4 }} wrapperCol={{ span: 18 }} onFinish={FormOnFinish}>
 				<Row gutter={16}>
 					<Col span={24}>
 						<Form.Item label='角色名称' name='role_name' rules={[{ required: true, message: '必填：角色名称' }]}>
@@ -165,8 +180,13 @@ const ModalComponent = (Params: any) => {
 						</Form.Item>
 					</Col>
 					<Col span={24}>
-						<Form.Item label='角色状态' name='status' rules={[{ required: false }]}>
-							<Switch />
+						<Form.Item label='角色状态' name='status' rules={[{ required: true, message: '必选：角色状态' }]}>
+							<Select
+								options={[
+									{ label: '启用', value: '启用' },
+									{ label: '停用', value: '停用' },
+								]}
+							/>
 						</Form.Item>
 					</Col>
 					<Col span={24}>
@@ -190,10 +210,9 @@ const ModalComponent = (Params: any) => {
 									checkStrictly={false}
 									showLine
 									checkable
-									treeData={menuList}
+									treeData={treeData}
 									checkedKeys={checkedKeys}
 									expandedKeys={expandedKeys}
-									// 自动寻找父级吗？
 									onExpand={(keys: any) => {
 										setExpandedKeys(keys);
 									}}

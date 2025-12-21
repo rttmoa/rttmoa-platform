@@ -1,0 +1,21 @@
+
+
+
+
+1、导出数据库 steedos_kedongFH
+2、将 __dept, __job, __menu, __role, __sys, __user 覆盖导入到服务器 可替换最新SQL
+3、将客户端文件打包到服务端运行
+
+
+
+
+
+导出 steedos_kedongFH： 
+mongodump -h 127.0.0.1 --port 27017 -d steedos_kedongFH -o E:\Project\rttmoa-platform-kd\sql
+
+导入 steedos_kedongFH.__menu：
+mongorestore -h 127.0.0.1 --port 27017 -d steedos_kedongFH -c __uuuusers E:\Project\rttmoa-platform-kd\sql\steedos_kedongFH\__menu.bson
+
+
+覆盖导入（推荐用于替换数据） 替换.__menu：
+mongorestore -h 127.0.0.1 --port 27017 -d steedos_kedongFH -c __menu --drop E:\Project\rttmoa-platform-kd\sql\steedos_kedongFH\__menu.bson

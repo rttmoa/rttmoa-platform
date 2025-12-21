@@ -7,7 +7,7 @@ import 'antd/dist/reset.css';
 import '@/styles/index.css';
 import '@/styles/index.less';
 import '@/assets/iconfont/iconfont.less'; // iconfont 字体图标
-import 'virtual:svg-icons-register'; // svg
+// import 'virtual:svg-icons-register'; // svg
 
 // #region
 // *

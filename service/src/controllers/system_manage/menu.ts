@@ -160,15 +160,31 @@ class Menu extends Basic {
 			}
 
 			// 根据角色：proAdmin / admin / user 去
-			const { role } = await this.getUserById(currentUser?.id, ctx);
+			const { role } = await this.getUserById(currentUser?.id, ctx); // 解构出权限字符  ['admin']
+			// console.log('role', role);
 			let RoleMenu: any = [];
-			if (role.length) {
-				const Role = await ctx.mongo.find('__role', { query: { permission_str: { $in: role } }, sort: { level: -1 } }); // 角色级别倒序
-				RoleMenu = Role[0].menuList;
+			if (role && role.length) {
+				const Role = await ctx.mongo.find('__role', { query: { permission_str: { $in: role } }, sort: { level: -1 } });  
+				if (Role.length) {
+					const ids = _.get(Role[0], 'menuList', []);  
+					if (Array.isArray(ids) && ids.length) { 
+						RoleMenu = await ctx.mongo.find('__menu', { query: { _id: { $in: ids } } });
+					}
+				} else {
+					RoleMenu = [];
+				}
+			} 
+
+			// * ✅ 根据角色：proAdmin / admin / user 返回对应的角色菜单
+			if (name && name == '角色' && RoleMenu.length > 0) {
+				const tree = flatToTree(RoleMenu);
+				removeEmptyChildren(tree);
+				const sortedTree = sortTreeBySort(tree);
+				return ctx.send(sortedTree, '获取菜单树结构成功');
 			}
 
 			// * ✅ 主控制逻辑：查询全部菜单
-			if (name && name == 'all') {
+			if (name && name == '全部') {
 				const flatMenu = await ctx.mongo.find('__menu'); // 或 "__dept"
 				const tree = flatToTree(flatMenu);
 				removeEmptyChildren(tree);
@@ -177,8 +193,9 @@ class Menu extends Basic {
 			}
 
 			// * ✅ 主控制逻辑： 前端查询：菜单 != "关闭"
-			if (name && name == 'open') {
-				const flatMenu = await ctx.mongo.find('__menu', { query: { enable: { $ne: '关闭' } } }); // 或 "__dept"
+			if (name && name == '开启') {
+				// const flatMenu = await ctx.mongo.find('__menu', { query: { enable: { $ne: '关闭' } } }); // 或 "__dept"
+				const flatMenu = await ctx.mongo.find('__menu', { query: { enable: '开启' } });
 				const tree = flatToTree(flatMenu);
 				removeEmptyChildren(tree);
 				const sortedTree = sortTreeBySort(tree);
@@ -193,14 +210,6 @@ class Menu extends Basic {
 				const home = await ctx.mongo.find('__menu', { query: { path: '/_/home/index' } });
 				const homePage = flatToTree(home);
 				return ctx.send(homePage, '获取菜单树结构成功');
-			}
-
-			// * ✅ 根据角色：proAdmin / admin / user 返回对应的角色菜单
-			if (RoleMenu.length) {
-				const tree = flatToTree(RoleMenu);
-				removeEmptyChildren(tree);
-				const sortedTree = sortTreeBySort(tree);
-				return ctx.send(sortedTree, '获取菜单树结构成功');
 			}
 		} catch (err) {
 			return ctx.sendError(500, err.message);
@@ -229,12 +238,10 @@ class Menu extends Basic {
 			// * 新增时、如果上一级状态是关闭、那么新增的子菜单状态也是关闭状态
 			// console.log('上级菜单：', data?.parent_id); // 0 | auth
 			let enableStatus = data?.enable;
-			let sortPlus = 1;
 			if (data?.parent_id != 0) {
 				// 当不是顶级菜单时
 				const exists = await ctx.mongo.find('__menu', { query: { key: data?.parent_id }, sort: { sort: -1 } });
 				if (exists.length) {
-					sortPlus = exists[0].sort + 10;
 					if (exists[0].enable == '关闭') enableStatus = '关闭';
 				}
 			}
@@ -244,7 +251,7 @@ class Menu extends Basic {
 			// * 4、编辑菜单对象
 			function delStr(str: string) {
 				const handleStr = String(str || '').trim();
-				if (handleStr == '') return "";
+				if (handleStr == '') return '';
 				else {
 					if (str.includes('\\')) {
 						return str.replace(/\\/g, '/');
@@ -267,7 +274,7 @@ class Menu extends Basic {
 				is_hide: data?.isHide == '是' ? 1 : 0, // 是否隐藏菜单项（0 否，1 是）
 				is_full: data?.isFull == '是' ? 1 : 0, // 是否全屏显示页面
 				is_affix: data?.isAffix == '是' ? 1 : 0, // 是否固定标签页
-				sort: +data?.sort == 1 ? sortPlus : +data?.sort, // 显示排序: 1-9999
+				sort: +data?.sort || 1, // 显示排序: 1-9999
 				enable: enableStatus, // 是否开启菜单
 				created_at: new Date(),
 				updated_at: new Date(),
@@ -349,7 +356,7 @@ class Menu extends Basic {
 						return handleStr;
 					}
 				}
-			} 
+			}
 			let fDoc: any = {
 				// * 注意：新增与修改传递的top数组不一致、修改时、传递的是当前菜单、不是上一级菜单
 				parent_id: data?.parent_id,
@@ -368,7 +375,7 @@ class Menu extends Basic {
 				sort: +data?.sort || 1,
 				enable: delStr(data?.enable),
 				updated_at: new Date(),
-			}; 
+			};
 			await ctx.mongo.updateOne('__menu', findMenu[0]._id, fDoc);
 			return ctx.send('更新菜单成功');
 		} catch (err) {

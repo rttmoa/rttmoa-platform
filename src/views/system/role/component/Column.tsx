@@ -19,9 +19,25 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 			// hideInTable: true,
 			// hideInForm: true,
 			// hideInDescriptions: true,
+
+			// render: (dom, entity: any) => {
+			// 	return <Link onClick={() => handleOperator('detail', entity)}>{entity?.role_name}</Link>;
+			// },
 			sorter: true,
+			editable: () => true,
 			render: (dom, entity: any) => {
-				return <Link onClick={() => handleOperator('detail', entity)}>{entity?.role_name}</Link>;
+				const status = entity?.status;
+				const nama = entity?.role_name;
+				return (
+					<a
+						href='javascript:void(0)'
+						onClick={() => {
+							handleOperator('detail', entity);
+						}}
+					>
+						{status == '停用' ? <span className='text-gray-400'>{nama}</span> : nama}
+					</a>
+				);
 			},
 		},
 		{
@@ -60,12 +76,9 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 			tooltip: '角色状态： status',
 			// width: 150,
 			sorter: true,
-			// render: (data, entity) => {
-			// 	return <Switch value={data == '0' ? false : true} />;
-			// },
 			render: (dom, entity) => {
-				if (dom == '1') return <Tag color='blue'>启用</Tag>;
-				if (dom == '0') return <Tag color='red'>停用</Tag>;
+				if (dom == '启用') return <Tag color='blue'>启用</Tag>;
+				if (dom == '停用') return <Tag color='red'>停用</Tag>;
 			},
 		},
 		{

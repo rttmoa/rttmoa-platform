@@ -1,13 +1,15 @@
 import { MongoClient, ObjectId } from 'mongodb';
+import 'dotenv/config'
+
 const chalk = require('chalk');
 const url = 'mongodb://127.0.0.1:27017';
 // const url = "mongodb://localhost"; // 链接地址错误
 
-const dbName = 'steedos_nbzy_v2';
+const dbName = process.env.DB_NAME || "";
 const baseInfo = {
-	space: '678dc12f269bfe707033b331',
-	created_by: '678dc12d269bfe707033b32f',
-	owner: '678dc12d269bfe707033b32f',
+	space: process.env.SPACE_ID || "",
+	created_by: process.env.CREATED_BY || "",
+	owner: process.env.OWNER_ID || "",
 };
 
 // 参考：
@@ -45,6 +47,9 @@ class MongoService {
 	private client: any;
 
 	constructor() {
+		if (!dbName) {
+			throw new Error("未获取到数据库名");
+		}
 		this.client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true } as any);
 		this.setupListeners(); // 绑定连接事件监听
 	}
@@ -64,7 +69,12 @@ class MongoService {
 	private async connect() {
 		if (!this.client.topology || !this.client.topology.isConnected()) {
 			await this.client.connect();
-			console.log(chalk.blue('🔌 正在连接 MongoDB...'));
+			console.log(chalk.blue("🔌 正在连接 MongoDB..."));
+		}
+		const dbName = process.env.DB_NAME as string;
+		// console.log("当前数据库是：", dbName);
+		if (!dbName) {
+			throw new Error("未获取到数据库名");
 		}
 		return this.client.db(dbName);
 	}

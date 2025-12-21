@@ -1,4 +1,4 @@
-import { findRole } from '@/api/modules/system';
+import { roleAPI } from '@/api/modules/system';
 import { Button, Col, Form, Input, Modal, Radio, Row, Select, Space } from 'antd';
 import { useEffect, useState } from 'react';
 
@@ -8,7 +8,7 @@ const ModalComponent = (Params: any) => {
 	const [roleOption, setRoleOption] = useState([]);
 
 	async function GetRole() {
-		const role: any = await findRole({ name: 'all' });
+		const role: any = await roleAPI.find({ name: '全部' });
 		const roleList = role.data?.list;
 		const option = roleList.map((value: any) => {
 			return {
@@ -65,14 +65,7 @@ const ModalComponent = (Params: any) => {
 				</Button>,
 			]}
 		>
-			<Form
-				className='mt-[40px] mb-[100px] px-[20px] max-h-[500px] overflow-auto'
-				layout='horizontal'
-				form={form}
-				labelCol={{ span: 4 }}
-				wrapperCol={{ span: 18 }}
-				onFinish={FormOnFinish}
-			>
+			<Form className='mt-[40px] mb-[100px] px-[20px] max-h-[500px] overflow-auto' layout='horizontal' form={form} labelCol={{ span: 4 }} wrapperCol={{ span: 18 }} onFinish={FormOnFinish}>
 				<Row gutter={16}>
 					<Col span={12}>
 						<Form.Item label='姓名' name='username' rules={[{ required: true, message: '请输入姓名' }]}>

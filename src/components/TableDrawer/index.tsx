@@ -4,39 +4,41 @@ import { Drawer, Empty, Typography } from 'antd';
 
 type DrawerComponentProps = {
 	drawerIsVisible: boolean;
-	drawerCurrentRow: {
-		name: string | undefined;
-		[key: string]: any;
-	};
+	drawerCurrentRow: any;
 	drawerClose: any;
-	columnsConfig: (modalOperate: any, modalResult: any) => ProColumns<any>[];
-	modalOperate: any;
-	modalResult: any;
+	columnsConfig: (Operate: any, Result: any, columns: any, tableOps: any) => ProColumns<any>[];
+
+	modalOperate?: any;
+	modalResult?: any;
+	columnsSchemaField?: any;
+	tableOps?: any;
 };
 const DrawerComponent: React.FC<DrawerComponentProps> = Params => {
-	const { drawerIsVisible, drawerCurrentRow, drawerClose, columnsConfig, modalOperate, modalResult } = Params;
-	const col = columnsConfig(modalOperate, modalResult) as ProDescriptionsItemProps<UserList>[];
+	const { drawerIsVisible, drawerCurrentRow, drawerClose, columnsConfig, modalOperate, modalResult, columnsSchemaField, tableOps } = Params;
+
+	const col = columnsConfig(modalOperate, modalResult, columnsSchemaField, tableOps) as ProDescriptionsItemProps<UserList>[];
 	const colConfig = col.map((value: any) => {
 		if (value.valueType == 'digit') value.valueType = 'text';
+		if (value.valueType == 'date') value.valueType = 'date';
 		return { ...value };
 	});
 
 	return (
 		<Drawer width={550} open={drawerIsVisible} onClose={drawerClose} closable={true}>
-			{drawerCurrentRow?.name ? (
+			{drawerCurrentRow?._id ? (
 				<ProDescriptions<UserList>
 					// extra='extra'
 					bordered
 					size='small'
 					layout='horizontal'
 					column={1}
-					title={drawerCurrentRow?.name}
+					title={drawerCurrentRow?.time__c}
 					request={async () => ({ data: drawerCurrentRow || {} })}
-					params={{ id: drawerCurrentRow?.name }}
+					params={{ id: drawerCurrentRow?._id }}
 					columns={colConfig}
 				/>
 			) : (
-				<Empty className='mt-[20px]' description={<Typography.Text>详情信息中未配置 name 字段</Typography.Text>} />
+				<Empty className='mt-[20px]' description={<Typography.Text>详情信息数据错误！</Typography.Text>} />
 			)}
 		</Drawer>
 	);

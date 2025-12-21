@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { GlobalState } from '@/redux/interface'
-import { DEFAULT_PRIMARY } from '@/config'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { GlobalState } from '@/redux/interface';
+import { DEFAULT_PRIMARY } from '@/config';
 
 const globalState: GlobalState = {
 	// 布局 模式 (vertical | classic | transverse | columns)
@@ -25,6 +25,8 @@ const globalState: GlobalState = {
 	compactAlgorithm: false,
 	// 全局主题 -> antd 全局圆角大小
 	borderRadius: 6,
+	// 全局主题： 左侧侧边栏宽度、默认210
+	sidebarWidth: 210,
 
 	// 布局样式 -> 菜单 分割
 	menuSplit: true,
@@ -54,7 +56,7 @@ const globalState: GlobalState = {
 
 	// 主题盒子 Drawer 弹窗
 	themeDrawerVisible: false,
-}
+};
 
 const globalSlice = createSlice({
 	name: 'hooks-global',
@@ -62,14 +64,14 @@ const globalSlice = createSlice({
 	reducers: {
 		// TODO: 泛型类型
 		setGlobalState<T extends keyof GlobalState>(state: GlobalState, { payload }: PayloadAction<ObjToKeyValUnion<GlobalState>>) {
-			state[payload.key as T] = payload.value as GlobalState[T]
+			state[payload.key as T] = payload.value as GlobalState[T];
 		},
 	},
-})
+});
 // console.log(globalSlice);
 
-export const { setGlobalState } = globalSlice.actions
-export default globalSlice.reducer
+export const { setGlobalState } = globalSlice.actions;
+export default globalSlice.reducer;
 
 // 使用：
 // <div>

@@ -21,6 +21,10 @@ export class moduleAPI {
 
 	// 克东 保温库库存可视化(450个)
 	static getShelf_kd(params: Params) {
-		return httpUpack.get(`/storage_kd/shelfs`, params);
+		return httpUpack.get(`/storage_kd_keepwarm/shelfs`, params);
+	}
+	// 克东 常温库
+	static getShelf_kd_cwkeep(params: Params) {
+		return httpUpack.get(`/storage_kd_cwwarm/shelfs`, params);
 	}
 }
