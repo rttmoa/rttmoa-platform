@@ -1,0 +1,1 @@
+import{j as r,A as e}from"./index-fb38a998.js";import{C as s}from"./index-5bc852a6.js";import{I as t}from"./index-021b7839.js";import"./addEventListener-55f5334e.js";const o=""+new URL("../png/online-e94e9753.png",import.meta.url).href,p=()=>r.jsxs(s,{children:[r.jsx(e,{message:"示例：",type:"info",showIcon:!0}),r.jsx("br",{}),r.jsx(t,{width:1600,src:o})]});export{p as default};
