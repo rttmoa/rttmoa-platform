@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.59](https://github.com/rttmoa/rttmoa-platform/compare/v3.0.0...v2.4.59) (2025-12-21)
+
+
+### Features
+
+* 🚀 更新 public service src目录下文件 ([8d8345e](https://github.com/rttmoa/rttmoa-platform/commit/8d8345eb7d88ba3056dde251a989ca9c8c732e46))
+* 🚀 修改下拉组件Dropdown宽度 ([9d5bc9e](https://github.com/rttmoa/rttmoa-platform/commit/9d5bc9e13a8a40e86af74d9dc126d0f9872e0638))
+
+
+### Bug Fixes
+
+* 🧩 layout ([77f3b19](https://github.com/rttmoa/rttmoa-platform/commit/77f3b1976214505bca7a1d0ef2a0c80516aef3cc))
+* **api:** 🧩 a ([5711528](https://github.com/rttmoa/rttmoa-platform/commit/57115284db021a217653b3b819e02f50ee6f46e1))
+
 ### [2.4.58](https://github.com/rttmoa/rttmoa-platform/compare/v2.4.57...v2.4.58) (2025-12-16)
 
 
