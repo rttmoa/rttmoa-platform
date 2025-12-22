@@ -164,16 +164,16 @@ class Menu extends Basic {
 			// console.log('role', role);
 			let RoleMenu: any = [];
 			if (role && role.length) {
-				const Role = await ctx.mongo.find('__role', { query: { permission_str: { $in: role } }, sort: { level: -1 } });  
+				const Role = await ctx.mongo.find('__role', { query: { permission_str: { $in: role } }, sort: { level: -1 } });
 				if (Role.length) {
-					const ids = _.get(Role[0], 'menuList', []);  
-					if (Array.isArray(ids) && ids.length) { 
+					const ids = _.get(Role[0], 'menuList', []);
+					if (Array.isArray(ids) && ids.length) {
 						RoleMenu = await ctx.mongo.find('__menu', { query: { _id: { $in: ids } } });
 					}
 				} else {
 					RoleMenu = [];
 				}
-			} 
+			}
 
 			// * ✅ 根据角色：proAdmin / admin / user 返回对应的角色菜单
 			if (name && name == '角色' && RoleMenu.length > 0) {
@@ -292,6 +292,7 @@ class Menu extends Basic {
 			// * 1、校验参数、校验前端参数  【前端校验参数】
 			const data: any = ctx.request.body;
 			console.log('更新菜单参数：', data);
+			// return ctx.send({ data: await ctx.mongo.find('__menu', { query: {} }) });
 
 			const findMenu = await ctx.mongo.find('__menu', { query: { _id: data?._id } });
 			if (findMenu.length == 0) return ctx.sendError(400, '修改菜单失败：数据错误，根据id查找、数据未找到');
@@ -312,11 +313,60 @@ class Menu extends Basic {
 
 				const key = _.trim(_.get(data, 'key', ''));
 				await checkUniqueField(ctx, '__menu', 'key', key, data._id); // 校验 key
-
-				// 继续你的保存逻辑...
 			} catch (err: any) {
 				return ctx.sendError(400, err.message);
 			}
+
+			const is_open_all = _.get(data, 'is_open_all', ''); // 是否是： 开启全部菜单 | 关闭全部菜单
+			if (is_open_all) {
+				const all_Menu = await ctx.mongo.find('__menu', { query: {} });
+				console.log('all_Menu', all_Menu.length);
+
+				function toStr(v: any) {
+					if (v === undefined || v === null) return '';
+					return String(v);
+				}
+				function groupChildrenByParentKey(list: any) {
+					const m = new Map();
+					for (const item of list) {
+						const pid = toStr(item.parent_id);
+						if (pid === '' || pid === '0') continue;
+						const arr = m.get(pid);
+						if (arr) arr.push(item);
+						else m.set(pid, [item]);
+					}
+					return m;
+				}
+				function getDescendantsByKey(list: any, key: string) {
+					const childrenMap = groupChildrenByParentKey(list);
+					const out = [];
+					const stack = (childrenMap.get(String(key)) || []).slice();
+					while (stack.length) {
+						const node = stack.pop();
+						out.push(node);
+						const kids = childrenMap.get(String(node.key)) || [];
+						for (const k of kids) stack.push(k);
+					}
+					return out;
+				}
+				const currMenu = all_Menu.filter(v => v.key == data?.key); // 当前父级菜单
+				const findSubMenu = getDescendantsByKey(all_Menu, data?.key); // 寻找父级下面所有的子菜单
+				const updateMenuStatus = [...findSubMenu, ...currMenu];
+				// console.log('updateMenuStatus', updateMenuStatus.length);
+				if (is_open_all == '开启全部菜单') {
+					for (const element of updateMenuStatus) {
+						await ctx.mongo.updateOne('__menu', element._id, { enable: '开启' });
+					}
+				}
+				if (is_open_all == '关闭全部菜单') {
+					for (const element of updateMenuStatus) {
+						await ctx.mongo.updateOne('__menu', element._id, { enable: '关闭' });
+					}
+				}
+				return ctx.send('更新菜单成功');
+			}
+
+			// 【修改标识 key时、 所有的子菜单的 parent_id 是否都需要变呢】
 
 			// ! 更新菜单时、如果最顶级菜单为关闭时、那么子菜单全部关闭才可以
 			if (data.enable == '关闭') {

@@ -79,6 +79,7 @@ const useProTable = () => {
 					const hide = message.loading(type === 'create' ? '正在添加' : '正在编辑');
 					const res = type === 'create' ? await InsNewMenu(item) : await UpMenu(item);
 					hide();
+					console.log('res', res);
 					if (res) {
 						form.resetFields();
 						setModalIsVisible(false);

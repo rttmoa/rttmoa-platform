@@ -1,4 +1,4 @@
-import { Button, Card, Col, Form, Input, InputNumber, Modal, Radio, Row, TreeSelect } from 'antd';
+import { Button, Card, Col, Form, Input, InputNumber, Modal, Radio, Row, Select, TreeSelect } from 'antd';
 import { useEffect, useState } from 'react';
 import useEnterSubmit from '@/hooks/useTable/useEnterSubmit';
 import { menu } from './menuConfig';
@@ -15,6 +15,8 @@ const ModalComponent = (Props: any) => {
 	const [iconVisibel, setIconVisibel] = useState(false);
 
 	useEnterSubmit(modalIsVisible, () => form.submit()); // * 回车提交表单数据
+
+	// console.log('data?.parent_id', data?.parent_id);
 
 	useEffect(() => {
 		form.setFieldsValue({
@@ -33,6 +35,7 @@ const ModalComponent = (Props: any) => {
 			isFull: type === 'create' ? '否' : data?.meta?.isFull == 1 ? '是' : '否',
 			isAffix: type === 'create' ? '否' : data?.meta?.isAffix == 1 ? '是' : '否',
 			enable: type === 'create' ? '开启' : data?.meta?.enable || '开启',
+			is_open_all: null,
 		});
 
 		setIsTop(type === 'create' ? '是' : data?.parent_id == 0 ? '是' : '否');
@@ -40,6 +43,7 @@ const ModalComponent = (Props: any) => {
 		if (type == 'createSubMenu') {
 			// ! 设置子菜单、其他项应该是空
 			// ! 是否顶级部门 ？？？？
+			// 其他字段设置应该为 create 一样
 			form.setFieldsValue({ parent_id: modalSubMenu });
 			setIsTop('否');
 			setValue(modalSubMenu);
@@ -69,13 +73,11 @@ const ModalComponent = (Props: any) => {
 		if (type == 'edit') {
 			formList._id = data.unique;
 		}
-		console.log('parent_id', isTop, '+', formList.parent_id);
+		// console.log('parent_id', isTop, '+', formList.parent_id);
+		// console.log('is_open_all', formList.is_open_all);
 		// return;
 		handleModalSubmit && handleModalSubmit(type, formList);
 	};
-
-	const OnCancel = () => setModalIsVisible(false);
-	const OnSubmit = () => form.submit();
 
 	const iconNames: any = [];
 	Object.keys(Icons).forEach(key => {
@@ -83,31 +85,24 @@ const ModalComponent = (Props: any) => {
 			iconNames.push(key);
 		}
 	});
+
+	const CancleButton: any = (
+		<Button danger loading={false} onClick={() => setModalIsVisible(false)}>
+			取消
+		</Button>
+	);
+	const SubmitButton: any = (
+		<Button key='link' type='primary' loading={false} onClick={() => form.submit()}>
+			提交
+		</Button>
+	);
 	return (
 		<>
-			<Modal
-				title={modalTitle}
-				width={950}
-				loading={false}
-				open={modalIsVisible}
-				onCancel={OnCancel}
-				footer={[
-					<Button danger loading={false} onClick={OnCancel}>
-						取消
-					</Button>,
-					<Button key='link' type='primary' loading={false} onClick={OnSubmit}>
-						提交
-					</Button>,
-				]}
-			>
+			<Modal title={modalTitle} width={950} loading={false} open={modalIsVisible} onCancel={() => setModalIsVisible(false)} footer={[CancleButton, SubmitButton]}>
 				<Form className='mt-[40px] mb-[50px] px-[20px] max-h-[650px] overflow-auto' layout='vertical' size='middle' form={form} onFinish={FormOnFinish}>
 					<Row gutter={16}>
 						<Col span={12}>
 							<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>是否顶级部门</span>} name='isTop' rules={[{ required: true, message: '' }]}>
-								{/* <Radio.Group defaultValue='是' size='small'>
-									<Radio.Button value='是'>是</Radio.Button>
-									<Radio.Button value='否'>否</Radio.Button> 
-								</Radio.Group> */}
 								<Radio.Group
 									options={['是', '否']}
 									defaultValue='是'
@@ -240,7 +235,6 @@ const ModalComponent = (Props: any) => {
 								<Radio.Group options={['是', '否']} defaultValue='否' />
 							</Form.Item>
 						</Col>
-
 						<Col span={12}>
 							<Form.Item className='!mb-[8px]' label={<span className='text-[12px]'>显示排序</span>} name='sort' tooltip={{ title: '最小值：1、最大值：999、数值小排在前面' }}>
 								<InputNumber controls min={1} max={99999999} defaultValue={1} />
@@ -251,6 +245,28 @@ const ModalComponent = (Props: any) => {
 								<Radio.Group options={['开启', '关闭']} defaultValue='开启' />
 							</Form.Item>
 						</Col>
+						{type == 'edit' && data?.parent_id == 0 && (
+							<>
+								<Col span={12}></Col>
+								<Col span={12}>
+									<Form.Item
+										className='!mb-[8px]'
+										label={<span className='text-[12px]'>是否开启全部</span>}
+										name='is_open_all'
+										rules={[{ required: false, message: '创建菜单需 enable' }]}
+										tooltip={{ title: '当前菜单和所有当前菜单的子菜单全部 关闭/开启' }}
+									>
+										<Select
+											placeholder='请选择开启 开启全部菜单 / 关闭全部菜单 (默认不用选)'
+											options={[
+												{ value: '开启全部菜单', label: '开启全部菜单' },
+												{ value: '关闭全部菜单', label: '关闭全部菜单' },
+											]}
+										/>
+									</Form.Item>
+								</Col>
+							</>
+						)}
 					</Row>
 					<Card className='mt-[25px]' title={<span className='text-[14px]'>菜单结构 JSON 数据、参考如何创建菜单</span>} bodyStyle={{ height: 400, overflow: 'auto' }}>
 						<pre style={{ backgroundColor: '#f5f5f5', padding: '12px', borderRadius: '6px', overflow: 'auto', fontSize: 13 }}>
