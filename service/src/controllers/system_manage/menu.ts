@@ -98,8 +98,6 @@ class Menu extends Basic {
 			function flatToTree(flatList: any[]): any[] {
 				const keyMap = new Map<string, any>();
 				const tree: any[] = [];
-
-				// 构建 key 映射
 				for (const item of flatList) {
 					const node: any = {
 						path: item.path,
@@ -123,7 +121,6 @@ class Menu extends Basic {
 					};
 					keyMap.set(item.key, node);
 				}
-
 				// 构建父子关系
 				for (const item of flatList) {
 					const node = keyMap.get(item.key);
@@ -134,7 +131,6 @@ class Menu extends Basic {
 						tree.push(node);
 					}
 				}
-
 				return tree;
 			}
 
@@ -161,10 +157,11 @@ class Menu extends Basic {
 
 			// 根据角色：proAdmin / admin / user 去
 			const { role } = await this.getUserById(currentUser?.id, ctx); // 解构出权限字符  ['admin']
-			// console.log('role', role);
 			let RoleMenu: any = [];
 			if (role && role.length) {
+				console.log('role',role);
 				const Role = await ctx.mongo.find('__role', { query: { permission_str: { $in: role } }, sort: { level: -1 } });
+				console.log('Role', Role);
 				if (Role.length) {
 					const ids = _.get(Role[0], 'menuList', []);
 					if (Array.isArray(ids) && ids.length) {
@@ -177,6 +174,7 @@ class Menu extends Basic {
 
 			// * ✅ 根据角色：proAdmin / admin / user 返回对应的角色菜单
 			if (name && name == '角色' && RoleMenu.length > 0) {
+				console.log('RoleMenu', RoleMenu.length);
 				const tree = flatToTree(RoleMenu);
 				removeEmptyChildren(tree);
 				const sortedTree = sortTreeBySort(tree);
@@ -192,7 +190,7 @@ class Menu extends Basic {
 				return ctx.send(sortedTree, '获取菜单树结构成功');
 			}
 
-			// * ✅ 主控制逻辑： 前端查询：菜单 != "关闭"
+			// * ✅ 主控制逻辑： 前端查询：菜单 = "开启"
 			if (name && name == '开启') {
 				// const flatMenu = await ctx.mongo.find('__menu', { query: { enable: { $ne: '关闭' } } }); // 或 "__dept"
 				const flatMenu = await ctx.mongo.find('__menu', { query: { enable: '开启' } });
@@ -203,7 +201,7 @@ class Menu extends Basic {
 			}
 
 			// * ✅ 只返回首页：返回：首页home
-			// 1、没有获取到 cookie 中的 用户信息：currentUser
+			// 1、没有获取到 cookie 中 currentUser
 			// 2、登陆的用户没有 角色字符
 			// 3、获取的角色菜单为空
 			if (!currentUser.id || role.length == 0 || RoleMenu.length == 0) {
@@ -317,19 +315,20 @@ class Menu extends Basic {
 				return ctx.sendError(400, err.message);
 			}
 
-			const is_open_all = _.get(data, 'is_open_all', ''); // 是否是： 开启全部菜单 | 关闭全部菜单
+			// * 编辑菜单：开启全部菜单 | 关闭全部菜单
+			const is_open_all = _.get(data, 'is_open_all', '');  
 			if (is_open_all) {
 				const all_Menu = await ctx.mongo.find('__menu', { query: {} });
-				console.log('all_Menu', all_Menu.length);
 
-				function toStr(v: any) {
-					if (v === undefined || v === null) return '';
-					return String(v);
-				}
 				function groupChildrenByParentKey(list: any) {
 					const m = new Map();
 					for (const item of list) {
-						const pid = toStr(item.parent_id);
+						let pid = '';
+						if (item.parent_id == undefined || item.parent_id == null) {
+							pid = '';
+						} else {
+							pid = String(item.parent_id);
+						}
 						if (pid === '' || pid === '0') continue;
 						const arr = m.get(pid);
 						if (arr) arr.push(item);
@@ -352,7 +351,6 @@ class Menu extends Basic {
 				const currMenu = all_Menu.filter(v => v.key == data?.key); // 当前父级菜单
 				const findSubMenu = getDescendantsByKey(all_Menu, data?.key); // 寻找父级下面所有的子菜单
 				const updateMenuStatus = [...findSubMenu, ...currMenu];
-				// console.log('updateMenuStatus', updateMenuStatus.length);
 				if (is_open_all == '开启全部菜单') {
 					for (const element of updateMenuStatus) {
 						await ctx.mongo.updateOne('__menu', element._id, { enable: '开启' });

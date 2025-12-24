@@ -121,7 +121,8 @@ const useProTable = () => {
 					const { data }: any = await api.find({ ...params, page: params.current });
 					SetPagination({ ...pagination, total: data.total });
 
-					const menu: any = await FindAllMenu({ name: '开启' });
+					// const menu: any = await FindAllMenu({ name: '开启' });
+					const menu: any = await FindAllMenu({ name: '全部' });
 					setMenus(menu?.data || []);
 
 					SetLoading(false);
