@@ -9,8 +9,10 @@ copy "C:\Users\Administrator\.node-red\flows.json" "E:\Project\upack\upack-kdfh@
 
 
 
+导入数据库的某个表 (users)：
+mongorestore  --host 127.0.0.1 --port 27017   --drop   -d steedos_kedongFH  --collection users  E:\Project\upack\upack-kdfh@2.1.85\@sql\steedos_kedongFH\users.bson
 
-
+ 
 
 导入：
 mongorestore --host=127.0.0.1 --port=27017  -d steedos_kedongFH E:\Project\upack\upack-kdfh@2.1.85\@sql\steedos_kedongFH
@@ -19,4 +21,3 @@ mongorestore --host=127.0.0.1 --port=27017  -d steedos_kedongFH E:\Project\upack
 导出：
 mongodump -h 127.0.0.1 --port 27017 -d steedos_kedongFH -o   E:\Project\rttmoa-platform\sql
 
- 
