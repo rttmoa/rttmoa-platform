@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.1](https://github.com/rttmoa/rttmoa-platform/compare/v3.1.0...v3.1.1) (2026-01-23)
+
+
+### Features
+
+* 🚀 表格：更新前后端、无需修改前端代码、后端配置字段即可  ++  修改菜单模块的 开启全部菜单和关闭全部菜单功能 ([fb4ac25](https://github.com/rttmoa/rttmoa-platform/commit/fb4ac25d41c3054d43dae45b25a2f81af59eb88b))
+* 🚀 优化系统模块 角色管理中 弹窗选择菜单 ([e16d778](https://github.com/rttmoa/rttmoa-platform/commit/e16d778258b493377f3edf59111e49703e5c99fa))
+
+
+### Bug Fixes
+
+* 🧩 修复代码Menu ([3013c2f](https://github.com/rttmoa/rttmoa-platform/commit/3013c2f7fcb8fd5057af5ce8de7fbd5d144b7ff8))
+* 🧩 fix mongodb ([18adb4f](https://github.com/rttmoa/rttmoa-platform/commit/18adb4fc3d65110f1dd8ee4d9f717975387607cb))
+
 ## [3.1.0](https://github.com/rttmoa/rttmoa-platform/compare/v2.5.0...v3.1.0) (2025-12-22)
 
 ## [3.0.0](https://github.com/rttmoa/rttmoa-platform/compare/v2.5.0...v3.0.0) (2025-12-22)
