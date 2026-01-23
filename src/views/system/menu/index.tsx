@@ -97,7 +97,7 @@ const useProTable = () => {
 						message.success(`成功删除${type === 'delete' ? ` ${item?.postName}` : '多条'}记录`);
 					}
 				}
-				await initPermissions(globalToken);
+				await initPermissions(globalToken, '');
 			} catch (error: any) {
 				message.error(error.message || '操作失败，请重试！');
 			}

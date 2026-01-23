@@ -64,6 +64,9 @@ const LoginForm: React.FC = () => {
 		try {
 			await formRef?.current?.validateFields();
 			let getValues = formRef?.current?.getFieldsValue(); // 得到表单内容
+			// console.log('getValues', getValues);
+			// return;
+			const userName = getValues.username;
 
 			setLoading(true);
 			message.open({ type: 'loading', content: '登录中...' });
@@ -85,7 +88,7 @@ const LoginForm: React.FC = () => {
 			dispatch(setTabsList([]));
 
 			// * 初始化权限： 获取用户按钮权限 && 获取用户菜单权限     Button & Menu
-			await initPermissions(data?.token);
+			await initPermissions(data?.token, userName);
 
 			notification.success({
 				message: getTimeState(),

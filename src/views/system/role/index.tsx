@@ -12,8 +12,13 @@ import ModalComponent from './component/Modal';
 import ModalAuth from './component/ModalAuth';
 import DrawerComponent from '@/components/TableDrawer';
 import FooterComponent from '@/components/TableFooter';
+import usePermissions from '@/hooks/usePermissions';
+import { RootState, useSelector } from '@/redux';
 
 const useProTable = () => {
+	const globalToken = useSelector((state: RootState) => state.user.token);
+	const { initPermissions } = usePermissions();
+
 	const api = {
 		find: roleAPI.find,
 		add: roleAPI.add,
@@ -85,6 +90,7 @@ const useProTable = () => {
 						message.success(`${type === 'delete' ? `删除成功` : `删除 ${selectedRows.length} 条记录成功`}`);
 					}
 				}
+				await initPermissions(globalToken, '');
 			} catch (error: any) {
 				message.error(error.message || '操作失败，请重试！');
 			}

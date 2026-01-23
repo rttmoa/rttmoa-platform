@@ -13,42 +13,61 @@ const ModalComponent = (Params: any) => {
 
 	useEnterSubmit(modalIsVisible, () => form.submit()); // * 回车提交表单数据
 
-	const buildTreeAndMaps = (routes: any[]) => {
-		const k2i: Record<string, string> = {};
-		const i2k: Record<string, string> = {};
-		const walk = (nodes: any[]): any[] =>
-			nodes.map((route: any) => {
-				const key = route.meta?.key || '';
-				const id = route.unique || '';
-				if (key && id) {
-					k2i[key] = id;
-					i2k[id] = key;
-				}
-				const item: any = { title: route.meta?.title || '', key };
-				if (Array.isArray(route.children) && route.children.length > 0) {
-					item.children = walk(route.children);
-				}
-				return item;
-			});
-		return { tree: walk(routes), k2i, i2k };
-	};
-
-	const getLeafKeys = (nodes: any[]) => {
-		const list: any[] = [];
-		const walk = (arr: any[]) => {
-			arr.forEach((item: any) => {
-				if (item.children && item.children.length) {
-					walk(item.children);
-				} else {
-					list.push(item.key);
-				}
-			});
-		};
-		walk(nodes);
-		return list;
-	};
-
 	useEffect(() => {
+		function handleSelectKeys(Menus: any[], allSelectKeys: any) {
+			const isDisabled = (enable: string) => String(enable ?? '') === '关闭';
+
+			const collectDisabledKeys = (nodes: any[], out = new Set()) => {
+				for (const node of nodes ?? []) {
+					const key = node?.meta?.key;
+					if (key && isDisabled(node?.meta?.enable)) out.add(key);
+					const children = node?.children;
+					if (Array.isArray(children) && children.length) collectDisabledKeys(children, out);
+				}
+				return out;
+			};
+
+			const disabledKeys = collectDisabledKeys(Menus);
+			const readEnabled = allSelectKeys.filter((key: any) => !disabledKeys.has(key));
+			const readDisabled = allSelectKeys.filter((key: any) => disabledKeys.has(key));
+			return readEnabled;
+		}
+		const buildTreeAndMaps = (routes: any[]) => {
+			const k2i: Record<string, string> = {};
+			const i2k: Record<string, string> = {};
+			const walk = (nodes: any[]): any[] =>
+				nodes.map((route: any) => {
+					const key = route.meta?.key || '';
+					const id = route.unique || '';
+					const enable = route.meta.enable == '开启'; // 不等于开启的部分全部禁用掉
+					if (key && id) {
+						k2i[key] = id;
+						i2k[id] = key;
+					}
+					const item: any = { title: route.meta?.title || '', key, disableCheckbox: !enable };
+					if (Array.isArray(route.children) && route.children.length > 0) {
+						item.children = walk(route.children);
+					}
+					return item;
+				});
+			return { tree: walk(routes), k2i, i2k };
+		};
+
+		const getLeafKeys = (nodes: any[]) => {
+			const list: any[] = [];
+			const walk = (arr: any[]) => {
+				arr.forEach((item: any) => {
+					if (item.children && item.children.length) {
+						walk(item.children);
+					} else {
+						list.push(item.key);
+					}
+				});
+			};
+			walk(nodes);
+			return list;
+		};
+
 		const { tree, k2i, i2k } = buildTreeAndMaps(Menus || []);
 		setTreeData(tree);
 		setKeyToId(k2i);
@@ -64,8 +83,11 @@ const ModalComponent = (Params: any) => {
 						: [];
 		const leafSet = new Set(getLeafKeys(tree));
 		const initKeysLeaf = initKeysRaw.filter((k: string) => leafSet.has(k));
+		// console.log('initKeysLeaf', initKeysRaw);
 
-		setCheckedKeys(initKeysLeaf.length > 0 ? initKeysLeaf : initKeysRaw);
+		// setCheckedKeys(initKeysLeaf.length > 0 ? initKeysLeaf : initKeysRaw);
+		setCheckedKeys(initKeysLeaf.length > 0 ? handleSelectKeys(Menus, initKeysLeaf) : handleSelectKeys(Menus, initKeysRaw));
+
 		form.setFieldsValue({
 			role_name: modalType === 'create' ? '' : userInfo.role_name,
 			permission_str: modalType === 'create' ? '' : userInfo.permission_str,
@@ -74,13 +96,7 @@ const ModalComponent = (Params: any) => {
 			status: modalType === 'create' ? '启用' : userInfo.status,
 			desc: modalType === 'create' ? '' : userInfo.desc,
 		});
-	}, [Menus, modalType, userInfo]);
-
-	const onCancel = () => {
-		setExpandedKeys([]);
-		setCheckedKeys([]);
-		setModalIsVisible(false);
-	};
+	}, [Menus, modalType, userInfo, modalIsVisible]);
 
 	// * 提交最终数据 （将菜单处理为menu格式、为每个角色可以直接使用的菜单结构）
 	const FormOnFinish = () => {
@@ -129,17 +145,16 @@ const ModalComponent = (Params: any) => {
 		return list;
 	};
 	// 展开/折叠
-	const ExpandedFunc = (e: any) => {
-		const checked = e.target.checked;
-		setExpandedKeys(checked ? getAllKeys(treeData) : []);
-	};
+	const ExpandedFunc = (e: any) => setExpandedKeys(e.target.checked ? getAllKeys(treeData) : []);
 	// 全选/全不选
-	const SelectAllFunc = (e: any) => {
-		const checked = e.target.checked;
-		setCheckedKeys(checked ? getAllKeys(treeData) : []);
-	};
-	const OnSubmit = () => {
-		form.submit();
+	const SelectAllFunc = (e: any) => setCheckedKeys(e.target.checked ? getAllKeys(treeData) : []);
+
+	const OnSubmit = () => form.submit();
+
+	const onCancel = () => {
+		setExpandedKeys([]);
+		setCheckedKeys([]);
+		setModalIsVisible(false);
 	};
 
 	return (

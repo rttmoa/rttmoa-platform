@@ -159,7 +159,7 @@ class Menu extends Basic {
 			const { role } = await this.getUserById(currentUser?.id, ctx); // 解构出权限字符  ['admin']
 			let RoleMenu: any = [];
 			if (role && role.length) {
-				console.log('role',role);
+				console.log('role', role);
 				const Role = await ctx.mongo.find('__role', { query: { permission_str: { $in: role } }, sort: { level: -1 } });
 				console.log('Role', Role);
 				if (Role.length) {
@@ -316,7 +316,7 @@ class Menu extends Basic {
 			}
 
 			// * 编辑菜单：开启全部菜单 | 关闭全部菜单
-			const is_open_all = _.get(data, 'is_open_all', '');  
+			const is_open_all = _.get(data, 'is_open_all', '');
 			if (is_open_all) {
 				const all_Menu = await ctx.mongo.find('__menu', { query: {} });
 
