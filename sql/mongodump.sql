@@ -20,4 +20,3 @@ mongorestore --host=127.0.0.1 --port=27017  -d steedos_kedongFH E:\Project\upack
 
 导出：
 mongodump -h 127.0.0.1 --port 27017 -d steedos_kedongFH -o   E:\Project\rttmoa-platform\sql
-
