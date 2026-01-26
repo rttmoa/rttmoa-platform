@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.5](https://github.com/rttmoa/rttmoa-platform/compare/v3.1.4...v3.1.5) (2026-01-26)
+
+
+### Bug Fixes
+
+* 🧩 修改角色管理菜单： 首页需要被禁止选择 ([2bdd936](https://github.com/rttmoa/rttmoa-platform/commit/2bdd93669809ef6efb1b2251c9152a4d9682561f))
+
 ### [3.1.4](https://github.com/rttmoa/rttmoa-platform/compare/v3.1.3...v3.1.4) (2026-01-23)
 
 
