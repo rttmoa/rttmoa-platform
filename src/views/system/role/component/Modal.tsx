@@ -44,7 +44,10 @@ const ModalComponent = (Params: any) => {
 						k2i[key] = id;
 						i2k[id] = key;
 					}
-					const item: any = { title: route.meta?.title || '', key, disableCheckbox: !enable };
+					let item: any = { title: route.meta?.title || '', key, disableCheckbox: !enable };
+					if (route.meta?.title == '首页') {
+						item.disableCheckbox = true;
+					}
 					if (Array.isArray(route.children) && route.children.length > 0) {
 						item.children = walk(route.children);
 					}
