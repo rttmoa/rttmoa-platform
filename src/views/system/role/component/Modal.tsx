@@ -46,7 +46,7 @@ const ModalComponent = (Params: any) => {
 					}
 					let item: any = { title: route.meta?.title || '', key, disableCheckbox: !enable };
 					if (route.meta?.title == '首页') {
-						item.disableCheckbox = true;
+						// item.disableCheckbox = true;
 					}
 					if (Array.isArray(route.children) && route.children.length > 0) {
 						item.children = walk(route.children);

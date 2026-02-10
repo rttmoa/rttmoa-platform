@@ -22,7 +22,10 @@ class User extends Basic {
 			if (!username) return ctx.sendError(400, '登陆操作：无用户名');
 			if (!password) return ctx.sendError(400, '登陆操作：无密码');
 
-			const userInfo = await ctx.mongo.find(this.Collection, { query: { phone: username } });
+			
+
+			const userInfo = await ctx.mongo.find(this.Collection, { query: {      $or: [{  phone: username }, { username: username },  ]  } });
+
 			if (userInfo.length != 1) {
 				return ctx.sendError(400, '登陆操作：用户名错误');
 			}
