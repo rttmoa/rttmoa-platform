@@ -1,0 +1,1 @@
+import{r as f}from"./index-5724b366.js";function s(n,t,r=2e3){const o=f.useRef(0);f.useEffect(()=>{const e=u=>{if(u.key!=="Enter")return;u.preventDefault();const w=Date.now();w-o.current<r||(o.current=w,t())};return n?window.addEventListener("keydown",e):window.removeEventListener("keydown",e),()=>{window.removeEventListener("keydown",e)}},[n,t,r])}export{s as u};
