@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.8](https://github.com/rttmoa/rttmoa-platform/compare/v3.1.7...v3.1.8) (2026-02-13)
+
+
+### Bug Fixes
+
+* 🧩 优化 写入 __error 和 __operate表，不可随意写入 ([fc1d49b](https://github.com/rttmoa/rttmoa-platform/commit/fc1d49b2a943ff71941a70ec242bd4e93fa51878))
+
 ### [3.1.7](https://github.com/rttmoa/rttmoa-platform/compare/v3.1.6...v3.1.7) (2026-02-10)
 
 
