@@ -27,7 +27,7 @@ const errorHandle = async (ctx: Context, next: () => Promise<any>) => {
       const status = body?.code;
       const msg = body?.msg;
       const info = {status, msg}
-      const result = await mongoService.insertOne("__error", {...logData, ...info})
+      // const result = await mongoService.insertOne("__error", {...logData, ...info})
     }
 
     // 如果下游没有处理响应

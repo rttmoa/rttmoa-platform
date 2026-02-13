@@ -27,8 +27,8 @@ const logger = (winstonInstance: any): any => {
 		try { 
 			await next();
 		} catch (err) { 
-			ctx.status = err.status || 500;
-			ctx.body = err.message;
+			ctx.status = err?.status || 500;
+			ctx.body = err?.message;
 		}
 		const ms = new Date().getTime() - start;
 
@@ -63,7 +63,7 @@ const logger = (winstonInstance: any): any => {
 			created: new Date(),
 		}
 		// 缺少请求参数、GET、POST
-		const result = await mongoService.insertOne("__operate", requestInfo)
+		// const result = await mongoService.insertOne("__operate", requestInfo)
 
 		const msg = `${ctx.method} - ${ctx.originalUrl} - ${ctx.status} - ${ms}ms`;
 		winstonInstance.log(logLevel, msg);
