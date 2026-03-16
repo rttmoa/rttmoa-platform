@@ -3,7 +3,7 @@ import { Layout } from 'antd';
 import ToolBarRight from '@/layouts/components/Header/ToolBarRight';
 import LayoutMenu from '@/layouts/components//Menu';
 import LayoutMain from '@/layouts/components/Main';
-import logo from '@/assets/images/kdFH.png';
+import logo from '@/assets/images/logo_haikouZY.png';
 import './index.less';
 import { RootState, useSelector } from '@/redux';
 

@@ -5,7 +5,7 @@ import ToolBarLeft from '@/layouts/components/Header/ToolBarLeft';
 import ToolBarRight from '@/layouts/components/Header/ToolBarRight';
 import LayoutMenu from '@/layouts/components//Menu';
 import LayoutMain from '@/layouts/components/Main';
-import logo2 from '@/assets/images/kdFH.png';
+import logo2 from '@/assets/images/logo_haikouZY.png';
 import './index.less'; // todo 垂直布局 LESS
 
 const { Header, Sider } = Layout;
