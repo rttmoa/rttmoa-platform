@@ -1,0 +1,41 @@
+! : 备份数据库：命令 — 导出：   
+ 
+!@!!!!导入整个数据库
+mongorestore  --host 127.0.0.1  --port 27017 --drop  -d steedos_kedongFH  C:\rrr\steedos_kedongFH
+
+-- 导入所有表中的某个表
+-- mongorestore  --host 127.0.0.1 --port 27017   --drop   -d steedos_nbzy_v2  --collection nb_jk_data__c  C:\rrr\nb_jk_data__c.bson
+-- 导入整个数据库
+-- mongorestore  --host 127.0.0.1  --port 27017 --drop  -d steedos_nbzy_v2  C:\rrrrr\steedos_nbzy_v2
+-- 导入：
+-- mongorestore --host=127.0.0.1 --port=27017  -d steedos_nbzy_v2 C:\steedos
+
+
+服务器库存同步到本地： 更新数据后，表字段不变，只是数据变化
+更新前：
+保温库： 保温库货架占用：352    保温库库存348
+--保温库货架表：  mongorestore  --host 127.0.0.1 --port 27017   --drop   -d steedos_kedongFH  --collection kd_keepwarm_stock__c  C:\rrr\steedos_kedongFH\kd_keepwarm_stock__c.bson
+--保温库库存表：  mongorestore  --host 127.0.0.1 --port 27017   --drop   -d steedos_kedongFH  --collection kd_keepwarm_stock_detail__c  C:\rrr\steedos_kedongFH\kd_keepwarm_stock_detail__c.bson
+
+常温库：常温库货架占用61   常温库库存64
+--常温库货架表：  mongorestore  --host 127.0.0.1 --port 27017   --drop   -d steedos_kedongFH  --collection kd_cwwarm_stock__c  C:\rrr\steedos_kedongFH\kd_cwwarm_stock__c.bson
+--常温库货架表：  mongorestore  --host 127.0.0.1 --port 27017   --drop   -d steedos_kedongFH  --collection kd_cwwarm_stock_detail__c  C:\rrr\steedos_kedongFH\kd_cwwarm_stock_detail__c.bson
+
+
+!@!!!!导出整个数据库： 
+mongodump -h 127.0.0.1 --port 27017 -d steedos_kedongFH -o   E:\Project\upack\upack-kdfh@2.1.85\@sql-本地
+
+ 
+
+
+
+导出数据库steedos_nbzy_v2时：
+  0、导出steedos_nbzy_v2全部数据库、但是只保留 rttmoa 项目中需要的数据库即可
+  1、复制 dept、sys、job、menu、role、user数据库 到 steedos文件夹中
+  2、将steedos复制到C盘中： C:\steedos
+  3、导入到目标数据库即可 steedos_kedongFH
+
+! 将steedos_nbzy_v2中部分数据库使用mongodump导出、并将部分数据库导入mongorestore至Steedos_kedongFH中
+
+
+! 注意：备份使用mongodb命令导出、不要使用navicat中导出数据

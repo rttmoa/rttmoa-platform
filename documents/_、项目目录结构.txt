@@ -1,0 +1,227 @@
+生成三级目录、并包含文件大小
+treee -L 3 -I "node_modules" -s -r -F > TREE.txt  
+treee -L 3 -I "node_modules" -r -F > TREE.txt  
+
+
+rttmoa-platform
+├── CHANGELOG.md                          # 提交代码的提交内容
+├── LICENSE                               # 许可证文件
+├── OAuth     
+├── README.md                             # 项目说明文件
+├── _start__client.bat                    # 双击文件可直接启动项目的文件
+├── build                                 # yarn deploy & vite 打包项目的配置文件
+│   ├── getEnv.ts
+│   ├── plugins.ts
+│   └── proxy.ts
+├── build.css                             # tailwindcss 文件
+├── commitlint.config.cjs                 # yarn commit & 提交代码时的配置文件
+├── dist                                  # yarn deploy & 打包项目文件的产物、在index.html中查看打包后的效果 
+│   ├── index.html                        # 在此文件查看运行效果 
+│   ├── ..........                        # 其他打包文件 
+├── example.http                          
+├── index.css
+├── index.html                            # 打包项目的html模板、必要文件
+├── lint-staged.config.cjs
+├── package.json                          # 运行文件、必要文件
+├── postcss.config.cjs                    # 处理css：自动处理css前缀、打包时压缩css代码
+├── public                                # 公共文件夹：存放图标、图片等静态资源
+│   ├── favicon.ico
+│   ├── react.svg
+│   ├── rttmoa-128x128.png
+│   ├── rttmoa-192x192.png
+│   ├── rttmoa-512x512.png
+│   ├── rttmoa.svg
+│   └── vite.svg
+├── stats.html                            # 打包后生成的文件
+├── tailwind.config.js                    # tailwindcss 的配置文件
+├── tsconfig.json                         # typescript 的配置文件
+├── vite.config.ts                        # vite 构建工具的配置文件
+├── yarn.lock                             # yarn安装的依赖项
+├── ! rttmoa-platform.vsdx                # 项目 visio 文件
+├── ! _start__service.bat                 # 双击直接启动服务
+
+
+
+
+
+├── service/                              # 服务端目录
+│   ├── yarn.lock
+│   ├── tsconfig.json
+│   ├── src/
+│   │   ├── utils/
+│   │   ├── status.ts
+│   │   ├── schedule/
+│   │   ├── routes/
+│   │   ├── prototype/
+│   │   ├── model/
+│   │   ├── middlewares/
+│   │   ├── koa.d.ts
+│   │   ├── global.d.ts
+│   │   ├── controllers/
+│   │   ├── config/
+│   │   └── app.ts
+│   ├── sql/                                ## 先导入 sql 文件
+│   │   ├── tanhua 20200630 0858.rar
+* │   │   ├── steedos_nbzy_v2.rar             #### 导入此文件、导入mongodb数据库
+│   │   └── Backup.sql
+│   ├── public/                             # 服务端运行前端打包项目的产物
+│   │   ├── upload/
+│   │   ├── swagger.html
+│   │   └── swagger/
+│   ├── packages/                            # 参考文件
+│   │   ├── objectql-/
+│   │   ├── objectql/
+│   │   ├── metadata-registrar/
+│   │   ├── metadata-api/
+│   │   ├── client/
+│   │   └── accounts/
+│   ├── package.json                          # 项目 npm 包
+│   ├── package-lock.json                     # npm 启动文件
+│   ├── errorLog.log                          # 错误日志文件
+│   ├── _、desc.txt 
+│   └── README.md
+├── public/
+│   ├── vite.svg
+│   ├── rttmoa.svg
+│   ├── rttmoa-512x512.png
+│   ├── rttmoa-192x192.png
+│   ├── rttmoa-128x128.png
+│   ├── react.svg
+│   └── favicon.ico
+
+
+
+
+
+├── src/                                # 客户端目录
+│   ├── vite-env.d.ts
+│   ├── views/
+│   │   ├── system/
+│   │   ├── no-layout/
+│   │   ├── monitor/
+│   │   ├── module/
+│   │   ├── menu/
+│   │   ├── login/
+│   │   ├── list/
+│   │   ├── home/
+│   │   ├── form/
+│   │   ├── feat/
+│   │   ├── dataScreenHouse/
+│   │   ├── dataScreen/
+│   │   ├── auth/
+│   │   └── assembly/
+│   ├── utils/
+│   │   ├── navigator.ts
+│   │   ├── is.ts
+│   │   ├── index.ts
+│   │   ├── dom.ts
+│   │   ├── compute.ts
+│   │   └── color.ts
+│   ├── typings/
+│   │   ├── window.d.ts
+│   │   ├── utils.d.ts
+│   │   ├── typings.d.ts
+│   │   ├── global.d.ts
+│   │   └── asset.d.ts
+│   ├── styles/
+│   │   ├── transition.less
+│   │   ├── theme/
+│   │   ├── proTable.less
+│   │   ├── less/
+│   │   ├── index.less
+│   │   └── index.css
+│   ├── routers/
+│   │   ├── modules/
+│   │   ├── interface/
+│   │   ├── index.tsx
+│   │   └── helper/
+│   ├── redux/
+│   │   ├── modules/
+│   │   ├── interface/
+│   │   └── index.ts
+│   ├── layouts/
+│   │   ├── indexAsync.tsx
+│   │   ├── index.tsx
+│   │   ├── components/
+│   │   ├── LayoutVertical/
+│   │   ├── LayoutTransverse/
+│   │   ├── LayoutColumns/
+│   │   └── LayoutClassic/
+│   ├── languages/
+│   │   ├── modules/
+│   │   └── index.ts
+│   ├── hooks/
+│   │   ├── useWinViewport.ts
+│   │   ├── useWinSize.ts
+│   │   ├── useWinOnline.ts
+│   │   ├── useWinMouse.ts
+│   │   ├── useTime.ts
+│   │   ├── useThrottle/
+│   │   ├── useTheme.ts
+│   │   ├── useTableScroll.ts
+│   │   ├── usePermissions.ts
+│   │   ├── useNetworkStatus.ts
+│   │   ├── useMessage.ts
+│   │   ├── useLocalStorage.ts
+│   │   ├── useLazyloadImg.tsx
+│   │   ├── useLazyloadImage.tsx
+│   │   ├── useInterval/
+│   │   ├── useInitialRender.ts
+│   │   ├── useFetchReducer/
+│   │   ├── useEyeDropper.ts
+│   │   ├── useEventListener.ts
+│   │   ├── useErrorBoundary.tsx
+│   │   ├── useEntranceExcle/
+│   │   ├── useEcharts.ts
+│   │   ├── useDebounce/
+│   │   ├── useClipboard.ts
+│   │   ├── useAuthButton.ts
+│   │   ├── useApiCallOnMount.ts
+│   │   ├── aHooks
+│   │   └── ReactHooks/
+│   ├── enums/
+│   │   ├── wmsEnum.ts
+│   │   └── httpEnum.ts
+│   ├── context/
+│   │   ├── Theme.tsx
+│   │   └── Refresh.tsx
+│   ├── config/
+│   │   ├── regular.ts
+│   │   ├── proTable.ts
+│   │   ├── nprogress.ts
+│   │   └── index.ts
+│   ├── components/
+│   │   ├── components.md
+│   │   ├── Tables/
+│   │   ├── TableReducer/
+│   │   ├── SvgIcon/
+│   │   ├── ProTable/
+│   │   ├── Modals/
+│   │   ├── Loading/
+│   │   ├── Lazy/
+│   │   ├── Icon/
+│   │   ├── Grid/
+│   │   ├── Excel/
+│   │   ├── Error/
+│   │   ├── Echarts/
+│   │   ├── AuthButton/
+│   │   ├── AdvancedSearchForm/
+│   │   └── Abandon/
+│   ├── assets/
+│   │   ├── json/
+│   │   ├── images/
+│   │   ├── icons/
+│   │   ├── iconfont/
+│   │   ├── documents/
+│   │   └── api/
+│   ├── api/
+│   │   ├── service/
+│   │   ├── modules/
+│   │   ├── interface/
+│   │   ├── index.ts
+│   │   ├── helper/
+│   │   ├── config/
+│   │   ├── apiFetch/
+│   │   └── _optimization_plan.md
+│   ├── main.tsx
+│   └── App.tsx
