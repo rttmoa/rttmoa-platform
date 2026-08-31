@@ -1,29 +1,26 @@
-import App from './App.tsx';
-import ReactDOM from 'react-dom/client';
-import { Provider } from 'react-redux';
-import { store, persistor } from '@/redux';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import { PersistGate } from 'redux-persist/integration/react';
+import App from './App.tsx';
+import { Provider } from 'react-redux';
+import { persistor, store } from '@/redux';
 import 'antd/dist/reset.css';
 import '@/styles/index.css';
 import '@/styles/index.less';
-import '@/assets/iconfont/iconfont.less'; // iconfont 字体图标
-// import 'virtual:svg-icons-register'; // svg
+import '@/assets/iconfont/iconfont.less';
 
-// #region
-// *
-// * redux | redux持久化
-// * 导入字体 | 图标 | CSS | LESS | svg | antdCSS
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+const container = document.getElementById('root');
+
+if (!container) {
+	throw new Error('未找到 #root 挂载节点');
+}
+
+const app = (
 	<Provider store={store}>
-		<PersistGate persistor={persistor}>
-			{/* <React.StrictMode> */}
+		<PersistGate loading={<div>加载中…</div>} persistor={persistor}>
 			<App />
-			{/* </React.StrictMode> */}
 		</PersistGate>
 	</Provider>
 );
 
-// 项目注释
-// 开发文档
-
-// #endregion
+createRoot(container).render(import.meta.env.DEV ? <StrictMode>{app}</StrictMode> : app);
