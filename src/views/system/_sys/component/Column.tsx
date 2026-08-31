@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import { TableRowEdit, TableRenderAction } from '@/components/TableAction';
 import Link from 'antd/lib/typography/Link';
 import { UserOutlined } from '@ant-design/icons';
-import index from '@/views/rule/check';
+// import index from '@/views/rule/check';
 
 export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<any>[] => {
 	// * 这里 dataIndex 唯一索引不可以重复

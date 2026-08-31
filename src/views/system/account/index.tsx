@@ -74,13 +74,7 @@ const Basic = () => {
 	};
 	return (
 		<>
-			<Form
-				style={{ maxWidth: 600 }}
-				{...layout}
-				form={form}
-				onFinish={onFinish}
-				initialValues={{ nickName: 'rttmoa', phone: '18888888888', email: 'rttmoa@gmail.com', sex: 2 }}
-			>
+			<Form style={{ maxWidth: 600 }} {...layout} form={form} onFinish={onFinish} initialValues={{ nickName: 'rttmoa', phone: '18888888888', email: 'rttmoa@gmail.com', sex: 2 }}>
 				<Form.Item name='nickName' label='用户昵称' required={true}>
 					<Input />
 				</Form.Item>
@@ -127,13 +121,7 @@ const UpdatePassword = () => {
 	};
 	return (
 		<>
-			<Form
-				style={{ maxWidth: 600 }}
-				{...layout}
-				form={form}
-				onFinish={onFinish}
-				initialValues={{ nickName: 'rttmoa', phone: '18888888888', email: 'rttmoa@gmail.com', sex: 2 }}
-			>
+			<Form style={{ maxWidth: 600 }} {...layout} form={form} onFinish={onFinish} initialValues={{ nickName: 'rttmoa', phone: '18888888888', email: 'rttmoa@gmail.com', sex: 2 }}>
 				<Form.Item name='pass' label='旧密码' required={true}>
 					<Input.Password placeholder='请输入旧密码' iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
 				</Form.Item>

@@ -1,9 +1,9 @@
 import { Button, Dropdown, Tooltip, Upload, UploadFile } from 'antd';
-import { useState } from 'react';
+import { useState, type CSSProperties, type ReactNode } from 'react';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { message } from '@/hooks/useMessage';
-import { DeleteOutlined, EditOutlined, EyeOutlined, QuestionCircleTwoTone } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, EyeOutlined, QuestionCircleTwoTone, SettingOutlined } from '@ant-design/icons';
 
 // const tableHeaders = ['序号', '学科', '项目名称', '端', '账号', '密码'];
 
@@ -20,9 +20,13 @@ import { DeleteOutlined, EditOutlined, EyeOutlined, QuestionCircleTwoTone } from
 interface ExcelProps {
 	TableName: string; // 导出文件名：用户管理
 	tableHeaders: string[]; // 表头名称：['序号', '学科', '项目名称', '端', '账号', '密码'];  需传递此种格式
-	ExportData: Array<any>[]; // 导出表格数据
+	ExportData: Array<any>[]; // 接口数据
 	ImportData: (data: any) => void; // 导入表格数据结果
-	children: any;
+	columnSchema?: Record<string, any>;
+	children?: ReactNode;
+	disabled?: boolean;
+	buttonStyle?: CSSProperties;
+	findApi?: () => Promise<any>;
 }
 // ! 上传完毕后：还需要记录上传的文件信息（导入表格记录表）
 export default function Excel(Props: ExcelProps) {
@@ -32,16 +36,28 @@ export default function Excel(Props: ExcelProps) {
 		tableHeaders, // 表头名称：['序号', '学科', '项目名称', '端', '账号', '密码'];  需传递此种格式
 		ExportData, // 导出表格数据
 		ImportData, // 导入表格数据结果
+		columnSchema,
 		children,
+		disabled,
+		findApi,
 	} = Props;
 
 	const [tableLoading, setTableLoading] = useState<boolean>(false); // 加载状态：Loading
 	const [fileName, setFileName] = useState<string>(''); // 文件名称： __EXCEL__黑马账号信息.xlsx
 	const [fileList, setFileList] = useState<UploadFile[]>([]);
 
+	const compactBtnStyle = {
+		height: 28,
+		paddingInline: 10,
+		fontSize: 12,
+		borderRadius: 4,
+	};
+
 	// ! 导入表格数据
 	// 参数设置   (file:文件 Blob类型,sheetName:工作区名称 string类型)
 	const handleUpload = (file: any) => {
+		message.info('正在开发中');
+		return;
 		let fileObj = {
 			uid: file.uid,
 			name: file.name,
@@ -118,35 +134,72 @@ export default function Excel(Props: ExcelProps) {
 
 	// * 导出模板
 	// ! 传参：expectedHeaders表头信息
-	const exportTemplate = () => {
-		// const tableHeaders = ['序号', '学科', '项目名称', '端', '账号', '密码'];
-		const columnConfig = tableHeaders.map((value: any) => value.title);
+	const schemaEntries = Object.entries(columnSchema || {}).filter(([field, config]: any) => field !== '__ops__' && config?.label);
+	const exportHeaders = schemaEntries.length ? schemaEntries.map(([, config]: any) => config.label) : tableHeaders;
+	const getExportColumnWidths = () => {
+		if (!schemaEntries.length) {
+			return exportHeaders.map((header: any) => ({ wch: Math.max(8, String(header ?? '').length * 2) }));
+		}
 
-		// 1. 构造一个空的 worksheet，只包含表头
-		const ws = XLSX.utils.aoa_to_sheet([tableHeaders]);
-
-		// 2. 创建 workbook
-		const wb = XLSX.utils.book_new();
-		XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-
-		// 3. 生成并导出
-		const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-		const blob = new Blob([wbout], { type: 'application/octet-stream' });
-
-		saveAs(blob, `${TableName}模板.xlsx`);
+		return schemaEntries.map(([, config]: any) => {
+			const schemaWidth = Number(config?.widthd ?? config?.width);
+			if (Number.isFinite(schemaWidth) && schemaWidth > 0) return { wch: Math.max(8, Math.ceil(schemaWidth / 8)) };
+			return { wch: Math.max(8, String(config?.label ?? '').length * 2) };
+		});
 	};
 
-	// * 导出表格
-	const handleExport = () => {
-		if (!ExportData.length) return message.warning('暂无数据可导出');
+	const getExportRows = (rows: any[] = ExportData as any[]) => {
+		if (!schemaEntries.length) return rows;
 
-		const worksheet = XLSX.utils.json_to_sheet(ExportData);
+		return rows.map((row: any) => {
+			return schemaEntries.reduce((res: any, [field, config]: any) => {
+				res[config.label] = row?.[field] ?? '';
+				return res;
+			}, {});
+		});
+	};
+
+	const exportRowsToExcel = (rows: any[], fileName: string) => {
+		const exportRows = getExportRows(rows);
+		if (!exportRows.length) return message.warning('暂无数据可导出');
+
+		const worksheet = XLSX.utils.json_to_sheet(exportRows, { header: exportHeaders });
+		worksheet['!cols'] = getExportColumnWidths();
 		const workbook = XLSX.utils.book_new();
 		XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
 
 		const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
 		const fileBlob = new Blob([excelBuffer], { type: 'application/octet-stream' });
-		saveAs(fileBlob, `导出${TableName}数据.xlsx`);
+		saveAs(fileBlob, fileName);
+	};
+
+	// * 导出表格
+	const handleExport = () => {
+		const exportRows = getExportRows();
+		if (!exportRows.length) return message.warning('暂无数据可导出');
+
+		const worksheet = XLSX.utils.json_to_sheet(exportRows, { header: exportHeaders });
+		worksheet['!cols'] = getExportColumnWidths();
+		const workbook = XLSX.utils.book_new();
+		XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+
+		const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+		const fileBlob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+		saveAs(fileBlob, `${TableName} 数据.xlsx`);
+	};
+
+	const handleExportAll = async () => {
+		if (!findApi) return message.warning('暂无导出全部数据接口');
+
+		try {
+			setTableLoading(true);
+			const { data }: any = await findApi();
+			exportRowsToExcel(data?.list || [], `${TableName} 全部数据.xlsx`);
+		} catch (err) {
+			message.error('导出所有表格数据失败');
+		} finally {
+			setTableLoading(false);
+		}
 	};
 
 	const menuList = [
@@ -187,9 +240,9 @@ export default function Excel(Props: ExcelProps) {
 		{
 			key: '3',
 			label: (
-				<Button key='edit' type='text' size='middle' icon={<EditOutlined />} onClick={exportTemplate}>
-					导出表格模板
-					<Tooltip title='模板格式、按格式去导入！'>
+				<Button key='edit' type='text' size='middle' icon={<EditOutlined />} onClick={handleExport}>
+					导出当前表格数据
+					<Tooltip title='导出当前表格数据！~'>
 						<span>
 							<QuestionCircleTwoTone />
 						</span>
@@ -200,8 +253,8 @@ export default function Excel(Props: ExcelProps) {
 		{
 			key: '4',
 			label: (
-				<Button key='delete' type='text' size='middle' icon={<DeleteOutlined />} onClick={handleExport}>
-					导出表格数据
+				<Button key='delete' type='text' size='middle' icon={<DeleteOutlined />} loading={tableLoading} onClick={handleExportAll}>
+					导出所有表格数据
 					<Tooltip title='导出表格中所有的数据！'>
 						<span>
 							<QuestionCircleTwoTone />
@@ -222,8 +275,11 @@ export default function Excel(Props: ExcelProps) {
 				trigger={['click']}
 			>
 				<div className='more-button-item'>
-					{/* <SettingOutlined className='hover:cursor-pointer' /> */}
-					{Props.children}
+					{children || (
+						<Button size='small' style={compactBtnStyle} icon={<SettingOutlined className='hover:cursor-pointer' />} disabled={disabled}>
+							Excel Setting
+						</Button>
+					)}
 				</div>
 			</Dropdown>
 		</>

@@ -1,5 +1,5 @@
 import type { MenuProps } from 'antd';
-import { Dropdown } from 'antd';
+import { Dropdown, Tooltip } from 'antd';
 import { useDispatch, RootState, useSelector } from '@/redux';
 import { setGlobalState } from '@/redux/modules/global';
 import { LanguageType } from '@/redux/interface';
@@ -25,9 +25,13 @@ const Language: React.FC = () => {
 	};
 
 	return (
-		<Dropdown menu={menuProps} placement='bottom' arrow trigger={['click']}>
-			<i className='iconfont icon-zhongyingwen'></i>
-		</Dropdown>
+		<Tooltip placement='bottom' title='切换中英文' arrow mouseEnterDelay={0.2}>
+			<span>
+				<Dropdown menu={menuProps} placement='bottom' arrow trigger={['click']}>
+					<i className='iconfont icon-zhongyingwen'></i>
+				</Dropdown>
+			</span>
+		</Tooltip>
 	);
 };
 export default Language;

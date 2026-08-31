@@ -23,6 +23,6 @@ const siderTheme = {
 		'--hooks-colorBorderSider': '#303030',
 		'--hooks-colorBgSubMenuSider': '#1d1d1d',
 	},
-}
+};
 
-export default siderTheme
+export default siderTheme;

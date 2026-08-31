@@ -137,6 +137,8 @@ const LayoutMenu: React.FC<LayoutMenuProps> = ({ mode, menuList, menuSplit }) =>
 	return (
 		// ! Menu-Api：https://ant.design/components/menu-cn#api
 		<Menu
+			style={{ fontSize: 12 }}
+			inlineIndent={8} // 缩进
 			theme={isDarkTheme ? 'dark' : 'light'} // 主题颜色
 			mode={mode} //  "inline" || "horizontal" || "vertical"
 			selectedKeys={menuSplit ? splitSelectedKeys : selectedKeys} // 当前选中的菜单项 key 数组;  string[]

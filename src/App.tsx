@@ -9,6 +9,7 @@ import { I18nextProvider } from 'react-i18next';
 import { RefreshProvider } from '@/context/Refresh';
 import UseErrorBoundary from '@/hooks/useErrorBoundary';
 import RouterProvider from '@/routers'; // 路由 router
+import SapReturnReminder from '@/components/SapReturnReminder';
 
 import i18n from '@/languages/index'; // 国际化 i18n
 import enUS from 'antd/locale/en_US';
@@ -60,6 +61,8 @@ const App: React.FC = () => {
 		// antd Global Config：  https://ant.design/docs/react/customize-theme-cn#seedtoken
 		<ConfigProvider {...configProviderProps}>
 			<AppProvider>
+				{/* 每天9点定时提醒 */}
+				<SapReturnReminder />
 				<I18nextProvider i18n={i18n}>
 					{/* 全局刷新 / 局部刷新数据  */}
 					<RefreshProvider>

@@ -1,10 +1,182 @@
 /* ant-pro-table internal scrolling */
 
+/* ProTable hover row highlight */
+.mater-stock-hover-table {
+	.ant-table-tbody > tr:hover:not(.ant-table-placeholder) > td {
+		background: #bcd7ff !important;
+		transition: background 0.15s ease;
+	}
+
+	// 表格虚拟化
+	.ant-table-tbody-virtual .ant-table-row:hover .ant-table-cell {
+		background: #bcd7ff !important;
+		transition: none;
+	}
+}
+
+// 表格 虚拟化滚动：   当视口没有填满行时，保持虚拟表格滚动条在底部。
+.mater-stock-detail-virtual-table {
+	// The virtual horizontal scrollbar uses the reserved area below the body.
+	.ant-table {
+		overflow: visible !important;
+	}
+
+	// Reserve a separate area for the horizontal scrollbar so it does not cover rows.
+	.ant-table-tbody-virtual {
+		position: relative;
+		box-sizing: border-box;
+		padding-bottom: 0 !important;
+	}
+
+	.ant-table-tbody-virtual-holder {
+		height: var(--mater-stock-table-body-scroll-y);
+		max-height: var(--mater-stock-table-body-scroll-y) !important;
+		scrollbar-gutter: stable;
+		scrollbar-width: auto;
+		overflow-x: hidden !important;
+		overscroll-behavior: contain;
+		contain: layout paint;
+		transform: translateZ(0);
+	}
+	.ant-table-tbody-virtual-scrollbar-horizontal {
+		height: 16px !important;
+		left: 0 !important;
+		right: 0 !important;
+		bottom: -17px !important;
+		visibility: visible !important;
+		background: #e4e4e7;
+		border-radius: 8px;
+
+		&::before,
+		&::after {
+			position: absolute;
+			top: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 16px;
+			height: 16px;
+			color: #595959;
+			font-size: 0;
+			background: #595959;
+			z-index: 2;
+			pointer-events: none;
+		}
+
+		&::before {
+			left: 0;
+			width: 16px;
+			height: 16px;
+			color: #595959;
+			font-size: 9px;
+			clip-path: none;
+			background: #e4e4e7;
+			content: '\25C0';
+		}
+
+		&::after {
+			right: 10px;
+			width: 16px;
+			height: 16px;
+			color: #595959;
+			font-size: 9px;
+			clip-path: none;
+			background: #e4e4e7;
+			content: '\25B6';
+		}
+
+		.ant-table-tbody-virtual-scrollbar-thumb {
+			height: 10px !important;
+			top: 3px !important;
+			background: #bdbdbd !important;
+			border-radius: 8px !important;
+		}
+	}
+
+	.ant-table-tbody-virtual-scrollbar-vertical {
+		width: 10px !important;
+		top: 0 !important;
+		bottom: 0 !important;
+		visibility: visible !important;
+
+		&::before,
+		&::after {
+			position: absolute;
+			left: -3px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 16px;
+			height: 16px;
+			color: #595959;
+			font-size: 0;
+			background: #595959;
+			z-index: 2;
+			pointer-events: none;
+		}
+
+		&::before {
+			top: 0;
+			color: #595959;
+			font-size: 9px;
+			clip-path: none;
+			background: #e4e4e7;
+			content: '\25B2';
+		}
+
+		&::after {
+			bottom: 0;
+			color: #595959;
+			font-size: 9px;
+			clip-path: none;
+			background: #e4e4e7;
+			content: '\25BC';
+		}
+
+		.ant-table-tbody-virtual-scrollbar-thumb {
+			width: 10px !important;
+			background: #bdbdbd !important;
+		}
+	}
+
+	.ant-table-tbody-virtual-scrollbar-thumb:hover {
+		background: #939393 !important;
+	}
+
+}
+
 // * 加这个是 ProTable组件 界面滚动区域
 .ant-pro-table-scroll {
 	display: flex;
 	flex-direction: column;
 	height: 100%;
+
+	// ! ProTable 改变表格字体大小，让表格呈现更多数据
+	&.ant-pro-table-compact {
+		.ant-table-thead > tr > th .ant-table-column-title,
+		.ant-table-thead > tr > th .ant-table-column-title * {
+			font-size: 12px !important;
+		}
+		.ant-table-tbody > tr > td,
+		.ant-table-tbody > tr > td .ant-typography,
+		.ant-table-tbody > tr > td .ant-typography * {
+			font-size: 12px !important;
+			// font-family: sans-serif;
+		}
+		.ant-table-tbody > tr > td {
+			padding: 5px 6px !important;
+		}
+		// 表格虚拟化
+		.ant-table-tbody-virtual .ant-table-row .ant-table-cell,
+		.ant-table-tbody-virtual .ant-table-row .ant-table-cell .ant-typography,
+		.ant-table-tbody-virtual .ant-table-row .ant-table-cell .ant-typography * {
+			font-size: 12px !important;
+		}
+		.ant-table-tbody-virtual .ant-table-row .ant-table-cell {
+			padding: 5px 6px !important;
+		}
+	}
+
 	.ant-pro-table-search {
 		margin-block-end: 10px;
 	}
@@ -27,6 +199,12 @@
 						.ant-table {
 							flex: auto;
 							overflow: hidden;
+
+							// ! ProTable 组件中表格表头的文字大小
+							.ant-table-thead > tr > th .ant-table-column-title,
+							.ant-table-thead > tr > th .ant-table-column-title * {
+								font-size: 12px !important;
+							}
 							.ant-table-container {
 								display: flex;
 								flex-direction: column;

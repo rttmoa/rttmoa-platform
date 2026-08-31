@@ -1,0 +1,69 @@
+{
+  "name": "server",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon --watch src --ext ts,js,json --exec \"tsx src/app.ts\"",
+    "start": "nodemon --watch src --ext ts,js,json --exec \"tsx src/app.ts\"",
+    "start:dev": "cross-env NODE_ENV=development nodemon --watch src --ext ts,js,json --exec \"tsx src/app.ts\"",
+    "start:prod": "cross-env NODE_ENV=production tsx src/app.ts",
+    "start:node20": "node --import tsx src/app.ts",
+    "start:node20:watch": "node --import tsx --watch src/app.ts",
+    "koaMysql": "nodemon koa-mysql.js",
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "dev_run_all": "npm-run-all --parallel client:dev server:dev server:start",
+    "server_start": "cross-env NODE_ENV=development supervisor -i ./dist/client/ -w ./dist/ ./dist/app.js",
+    "restart": "tsx watch src/app.ts"
+  },
+  "engines": {
+    "node": ">=14.18.0"
+  },
+  "dependencies": {
+    "@koa/cors": "^5.0.0",
+    "axios": "^1.11.0",
+    "chalk": "^4.1.2",
+    "koa": "^2.5.2",
+    "koa-body": "^4.1.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-helmet": "6.1.0",
+    "koa-json": "^2.0.2",
+    "koa-jwt": "^3.3.2",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "mongodb": "^5.9.2",
+    "mongoose": "^5.13.21",
+    "mssql": "^12.3.0",
+    "mysql": "^2.17.1",
+    "systeminformation": "^5.33.6",
+    "underscore": "^1.13.6",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@koa/router": "^12.0.1",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/koa": "^2.13.11",
+    "@types/koa__router": "^12.0.4",
+    "@types/koa-bodyparser": "^4.3.12",
+    "@types/koa-json": "^2.0.23",
+    "@types/koa-static": "^4.0.4",
+    "@types/node": "^20.9.0",
+    "@types/underscore": "^1.11.14",
+    "bson": "6.7.0",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.7",
+    "nodemon": "^3.0.1",
+    "supervisor": "^0.12.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.2.2"
+  },
+  "resolutions": {
+    "generator-function": "1.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}

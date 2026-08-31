@@ -21,7 +21,7 @@ const ToolBarRight: React.FC = () => {
 				{/* 主题设置 & 全局搜索框 & 通知 */}
 				<ThemeSetting />
 				<SearchMenu />
-				<Message />
+				{/* <Message /> */}
 
 				{/* 组件大小 & 切换语言 & 全屏网页 */}
 				<ComponentSize />

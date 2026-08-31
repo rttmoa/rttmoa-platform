@@ -1,25 +1,27 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Form } from 'antd';
-import type { ActionType, FormInstance } from '@ant-design/pro-components';
+import type { ActionType, FormInstance, ProTableProps } from '@ant-design/pro-components';
 import { message } from '@/hooks/useMessage';
-import useTabColumnSchema from '@/hooks/useTableSchema/useTabColumnSchema';
-import useTabFormSchema from '@/hooks/useTableSchema/useTabFormSchema';
-import ColumnsConfig from '@/components/TableColumns';
-import ToolBarRender from '@/components/TableToolBar';
-import { usePagination } from '@/hooks/useTable/usePagination';
-import { useSearchSpan } from '@/hooks/useTable/useSearchSpan';
-import useTableRequest from '@/hooks/useTable/useTableRequest';
 import _ from 'lodash';
+import useHeaderStretch from '@/hooks/useTable/useHeaderStretch';
+import { useSearchSpan } from '@/hooks/useTable/useSearchSpan'; // 公共：屏幕宽度自动计算
+import { usePagination } from '@/hooks/useTable/usePagination'; // 公共：页码配置
+import useTableRequest from '@/hooks/useTable/useTableRequest'; // 公共：统一请求服务端
+import useTabFormSchema from '@/hooks/useTableSchema/useTabFormSchema'; // 公共：表格Form配置
+import useTabColumnSchema from '@/hooks/useTableSchema/useTabColumnSchema'; // 公共：表格列配置
+import ColumnsConfig from '@/components/TableColumns'; // 公共：表格列配置
+import useConfigModal from '@/hooks/useTable/useConfig_Modal';
 
-const useProTableDynamic = ({ api }: any) => {
-	const { setPagination, paginationProps } = usePagination();
-
+const useProTableDynamic = ({ api, headerStretch = false }: any) => {
 	const [loading, setLoading] = useState<boolean>(false);
-	const [columnSchema, setcolumnSchema] = useState<any>({});
-	const [tableInfo, setTableInfo] = useState<any>({ tableName: '', collection: '' });
-	const { tableName, collection } = tableInfo;
-	const { handleRequest } = useTableRequest(api, setLoading, setcolumnSchema, setPagination, setTableInfo);
+	const { setPagination, paginationProps } = usePagination({
+		onBeforeChange: () => setLoading(true),
+	});
+	const [columnSchema, setcolumnSchema] = useState<any>({}); // 每个表的 FieldSchema 配置
+	const [initColumnSchema, setInitColumnSchema] = useState<any>({});
 
+	const [tableInfo, setTableInfo] = useState<any>({ tableName: '', collection: '' }); // 每个表的表名
+	const { tableName, collection } = tableInfo;
 	const searchSpan = useSearchSpan();
 
 	const actionRef = useRef<ActionType>();
@@ -29,61 +31,27 @@ const useProTableDynamic = ({ api }: any) => {
 	const [editableKeys, setEditableKeys] = useState<React.Key[]>([]); // 行内编辑
 
 	const [openSearch, setOpenSearch] = useState<boolean>(false);
-	const [tableData, setTableData] = useState<any[]>([]);
+	const [dataList, setDataList] = useState<any[]>([]);
+	const { handleRequest, findApi } = useTableRequest(api, setLoading, setcolumnSchema, setPagination, setTableInfo, setInitColumnSchema, setDataList);
+
 	const [selectedRows, setSelectedRows] = useState<any[]>([]);
+	const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]); // 操作后，取消勾选的表格数据
 
 	const [drawerCurrentRow, setDrawerCurrentRow] = useState<any>({});
 	const [drawerIsVisible, setDrawerIsVisible] = useState<boolean>(false);
 
-	const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
-	const [modalTitle, setModalTitle] = useState<string>('');
-	const [modalType, setModalType] = useState<'create' | 'edit' | 'detail'>('create');
-	const [modalUserInfo, setModalUserInfo] = useState<any>({});
+	const { modalIsVisible, setModalIsVisible, modalTitle, modalType, modalUserInfo, modalOperate, modalResult } = useConfigModal({
+		api,
+		form,
+		actionRef,
+		selectedRows,
+		setSelectedRows,
+		setSelectedRowKeys,
+		setDrawerCurrentRow,
+		setDrawerIsVisible,
+	});
 
-	const modalOperate = (type: 'create' | 'edit' | 'detail', item?: any) => {
-		setModalType(type);
-		if (type === 'detail') {
-			setDrawerIsVisible(true);
-			setDrawerCurrentRow(item || {});
-		} else {
-			setModalIsVisible(true);
-			setModalUserInfo(item || {});
-			setModalTitle(type === 'create' ? '新建' : '编辑');
-		}
-	};
-
-	const modalResult = useCallback(
-		async (type: string, item: any) => {
-			try {
-				if (['create', 'edit'].includes(type)) {
-					const hide = message.loading(type === 'create' ? '正在添加' : '正在编辑');
-					const res = type === 'create' ? await api.add(item) : await api.modify(item._id, item);
-					hide();
-					if (res) {
-						form.resetFields();
-						setModalIsVisible(false);
-						actionRef.current?.reload();
-						message.success(type === 'create' ? '添加成功' : '编辑成功');
-					}
-				} else if (['delete', 'moreDelete'].includes(type)) {
-					const hide = message.loading('正在删除');
-					const ids = type === 'delete' ? [item._id] : selectedRows.map(row => row._id);
-					const res = type === 'delete' ? await api.del(item._id) : await api.delMore(ids);
-					hide();
-					if (res) {
-						if (type === 'moreDelete') setSelectedRows([]);
-						actionRef.current?.reloadAndRest?.();
-						message.success(`${type === 'delete' ? `删除成功` : `删除 ${selectedRows.length} 条记录成功`}`);
-					}
-				}
-			} catch (error: any) {
-				message.error(error.message || '操作失败，请重试！');
-			}
-		},
-		[selectedRows, form]
-	);
-
-	const quickSearch = () => {};
+	const quickSearch = useCallback(() => {}, []);
 
 	const ImportData = useCallback(
 		async (data: any) => {
@@ -101,10 +69,10 @@ const useProTableDynamic = ({ api }: any) => {
 		[api.importEx]
 	);
 
-	const columnsSchemaField = useTabColumnSchema(columnSchema);
+	const columnsSchemaField = useTabColumnSchema(columnSchema); // 设置列：标题、宽度、类型(string,number)等
 	const formSchemaField = useTabFormSchema(columnSchema);
 	const tableOps = columnSchema?.__ops__ || {};
-	const columnsCfg = ColumnsConfig(modalOperate, modalResult, columnsSchemaField, tableOps);
+	const columnsCfg = useMemo(() => ColumnsConfig(modalOperate, modalResult, columnsSchemaField, tableOps), [modalOperate, modalResult, columnsSchemaField, tableOps]);
 
 	// * 表头搜索条件变化自动调用服务端
 	const debouncedSubmit = useMemo(
@@ -120,45 +88,54 @@ const useProTableDynamic = ({ api }: any) => {
 		};
 	}, [debouncedSubmit]);
 
-	const toolBarParams: any = {
-		quickSearch,
-		openSearch,
-		setOpenSearch,
-		modalOperate,
-		tableName,
-		tableData,
-		ImportData,
-		columnsCfg,
-		ops: tableOps,
-		loading,
-	};
+	// 工具栏 Config
+	const reloadTable = useCallback(async () => {
+		const current = Number(paginationProps.current) || 1;
+		const pageSize = Number(paginationProps.pageSize) || 50;
 
-	const proTableProps: any = {
-		rowKey: '_id',
-		className: 'ant-pro-table-scroll',
-		scroll: { y: '100vh' },
-		headerTitle: tableName,
-		loading,
-		formRef,
-		actionRef,
-		bordered: true,
-		cardBordered: true,
-		dateFormatter: 'number',
-		defaultSize: 'small',
-		columns: columnsCfg,
-		toolBarRender: () => ToolBarRender(toolBarParams),
-		// 表头查询方式： query | light
-		search: openSearch ? false : { labelWidth: 'auto', filterType: 'query', span: searchSpan, showHiddenNum: true },
-		request: handleRequest,
-		form: {
-			onValuesChange: () => debouncedSubmit(),
-		},
-		pagination: paginationProps,
-		rowSelection: {
-			onChange: (_: any, rows: any[]) => setSelectedRows(rows),
-		},
-		editable: {
-			type: 'multiple',
+		setcolumnSchema({});
+		setInitColumnSchema({});
+		await handleRequest({ current, pageSize }, {}, {});
+		actionRef.current?.reload();
+	}, [handleRequest, paginationProps.current, paginationProps.pageSize]);
+
+	// 工具栏 Config
+	const toolBarParams: any = useMemo(
+		() => ({
+			loading,
+			quickSearch,
+			openSearch,
+			setOpenSearch,
+			modalOperate,
+			tableInfo,
+			dataList,
+			ImportData,
+			columnsCfg,
+			ops: tableOps,
+			columnSchema,
+			initColumnSchema,
+			reloadTable,
+			findApi,
+		}),
+		[loading, quickSearch, openSearch, modalOperate, tableInfo, dataList, ImportData, columnsCfg, tableOps, columnSchema, initColumnSchema, reloadTable, findApi]
+	);
+
+	// 勾选表格数据
+	const rowSelection = useMemo(
+		() => ({
+			selectedRowKeys,
+			onChange: (keys: React.Key[], rows: any[]) => {
+				setSelectedRowKeys(keys);
+				setSelectedRows(rows);
+			},
+		}),
+		[selectedRowKeys]
+	);
+
+	// 行内编辑
+	const editableConfig = useMemo(
+		() => ({
+			type: 'multiple' as const,
 			editableKeys,
 			onChange: setEditableKeys,
 			onSave: async (_key: any, row: any) => {
@@ -184,7 +161,45 @@ const useProTableDynamic = ({ api }: any) => {
 					message.success(`删除失败：服务器错误！`);
 				}
 			},
+		}),
+		[editableKeys, api, form]
+	);
+
+	const proTableProps: ProTableProps<any, any> = {
+		rowKey: '_id',
+		className: 'ant-pro-table-scroll  ant-pro-table-compact    mater-stock-hover-table',
+		scroll: { y: '100vh' },
+		headerTitle: tableName,
+		formRef,
+		actionRef,
+		onLoadingChange: nextLoading => {
+			if (typeof nextLoading === 'boolean') {
+				setLoading(nextLoading);
+				return;
+			}
+			setLoading(Boolean(nextLoading?.spinning ?? nextLoading));
 		},
+		bordered: true,
+		cardBordered: true,
+		dateFormatter: 'number',
+		defaultSize: 'small',
+		columns: columnsCfg,
+		// options: false,
+		options: {
+			reload: true,
+			density: false,
+			setting: true,
+		},
+		// 表头查询方式： query | light
+		search: openSearch ? false : { labelWidth: 'auto', filterType: 'query', span: searchSpan, showHiddenNum: true },
+		debounceTime: 0,
+		request: handleRequest, // 服务端接口数据
+		form: {
+			onValuesChange: () => debouncedSubmit(),
+		},
+		pagination: paginationProps,
+		rowSelection,
+		editable: editableConfig,
 		ghost: false,
 		onSizeChange: () => {},
 		onRequestError: (_error: any) => {},
@@ -194,9 +209,16 @@ const useProTableDynamic = ({ api }: any) => {
 		},
 	};
 
+	// 表头拖拽功能
+	const headerStretchProps = useHeaderStretch(proTableProps);
+	const finalProTableProps = headerStretch ? { ...proTableProps, ...headerStretchProps } : proTableProps;
+
+	// Footer 配置
 	const footerProps = { selectedRows, modalResult };
+
 	const showFooter = selectedRows?.length > 0 && tableOps?.allowBatchDelete !== false;
 
+	// 新建弹窗 Modal Config
 	const modalProps = {
 		form,
 		modalIsVisible,
@@ -208,6 +230,7 @@ const useProTableDynamic = ({ api }: any) => {
 		formSchemaField,
 	};
 
+	// 查看数据详情的 Drawer
 	const drawerProps = {
 		drawerIsVisible,
 		drawerCurrentRow: { ...drawerCurrentRow },
@@ -222,7 +245,7 @@ const useProTableDynamic = ({ api }: any) => {
 		tableOps,
 	};
 
-	return { proTableProps, showFooter, footerProps, modalProps, drawerProps };
+	return { proTableProps: finalProTableProps, toolBarParams, showFooter, footerProps, modalProps, drawerProps };
 };
 
 export default useProTableDynamic;

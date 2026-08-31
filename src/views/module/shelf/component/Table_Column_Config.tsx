@@ -1,30 +1,30 @@
-import { ProColumns } from '@ant-design/pro-components'
-import { UserList } from '@/api/interface'
-import { Button, Dropdown, Input } from 'antd'
-import { DeleteOutlined, EditOutlined, EyeOutlined, SearchOutlined } from '@ant-design/icons'
-import { message } from '@/hooks/useMessage'
-import { IconFont } from '@/components/Icon'
+import { ProColumns } from '@ant-design/pro-components';
+import { UserList } from '@/api/interface';
+import { Button, Dropdown, Input } from 'antd';
+import { DeleteOutlined, EditOutlined, EyeOutlined, SearchOutlined } from '@ant-design/icons';
+import { message } from '@/hooks/useMessage';
+import { IconFont } from '@/components/Icon';
 
 const valueEnum: { [key: number]: string } = {
 	0: 'close',
 	1: 'running',
 	2: 'online',
 	3: 'error',
-}
+};
 const ProcessMap = {
 	close: 'normal',
 	running: 'active',
 	online: 'success',
 	error: 'exception',
-} as const
+} as const;
 
 export interface TableColumnsParams {
-	setCurrentRow: (arg: any) => void
-	setShowDetail: (arg: any) => void
+	setCurrentRow: (arg: any) => void;
+	setShowDetail: (arg: any) => void;
 }
 
 const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<any>[] => {
-	let { setCurrentRow, setShowDetail } = Params
+	let { setCurrentRow, setShowDetail } = Params;
 	return [
 		{
 			title: '位置名称',
@@ -43,19 +43,20 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<any>[] => {
 			render: (dom, entity) => {
 				return (
 					<a
-						href="javascript:void(0)"
+						href='javascript:void(0)'
 						onClick={() => {
-							setCurrentRow(entity)
-							setShowDetail(true)
-							message.info(`点击了 ${entity.loc_name__c}`)
-						}}>
+							setCurrentRow(entity);
+							setShowDetail(true);
+							message.info(`点击了 ${entity.loc_name__c}`);
+						}}
+					>
 						{dom}
 					</a>
-				)
+				);
 			},
 			filterDropdown: () => (
 				<div style={{ padding: 2 }}>
-					<Input style={{ width: 150, marginBlockEnd: 8, display: 'block', fontSize: '14px' }} placeholder="请输入" />
+					<Input style={{ width: 150, marginBlockEnd: 8, display: 'block', fontSize: '14px' }} placeholder='请输入' />
 				</div>
 			),
 			filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
@@ -119,7 +120,7 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<any>[] => {
 			width: 120,
 			filterDropdown: () => (
 				<div style={{ padding: 2 }}>
-					<Input style={{ width: 150, marginBlockEnd: 8, display: 'block', fontSize: '14px' }} placeholder="请输入" />
+					<Input style={{ width: 150, marginBlockEnd: 8, display: 'block', fontSize: '14px' }} placeholder='请输入' />
 				</div>
 			),
 			filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
@@ -138,12 +139,12 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<any>[] => {
 			hideInSearch: true,
 			render: (data, entity) => action(entity, Params),
 		},
-	]
-}
+	];
+};
 
 // 操作按钮：查看、新增、删除
 const action = (entity: UserList, Params: TableColumnsParams) => [
-	<div className="more-button">
+	<div className='more-button'>
 		<Dropdown
 			menu={{
 				items: [
@@ -151,15 +152,16 @@ const action = (entity: UserList, Params: TableColumnsParams) => [
 						key: '1',
 						label: (
 							<Button
-								key="view"
-								type="link"
-								size="small"
+								key='view'
+								type='link'
+								size='small'
 								icon={<EyeOutlined />}
 								onClick={() => {
 									// console.log(entity)
-									Params.setCurrentRow(entity)
-									Params.setShowDetail(true)
-								}}>
+									Params.setCurrentRow(entity);
+									Params.setShowDetail(true);
+								}}
+							>
 								查看
 							</Button>
 						),
@@ -167,7 +169,7 @@ const action = (entity: UserList, Params: TableColumnsParams) => [
 					{
 						key: '2',
 						label: (
-							<Button key="edit" type="link" size="small" icon={<EditOutlined />}>
+							<Button key='edit' type='link' size='small' icon={<EditOutlined />}>
 								编辑
 							</Button>
 						),
@@ -176,27 +178,29 @@ const action = (entity: UserList, Params: TableColumnsParams) => [
 						key: '3',
 						label: (
 							<Button
-								key="delete"
-								type="link"
-								size="small"
+								key='delete'
+								type='link'
+								size='small'
 								danger
 								icon={<DeleteOutlined />}
 								onClick={() => {
-									message.success(`删除了iD为: ${entity.username}`, 2)
-								}}>
+									message.success(`删除了iD为: ${entity.username}`, 2);
+								}}
+							>
 								删除
 							</Button>
 						),
 					},
 				],
 			}}
-			placement="bottomRight"
+			placement='bottomRight'
 			arrow={{ pointAtCenter: true }}
-			trigger={['click']}>
-			<div className="more-button-item">
-				<IconFont style={{ fontSize: 22 }} type="icon-xiala" />
+			trigger={['click']}
+		>
+			<div className='more-button-item'>
+				<IconFont style={{ fontSize: 22 }} type='icon-xiala' />
 			</div>
 		</Dropdown>
 	</div>,
-]
-export default TableColumnsConfig
+];
+export default TableColumnsConfig;

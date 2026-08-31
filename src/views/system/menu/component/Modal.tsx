@@ -7,7 +7,7 @@ import { Icon } from '@/components/Icon';
 import * as Icons from '@ant-design/icons';
 
 const ModalComponent = (Props: any) => {
-	const { form, menuOpen, modalTitle, modalType: type, modalIsVisible, modalSubMenu, modalMenuInfo: data, setModalIsVisible, handleModalSubmit } = Props;
+	const { form, menuOpen, modalTitle, modalType: type, modalIsVisible, modalSubMenu, modalItemInfo: data, setModalIsVisible, handleModalSubmit } = Props;
 
 	const [isTop, setIsTop] = useState('是');
 	const [value, setValue] = useState<string>('');
@@ -17,17 +17,25 @@ const ModalComponent = (Props: any) => {
 	useEnterSubmit(modalIsVisible, () => form.submit()); // * 回车提交表单数据
 
 	// console.log('data?.parent_id', data?.parent_id);
+	console.log('type', type);
+	console.log('data.meta?.path', data.meta?.path);
 
 	useEffect(() => {
+		let key = type === 'create' ? null : type === 'createSubMenu' ? `______` : data.meta?.key;
+		let title = type === 'create' ? null : type === 'createSubMenu' ? `______` : data.meta?.title;
+		let redirect = type === 'create' ? null : type === 'createSubMenu' ? null : data?.redirect;
+		let path = type === 'create' ? null : type === 'createSubMenu' ? `${data?.path}/______` : data?.path;
+		let element = type === 'create' ? null : type === 'createSubMenu' ? `${data?.path}/______/index` : data?.element;
+
 		form.setFieldsValue({
 			isTop: type === 'create' ? '是' : data?.parent_id == 0 ? '是' : '否',
 			parent_id: type === 'create' ? null : data?.parent_id == 0 ? null : data?.parent_id,
-			path: type === 'create' ? null : data.path,
-			element: type === 'create' ? null : data.element,
-			redirect: type === 'create' ? null : data.redirect,
+			path: path,
+			element: element,
+			redirect: redirect,
 			type: type === 'create' ? '目录' : data.meta?.type,
-			key: type === 'create' ? null : data.meta?.key,
-			title: type === 'create' ? null : data.meta?.title,
+			key: key,
+			title: title,
 			icon: type === 'create' ? 'AppstoreOutlined' : data.meta?.icon,
 			sort: type === 'create' ? 1 : data.meta?.sort || 1,
 			isLink: type === 'create' ? null : data?.meta?.isLink,

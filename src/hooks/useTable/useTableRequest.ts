@@ -1,36 +1,57 @@
 import { useCallback } from 'react';
 import { message } from '@/hooks/useMessage';
 
-// * 📌 useTableRequest.ts（统一请求）
-// * 发请求：当表格参数变化
-// * 搜索条件类型为：字符串、数字、日期、筛选比如男女这样的等格式测试
-// * 表头搜索、排序搜索、分页搜索等
-// * 排序：每个字段排序、不可多个字段排序
-export default function useTableRequest(api?: any, setLoading?: any, setSchema?: any, setPagination?: any, setTableInfo?: any) {
+/**
+ * ！！！公共：请求服务端
+ */
+export default function useTableRequest(api?: any, setLoading?: any, setSchema?: any, setPagination?: any, setTableInfo?: any, setInitSchema?: any, setDataList?: any) {
 	const handleRequest = useCallback(
 		async (params: any, sort: any, filter: any) => {
-			setLoading(true);
 			try {
 				const searchParams = { ...params };
 				delete searchParams.current;
 				delete searchParams.pageSize;
 
-				const mappedSort = Object.fromEntries(Object.entries(sort).map(([k, v]) => [k, v === 'ascend' ? 'asc' : 'desc']));
+				const mappedSort = Object.fromEntries(Object.entries(sort || {}).map(([k, v]) => [k, v === 'ascend' ? 'asc' : 'desc']));
 
 				const payload = {
 					search: searchParams,
 					filter,
 					pagination: { page: params.current, pageSize: params.pageSize },
-					sort: mappedSort,
+					...(Object.keys(mappedSort).length ? { sort: mappedSort } : {}),
 				};
 
 				const { data }: any = await api.find(payload);
 
-				setTableInfo(data?.tableInfo || {});
-				setSchema(data?.schema || {});
-				setPagination((prev: any) => ({ ...prev, total: data.total }));
+				const list = data?.list || [];
+				const total = data?.total || 0;
 
-				return { data: data.list, success: true, total: data.total };
+				setDataList?.(list);
+
+				setPagination?.((prev: any) => {
+					if (prev?.total === total) return prev;
+					return { ...prev, total };
+				});
+
+				setSchema?.((prev: any) => {
+					if (prev && Object.keys(prev).length) return prev;
+					if (!data?.schema) return prev;
+					return data.schema;
+				});
+
+				setInitSchema?.((prev: any) => {
+					if (prev && Object.keys(prev).length) return prev;
+					if (!data?.init_schema && !data?.schema) return prev;
+					return data.init_schema || data.schema;
+				});
+
+				setTableInfo?.((prev: any) => {
+					if (prev?.collection || prev?.tableName) return prev;
+					if (!data?.tableInfo) return prev;
+					return data.tableInfo;
+				});
+
+				return { data: list, success: true, total };
 			} catch (err) {
 				message.error('数据加载失败');
 				return {
@@ -38,12 +59,12 @@ export default function useTableRequest(api?: any, setLoading?: any, setSchema?:
 					success: false,
 					total: 0,
 				};
-			} finally {
-				setLoading(false);
 			}
 		},
 		[api.find]
 	);
 
-	return { handleRequest };
+	const findApi = useCallback(() => api.find(), [api.find]);
+
+	return { handleRequest, findApi };
 }

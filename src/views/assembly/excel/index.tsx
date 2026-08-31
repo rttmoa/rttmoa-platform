@@ -46,15 +46,7 @@ const TableDataImport = () => {
 					<Button icon={<SettingOutlined className='hover:cursor-pointer' />}>Excel Setting</Button>
 				</Excel>
 			</div>
-			<Table
-				scroll={{ x: '100%', y: 'calc( 100vh - 270px )' }}
-				rowKey={(record: any) => record.key}
-				bordered
-				loading={tableLoading}
-				size='small'
-				dataSource={dataSource}
-				columns={column}
-			/>
+			<Table scroll={{ x: '100%', y: 'calc( 100vh - 270px )' }} rowKey={(record: any) => record.key} bordered loading={tableLoading} size='small' dataSource={dataSource} columns={column} />
 		</div>
 	);
 };

@@ -23,6 +23,6 @@ const headerTheme = {
 		'--hooks-colorBgHeader': '#141414',
 		'--hooks-colorBorderHeader': '#303030',
 	},
-}
+};
 
-export default headerTheme
+export default headerTheme;

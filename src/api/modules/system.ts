@@ -56,6 +56,7 @@ export const FindAllMenu = (params: Params) => http.get(`/menu/allMenu`, params)
 export const InsNewMenu = (params: Params) => http.post(`/menu/addMenu`, params);
 export const UpMenu = (params: Params) => http.post(`/menu/modMenu`, params);
 export const DelMenu = (params: Params) => http.post(`/menu/delMenu`, params);
+export const DelMoreMenu = (params: Params) => http.post(`/menu/delMoreMenu`, params);
 
 // * 系统管理 — 用户管理eg1
 export const getUsers = (params: Params) => http.get(`/userp/users2`, params);

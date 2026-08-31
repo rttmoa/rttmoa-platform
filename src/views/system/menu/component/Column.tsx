@@ -7,7 +7,7 @@ import { Button, Tag } from 'antd';
 const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProColumns<UserList>[] => {
 	return [
 		{
-			title: '菜单标题',
+			title: <div className='text-[10px]'>菜单标题</div>,
 			dataIndex: ['meta', 'title'],
 			// align: 'center',
 			copyable: true,
@@ -39,7 +39,7 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 			},
 		},
 		{
-			title: '排序',
+			title: <div className='text-[10px]'>排序</div>,
 			width: 80,
 			dataIndex: ['meta', 'sort'],
 			align: 'center',
@@ -48,9 +48,9 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 			editable: () => true,
 		},
 		{
-			title: '菜单图标',
+			title: <div className='text-[10px]'>菜单图标</div>,
 			dataIndex: ['meta', 'icon'],
-			width: 80,
+			width: 60,
 			align: 'center',
 			filters: true,
 			onFilter: true,
@@ -58,7 +58,7 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 			render: (text, record: any) => <Icon name={record?.meta?.icon} />,
 		},
 		{
-			title: '菜单类型',
+			title: <div className='text-[10px]'>菜单类型</div>,
 			dataIndex: ['meta', 'type'],
 			width: 80,
 			align: 'center',
@@ -67,17 +67,30 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 			editable: () => true,
 		},
 		{
-			title: '菜单标识',
+			title: <div className='text-[10px]'>上级 Key</div>,
+			dataIndex: 'parent_id',
+			ellipsis: true,
+			width: 100,
+			align: 'center',
+			filters: true,
+			onFilter: true,
+			editable: () => true,
+			render: (_, record: any) => {
+				return <div>{record.parent_id == '0' ? '无' : record.parent_id}</div>;
+			},
+		},
+		{
+			title: <div className='text-[10px]'>菜单标识</div>,
 			dataIndex: ['meta', 'key'],
 			ellipsis: true,
-			width: 150,
+			width: 120,
 			align: 'center',
 			filters: true,
 			onFilter: true,
 			editable: () => true,
 		},
 		{
-			title: '开启菜单',
+			title: <div className='text-[10px]'>开启菜单</div>,
 			dataIndex: ['meta', 'enable'],
 			ellipsis: true,
 			width: 100,
@@ -89,7 +102,7 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 			},
 		},
 		{
-			title: '路由路径',
+			title: <div className='text-[10px]'>路由路径</div>,
 			dataIndex: 'path',
 			ellipsis: true,
 			width: 220,
@@ -98,7 +111,7 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 			onFilter: true,
 		},
 		{
-			title: '组件路径',
+			title: <div className='text-[10px]'>组件路径</div>,
 			dataIndex: 'element',
 			ellipsis: true,
 			width: 260,
@@ -107,7 +120,7 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 			onFilter: true,
 		},
 		{
-			title: '重定向路径',
+			title: <div className='text-[10px]'>重定向路径</div>,
 			dataIndex: 'redirect',
 			ellipsis: true,
 			width: 180,
@@ -116,7 +129,7 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 			onFilter: true,
 		},
 		{
-			title: '外链url',
+			title: <div className='text-[10px]'>外链url</div>,
 			dataIndex: ['meta', 'isLink'],
 			width: 180,
 			align: 'center',
@@ -125,7 +138,7 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 			render: (_, record: any) => record.meta.isLink || '-',
 		},
 		{
-			title: '隐藏菜单项',
+			title: <div className='text-[10px]'>隐藏菜单项</div>,
 			dataIndex: ['meta', 'isHide'],
 			ellipsis: true,
 			width: 90,
@@ -135,7 +148,7 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 			render: (_, record: any) => (record.meta.isHide ? '是' : '否'),
 		},
 		{
-			title: '全屏显示',
+			title: <div className='text-[10px]'>全屏显示</div>,
 			dataIndex: ['meta', 'isFull'],
 			width: 80,
 			align: 'center',
@@ -144,7 +157,7 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 			render: (_, record: any) => (record.meta.isFull ? '是' : '否'),
 		},
 		{
-			title: '固定标签页',
+			title: <div className='text-[10px]'>固定标签页</div>,
 			dataIndex: ['meta', 'isAffix'],
 			ellipsis: true,
 			width: 90,
@@ -167,10 +180,12 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 			valueType: 'option',
 			align: 'center',
 			fixed: 'right',
-			width: 150,
+			width: 100,
 			render: (text, record, index, action) => {
 				return (
 					<Button
+						className='menu-action-button'
+						size='small'
 						onClick={() => {
 							handleOperator('createSubMenu', record);
 						}}

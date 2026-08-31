@@ -101,15 +101,7 @@ const JobManage = () => {
 				</Form>
 			</ModalForm> */}
 
-			<ModalComponent
-				form={form}
-				modalIsVisible={modalIsVisible}
-				setModalIsVisible={setModalIsVisible}
-				modalTitle={modalTitle}
-				modalType={modalType}
-				modalUserInfo={modalUserInfo}
-				modalResult={handleModalResult}
-			/>
+			<ModalComponent form={form} modalIsVisible={modalIsVisible} setModalIsVisible={setModalIsVisible} modalTitle={modalTitle} modalType={modalType} modalUserInfo={modalUserInfo} modalResult={handleModalResult} />
 
 			<DrawerComponent
 				drawerIsVisible={drawerIsVisible}

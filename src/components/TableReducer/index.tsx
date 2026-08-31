@@ -121,14 +121,7 @@ const useAsyncTable: React.FC<ArgTableProps> = props => {
 			<Table columns={owncolumns(fetchData)} rowKey={(record: any) => record.id} pagination={false} dataSource={state.dataSource} loading={state.loading} {...baseProps} />
 			<Row style={{ marginTop: 20 }} justify='end'>
 				<Col>
-					<Pagination
-						defaultCurrent={1}
-						current={state.pagination.current}
-						total={state.pagination.total}
-						showTotal={total => `总共 ${total} 条数据`}
-						showSizeChanger
-						onChange={handleTableChange}
-					/>
+					<Pagination defaultCurrent={1} current={state.pagination.current} total={state.pagination.total} showTotal={total => `总共 ${total} 条数据`} showSizeChanger onChange={handleTableChange} />
 				</Col>
 			</Row>
 		</>

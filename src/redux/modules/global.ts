@@ -31,7 +31,7 @@ const globalState: GlobalState = {
 	// 布局样式 -> 菜单 分割
 	menuSplit: true,
 	// 布局样式 -> 侧边 反转色
-	siderInverted: false,
+	siderInverted: true,
 	// 布局样式 -> 头部 反转色
 	headerInverted: false,
 

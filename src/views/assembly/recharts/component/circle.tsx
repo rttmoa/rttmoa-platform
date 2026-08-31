@@ -1,5 +1,5 @@
-import React from 'react'
-import { RadialBarChart, RadialBar, Legend, Tooltip, ResponsiveContainer } from 'recharts'
+import React from 'react';
+import { RadialBarChart, RadialBar, Legend, Tooltip, ResponsiveContainer } from 'recharts';
 
 const data = [
 	{ name: '18-24', uv: 31.47, pv: 2400, fill: '#8884d8' },
@@ -9,15 +9,15 @@ const data = [
 	{ name: '40-49', uv: 8.63, pv: 3908, fill: '#a4de6c' },
 	{ name: '50+', uv: 2.63, pv: 4800, fill: '#d0ed57' },
 	{ name: 'unknow', uv: 6.67, pv: 4800, fill: '#ffc658' },
-]
+];
 
 export default () => (
-	<ResponsiveContainer width="100%" height={300}>
-		<RadialBarChart width={730} height={250} innerRadius="10%" outerRadius="80%" data={data}>
+	<ResponsiveContainer width='100%' height={300}>
+		<RadialBarChart width={730} height={250} innerRadius='10%' outerRadius='80%' data={data}>
 			{/* RadialBar：prop type `data[0].value` is invalid; */}
-			<RadialBar startAngle={90} endAngle={-270} label background dataKey="uv" />
-			<Legend iconSize={10} width={120} height={140} layout="vertical" verticalAlign="middle" align="right" />
+			<RadialBar startAngle={90} endAngle={-270} label background dataKey='uv' />
+			<Legend iconSize={10} width={120} height={140} layout='vertical' verticalAlign='middle' align='right' />
 			<Tooltip />
 		</RadialBarChart>
 	</ResponsiveContainer>
-)
+);

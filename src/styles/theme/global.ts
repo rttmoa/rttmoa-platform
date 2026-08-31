@@ -29,6 +29,6 @@ const globalTheme = {
 		'--hooks-colorBgLoginMain': 'rgb(0 0 0 / 80%)',
 		'--hooks-boxShadowLoginForm': '0 2px 10px 2px rgb(255 255 255 / 12%)',
 	},
-}
+};
 
-export default globalTheme
+export default globalTheme;

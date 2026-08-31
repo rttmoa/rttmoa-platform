@@ -14,4 +14,4 @@ export default {
 		closeOther: '关闭其它',
 		closeAll: '关闭所有',
 	},
-}
+};

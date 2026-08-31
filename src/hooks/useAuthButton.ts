@@ -30,6 +30,7 @@ const useAuthButton = () => {
 
 	authButtonList[meta.key!]?.forEach(item => (currentPageAuthButton[item] = true));
 
+	console.log('currentPageAuthButton', currentPageAuthButton);
 	return {
 		BUTTONS: currentPageAuthButton,
 	};

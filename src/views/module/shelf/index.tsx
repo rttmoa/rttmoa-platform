@@ -6,7 +6,7 @@ import { UserList } from '@/api/interface';
 import { FooterToolbar, ModalForm, ProDescriptions, ProFormText, ProFormTextArea, ProTable } from '@ant-design/pro-components';
 import type { ActionType, FormInstance, ProDescriptionsItemProps } from '@ant-design/pro-components';
 import { message } from '@/hooks/useMessage';
-import { addRule, removeRule, updateRule } from '@/api/modules/eg_proTable/api';
+import { addRule, removeRule, updateRule } from '@/api/modules/proTable/api';
 import UpdateForm from './component/_UpdateForm';
 import './index.less';
 import TableColumnsConfig, { TableColumnsParams } from './component/Table_Column_Config';

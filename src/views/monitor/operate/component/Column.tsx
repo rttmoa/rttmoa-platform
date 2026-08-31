@@ -220,15 +220,7 @@ const action = (entity: any, modalOperate: any, modalResult: any) => {
 		{
 			key: '3',
 			label: (
-				<Popconfirm
-					title='删除任务！'
-					description={`你确定要删除： ${entity.postName}`}
-					onConfirm={OnDelete}
-					okText='确认'
-					cancelText='取消'
-					placement='top'
-					trigger='hover'
-				>
+				<Popconfirm title='删除任务！' description={`你确定要删除： ${entity.postName}`} onConfirm={OnDelete} okText='确认' cancelText='取消' placement='top' trigger='hover'>
 					<Button key='delete' type='link' size='small' danger icon={<DeleteOutlined />}>
 						删除
 					</Button>

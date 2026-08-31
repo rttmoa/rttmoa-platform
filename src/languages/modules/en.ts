@@ -14,4 +14,4 @@ export default {
 		closeOther: 'Close other',
 		closeAll: 'Close All',
 	},
-}
+};

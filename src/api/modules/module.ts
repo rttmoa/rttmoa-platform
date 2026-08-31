@@ -23,8 +23,24 @@ export class moduleAPI {
 	static getShelf_kd(params: Params) {
 		return httpUpack.get(`/storage_kd_keepwarm/shelfs`, params);
 	}
+
 	// 克东 常温库
 	static getShelf_kd_cwkeep(params: Params) {
 		return httpUpack.get(`/storage_kd_cwwarm/shelfs`, params);
+	}
+
+	// 成品冷冻库
+	static getShelf_hk_freezing(params: Params) {
+		return httpUpack.get(`/visual_product_freezing/shelfs`, params);
+	}
+
+	// 成品冷藏库
+	static getShelf_hk_chilled(params: Params) {
+		return httpUpack.get(`/visual_product_chilled/shelfs`, params);
+	}
+	
+	// 原料库
+	static getShelf_hk_mterial(params: Params) {
+		return httpUpack.get(`/visual_material/shelfs`, params);
 	}
 }

@@ -5,9 +5,10 @@ export enum WmsDocumentsEnum {
 	OtherReceipt = '其他入库单',
 	PurchaseReturn = '采购退货单',
 	TransferOut = '调拨出库单',
-	OtherOut = '其他出库单',
-	SalesOut = '销售出库单',
-	SalesReturn = '销售退货单',
+	OtherOut = '其他出库单', // HK
+	SalesOut = '销售出库单',// HK
+	SalesReturn = '销售退货单',// HK
+	DemandOut = "需求出库单", // HK
 	TransferOrder = '调拨单',
 	PurchaseOrder = '采购订单',
 	SalesOrder = '销售订单',

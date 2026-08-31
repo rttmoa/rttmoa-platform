@@ -1,6 +1,6 @@
-import { Button, Popconfirm } from 'antd'
-import React from 'react'
-import ArgTable from '.'
+import { Button, Popconfirm } from 'antd';
+import React from 'react';
+import ArgTable from '.';
 
 export default function useTable() {
 	const getColumn: any = (updateMethod: any) => {
@@ -17,25 +17,26 @@ export default function useTable() {
 				render: (text: any, record: any, index: number) => {
 					return (
 						<div>
-							<Button type="primary" style={{ marginRight: '5px' }}>
+							<Button type='primary' style={{ marginRight: '5px' }}>
 								查看
 							</Button>
 							<Popconfirm
-								title="此操作将永久删除该项目, 是否继续?"
-								okText="确定"
-								cancelText="取消"
+								title='此操作将永久删除该项目, 是否继续?'
+								okText='确定'
+								cancelText='取消'
 								onConfirm={() => {
-									updateMethod()
-								}}>
-								<Button type="primary">删除</Button>
+									updateMethod();
+								}}
+							>
+								<Button type='primary'>删除</Button>
 							</Popconfirm>
 						</div>
-					)
+					);
 				},
 			},
-		]
-	}
-	const getData = () => new Promise((reslove: any) => reslove())
+		];
+	};
+	const getData = () => new Promise((reslove: any) => reslove());
 	return (
 		<ArgTable
 			// params={searchData}
@@ -45,5 +46,5 @@ export default function useTable() {
 			queryAction={getData}
 			baseProps={{ rowKey: record => record.project_id }}
 		/>
-	)
+	);
 }

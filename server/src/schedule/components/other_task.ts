@@ -1,0 +1,121 @@
+const port = process.env.SERVER_PORT || process.env.PORT || "4001";
+const base = `http://localhost:${port}/api/Scheduled/other_task`;
+
+let key = "Other_Task_";
+
+export const other_task = [
+	{
+		key: `${key}Material_Barcode_Rule`,
+		method: "POST",
+		targetUrl: `${base}/Material_Barcode_Rule`,
+		intervalSec: "3s",
+		enabled: true,
+		desc: "原料库 更新条码规则",
+	},
+	{
+		key: `${key}Material_Send_WCS`,
+		method: "POST",
+		targetUrl: `${base}/Material_Send_WCS`,
+		intervalSec: "15s",
+		enabled: true,
+		desc: "原料库出库：下发WCS任务",
+	},
+	{
+		key: `${key}Product_Send_WCS`,
+		method: "POST",
+		targetUrl: `${base}/Product_Send_WCS`,
+		intervalSec: "15s",
+		enabled: true,
+		desc: "成品库出库：下发WCS任务",
+	},
+	// 汇总出入库数量
+	{
+		key: `${key}Material_Document_Update_Quantity`,
+		method: "POST",
+		targetUrl: `${base}/Material_Document_Update_Quantity`,
+		intervalSec: "30s",
+		enabled: true,
+		desc: "汇总原料库出入库数量",
+	},
+	{
+		key: `${key}Material_Summary_lei`,
+		method: "POST",
+		targetUrl: `${base}/Material_Summary_lei`,
+		intervalSec: "30s",
+		enabled: true,
+		desc: "汇总原料库出入库数量",
+	},
+	{
+		key: `${key}Material_Summary_tie`,
+		method: "POST",
+		targetUrl: `${base}/Material_Summary_tie`,
+		intervalSec: "30s",
+		enabled: true,
+		desc: "汇总原料库出入库数量",
+	},
+	{
+		key: `${key}Material_Summary_two`,
+		method: "POST",
+		targetUrl: `${base}/Material_Summary_two`,
+		intervalSec: "30s",
+		enabled: true,
+		desc: "汇总原料库出入库数量",
+	},
+	{
+		key: `${key}Product_Document_Update_Quantity`,
+		method: "POST",
+		targetUrl: `${base}/Product_Document_Update_Quantity`,
+		intervalSec: "30s",
+		enabled: true,
+		desc: "汇总成品库出入库数量",
+	},
+		{
+		key: `${key}Auxilliry_Summary`,
+		method: "POST",
+		targetUrl: `${base}/Auxilliry_Summary`,
+		intervalSec: "30s",
+		enabled: true,
+		desc: "汇总辅料库出入库数量",
+	},
+		{
+		key: `${key}Pack_Summary`,
+		method: "POST",
+		targetUrl: `${base}/Pack_Summary`,
+		intervalSec: "30s",
+		enabled: true,
+		desc: "汇总包材库出入库数量",
+	},
+	// 移库部分
+	{
+		key: `${key}Material_Move_t`,
+		method: "POST",
+		targetUrl: `${base}/Material_Move_t`,
+		intervalSec: "3s",
+		enabled: true,
+		desc: "原料库移库表：校验字段并写入出入库任务表中",
+	},
+	{
+		key: `${key}Material_Move_Send_WCS`,
+		method: "POST",
+		targetUrl: `${base}/Material_Move_Send_WCS`,
+		intervalSec: "15s",
+		enabled: true,
+		desc: "原料库移库：下发WCS任务",
+	},
+	{
+		key: `${key}Product_Move_t`,
+		method: "POST",
+		targetUrl: `${base}/Product_Move_t`,
+		intervalSec: "3s",
+		enabled: true,
+		desc: "成品库移库表：校验字段并写入出入库任务表中",
+	},
+	{
+		key: `${key}Product_Move_Send_WCS`,
+		method: "POST",
+		targetUrl: `${base}/Product_Move_Send_WCS`,
+		intervalSec: "15s",
+		enabled: true,
+		desc: "成品库移库：下发WCS任务",
+	},
+];

@@ -6,7 +6,8 @@ export const TableRowEdit = (record: any, index: number, action: any) => {
 		<div key='operate' className='flex flex-row justify-around'>
 			<div
 				key='edit'
-				className='bg-blue-300 hover:bg-blue-400 w-[30px] h-[22px] flex justify-center items-center rounded-[4px] cursor-pointer'
+				// className='bg-blue-100 hover:bg-blue-400 w-[30px] h-[22px] flex justify-center items-center rounded-[4px] cursor-pointer'
+				className='bg-gray-100 hover:bg-gray-400 w-[30px] h-[22px] flex justify-center items-center rounded-[4px] cursor-pointer'
 				onClick={() => {
 					const rowKey = record?.unique ?? record?._id ?? record?.id;
 					action?.startEditable?.(rowKey);
@@ -64,7 +65,8 @@ export const TableRenderAction = (entity: any, modalOperate: any, modalResult: a
 			{allowDelete && (
 				<Popconfirm
 					title='删除任务！'
-					description={`你确定要删除： ${entity?.name || entity?.postName || entity?.meta?.title}`}
+					// description={`你确定要删除： ${entity?.name || entity?.postName || entity?.meta?.title}`}
+					description={`您是否要删除此条任务？`}
 					onConfirm={() => modalResult('delete', entity)}
 					okText='确认'
 					cancelText='取消'

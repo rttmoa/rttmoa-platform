@@ -7,11 +7,13 @@ const ColumnsConfig = (modalOperate?: any, modalResult?: any, columnsSchemaField
 	if (columnsField.length == 0) {
 		return [];
 	}
+	// 序号
 	const t1 = [
 		{
+			title: <span className='text-[12px] font-sans'>索引</span>,
 			dataIndex: 'index',
 			valueType: 'index',
-			width: 40,
+			width: 60,
 			fixed: 'left',
 			align: 'center',
 			render: (text: any, entity: any, index: any) => <Link onClick={() => modalOperate('detail', entity)}>{index + 1}</Link>,
@@ -19,6 +21,7 @@ const ColumnsConfig = (modalOperate?: any, modalResult?: any, columnsSchemaField
 		},
 	];
 	const allowRowEdit = ops?.allowRowEdit !== false;
+	// 行内编辑 & 操作
 	const t2: ProColumns<any>[] = [];
 	if (allowRowEdit) {
 		t2.push({
@@ -26,7 +29,7 @@ const ColumnsConfig = (modalOperate?: any, modalResult?: any, columnsSchemaField
 			valueType: 'option',
 			align: 'center',
 			fixed: 'right',
-			width: 150,
+			width: 120,
 			render: (text: any, record: any, index: number, action: any) => TableRowEdit(record, index, action),
 		} as any);
 	}
@@ -41,6 +44,8 @@ const ColumnsConfig = (modalOperate?: any, modalResult?: any, columnsSchemaField
 		hideInSearch: true,
 		render: (_: any, record: any) => TableRenderAction(record, modalOperate, modalResult, { allowEdit: ops?.allowEdit, allowDelete: ops?.allowDelete }),
 	});
-	return [...t1, ...columnsField, ...t2];
+	let totalColumn = [...t1, ...columnsField, ...t2];
+	// console.log('totalColumn', totalColumn);
+	return totalColumn;
 };
 export default ColumnsConfig;

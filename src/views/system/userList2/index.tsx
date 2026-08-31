@@ -198,9 +198,7 @@ const UserManage: React.FC = () => {
 				FormListConfig={newFormList} // Form配置项
 				// Form表单提交结果：表单是否有参数变化
 				FormOnFinish={(filterParams = {}) => {
-					const filtered = Object.fromEntries(
-						Object.entries(filterParams).filter(([_, value]) => value !== undefined && value !== null && !(typeof value === 'string' && value.trim() === ''))
-					);
+					const filtered = Object.fromEntries(Object.entries(filterParams).filter(([_, value]) => value !== undefined && value !== null && !(typeof value === 'string' && value.trim() === '')));
 					setSearchFilter(filtered || {});
 				}}
 				SetIsExpand={SetIsExpand}

@@ -1,6 +1,6 @@
 import renderFormItem from '@/hooks/useTableSchema/useTabFormItem';
 import { ModalForm } from '@ant-design/pro-components';
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 
 const ModalComponent = (Params: any) => {
 	const { form, modalIsVisible, setModalIsVisible, modalTitle, modalType, modalUserInfo, modalResult, formSchemaField } = Params;
@@ -70,7 +70,9 @@ const ModalComponent = (Params: any) => {
 			onOpenChange={onOpenChange}
 			onFinish={onFinish}
 		>
-			{formSchemaField.map((item: any) => renderFormItem(item))}
+			{formSchemaField.map((item: any, index: number) => (
+				<Fragment key={item?.name || item?.label || index}>{renderFormItem(item)}</Fragment>
+			))}
 		</ModalForm>
 	);
 };

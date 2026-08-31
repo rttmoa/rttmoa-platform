@@ -49,7 +49,7 @@ export interface TabsState {
 /* UserState */
 export interface UserState {
 	token: string; // redux 中登陆用户的 Token
-	userInfo: { name: string };
+	userInfo: {};
 }
 
 /* AuthState */

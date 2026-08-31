@@ -15,9 +15,9 @@ import {
 	ToolboxComponent,
 	MarkLineComponent,
 	MarkLineComponentOption,
-} from 'echarts/components'
-import { LabelLayout, UniversalTransition } from 'echarts/features'
-import { CanvasRenderer } from 'echarts/renderers'
+} from 'echarts/components';
+import { LabelLayout, UniversalTransition } from 'echarts/features';
+import { CanvasRenderer } from 'echarts/renderers';
 import {
 	// 组件类型的定义后缀都为 ComponentOption
 	BarSeriesOption,
@@ -29,9 +29,9 @@ import {
 	GaugeSeriesOption,
 	PictorialBarSeriesOption,
 	PictorialBarChart,
-} from 'echarts/charts'
-import type { TitleComponentOption, TooltipComponentOption, GridComponentOption, DatasetComponentOption, LegendComponentOption } from 'echarts/components'
-import type { ComposeOption } from 'echarts/core'
+} from 'echarts/charts';
+import type { TitleComponentOption, TooltipComponentOption, GridComponentOption, DatasetComponentOption, LegendComponentOption } from 'echarts/components';
+import type { ComposeOption } from 'echarts/core';
 
 // 通过 ComposeOption 来组合出一个只有必须组件和图表的 Option 类型
 export type ECOption = ComposeOption<
@@ -49,10 +49,10 @@ export type ECOption = ComposeOption<
 	| MarkLineComponentOption
 	| LegendComponentOption
 	| PictorialBarSeriesOption
->
+>;
 
-import * as echarts from 'echarts/core'
-import { BarChart, LineChart, LinesChart, PieChart, ScatterChart, RadarChart, GaugeChart } from 'echarts/charts'
+import * as echarts from 'echarts/core';
+import { BarChart, LineChart, LinesChart, PieChart, ScatterChart, RadarChart, GaugeChart } from 'echarts/charts';
 echarts.use([
 	TitleComponent,
 	TooltipComponent,
@@ -75,6 +75,6 @@ echarts.use([
 	CanvasRenderer,
 	MarkLineComponent,
 	PictorialBarChart,
-])
+]);
 
-export default echarts
+export default echarts;

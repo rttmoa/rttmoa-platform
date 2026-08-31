@@ -15,7 +15,7 @@ const Analysis: React.FC = () => {
 						<Col xl={24} lg={24} md={24} sm={24} xs={24}>
 							<div className='card overview-box'>
 								<div className='overview-head'>
-									<span className='overview-title'>克东飞鹤出入库任务报表</span>
+									<span className='overview-title'>紫燕百味鸡出入库任务报表</span>
 								</div>
 								<div className='overview-echarts'>
 									<ECharts option={overviewOptionsFn(isDark)} />
@@ -32,7 +32,7 @@ const Analysis: React.FC = () => {
 						<Col xl={24} lg={24} md={24} sm={24} xs={24}>
 							<div className='card overview-box'>
 								<div className='overview-head'>
-									<span className='overview-title'>克东飞鹤库存报表</span>
+									<span className='overview-title'>紫燕百味鸡库存报表</span>
 								</div>
 								<div className='overview-echarts'>
 									<ECharts option={stockOverviewOptionsFn(isDark)} />

@@ -42,3 +42,36 @@ body,
 .ant-btn-primary {
 	background-color: #1677ff !important;
 }
+
+// FIXME: 点击表格工具栏里的“全屏”后，页面主体区域会真正铺满。
+/* maximize layout */
+#root.main-maximize {
+	.layout-vertical > .ant-layout-sider,
+	.layout-vertical > .ant-layout > .ant-layout-header,
+	.layout-columns > .sider-split,
+	.layout-columns > .ant-layout-sider,
+	.layout-columns > .ant-layout > .ant-layout-header,
+	.layout-classic > .ant-layout-header,
+	.layout-classic .classic-content > .ant-layout-sider,
+	.layout-transverse > .ant-layout-header,
+	.tabs-box,
+	.ant-layout-footer {
+		display: none !important;
+	}
+
+	.layout-classic .classic-content {
+		height: 100% !important;
+	}
+
+	.layout-vertical > .ant-layout,
+	.layout-columns > .ant-layout,
+	.layout-classic .classic-content .classic-main,
+	.layout-transverse,
+	.ant-layout-content {
+		height: 100%;
+	}
+
+	.ant-layout-content {
+		padding: 0;
+	}
+}

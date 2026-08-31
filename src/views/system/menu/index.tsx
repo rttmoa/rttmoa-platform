@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
+import type { Key } from 'react';
 import { Form } from 'antd';
 import { formatDataForProTable } from '@/utils';
 import { UserList } from '@/api/interface';
@@ -7,7 +8,7 @@ import type { ActionType, FormInstance } from '@ant-design/pro-components';
 import { message } from '@/hooks/useMessage';
 import ColumnsConfig from './component/Column';
 import ToolBarRender from './component/ToolBar';
-import { DelMenu, FindAllMenu, InsNewMenu, UpMenu } from '@/api/modules/system';
+import { DelMenu, DelMoreMenu, FindAllMenu, InsNewMenu, UpMenu } from '@/api/modules/system';
 import './index.less';
 import ModalComponent from './component/Modal';
 import FooterComponent from '@/components/TableFooter';
@@ -22,6 +23,44 @@ export type FormValueType = {
 	time?: string;
 	frequency?: string;
 } & Partial<UserList>;
+
+const findMenuByUnique = (list: any[] = [], key: any): any => {
+	for (const item of list) {
+		if (item?.unique === key || item?._id === key || item?.id === key) return item;
+		const child = findMenuByUnique(item?.children || [], key);
+		if (child) return child;
+	}
+	return null;
+};
+
+const toYesNo = (value: any) => {
+	if (value === true || value === 1 || value === '是') return '是';
+	return '否';
+};
+
+const getMetaValue = (row: any, original: any, key: string) => {
+	return row?.meta?.[key] ?? row?.[`meta.${key}`] ?? row?.[`meta,${key}`] ?? original?.meta?.[key];
+};
+
+const buildMenuUpdatePayload = (row: any, original: any, key: any) => {
+	return {
+		_id: row?._id ?? row?.unique ?? original?._id ?? original?.unique ?? key,
+		parent_id: row?.parent_id ?? original?.parent_id ?? 0,
+		path: row?.path ?? original?.path,
+		element: row?.element ?? original?.element,
+		redirect: row?.redirect ?? original?.redirect,
+		type: getMetaValue(row, original, 'type'),
+		key: getMetaValue(row, original, 'key'),
+		title: getMetaValue(row, original, 'title'),
+		icon: getMetaValue(row, original, 'icon'),
+		sort: getMetaValue(row, original, 'sort'),
+		enable: getMetaValue(row, original, 'enable'),
+		isLink: getMetaValue(row, original, 'isLink'),
+		isHide: toYesNo(getMetaValue(row, original, 'isHide')),
+		isFull: toYesNo(getMetaValue(row, original, 'isFull')),
+		isAffix: toYesNo(getMetaValue(row, original, 'isAffix')),
+	};
+};
 
 const useProTable = () => {
 	const globalToken = useSelector((state: RootState) => state.user.token);
@@ -39,6 +78,8 @@ const useProTable = () => {
 	const [menuOpen, setMenuOpen] = useState<[]>([]); // 菜单开启部分
 	const [selectedRows, setSelectedRows] = useState<any[]>([]); // 表格：选择行数据
 
+	console.log('menuList', menuList);
+
 	// Drawer
 	const [drawerCurrentRow, setDrawerCurrentRow] = useState<any>({}); // Drawer 选择当前行数据
 	const [drawerIsVisible, setDrawerIsVisible] = useState<boolean>(false); // Drawer 是否显示
@@ -48,9 +89,10 @@ const useProTable = () => {
 	const [modalTitle, setModalTitle] = useState<string>('');
 	const [modalType, setModalType] = useState<string>('');
 	const [modalSubMenu, setModalSubMenu] = useState<string>(''); // key
-	const [modalUserInfo, setModalUserInfo] = useState({});
+	const [modalItemInfo, setModalItemInfo] = useState({});
 
 	const [rowKeys, setRowKeys] = useState([]);
+	const [editableKeys, setEditableKeys] = useState<Key[]>([]);
 
 	const quickSearch = () => {};
 
@@ -60,14 +102,14 @@ const useProTable = () => {
 			setDrawerIsVisible(true);
 			setDrawerCurrentRow(item || {});
 		} else if (type == 'createSubMenu') {
-			setModalUserInfo(item || {});
-			setModalTitle('新建菜单');
+			setModalItemInfo(item || {});
+			setModalTitle('新建子菜单');
 			// 设置顶级部门是当前这个 key
 			setModalSubMenu(item?.meta?.key);
 			setModalIsVisible(true);
 		} else {
 			setModalIsVisible(true);
-			setModalUserInfo(item || {});
+			setModalItemInfo(item || {});
 			setModalTitle(type === 'create' ? '新建菜单' : '编辑菜单');
 		}
 	};
@@ -75,11 +117,17 @@ const useProTable = () => {
 	const handleModalSubmit = useCallback(
 		async (type: string, item: any) => {
 			try {
-				if (['create', 'edit'].includes(type)) {
+				console.log('item', item);
+				if (['create', 'edit', 'createSubMenu'].includes(type)) {
 					const hide = message.loading(type === 'create' ? '正在添加' : '正在编辑');
-					const res = type === 'create' ? await InsNewMenu(item) : await UpMenu(item);
+					// const res = type === 'create' ? await InsNewMenu(item) : await UpMenu(item);
+					let res: any = null;
 					hide();
-					console.log('res', res);
+					if (type == 'create' || type == 'createSubMenu') {
+						res = await InsNewMenu(item);
+					} else if (type == 'edit') {
+						res = await UpMenu(item);
+					}
 					if (res) {
 						form.resetFields();
 						setModalIsVisible(false);
@@ -88,8 +136,11 @@ const useProTable = () => {
 					}
 				} else if (['delete', 'moreDelete'].includes(type)) {
 					const hide = message.loading('正在删除');
-					const ids = type === 'delete' ? [item._id] : selectedRows.map(row => row._id);
-					const res = type === 'delete' ? await DelMenu(item) : message.warning('多选删除正在开发中');
+					console.log('selectedRows', selectedRows);
+					const ids = type === 'delete' ? [item._id] : selectedRows.map(row => row.unique);
+					const res = type === 'delete' ? await DelMenu(item) : await DelMoreMenu(ids);
+					// const res = type === 'delete' ? await DelMenu(item) : message.warning('禁止删除多个菜单！');
+
 					hide();
 					if (res) {
 						if (type === 'moreDelete') setSelectedRows([]);
@@ -106,6 +157,35 @@ const useProTable = () => {
 	);
 
 	// * 工具栏 ToolBar
+	const handleInlineSave = useCallback(
+		async (key: any, row: any) => {
+			const original = findMenuByUnique(menuList, key) || {};
+			const payload = buildMenuUpdatePayload(row, original, key);
+
+			if (!payload._id) {
+				message.error('编辑失败：行 ID 不存在');
+				return;
+			}
+
+			const hide = message.loading('正在编辑');
+			try {
+				const res = await UpMenu(payload);
+				hide();
+				if (res) {
+					form.resetFields();
+					setEditableKeys(keys => keys.filter(item => item !== key));
+					actionRef.current?.reload();
+					message.success('编辑成功');
+					await initPermissions(globalToken, '');
+				}
+			} catch (error: any) {
+				hide();
+				message.error(error.message || '编辑失败，请重试！');
+			}
+		},
+		[form, globalToken, initPermissions, menuList]
+	);
+
 	let ToolBarParams: any = {
 		quickSearch,
 		openSearch,
@@ -121,7 +201,7 @@ const useProTable = () => {
 		<>
 			<ProTable<UserList>
 				rowKey='unique' // ! 此key设置错误、导致点击某一个展开、全部节点全展开
-				className='ant-pro-table-scroll'
+				className='ant-pro-table-scroll ant-pro-table-compact mater-stock-hover-table'
 				scroll={{ y: '100vh' }} // 100vh
 				bordered
 				dateFormatter='string'
@@ -169,7 +249,12 @@ const useProTable = () => {
 				ghost={false}
 				onSizeChange={() => {}} // Table 尺寸发生改变、将尺寸存储到数据库中
 				onRequestError={(error: any) => {}} // 数据加载失败时触发
-				editable={{ type: 'multiple' }}
+				editable={{
+					type: 'multiple',
+					editableKeys,
+					onChange: keys => setEditableKeys(keys as Key[]),
+					onSave: handleInlineSave,
+				}}
 				columnsState={{
 					// 持久化列的 key，用于判断是否是同一个 table
 					persistenceKey: 'use-pro-table-key',
@@ -186,7 +271,7 @@ const useProTable = () => {
 				modalType={modalType} // 类型
 				modalIsVisible={modalIsVisible} // 显示
 				modalSubMenu={modalSubMenu}
-				modalMenuInfo={modalUserInfo} // 菜单信息
+				modalItemInfo={modalItemInfo} // 菜单信息
 				setModalIsVisible={setModalIsVisible} // 设置显示
 				handleModalSubmit={handleModalSubmit}
 			/>

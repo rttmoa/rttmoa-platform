@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react';
 
+
+// 按回车提交
 export default function useEnterSubmit(modalIsVisible: boolean, submit: () => void, cooldownMs: number = 2000) {
 	const lastTimeRef = useRef(0);
 	useEffect(() => {

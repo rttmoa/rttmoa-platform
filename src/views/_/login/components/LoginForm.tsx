@@ -3,7 +3,7 @@ import { Button, Form, Input, Tabs } from 'antd';
 import { HOME_URL } from '@/config';
 import { getTimeState } from '@/utils';
 import { useDispatch } from '@/redux';
-import { setToken } from '@/redux/modules/user';
+import { setToken, setUserInfo } from '@/redux/modules/user';
 import { setTabsList } from '@/redux/modules/tabs';
 import { notification } from '@/hooks/useMessage';
 // import { loginApi, userLogin, userRegister } from '@/api/modules/login';
@@ -83,6 +83,7 @@ const LoginForm: React.FC = () => {
 
 			// 存储Token + 派发任务存储redux
 			dispatch(setToken(data?.token));
+			dispatch(setUserInfo(data?.list?.[0]));
 
 			// 清除最后一个帐户选项卡
 			dispatch(setTabsList([]));

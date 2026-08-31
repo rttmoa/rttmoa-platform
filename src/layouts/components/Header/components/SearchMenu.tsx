@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useRef, useState, useEffect, useMemo } from 'react';
-import { Empty, Input, InputRef, Modal } from 'antd';
+import { Empty, Input, InputRef, Modal, Tooltip } from 'antd';
 import { EnterOutlined, SearchOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { RouteObjectType } from '@/routers/interface';
@@ -115,12 +115,7 @@ const SearchMenu: React.FC = () => {
 		return (
 			<div className='menu-list' ref={menuListRef}>
 				{searchList.map(item => (
-					<div
-						key={item.path}
-						className={`menu-item ${item.path === activePath && 'menu-active'}`}
-						onMouseEnter={() => mouseoverMenuItem(item)}
-						onClick={() => selectMenuItem()}
-					>
+					<div key={item.path} className={`menu-item ${item.path === activePath && 'menu-active'}`} onMouseEnter={() => mouseoverMenuItem(item)} onClick={() => selectMenuItem()}>
 						<Icon className='menu-icon' name={item.meta!.icon!} />
 						<span className='menu-title'>{item.meta?.title}</span>
 						<EnterOutlined className='menu-enter' />
@@ -132,7 +127,10 @@ const SearchMenu: React.FC = () => {
 
 	return (
 		<React.Fragment>
-			<i className='iconfont icon-sousuo' onClick={showModal}></i>
+			<Tooltip placement='bottom' title='菜单搜索' arrow mouseEnterDelay={0.2}>
+				<i className='iconfont icon-sousuo' onClick={showModal}></i>
+			</Tooltip>
+
 			<Modal className='search-modal' width={600} footer={null} closable={false} open={isModalOpen} onCancel={closeModal}>
 				<Input
 					ref={inputRef}

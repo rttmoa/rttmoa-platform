@@ -73,15 +73,7 @@ const JobManage = () => {
 
 			{selectedRows?.length > 0 && <FooterComponent actionRef={actionRef} selectedRows={selectedRows} setSelectedRows={setSelectedRows} modalResult={handleModalResult} />}
 
-			<ModalComponent
-				form={form}
-				modalIsVisible={modalIsVisible}
-				setModalIsVisible={setModalIsVisible}
-				modalTitle={modalTitle}
-				modalType={modalType}
-				modalUserInfo={modalUserInfo}
-				modalResult={handleModalResult}
-			/>
+			<ModalComponent form={form} modalIsVisible={modalIsVisible} setModalIsVisible={setModalIsVisible} modalTitle={modalTitle} modalType={modalType} modalUserInfo={modalUserInfo} modalResult={handleModalResult} />
 
 			<DrawerComponent
 				drawerIsVisible={drawerIsVisible}
