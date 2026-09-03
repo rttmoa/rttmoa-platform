@@ -1,0 +1,1 @@
+import{ah as s}from"./index-8616376b.js";function u(e,n,d,i){var a=s.unstable_batchedUpdates?function(o){s.unstable_batchedUpdates(d,o)}:d;return e!=null&&e.addEventListener&&e.addEventListener(n,a,i),{remove:function(){e!=null&&e.removeEventListener&&e.removeEventListener(n,a,i)}}}export{u as a};

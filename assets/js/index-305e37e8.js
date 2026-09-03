@@ -1,0 +1,1 @@
+import{c as t,j as a}from"./index-8616376b.js";const e=""+new URL("../svg/back-ee3202aa.svg",import.meta.url).href;const n=()=>{const s=t();return a.jsx("div",{className:"no-layout",children:a.jsx("div",{className:"content",onClick:()=>s(-1),children:a.jsx("div",{className:"button",children:a.jsx("img",{src:e,alt:"back"})})})})};export{n as default};
