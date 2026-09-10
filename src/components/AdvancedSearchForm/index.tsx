@@ -20,7 +20,7 @@ type FormFieldItem = {
 	component?: React.ReactNode; // 👈 支持传入完整组件
 };
 type FormPropsType = {
-	formRef: React.RefObject<HTMLDivElement>;
+	formRef: React.RefObject<HTMLDivElement | null>;
 	name?: string; // 表示每个Form表格、必须不相同
 	isSearch?: boolean; // 是否是表单搜索
 	loading: boolean;
@@ -77,7 +77,7 @@ const AdvancedSearchForm = (Props: FormPropsType) => {
 		const fieldNodes = shownList.map((cfg: FormFieldItem, idx: number) => {
 			const { type, label, field, placeholder, list, component } = cfg;
 
-			let inputEl: React.ReactNode = null;
+			let inputEl: React.ReactNode;
 
 			if (component) {
 				// 👈 优先使用自定义组件 {label: "年末", component: <Input placeholder="" /> }

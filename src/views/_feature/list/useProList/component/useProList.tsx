@@ -1,5 +1,6 @@
 import { ProList } from '@ant-design/pro-components';
 import { Button, Card, Space, Tag } from 'antd';
+import '../index.less';
 
 const dataSource = [
 	{
@@ -68,8 +69,7 @@ const UseProList = () => (
 			headerTitle='使用 ProList'
 			tooltip='基础列表的配置'
 			dataSource={dataSource}
-			showActions='hover'
-			showExtra='hover'
+			className='pro-list-hover-actions'
 			cardBordered
 			metas={{
 				title: { dataIndex: 'name' },

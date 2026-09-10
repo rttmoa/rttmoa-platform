@@ -56,8 +56,7 @@ const App: any = ({ isShow }: any) => {
 				key: 'odd',
 				text: 'Select Odd Row',
 				onSelect: changeableRowKeys => {
-					let newSelectedRowKeys = [];
-					newSelectedRowKeys = changeableRowKeys.filter((_, index) => {
+					const newSelectedRowKeys = changeableRowKeys.filter((_, index) => {
 						if (index % 2 !== 0) {
 							return false;
 						}
@@ -70,8 +69,7 @@ const App: any = ({ isShow }: any) => {
 				key: 'even',
 				text: 'Select Even Row',
 				onSelect: changeableRowKeys => {
-					let newSelectedRowKeys = [];
-					newSelectedRowKeys = changeableRowKeys.filter((_, index) => {
+					const newSelectedRowKeys = changeableRowKeys.filter((_, index) => {
 						if (index % 2 !== 0) {
 							return true;
 						}

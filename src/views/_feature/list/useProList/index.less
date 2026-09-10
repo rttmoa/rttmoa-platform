@@ -1,0 +1,21 @@
+.pro-list-hover-actions {
+	.ant-pro-list-item-action,
+	.ant-pro-checkcard-extra,
+	.pro-list-bottom-actions {
+		opacity: 0;
+		transition: opacity 0.2s;
+	}
+	.ant-pro-list-row:hover,
+	.ant-pro-list-row:focus-within {
+		.ant-pro-list-item-action,
+		.ant-pro-checkcard-extra,
+		.pro-list-bottom-actions {
+			opacity: 1;
+		}
+	}
+	.pro-list-bottom-actions {
+		display: flex;
+		gap: 16px;
+		margin-top: 16px;
+	}
+}

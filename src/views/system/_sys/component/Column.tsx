@@ -96,7 +96,7 @@ export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<a
 			dataIndex: 'progress',
 			valueType: 'progress',
 			editable: () => false,
-			hideInSearch: true,
+			search: false,
 			responsive: ['lg'],
 			render: (_, record) => {
 				return <Progress percent={78} size='small' status='active' />;
@@ -106,7 +106,7 @@ export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<a
 			title: '头像',
 			dataIndex: 'Avatar',
 			editable: () => false,
-			hideInSearch: true,
+			search: false,
 			align: 'center',
 			responsive: ['lg'],
 			render: (_, record) => {
@@ -142,7 +142,7 @@ export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<a
 			width: 135,
 			editable: () => false,
 			tooltip: '操作按钮分别是：详情、编辑、删除',
-			hideInSearch: true,
+			search: false,
 			// render: renderAction,
 			render: (_, record) => TableRenderAction(record, modalOperate, modalResult),
 		},

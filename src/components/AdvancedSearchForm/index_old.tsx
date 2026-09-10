@@ -53,7 +53,7 @@ const AdvancedSearchForm = (Props: FormPropsType) => {
 		const colsPerRow = rowCount || 3; // 每行占几个 <Col />
 		const rowCounts = 24 / colsPerRow; // 动态计算span: 1、2、3、4   不可超过4个
 
-		let closeCount = null;
+		let closeCount;
 		if (colsPerRow == 1) closeCount = FormConfig.slice(0, 1);
 		else closeCount = FormConfig.length >= colsPerRow ? FormConfig.slice(0, colsPerRow - 1) : FormConfig; // 闭合时数量
 

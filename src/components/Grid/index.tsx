@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { BreakPoint } from './interface';
+import GridItem from './components/GridItem';
+type GridChildProps = React.ComponentProps<typeof GridItem>;
 
 type Props = {
 	cols?: number | Record<BreakPoint, number>;
@@ -62,7 +64,7 @@ export default function Grid(props: Props) {
 		let suffix: React.ReactNode | null = null;
 		React.Children.toArray(props.children).forEach((child: React.ReactNode) => {
 			// 判断 child 是不是一个有效的 React 元素
-			if (React.isValidElement(child)) {
+			if (React.isValidElement<GridChildProps>(child)) {
 				// 判断 child 的类型
 				if (typeof child.type === 'object' && child.type['name'] === 'GridItem') {
 					suffix = child;
@@ -80,15 +82,15 @@ export default function Grid(props: Props) {
 		let suffixCols = 0;
 		if (suffix) {
 			suffixCols =
-				((suffix as React.ReactElement)!.props![breakPoint.current]?.span ?? (suffix as React.ReactElement)!.props?.span ?? 1) +
-				((suffix as React.ReactElement)!.props![breakPoint.current]?.offset ?? (suffix as React.ReactElement)!.props?.offset ?? 0);
+				((suffix as React.ReactElement<GridChildProps>).props[breakPoint.current]?.span ?? (suffix as React.ReactElement<GridChildProps>).props.span ?? 1) +
+				((suffix as React.ReactElement<GridChildProps>).props[breakPoint.current]?.offset ?? (suffix as React.ReactElement<GridChildProps>).props.offset ?? 0);
 		}
 		try {
 			let find = false;
 			fields.reduce((prev = 0, current: React.ReactElement, index: number) => {
 				prev +=
-					((current as React.ReactElement)!.props![breakPoint.current]?.span ?? (current as React.ReactElement)!.props?.span ?? 1) +
-					((current as React.ReactElement)!.props![breakPoint.current]?.offset ?? (current as React.ReactElement)!.props?.offset ?? 0);
+					((current as React.ReactElement<GridChildProps>).props[breakPoint.current]?.span ?? (current as React.ReactElement<GridChildProps>).props.span ?? 1) +
+					((current as React.ReactElement<GridChildProps>).props[breakPoint.current]?.offset ?? (current as React.ReactElement<GridChildProps>).props.offset ?? 0);
 				if (Number(prev) > collapsedRows * gridCols - suffixCols) {
 					hiddenIndex.current = index;
 					find = true;

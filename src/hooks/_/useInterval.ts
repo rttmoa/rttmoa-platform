@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 
 // * 【定时器】
 export default function useInterval(callback: unknown, delay: unknown) {
-	const savedCallback = useRef<any>();
+	const savedCallback = useRef<any>(undefined);
 
 	// Remember the latest function.
 	useEffect(() => {

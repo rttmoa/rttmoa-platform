@@ -102,7 +102,7 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] 
 			hideInForm: true, // * hideInForm 在Form中不展示此列, 不可搜索
 			filters: true,
 			onFilter: true,
-			hideInSearch: true,
+			search: false,
 			valueEnum: {
 				0: {
 					text: '正常',
@@ -126,7 +126,7 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] 
 			title: '执行进度',
 			dataIndex: 'progress',
 			width: 300,
-			hideInSearch: true,
+			search: false,
 			valueType: item => ({
 				type: 'progress',
 				status: ProcessMap[valueEnum[item.progress_status] as 'close'] as any,
@@ -135,7 +135,7 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] 
 		{
 			title: '邮箱',
 			dataIndex: 'email',
-			hideInSearch: true,
+			search: false,
 			ellipsis: true, // * ellipsis 是否自动缩略
 		},
 		{
@@ -238,7 +238,7 @@ const TableColumnsConfig = (Params: TableColumnsParams): ProColumns<UserList>[] 
 			key: 'option',
 			fixed: 'right',
 			width: 50,
-			hideInSearch: true,
+			search: false,
 			render: (data, entity) => action(entity, Params),
 		},
 	];

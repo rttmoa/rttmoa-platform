@@ -41,7 +41,7 @@ const ColumnsConfig = (modalOperate?: any, modalResult?: any, columnsSchemaField
 		width: 135,
 		editable: () => false,
 		tooltip: '操作按钮分别是：详情、编辑、删除',
-		hideInSearch: true,
+		search: false,
 		render: (_: any, record: any) => TableRenderAction(record, modalOperate, modalResult, { allowEdit: ops?.allowEdit, allowDelete: ops?.allowDelete }),
 	});
 	let totalColumn = [...t1, ...columnsField, ...t2];

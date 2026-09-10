@@ -13,6 +13,6 @@ declare const __APP_VERSION__: string; // 这样在项目中随时可以用 __AP
 // }
 
 // 3、声明全局模块（没有类型定义的库/模块）
-declare module 'three';
+// declare module 'three';
 declare module 'react-highlight-words';
 declare module 'file-saver'; // 文件导出

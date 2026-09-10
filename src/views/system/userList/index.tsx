@@ -3,7 +3,8 @@ import { Form } from 'antd';
 import { formatDataForProTable } from '@/utils';
 import { UserList } from '@/api/interface';
 import { ProTable } from '@ant-design/pro-components';
-import type { ActionType, FormInstance } from '@ant-design/pro-components';
+import type { ActionType } from '@ant-design/pro-components';
+import type { FormInstance } from 'antd';
 import { message } from '@/hooks/useMessage';
 import ColumnsConfig from './component/Column';
 import ToolBarRender from './component/ToolBar';
@@ -24,8 +25,8 @@ export type FormValueType = {
 // * 表头：排序、筛选、过滤
 // * 待实现：列拖拽排序、可编辑行、可编辑单元格、响应式、随页面滚动的固定表头和滚动条
 const useProTable = () => {
-	const actionRef = useRef<ActionType>(); // 表格 ref
-	const formRef = useRef<FormInstance>(); // 表单 ref
+	const actionRef = useRef<ActionType>(undefined); // 表格 ref
+	const formRef = useRef<FormInstance>(undefined); // 表单 ref
 
 	const [form] = Form.useForm();
 

@@ -31,7 +31,7 @@ const DraggableTabNode = ({ ...props }: DraggableTabPaneProps) => {
 		transition,
 	};
 
-	return React.cloneElement(props.children as React.ReactElement, {
+	return React.cloneElement(props.children as React.ReactElement<React.HTMLAttributes<HTMLElement> & React.RefAttributes<HTMLElement>>, {
 		ref: setNodeRef,
 		style,
 		...attributes,
@@ -141,7 +141,7 @@ const LayoutTabs: React.FC = () => {
 								<SortableContext items={items.map(i => i.key)} strategy={horizontalListSortingStrategy}>
 									<DefaultTabBar {...tabBarProps}>
 										{node => (
-											<DraggableTabNode {...node.props} key={node.key}>
+											<DraggableTabNode {...(node.props as DraggableTabPaneProps)} key={node.key}>
 												{node}
 											</DraggableTabNode>
 										)}

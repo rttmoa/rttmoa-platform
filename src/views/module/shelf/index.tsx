@@ -4,7 +4,8 @@ import { formatDataForProTable } from '@/utils';
 import { pagination as paginationConfig } from '@/config/proTable';
 import { UserList } from '@/api/interface';
 import { FooterToolbar, ModalForm, ProDescriptions, ProFormText, ProFormTextArea, ProTable } from '@ant-design/pro-components';
-import type { ActionType, FormInstance, ProDescriptionsItemProps } from '@ant-design/pro-components';
+import type { ActionType, ProDescriptionsItemProps } from '@ant-design/pro-components';
+import type { FormInstance } from 'antd';
 import { message } from '@/hooks/useMessage';
 import { addRule, removeRule, updateRule } from '@/api/modules/proTable/api';
 import UpdateForm from './component/_UpdateForm';
@@ -24,8 +25,8 @@ export type FormValueType = {
 // TODO: refer： https://github.com/ant-design/ant-design-pro
 // ProTable：https://procomponents.ant.design/components/table
 const useProTable = () => {
-	const actionRef = useRef<ActionType>();
-	const formRef = useRef<FormInstance>();
+	const actionRef = useRef<ActionType>(undefined);
+	const formRef = useRef<FormInstance>(undefined);
 	const [createModalOpen, handleModalOpen] = useState<boolean>(false);
 	const [selectedRowsState, setSelectedRows] = useState<UserList[]>([]); // 表格：选择行数据
 	const [currentRow, setCurrentRow] = useState<UserList>();

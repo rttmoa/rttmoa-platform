@@ -13,9 +13,9 @@ const userForm: React.FC = () => {
 	const [form] = Form.useForm();
 	const [formLayout, setFormLayout] = useState<LayoutType>('horizontal');
 
-	const onFormLayoutChange = ({ layout }: { layout: LayoutType }) => {
+	const onFormLayoutChange = ({ layout }: { layout?: LayoutType }) => {
 		// 监听 name=layout 的事件改变
-		setFormLayout(layout);
+		if (layout) setFormLayout(layout);
 	};
 
 	const formItemLayout = formLayout === 'horizontal' ? { labelCol: { span: 4 }, wrapperCol: { span: 14 } } : null;

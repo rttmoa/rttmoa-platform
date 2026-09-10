@@ -13,9 +13,9 @@ const data = [
 
 export default () => (
 	<ResponsiveContainer width='100%' height={300}>
-		<RadialBarChart width={730} height={250} innerRadius='10%' outerRadius='80%' data={data}>
+		<RadialBarChart width={730} height={250} innerRadius='10%' outerRadius='80%' data={data} startAngle={90} endAngle={-270}>
 			{/* RadialBar：prop type `data[0].value` is invalid; */}
-			<RadialBar startAngle={90} endAngle={-270} label background dataKey='uv' />
+			<RadialBar label background dataKey='uv' />
 			<Legend iconSize={10} width={120} height={140} layout='vertical' verticalAlign='middle' align='right' />
 			<Tooltip />
 		</RadialBarChart>

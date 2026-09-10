@@ -3,7 +3,8 @@ import { Form } from 'antd';
 import { formatDataForProTable } from '@/utils';
 import { UserList } from '@/api/interface';
 import { ProTable } from '@ant-design/pro-components';
-import type { ActionType, FormInstance } from '@ant-design/pro-components';
+import type { ActionType } from '@ant-design/pro-components';
+import type { FormInstance } from 'antd';
 import { message } from '@/hooks/useMessage';
 import ColumnsConfig from './component/Column';
 import ToolBarRender from './component/ToolBar';
@@ -27,8 +28,8 @@ const useProTable = () => {
 		delMore: roleAPI.delMore,
 	};
 
-	const actionRef = useRef<ActionType>(); // 表格 ref
-	const formRef = useRef<FormInstance>(); // 表单 ref
+	const actionRef = useRef<ActionType>(undefined); // 表格 ref
+	const formRef = useRef<FormInstance>(undefined); // 表单 ref
 
 	const [form] = Form.useForm();
 
@@ -97,7 +98,6 @@ const useProTable = () => {
 		},
 		[selectedRows, form]
 	);
-	('');
 	// * 工具栏 ToolBar
 	let ToolBarParams: any = {
 		quickSearch, // 工具栏：快捷搜索

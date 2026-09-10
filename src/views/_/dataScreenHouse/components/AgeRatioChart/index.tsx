@@ -1,4 +1,5 @@
 import ECharts from '@/components/Echarts';
+import type * as echarts from 'echarts';
 import { ECOption } from '@/components/Echarts/config';
 import './index.less';
 import { Empty } from 'antd';

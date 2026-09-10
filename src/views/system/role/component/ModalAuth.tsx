@@ -7,7 +7,7 @@ const ModalAuth = (Props: any) => {
 
 	const [formUser] = Form.useForm();
 
-	const getStatusV = useRef<any>();
+	const getStatusV = useRef<any>(undefined);
 
 	const [transferData, settransferData] = useState([]);
 	const [targetKeys, settargetKeys] = useState([]);

@@ -126,9 +126,8 @@ async function startCapture(displayMediaOptions: DisplayMediaStreamOptions) {
 // getUserMedia(options) 方法询问用户是否允许使用媒体输入，开启录制视频/录音
 // 说明：options 该参数只有video和audio两个属性，即授予录制视频和录音权限。
 async function startMediaInput(displayMediaOptions: MediaStreamConstraints) {
-	let stream = null;
 	try {
-		stream = await navigator.mediaDevices.getUserMedia(displayMediaOptions);
+		const stream = await navigator.mediaDevices.getUserMedia(displayMediaOptions);
 		return stream;
 		/* use the stream */
 	} catch (err) {

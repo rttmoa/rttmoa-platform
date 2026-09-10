@@ -13,7 +13,7 @@ const useTableScroll = ({ extraHeight = 105, id }: { extraHeight?: number; id?: 
 	const [scrollY, setScrollY] = useState('');
 
 	useEffect(() => {
-		let tHeader = null;
+		let tHeader;
 		if (id) {
 			tHeader = document.getElementById(id)?.getElementsByClassName('ant-table-thead')[0] || null;
 		} else {
@@ -25,10 +25,10 @@ const useTableScroll = ({ extraHeight = 105, id }: { extraHeight?: number; id?: 
 
 		tHeader && (tHeaderBottom = tHeader.getBoundingClientRect().bottom);
 
-		if (!tabs) extraHeight - 40;
+		const effectiveExtraHeight = tabs ? extraHeight : extraHeight - 40;
 
 		// Window height - Table content top height - Table content bottom height
-		setScrollY(`calc(100vh - ${tHeaderBottom + extraHeight}px)`);
+		setScrollY(`calc(100vh - ${tHeaderBottom + effectiveExtraHeight}px)`);
 	}, [tabs]);
 
 	return { scrollY };

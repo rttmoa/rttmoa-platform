@@ -23,7 +23,7 @@ type resultType = React.ForwardRefRenderFunction<EChartsRef, EChartProps>;
 
 const EChartInner: resultType = ({ option, isResize = true, width, height, onClick }, ref: ForwardedRef<EChartsRef>) => {
 	const cRef = useRef<HTMLDivElement>(null);
-	const cInstance = useRef<EChartsType>();
+	const cInstance = useRef<EChartsType>(undefined);
 	const [isFirstRun, setIsFirstRun] = useState(true);
 
 	const maximize = useSelector((state: RootState) => state.global.maximize);

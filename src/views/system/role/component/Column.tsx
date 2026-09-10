@@ -87,13 +87,13 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 			hideInForm: true, // * hideInForm 在Form中不展示此列, 不可搜索
 			filters: true,
 			onFilter: true,
-			hideInSearch: true,
+			search: false,
 		},
 		{
 			title: '操作',
 			key: 'option',
 			fixed: 'right',
-			hideInSearch: true,
+			search: false,
 			width: 135,
 			render: (_, record) => TableRenderAction(record, handleOperator, handleModalSubmit),
 		},

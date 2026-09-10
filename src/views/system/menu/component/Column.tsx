@@ -200,7 +200,7 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 			key: 'option',
 			align: 'center',
 			fixed: 'right',
-			hideInSearch: true,
+			search: false,
 			editable: () => false,
 			// render: (data, entity) => action(entity, handleOperator),
 			width: 135,

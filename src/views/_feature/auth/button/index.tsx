@@ -12,7 +12,7 @@ const AuthButtonPage: React.FC = () => {
 	return (
 		<Card className='h-full'>
 			<Alert message={`当前用户按钮权限：${JSON.stringify(Object.keys(BUTTONS))}`} type='success' showIcon />
-			<Divider orientation='left' plain>
+			<Divider titlePlacement='start' plain>
 				使用 Hooks 绑定按钮权限 —— useAuthButton函数
 			</Divider>
 			<Space>
@@ -43,7 +43,7 @@ const AuthButtonPage: React.FC = () => {
 				)}
 			</Space>
 
-			<Divider orientation='left' plain className='mt30'>
+			<Divider titlePlacement='start' plain className='mt30'>
 				使用 HOC 绑定按钮权限 —— AuthButton组件
 			</Divider>
 			<Space>
@@ -74,7 +74,7 @@ const AuthButtonPage: React.FC = () => {
 				</AuthButton>
 			</Space>
 
-			<Divider orientation='left' plain className='mt30'>
+			<Divider titlePlacement='start' plain className='mt30'>
 				使用 HOC 绑定多个按钮权限 —— AuthButton组件
 			</Divider>
 			<Space>

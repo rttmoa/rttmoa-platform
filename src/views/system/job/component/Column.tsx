@@ -75,7 +75,7 @@ export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<a
 			tooltip: '岗位状态：flag',
 			fieldProps: { placeholder: '请输入岗位状态' },
 			render: (_, record) => {
-				let tagContent: any = '';
+				let tagContent: React.ReactNode;
 				if (_) tagContent = <Tag color='blue'>启用</Tag>;
 				else tagContent = <Tag color='red'>停用</Tag>;
 				return <span>{tagContent}</span>;
@@ -117,7 +117,7 @@ export const ColumnsConfig = (modalOperate: any, modalResult: any): ProColumns<a
 			fixed: 'right',
 			width: 135,
 			tooltip: '操作按钮分别是：详情、编辑、删除',
-			hideInSearch: true,
+			search: false,
 			// render: renderAction,
 			render: (_, record) => TableRenderAction(record, modalOperate, modalResult),
 		},

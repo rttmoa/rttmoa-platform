@@ -4,7 +4,7 @@ import { message } from '@/hooks/useMessage';
  * @description 十六进制颜色转RGB颜色
  */
 export function hexToRgb(str: string) {
-	let hexs: any = '';
+	let hexs: any;
 	let reg = /^#?[0-9A-Fa-f]{6}$/;
 	if (!reg.test(str)) return message.warning('Enter wrong hex color value');
 	str = str.replace('#', '');

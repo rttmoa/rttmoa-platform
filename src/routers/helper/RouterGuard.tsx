@@ -33,13 +33,15 @@ const RouterGuard: React.FC<RouterGuardProps> = props => {
 
 		// 当访问 /login时，拦截至 首页
 		if (authMenuList.length && token && pathname === LOGIN_URL) {
-			return navigate(HOME_URL);
+			void navigate(HOME_URL);
+			return;
 		}
 
 		// 当访问不为 /login 时，拦截至 登陆页
 		if (!authMenuList.length && !token && pathname !== LOGIN_URL) {
 			console.log('当没有token时，访问 / 拦截至登录页 Login');
-			return navigate(LOGIN_URL, { replace: true });
+			void navigate(LOGIN_URL, { replace: true });
+			return;
 		}
 
 		// 无 Cookie 时，拦截至登陆页

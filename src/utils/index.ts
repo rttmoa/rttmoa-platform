@@ -119,7 +119,7 @@ export function convertToSixDigitHexColor(str: string) {
  */
 export function getBrowserLang() {
 	let browserLang = navigator.language ? navigator.language : navigator.browserLanguage;
-	let defaultBrowserLang = '';
+	let defaultBrowserLang: string;
 	let lang = browserLang.toLowerCase();
 	if (['cn', 'zh', 'zh-cn'].includes(lang)) defaultBrowserLang = 'zh';
 	else defaultBrowserLang = 'en';

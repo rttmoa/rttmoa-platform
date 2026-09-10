@@ -4,7 +4,8 @@ import { formatDataForProTable } from '@/utils';
 import { pagination as paginationConfig } from '@/config/proTable';
 import { UserList } from '@/api/interface';
 import { FooterToolbar, ProDescriptions, ProTable } from '@ant-design/pro-components';
-import type { ActionType, FormInstance, ProDescriptionsItemProps } from '@ant-design/pro-components';
+import type { ActionType, ProDescriptionsItemProps } from '@ant-design/pro-components';
+import type { FormInstance } from 'antd';
 import { message } from '@/hooks/useMessage';
 import { addRule, updateRule } from '@/api/modules/proTable/api';
 import UpdateForm from './component/UpdateForm';
@@ -31,8 +32,8 @@ export type FormValueType = {
 const useProTable = () => {
 	// console.log('defalut', defalut)
 
-	const actionRef = useRef<ActionType>();
-	const formRef = useRef<FormInstance>();
+	const actionRef = useRef<ActionType>(undefined);
+	const formRef = useRef<FormInstance>(undefined);
 	const [createModalOpen, handleModalOpen] = useState<boolean>(false);
 	const [selectedRowsState, setSelectedRows] = useState<any[]>([]); // 表格：选择行数据
 	const [currentRow, setCurrentRow] = useState<UserList>();

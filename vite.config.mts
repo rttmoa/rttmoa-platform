@@ -1,9 +1,9 @@
 import { defineConfig, loadEnv, ConfigEnv, UserConfig } from 'vite';
-import { createVitePlugins } from './build/plugins';
-import { createProxy } from './build/proxy';
-import { wrapperEnv } from './build/getEnv';
+import { createVitePlugins } from './build/plugins.ts';
+import { createProxy } from './build/proxy.ts';
+import { wrapperEnv } from './build/getEnv.ts';
 import { resolve } from 'path';
-import pkg from './package.json';
+import pkg from './package.json' with { type: 'json' };
 import dayjs from 'dayjs';
 
 // 获取 package 信息
@@ -29,7 +29,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
 		resolve: {
 			// 路径别名
 			alias: {
-				'@': resolve(__dirname, './src'),
+				'@': resolve(import.meta.dirname, './src'),
 			},
 			// 文件尾缀
 			extensions: ['.js', '.ts', '.tsx', '.json'],
@@ -48,20 +48,16 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
 		// ? 插件配置
 		plugins: [createVitePlugins(viteEnv)],
 
-		esbuild: {
-			// 去除console、debugger
-			pure: viteEnv.VITE_DROP_CONSOLE ? ['console.log', 'debugger'] : [],
-		},
 		// 开启构建缓存： 用 esbuild 做依赖预构建 + 缓存，加快二次打包
 		optimizeDeps: {
-			esbuildOptions: {
-				target: 'esnext',
+			rolldownOptions: {
+				transform: { target: 'esnext' },
 			},
 		},
 		build: {
 			outDir: 'dist',
 			// esbuild 打包速度较快，但不能去掉 console.log、 默认是 'terser'
-			minify: 'esbuild',
+			minify: 'oxc',
 
 			// terserOptions: {
 			// 	compress: {
@@ -77,8 +73,18 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
 			// 确定触发警告的块大小,  默认2000，改成3M
 			chunkSizeWarningLimit: 3000,
 			// 自定义底层的 Rollup 打包配置。
-			rollupOptions: {
+			rolldownOptions: {
 				output: {
+					manualChunks(id) {
+						const moduleId = id.replaceAll('\\', '/');
+						if (!moduleId.includes('/node_modules/')) return;
+						if (/\/node_modules\/(echarts|zrender)\//.test(moduleId)) return 'charts';
+						if (/\/node_modules\/(xlsx|file-saver)\//.test(moduleId)) return 'spreadsheet';
+						if (moduleId.includes('/node_modules/@ant-design/pro-components/')) return 'pro-components';
+						if (/\/node_modules\/(antd|@ant-design|@rc-component|rc-[^/]+)\//.test(moduleId)) return 'antd';
+						if (/\/node_modules\/(react|react-dom|scheduler)\//.test(moduleId)) return 'react';
+					},
+					minify: { compress: { dropConsole: viteEnv.VITE_DROP_CONSOLE, dropDebugger: viteEnv.VITE_DROP_CONSOLE } },
 					// 静态资源分类与打包
 					chunkFileNames: 'assets/js/[name]-[hash].js', // 引入文件名的名称
 					entryFileNames: 'assets/js/[name]-[hash].js', // 包的入口文件名称

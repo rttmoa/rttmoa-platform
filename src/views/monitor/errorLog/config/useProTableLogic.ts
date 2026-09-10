@@ -1,7 +1,8 @@
 // src/pages/JobManage/useProTableLogic.ts
 import { useCallback, useRef, useState } from 'react';
 import { Form } from 'antd';
-import type { ActionType, FormInstance } from '@ant-design/pro-components';
+import type { ActionType } from '@ant-design/pro-components';
+import type { FormInstance } from 'antd';
 import { message } from '@/hooks/useMessage';
 import { addJob, delJob, delMoreJob, ExJob, findJob, modifyJob } from '@/api/modules/system';
 import { findError, findOperate } from '@/api/modules/monitor';
@@ -14,8 +15,8 @@ interface JobItem {
 }
 
 export const useProTableLogic = () => {
-	const actionRef = useRef<ActionType>();
-	const formRef = useRef<FormInstance>();
+	const actionRef = useRef<ActionType>(undefined);
+	const formRef = useRef<FormInstance>(undefined);
 	const [form] = Form.useForm();
 
 	// 状态管理

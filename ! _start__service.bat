@@ -4,7 +4,7 @@ REM 使用 Node.js 20.18.0
 call nvm use 20.18.0
 
 REM 服务端路径
-set SERVER_PATH=E:\Project\rttmoa-platform\service
+set SERVER_PATH=E:\Project\rttmoa-platform\server
 
 REM 客户端路径
 set CLIENT_PATH=E:\Project\rttmoa-platform

@@ -17,7 +17,7 @@ import {
 	MarkLineComponentOption,
 } from 'echarts/components';
 import { LabelLayout, UniversalTransition } from 'echarts/features';
-import { CanvasRenderer } from 'echarts/renderers';
+import { CanvasRenderer, SVGRenderer } from 'echarts/renderers';
 import {
 	// 组件类型的定义后缀都为 ComponentOption
 	BarSeriesOption,
@@ -73,6 +73,7 @@ echarts.use([
 	LabelLayout,
 	UniversalTransition,
 	CanvasRenderer,
+	SVGRenderer,
 	MarkLineComponent,
 	PictorialBarChart,
 ]);

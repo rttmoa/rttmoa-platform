@@ -22,10 +22,10 @@ type SizeType = Parameters<typeof Form>[0]['size'];
 const FormCollectUser: React.FC = () => {
 	const [form] = Form.useForm();
 	const [formLayout, setFormLayout] = useState<LayoutType>('horizontal');
-	const [componentSize, setComponentSize] = useState<SizeType | 'default'>('default');
-	const onFormLayoutChange = ({ layout, size }: { layout: LayoutType; size: SizeType }) => {
-		setFormLayout(layout);
-		setComponentSize(size);
+	const [componentSize, setComponentSize] = useState<SizeType>('middle');
+	const onFormLayoutChange = ({ layout, size }: { layout?: LayoutType; size?: SizeType }) => {
+		if (layout) setFormLayout(layout);
+		if (size) setComponentSize(size);
 	};
 
 	const onReset = () => {

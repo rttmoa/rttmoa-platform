@@ -11,7 +11,7 @@ export const useEcharts = (options: echarts.EChartsCoreOption, data?: any) => {
 	// 饼图	- Gitee / GitHub 访问量占比
 	// 柱状图	- 数据来源
 	// TODO: 所有Charts都会使用此组件 useEcharts
-	const myChart = useRef<echarts.EChartsType>();
+	const myChart = useRef<echarts.EChartsType>(undefined);
 	const echartsRef = useRef<HTMLDivElement>(null);
 
 	const echartsResize = () => {

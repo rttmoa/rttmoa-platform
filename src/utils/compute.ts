@@ -77,7 +77,7 @@ export class Compute {
 		var t1 = o1.times;
 		var t2 = o2.times;
 		var max = t1 > t2 ? t1 : t2;
-		var result = null;
+		var result: number;
 		switch (op) {
 			case 'add':
 				if (t1 === t2) {

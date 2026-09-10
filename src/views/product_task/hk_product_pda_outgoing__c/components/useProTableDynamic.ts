@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Form } from 'antd';
-import type { ActionType, FormInstance, ProTableProps } from '@ant-design/pro-components';
+import type { ActionType, ProTableProps } from '@ant-design/pro-components';
+import type { FormInstance } from 'antd';
 import { message } from '@/hooks/useMessage';
 import _ from 'lodash';
 import { useSearchSpan } from '@/hooks/useTable/useSearchSpan'; // 公共：屏幕宽度自动计算
@@ -22,8 +23,8 @@ const useProTableDynamic = ({ api }: any) => {
 	const { tableName, collection } = tableInfo;
 	const searchSpan = useSearchSpan();
 
-	const actionRef = useRef<ActionType>();
-	const formRef = useRef<FormInstance>();
+	const actionRef = useRef<ActionType>(undefined);
+	const formRef = useRef<FormInstance>(undefined);
 	const [form] = Form.useForm();
 
 	const [editableKeys, setEditableKeys] = useState<React.Key[]>([]); // 行内编辑
@@ -32,7 +33,6 @@ const useProTableDynamic = ({ api }: any) => {
 	const [dataList, setDataList] = useState<any[]>([]);
 	const { handleRequest, findApi } = useTableRequest(api, setLoading, setcolumnSchema, setPagination, setTableInfo, setInitColumnSchema, setDataList);
 
-	
 	const [selectedRows, setSelectedRows] = useState<any[]>([]);
 	const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]); // 操作后，取消勾选的表格数据
 

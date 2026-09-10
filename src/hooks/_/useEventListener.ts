@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react';
 
 // * 【事件监听】：resize、movemose、scroll、keydown、load 等等
 const useEventListener = (eventName: string, handler: Function) => {
-	const eventRef = useRef<any>();
+	const eventRef = useRef<any>(undefined);
 
 	useEffect(() => {
 		eventRef.current = handler;

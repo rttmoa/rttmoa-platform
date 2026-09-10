@@ -1,6 +1,8 @@
 import { ProFormRadio, ProFormSwitch, ProList } from '@ant-design/pro-components';
 import { Card, Progress, Tag } from 'antd';
 import { useState } from 'react';
+import { cloneElement, type ReactElement, type ReactNode } from 'react';
+import '../index.less';
 
 const data = ['语雀的天空', 'Ant Design', '蚂蚁金服体验科技', 'TechUI', 'TechUI 2.0', 'Bigfish', 'Umi', 'Ant Design Pro'].map(item => ({
 	title: item,
@@ -72,7 +74,20 @@ export default () => {
 							defaultPageSize: 8,
 							showSizeChanger: false,
 						}}
-						showActions='hover'
+						className='pro-list-hover-actions'
+						itemRender={(record, _index, defaultDom) =>
+							cardActionProps === 'extra'
+								? defaultDom
+								: cloneElement(defaultDom as ReactElement<{ actions?: ReactNode[]; content?: ReactNode }>, {
+										actions: [],
+										content: (
+											<>
+												{record.content}
+												<div className='pro-list-bottom-actions'>{record.actions}</div>
+											</>
+										),
+									})
+						}
 						rowSelection={{}}
 						grid={{ gutter: 16, column: 2 }}
 						onItem={(record: any) => {
@@ -91,9 +106,7 @@ export default () => {
 							type: {},
 							avatar: {},
 							content: {},
-							actions: {
-								cardActionProps,
-							},
+							actions: {},
 						}}
 						headerTitle='卡片列表展示'
 						dataSource={data}

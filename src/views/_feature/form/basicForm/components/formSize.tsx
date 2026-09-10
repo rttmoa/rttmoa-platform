@@ -4,10 +4,10 @@ import { Button, Cascader, DatePicker, Form, Input, InputNumber, Radio, Select, 
 type SizeType = Parameters<typeof Form>[0]['size'];
 
 const App: React.FC = () => {
-	const [componentSize, setComponentSize] = useState<SizeType | 'default'>('default');
+	const [componentSize, setComponentSize] = useState<SizeType>('middle');
 
-	const onFormLayoutChange = ({ size }: { size: SizeType }) => {
-		setComponentSize(size);
+	const onFormLayoutChange = ({ size }: { size?: SizeType }) => {
+		if (size) setComponentSize(size);
 	};
 
 	return (
@@ -26,7 +26,7 @@ const App: React.FC = () => {
 						<Form.Item label='Form Size' name='size'>
 							<Radio.Group>
 								<Radio.Button value='small'>Small</Radio.Button>
-								<Radio.Button value='default'>Default</Radio.Button>
+								<Radio.Button value='middle'>Default</Radio.Button>
 								<Radio.Button value='large'>Large</Radio.Button>
 							</Radio.Group>
 						</Form.Item>

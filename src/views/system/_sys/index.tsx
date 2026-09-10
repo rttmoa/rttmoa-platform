@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Form } from 'antd';
 import { ProTable } from '@ant-design/pro-components';
-import type { ActionType, FormInstance } from '@ant-design/pro-components';
+import type { ActionType } from '@ant-design/pro-components';
+import type { FormInstance } from 'antd';
 import { message } from '@/hooks/useMessage';
 import ColumnsConfig from './component/Column';
 import ToolBarRender from './component/ToolBar';
@@ -20,8 +21,8 @@ const useProTable = () => {
 	const tableName = '岗位管理';
 	const tablePersistence = 'system_sys'; // 持久化 Key
 
-	const actionRef = useRef<ActionType>(); // 表格 ref
-	const formRef = useRef<FormInstance>(); // 表单 ref
+	const actionRef = useRef<ActionType>(undefined); // 表格 ref
+	const formRef = useRef<FormInstance>(undefined); // 表单 ref
 	const [form] = Form.useForm();
 
 	const [searchSpan, setSearchSpan] = useState(6); // 搜索条件显示多少个 span

@@ -4,7 +4,7 @@ interface ClipboardFunctions {
 	copyToClipboard: (text: string) => void;
 }
 type IsCopiedState = boolean;
-type TextareaRef = React.RefObject<HTMLTextAreaElement>;
+type TextareaRef = React.RefObject<HTMLTextAreaElement | null>;
 
 type ClipboardHook = ClipboardFunctions & {
 	result: null | Object;

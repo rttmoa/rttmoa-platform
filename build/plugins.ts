@@ -7,10 +7,6 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 import react from '@vitejs/plugin-react';
 import checker from 'vite-plugin-checker';
 import viteCompression from 'vite-plugin-compression';
-import requireTransform from 'vite-plugin-require-transform';
-
-const path = require('path');
-const fs = require('fs');
 
 /**
  * Create vite plugin
@@ -23,7 +19,7 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
 		// react(),
 		react({
 			// 在所有 *.js 和 *.tsx 文件中使用 React 插件
-			include: '**/*.{js,ts,tsx}',
+			include: /\.[jt]sx?$/,
 		}),
 		// ESLint 错误消息显示在浏览器界面上
 		checker({ typescript: true }),
@@ -44,10 +40,6 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
 		VITE_PWA && createVitePwa(viteEnv),
 		// 图形化文件大小，分析依赖包大小进行优化
 		VITE_REPORT && (visualizer({ filename: 'stats.html', gzipSize: true, brotliSize: true }) as unknown as PluginOption),
-		requireTransform({
-			// .ts文件中使用 commonjs require()
-			fileRegex: /.ts$/,
-		}),
 		// 低版本浏览器兼容
 		// legacyPlugin({
 		// 	targets: ['chrome 52', 'Android &gt; 39', 'iOS &gt;= 10.3', 'iOS &gt;= 10.3'], // 需要兼容的目标列表，可以设置多个

@@ -86,7 +86,7 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 			hideInForm: true, // * hideInForm 在Form中不展示此列, 不可搜索
 			filters: true,
 			onFilter: true,
-			hideInSearch: true,
+			search: false,
 			valueEnum: {
 				0: {
 					text: '正常',
@@ -124,7 +124,7 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 			dataIndex: 'progress',
 			align: 'center',
 			width: 300,
-			hideInSearch: true,
+			search: false,
 			valueType: item => ({
 				type: 'progress',
 				status: ProcessMap[valueEnum[item.progress_status] as 'close'] as any,
@@ -135,7 +135,7 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 			dataIndex: 'email',
 			align: 'center',
 			width: 150,
-			hideInSearch: true,
+			search: false,
 			ellipsis: true, // * ellipsis 是否自动缩略
 		},
 		{
@@ -254,7 +254,7 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 			key: 'option',
 			align: 'center',
 			fixed: 'right',
-			hideInSearch: true,
+			search: false,
 			width: 135,
 			render: (_, record) => TableRenderAction(record, handleOperator, handleModalSubmit),
 		},

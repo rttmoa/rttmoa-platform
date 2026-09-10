@@ -134,7 +134,7 @@ export const TableColumnsConfig = (modalOperate: any, modalResult: any): ProColu
 			align: 'center',
 			fixed: 'right',
 			width: 50,
-			hideInSearch: true,
+			search: false,
 			render: (data, entity) => action(entity, modalOperate, modalResult),
 		},
 	];

@@ -1,4 +1,5 @@
 import { ECOption } from '@/components/Echarts/config';
+import type * as echarts from 'echarts';
 
 // 柱状图：https://echarts.apache.org/examples/zh/index.html#chart-type-bar
 export const option1Fn = (isDark: boolean): ECOption => {

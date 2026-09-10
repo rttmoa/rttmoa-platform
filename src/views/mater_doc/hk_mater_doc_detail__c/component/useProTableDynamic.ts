@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Form } from 'antd';
-import type { ActionType, FormInstance, ProTableProps } from '@ant-design/pro-components';
+import type { ActionType, ProTableProps } from '@ant-design/pro-components';
+import type { FormInstance } from 'antd';
 import dayjs from 'dayjs';
 import { message } from '@/hooks/useMessage';
 import useTabColumnSchema from '@/hooks/useTableSchema/useTabColumnSchema';
@@ -24,8 +25,8 @@ const useProTableDynamic = ({ api }: any) => {
 
 	const searchSpan = useSearchSpan();
 
-	const actionRef = useRef<ActionType>();
-	const formRef = useRef<FormInstance>();
+	const actionRef = useRef<ActionType>(undefined);
+	const formRef = useRef<FormInstance>(undefined);
 	const [form] = Form.useForm();
 
 	const [editableKeys, setEditableKeys] = useState<React.Key[]>([]); // 行内编辑
@@ -54,14 +55,14 @@ const useProTableDynamic = ({ api }: any) => {
 			setDrawerIsVisible(true);
 			setDrawerCurrentRow(item || {});
 		} else {
-				const currentScene = type === 'create' ? scene : item?.document_type__c === '生产入库单' ? 'product' : 'other';
+			const currentScene = type === 'create' ? scene : item?.document_type__c === '生产入库单' ? 'product' : 'other';
 			setModalScene(currentScene);
 			setModalIsVisible(true);
 			setModalUserInfo(item || {});
 			setModalTitle(type === 'create' ? '新建' : '编辑');
 		}
 	};
-	
+
 	const clearSelection = useCallback(() => {
 		setSelectedRowKeys([]);
 		setSelectedRows([]);

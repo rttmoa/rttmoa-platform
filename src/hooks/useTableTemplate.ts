@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
 import { Form } from 'antd';
-import type { ActionType, FormInstance } from '@ant-design/pro-components';
+import type { ActionType } from '@ant-design/pro-components';
+import type { FormInstance } from 'antd';
 import { message } from '@/hooks/useMessage';
 
 // 定义表格数据类型接口
@@ -36,8 +37,8 @@ export const useTableTemplate = <T extends TableDataItem>(config: TableTemplateC
 	const { tableName, apiMethods, nameField, columnsConfig } = config;
 
 	// 表格相关状态
-	const actionRef = useRef<ActionType>();
-	const formRef = useRef<FormInstance>();
+	const actionRef = useRef<ActionType>(undefined);
+	const formRef = useRef<FormInstance>(undefined);
 	const [form] = Form.useForm();
 	const [loading, setLoading] = useState<boolean>(false);
 	const [pagination, setPagination] = useState<{ page: number; pageSize: number; total: number }>({

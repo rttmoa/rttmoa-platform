@@ -32,8 +32,7 @@ function titleFN(data: string, record?: any, index?: number) {
 	const layer = record?.layer ?? '';
 	const str = `${row}排 - ${layer}层 - ${data}列`;
 
-	let color = data === '空闲' ? '#B4EEB4' : '#FF6A6A'; // 绿色 / 红色
-	color = '#FFF';
+	const color = '#FFF';
 
 	return (
 		<Tooltip

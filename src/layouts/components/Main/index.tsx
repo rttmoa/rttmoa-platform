@@ -3,7 +3,7 @@ import React from 'react';
 import { Layout } from 'antd';
 import { useDebounceFn } from 'ahooks';
 import { RefreshContext } from '@/context/Refresh';
-import { useEffect, createRef, useContext } from 'react';
+import { useEffect, useRef, useContext } from 'react';
 import { RouteObjectType } from '@/routers/interface';
 import { useLocation, useOutlet } from 'react-router-dom';
 import { setGlobalState } from '@/redux/modules/global';
@@ -55,8 +55,8 @@ const LayoutMain: React.FC = () => {
 
 	// 解决过渡动画导致useEffect执行多次的问题
 	// @see: http://reactcommunity.org/react-transition-group/with-react-router
-	const menuList: RouteTypeWithNodeRef[] = flatMenuList.map(item => ({ ...item, nodeRef: createRef() }));
-	const { nodeRef } = menuList.find(route => route.path === pathname) ?? {};
+	// React 19 removed findDOMNode; every route, including unmatched routes, needs a stable ref.
+	const nodeRef = useRef<HTMLElement>(null);
 
 	// console.log(outlet);
 	return (

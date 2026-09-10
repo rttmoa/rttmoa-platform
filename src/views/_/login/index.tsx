@@ -4,7 +4,7 @@ import loginIllustration from '@/assets/images/login_illustration.svg';
 import logo from '@/assets/images/rttmoa-128x128.png';
 import upack2 from '@/assets/images/upack2.png';
 import kdFH from '@/assets/images/logo_haikouZY.png';
-import ReactCanvas from './components/ReactCanvas';
+// import ReactCanvas from './components/ReactCanvas';
 import './index.less';
 import SwitchDark from './components/SwitchDark';
 

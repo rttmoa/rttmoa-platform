@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Form } from 'antd';
-import type { ActionType, FormInstance, ProTableProps } from '@ant-design/pro-components';
+import type { ActionType, ProTableProps } from '@ant-design/pro-components';
+import type { FormInstance } from 'antd';
 import { message } from '@/hooks/useMessage';
 import _ from 'lodash';
 import useHeaderStretch from '@/hooks/useTable/useHeaderStretch';
@@ -23,8 +24,8 @@ const useProTableDynamic = ({ api, headerStretch = false }: any) => {
 	const { tableName, collection } = tableInfo;
 	const searchSpan = useSearchSpan();
 
-	const actionRef = useRef<ActionType>();
-	const formRef = useRef<FormInstance>();
+	const actionRef = useRef<ActionType>(undefined);
+	const formRef = useRef<FormInstance>(undefined);
 	const [form] = Form.useForm();
 
 	const [editableKeys, setEditableKeys] = useState<React.Key[]>([]); // 行内编辑

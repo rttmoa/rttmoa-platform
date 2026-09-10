@@ -29,7 +29,7 @@ export const usePagination = ({ onBeforeChange, initialPageSize = 50 }: { onBefo
 	/** 生成 ProTable.pagination 配置 */
 	const paginationProps: TablePaginationConfig = useMemo(
 		() => ({
-			size: 'default',
+			size: 'middle',
 			showQuickJumper: true,
 			showSizeChanger: true,
 			pageSizeOptions: [10, 15, 20, 30, 50, 100],

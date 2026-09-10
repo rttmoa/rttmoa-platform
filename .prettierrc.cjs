@@ -25,7 +25,6 @@ module.exports = {
 	bracketSpacing: true,
 	// 将 > 的 JSX 元素放在最后一行的末尾而不是新行上 (true: 最后一行的末尾, false: 在新行上)
 	bracketSameLine: false,
-	jsxBracketSameLine: false, // jsx尖括号不换行
 	// 在唯一的箭头函数参数周围包含括号 (avoid: omit parentheses, always: include parentheses)
 	arrowParens: 'avoid',
 	// 指定要使用的解析器，无需在文件开头包含 @prettier

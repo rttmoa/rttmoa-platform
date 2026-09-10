@@ -7,8 +7,8 @@ const App: React.FC = () => {
 	const [form] = Form.useForm();
 	const [formLayout, setFormLayout] = useState<LayoutType>('horizontal');
 
-	const onFormLayoutChange = ({ layout }: { layout: LayoutType }) => {
-		setFormLayout(layout);
+	const onFormLayoutChange = ({ layout }: { layout?: LayoutType }) => {
+		if (layout) setFormLayout(layout);
 	};
 
 	const formItemLayout = formLayout === 'horizontal' ? { labelCol: { span: 4 }, wrapperCol: { span: 12 } } : null;

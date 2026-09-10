@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Form } from 'antd';
-import type { ActionType, FormInstance, ProTableProps } from '@ant-design/pro-components';
+import type { ActionType, ProTableProps } from '@ant-design/pro-components';
+import type { FormInstance } from 'antd';
 import { message } from '@/hooks/useMessage';
 import _ from 'lodash';
 import { useSearchSpan } from '@/hooks/useTable/useSearchSpan'; // 公共：屏幕宽度自动计算
@@ -18,8 +19,7 @@ const emptyTableOps = {};
 
 const useProTableDynamic = ({ api, Virtual = false }: { api: any; Virtual?: boolean }) => {
 	const [loading, setLoading] = useState<boolean>(false);
-	const loadingStartRef = useRef<number>();
-
+	const loadingStartRef = useRef<number>(undefined);
 
 	// * 查看表格加载时间
 	useEffect(() => {
@@ -68,8 +68,8 @@ const useProTableDynamic = ({ api, Virtual = false }: { api: any; Virtual?: bool
 	const searchSpan = useSearchSpan();
 	const { innerHeight } = useWindowSize();
 
-	const actionRef = useRef<ActionType>();
-	const formRef = useRef<FormInstance>();
+	const actionRef = useRef<ActionType>(undefined);
+	const formRef = useRef<FormInstance>(undefined);
 	const [form] = Form.useForm();
 
 	const [editableKeys, setEditableKeys] = useState<React.Key[]>([]); // 行内编辑
@@ -201,7 +201,6 @@ const useProTableDynamic = ({ api, Virtual = false }: { api: any; Virtual?: bool
 		[modalOperate, modalResult, columnsSchemaField, tableOps, columnSchema]
 	);
 
-	
 	const tableScrollX = useMemo(() => selectionColumnWidth + columnsCfg.reduce((total, column: any) => total + (Number(column.width) || 120), 0), [columnsCfg]);
 	const { virtualClassName, virtualProps } = useConfigVirtual({
 		Virtual,

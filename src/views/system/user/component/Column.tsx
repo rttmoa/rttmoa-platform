@@ -132,7 +132,7 @@ const TableColumnsConfig = (handleOperator: any, handleModalSubmit: any): ProCol
 			key: 'option',
 			align: 'center',
 			fixed: 'right',
-			hideInSearch: true,
+			search: false,
 			width: 135,
 			render: (_, record) => TableRenderAction(record, handleOperator, handleModalSubmit),
 		},
