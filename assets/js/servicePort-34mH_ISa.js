@@ -1,0 +1,1 @@
+var e=`/hooks`;export{e as t};

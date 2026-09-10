@@ -1,0 +1,1 @@
+import{jt as e}from"./antd-TT0Wgl12.js";import"./redux-CtNcMol7.js";import{Y as t}from"./pro-components-tMeZMFHb.js";import"./index-Dy7jggeg.js";var n=t(),r=()=>(0,n.jsx)(e,{children:(0,n.jsx)(`span`,{className:`text`,children:`我是 Menu 1`})});export{r as default};
