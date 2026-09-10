@@ -30,6 +30,7 @@ export const usePagination = ({ onBeforeChange, initialPageSize = 50 }: { onBefo
 	const paginationProps: TablePaginationConfig = useMemo(
 		() => ({
 			size: 'middle',
+			placement: ['bottomEnd'],
 			showQuickJumper: true,
 			showSizeChanger: true,
 			pageSizeOptions: [10, 15, 20, 30, 50, 100],

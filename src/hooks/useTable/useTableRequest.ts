@@ -23,8 +23,10 @@ export default function useTableRequest(api?: any, setLoading?: any, setSchema?:
 
 				const { data }: any = await api.find(payload);
 
-				const list = data?.list || [];
-				const total = data?.total || 0;
+				const list = Array.isArray(data?.list) ? data.list : [];
+				const responseTotal = data?.total ?? data?.count ?? data?.pagination?.total;
+				const parsedTotal = Number(responseTotal);
+				const total = Number.isFinite(parsedTotal) && parsedTotal > 0 ? parsedTotal : list.length;
 
 				setDataList?.(list);
 

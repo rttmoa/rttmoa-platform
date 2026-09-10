@@ -1,5 +1,5 @@
-@import url('./proTable.less');
-@import url('./transition.less');
+@import './proTable.less';
+@import './transition.less';
 
 /* global */
 html,
@@ -44,6 +44,7 @@ body,
 }
 
 // FIXME: 点击表格工具栏里的“全屏”后，页面主体区域会真正铺满。
+
 /* maximize layout */
 #root.main-maximize {
 	.layout-vertical > .ant-layout-sider,
@@ -58,11 +59,9 @@ body,
 	.ant-layout-footer {
 		display: none !important;
 	}
-
 	.layout-classic .classic-content {
 		height: 100% !important;
 	}
-
 	.layout-vertical > .ant-layout,
 	.layout-columns > .ant-layout,
 	.layout-classic .classic-content .classic-main,
@@ -70,7 +69,6 @@ body,
 	.ant-layout-content {
 		height: 100%;
 	}
-
 	.ant-layout-content {
 		padding: 0;
 	}

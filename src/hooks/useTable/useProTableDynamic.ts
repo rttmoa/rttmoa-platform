@@ -33,6 +33,7 @@ const useProTableDynamic = ({ api, headerStretch = false }: any) => {
 
 	const [openSearch, setOpenSearch] = useState<boolean>(false);
 	const [dataList, setDataList] = useState<any[]>([]);
+	const [tableScrollY, setTableScrollY] = useState(320);
 	const { handleRequest, findApi } = useTableRequest(api, setLoading, setcolumnSchema, setPagination, setTableInfo, setInitColumnSchema, setDataList);
 
 	const [selectedRows, setSelectedRows] = useState<any[]>([]);
@@ -88,6 +89,49 @@ const useProTableDynamic = ({ api, headerStretch = false }: any) => {
 			debouncedSubmit.cancel();
 		};
 	}, [debouncedSubmit]);
+
+	// Ant Design 6 会严格使用 scroll.y。根据表格在页面中的实际位置计算剩余高度，
+	// 避免使用 100vh 将横向滚动条和分页器推到视口之外。
+	useEffect(() => {
+		let frameId = 0;
+		const getVisibleTable = () => Array.from(document.querySelectorAll<HTMLElement>('.ant-pro-table-scroll')).find(element => element.getClientRects().length > 0);
+
+		const updateScrollHeight = () => {
+			const tableRoot = getVisibleTable();
+			const tableBody = tableRoot?.querySelector<HTMLElement>('.ant-table-body');
+			if (!tableRoot || !tableBody) return;
+
+			const pagination = tableRoot.querySelector<HTMLElement>('.ant-table-pagination');
+			const paginationStyle = pagination ? window.getComputedStyle(pagination) : null;
+			const paginationHeight = pagination ? pagination.getBoundingClientRect().height + Number.parseFloat(paginationStyle?.marginTop || '0') + Number.parseFloat(paginationStyle?.marginBottom || '0') : 0;
+			const availableBottom = Math.min(tableRoot.getBoundingClientRect().bottom, window.innerHeight);
+			const nextHeight = Math.max(160, Math.floor(availableBottom - tableBody.getBoundingClientRect().top - paginationHeight - 8));
+
+			setTableScrollY(current => (current === nextHeight ? current : nextHeight));
+		};
+
+		const scheduleUpdate = () => {
+			window.cancelAnimationFrame(frameId);
+			frameId = window.requestAnimationFrame(updateScrollHeight);
+		};
+
+		frameId = window.requestAnimationFrame(updateScrollHeight);
+		window.addEventListener('resize', scheduleUpdate);
+
+		const resizeObserver = new ResizeObserver(scheduleUpdate);
+		const tableRoot = getVisibleTable();
+		if (tableRoot) {
+			[tableRoot, tableRoot.querySelector('.ant-pro-table-search'), tableRoot.querySelector('.ant-pro-table-list-toolbar'), tableRoot.querySelector('.ant-table-pagination')]
+				.filter((element): element is Element => Boolean(element))
+				.forEach(element => resizeObserver.observe(element));
+		}
+
+		return () => {
+			window.cancelAnimationFrame(frameId);
+			window.removeEventListener('resize', scheduleUpdate);
+			resizeObserver.disconnect();
+		};
+	}, [openSearch, paginationProps.total, searchSpan]);
 
 	// 工具栏 Config
 	const reloadTable = useCallback(async () => {
@@ -169,7 +213,7 @@ const useProTableDynamic = ({ api, headerStretch = false }: any) => {
 	const proTableProps: ProTableProps<any, any> = {
 		rowKey: '_id',
 		className: 'ant-pro-table-scroll  ant-pro-table-compact    mater-stock-hover-table',
-		scroll: { y: '100vh' },
+		scroll: { x: 'max-content', y: tableScrollY },
 		headerTitle: tableName,
 		formRef,
 		actionRef,

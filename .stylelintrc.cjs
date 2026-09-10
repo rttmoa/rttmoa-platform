@@ -34,6 +34,8 @@ module.exports = {
     "no-descending-specificity": null, 				// 禁止较低特异性的选择器出现在较高特异性的选择器之后
     "custom-property-pattern": null, 	 				// 允许自定义 CSS 变量名称
     "media-feature-range-notation": null,	
+    "import-notation": "string", // Tailwind CSS 4 与 Less 使用字符串导入语法
+    "at-rule-no-unknown": [true, { ignoreAtRules: ["config", "custom-variant", "plugin", "source", "theme", "utility", "variant"] }],
     "selector-pseudo-class-no-unknown": [ true, { ignorePseudoClasses: ["global"] }],
 		// 'at-rule-no-unknown': null,
     // 'scss/at-rule-no-unknown': [

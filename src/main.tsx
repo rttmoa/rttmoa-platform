@@ -1,10 +1,10 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { StyleProvider } from '@ant-design/cssinjs';
 import { PersistGate } from 'redux-persist/integration/react';
 import App from './App.tsx';
 import { Provider } from 'react-redux';
 import { persistor, store } from '@/redux';
-import 'antd/dist/reset.css';
 import '@/styles/index.css';
 import '@/styles/index.less';
 import '@/assets/iconfont/iconfont.less';
@@ -16,11 +16,13 @@ if (!container) {
 }
 
 const app = (
-	<Provider store={store}>
-		<PersistGate loading={<div>加载中…</div>} persistor={persistor}>
-			<App />
-		</PersistGate>
-	</Provider>
+	<StyleProvider layer>
+		<Provider store={store}>
+			<PersistGate loading={<div>加载中…</div>} persistor={persistor}>
+				<App />
+			</PersistGate>
+		</Provider>
+	</StyleProvider>
 );
 
 createRoot(container).render(import.meta.env.DEV ? <StrictMode>{app}</StrictMode> : app);

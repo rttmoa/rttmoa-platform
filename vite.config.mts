@@ -81,7 +81,10 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
 						if (/\/node_modules\/(echarts|zrender)\//.test(moduleId)) return 'charts';
 						if (/\/node_modules\/(xlsx|file-saver)\//.test(moduleId)) return 'spreadsheet';
 						if (moduleId.includes('/node_modules/@ant-design/pro-components/')) return 'pro-components';
-						if (/\/node_modules\/(antd|@ant-design|@rc-component|rc-[^/]+)\//.test(moduleId)) return 'antd';
+						if (/\/node_modules\/@ant-design\/(icons|icons-svg)\//.test(moduleId)) return 'antd-icons';
+						if (moduleId.includes('/node_modules/antd/')) return 'antd';
+						if (/\/node_modules\/@ant-design\//.test(moduleId)) return 'antd-core';
+						if (/\/node_modules\/(@rc-component|rc-[^/]+)\//.test(moduleId)) return 'rc-components';
 						if (/\/node_modules\/(react|react-dom|scheduler)\//.test(moduleId)) return 'react';
 					},
 					minify: { compress: { dropConsole: viteEnv.VITE_DROP_CONSOLE, dropDebugger: viteEnv.VITE_DROP_CONSOLE } },

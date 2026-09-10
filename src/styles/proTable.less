@@ -27,7 +27,6 @@
 		box-sizing: border-box;
 		padding-bottom: 0 !important;
 	}
-
 	.ant-table-tbody-virtual-holder {
 		height: var(--mater-stock-table-body-scroll-y);
 		max-height: var(--mater-stock-table-body-scroll-y) !important;
@@ -46,7 +45,6 @@
 		visibility: visible !important;
 		background: #e4e4e7;
 		border-radius: 8px;
-
 		&::before,
 		&::after {
 			position: absolute;
@@ -62,7 +60,6 @@
 			z-index: 2;
 			pointer-events: none;
 		}
-
 		&::before {
 			left: 0;
 			width: 16px;
@@ -73,7 +70,6 @@
 			background: #e4e4e7;
 			content: '\25C0';
 		}
-
 		&::after {
 			right: 10px;
 			width: 16px;
@@ -84,7 +80,6 @@
 			background: #e4e4e7;
 			content: '\25B6';
 		}
-
 		.ant-table-tbody-virtual-scrollbar-thumb {
 			height: 10px !important;
 			top: 3px !important;
@@ -92,13 +87,11 @@
 			border-radius: 8px !important;
 		}
 	}
-
 	.ant-table-tbody-virtual-scrollbar-vertical {
 		width: 10px !important;
 		top: 0 !important;
 		bottom: 0 !important;
 		visibility: visible !important;
-
 		&::before,
 		&::after {
 			position: absolute;
@@ -114,7 +107,6 @@
 			z-index: 2;
 			pointer-events: none;
 		}
-
 		&::before {
 			top: 0;
 			color: #595959;
@@ -123,7 +115,6 @@
 			background: #e4e4e7;
 			content: '\25B2';
 		}
-
 		&::after {
 			bottom: 0;
 			color: #595959;
@@ -132,17 +123,14 @@
 			background: #e4e4e7;
 			content: '\25BC';
 		}
-
 		.ant-table-tbody-virtual-scrollbar-thumb {
 			width: 10px !important;
 			background: #bdbdbd !important;
 		}
 	}
-
 	.ant-table-tbody-virtual-scrollbar-thumb:hover {
 		background: #939393 !important;
 	}
-
 }
 
 // * 加这个是 ProTable组件 界面滚动区域
@@ -150,6 +138,8 @@
 	display: flex;
 	flex-direction: column;
 	height: 100%;
+	min-height: 0;
+	overflow: hidden;
 
 	// ! ProTable 改变表格字体大小，让表格呈现更多数据
 	&.ant-pro-table-compact {
@@ -176,49 +166,43 @@
 			padding: 5px 6px !important;
 		}
 	}
-
 	.ant-pro-table-search {
 		margin-block-end: 10px;
 	}
 	.ant-pro-card:last-child {
 		flex: 1;
+		min-height: 0;
 		overflow: hidden;
 		.ant-pro-card-body {
 			display: flex;
 			flex-direction: column;
 			height: 100%;
+			min-height: 0;
 			.ant-table-wrapper {
+				display: flex;
 				flex: 1;
-				overflow: hidden;
+				flex-direction: column;
+				min-height: 0;
 				.ant-spin-nested-loading {
 					height: 100%;
+					min-height: 0;
 					.ant-spin-container {
 						display: flex;
 						flex-direction: column;
 						height: 100%;
+						min-height: 0;
 						.ant-table {
-							flex: auto;
-							overflow: hidden;
-
 							// ! ProTable 组件中表格表头的文字大小
 							.ant-table-thead > tr > th .ant-table-column-title,
 							.ant-table-thead > tr > th .ant-table-column-title * {
 								font-size: 12px !important;
 							}
-							.ant-table-container {
-								display: flex;
-								flex-direction: column;
-								height: 100%;
-								.ant-table-header {
-									flex: none;
-								}
-								.ant-table-body {
-									flex: auto;
-								}
-							}
-							.ant-table-pagination {
-								flex: none;
-							}
+						}
+
+						// Ant Design 6 将分页放在 .ant-table 的同级节点。
+						> .ant-table-pagination {
+							flex: none;
+							margin-block-end: 0;
 						}
 
 						/* table empty */

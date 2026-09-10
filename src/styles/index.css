@@ -1,11 +1,19 @@
+@layer theme, base, antd, components, utilities;
+
 @import 'tailwindcss';
+@import 'antd/dist/reset.css' layer(antd);
+
 @config '../../tailwind.config.js';
 
 /* Preserve the Tailwind 3 default border color. */
 @layer base {
-  *, ::before, ::after, ::backdrop, ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
+	*,
+	::before,
+	::after,
+	::backdrop,
+	::file-selector-button {
+		border-color: var(--color-gray-200, currentColor);
+	}
 }
 
 /* 
