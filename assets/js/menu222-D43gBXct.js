@@ -1,1 +1,0 @@
-import{jt as e}from"./antd-TT0Wgl12.js";import{Y as t}from"./pro-components-tMeZMFHb.js";var n=t(),r=()=>(0,n.jsx)(e,{children:(0,n.jsx)(`span`,{className:`text`,children:`我是 Menu 2-2-2 页面`})});export{r as default};

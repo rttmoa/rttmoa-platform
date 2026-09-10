@@ -1,0 +1,1 @@
+import{a as e}from"./rolldown-runtime-B0Z9INg1.js";import{Rt as t,pr as n}from"./antd-m9AZ6nbF.js";import{t as r}from"./useInterval-CG7psXTU.js";var i=e(n()),a=e(t()),o=()=>{let[e,t]=(0,i.useState)((0,a.default)().format(`YYYY年MM月DD HH:mm:ss`));return r(()=>{t((0,a.default)().format(`YYYY年MM月DD HH:mm:ss`))},1e3),e};export{o as default};

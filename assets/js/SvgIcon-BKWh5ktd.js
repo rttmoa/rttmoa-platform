@@ -1,1 +1,0 @@
-import{a as e}from"./rolldown-runtime-B0Z9INg1.js";import{dr as t}from"./antd-TT0Wgl12.js";import{Y as n}from"./pro-components-tMeZMFHb.js";var r=e(t()),i=n(),a=r.memo(e=>{let{name:t,prefix:n=`icon`,iconStyle:r={width:`100px`,height:`100px`}}=e,a=`#${n}-${t}`;return(0,i.jsx)(`svg`,{"aria-hidden":`true`,style:r,children:(0,i.jsx)(`use`,{href:a})})});export{a as t};

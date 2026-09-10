@@ -1,0 +1,1 @@
+import{n as e}from"./api-BK6Prlpb.js";var t=t=>e.post(`/operate/operate`,t),n=t=>e.post(`/error/errorLog`,t);export{t as n,n as t};

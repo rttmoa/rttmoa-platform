@@ -1,1 +1,0 @@
-import{tn as e}from"./antd-TT0Wgl12.js";var t,n,r,i=()=>{let i=e.useApp();return t=i.message,r=i.modal,n=i.notification,null};export{i,r as n,n as r,t};

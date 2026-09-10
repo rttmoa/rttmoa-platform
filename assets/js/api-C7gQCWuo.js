@@ -1,1 +1,0 @@
-import{t as e}from"./api-CRsq5IPh.js";async function t(t){return e.post(`/api/rule`,{method:`POST`,data:{method:`update`,...t||{}}})}async function n(t){return e.post(`/api/rule`,{method:`POST`,data:{method:`post`,...t||{}}})}async function r(t){return e.post(`/api/rule`,{method:`POST`,data:{method:`delete`,...t||{}}})}export{r as n,t as r,n as t};

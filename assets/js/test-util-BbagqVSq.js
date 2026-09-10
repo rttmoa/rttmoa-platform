@@ -1,0 +1,1 @@
+import{a as e}from"./rolldown-runtime-B0Z9INg1.js";import{pr as t}from"./antd-m9AZ6nbF.js";var n=e(t()),r=()=>{function e(e,t){if(typeof window<`u`)return t}let[t,r]=((t,r)=>{let[i,a]=(0,n.useState)(()=>e(t,r));return(0,n.useEffect)(()=>{},[t,i]),[i,a]})(`zs`,33);return null};export{r as default};

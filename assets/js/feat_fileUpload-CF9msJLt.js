@@ -1,0 +1,1 @@
+import"./rolldown-runtime-B0Z9INg1.js";import{jt as e,pr as t}from"./antd-m9AZ6nbF.js";import{Y as n}from"./pro-components-BIdn72xq.js";import r from"./fileUpload-8i_c2u0P.js";t();var i=n(),a=()=>(0,i.jsx)(i.Fragment,{children:(0,i.jsx)(e,{className:`w-full h-full`,children:(0,i.jsx)(e,{children:(0,i.jsx)(r,{})})})});export{a as default};
