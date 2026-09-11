@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { message } from '@/hooks/useMessage';
 
 /**
- * ！！！公共：请求服务端
+ * ！！！公共(api)：请求服务端
  */
 export default function useTableRequest(api?: any, setLoading?: any, setSchema?: any, setPagination?: any, setTableInfo?: any, setInitSchema?: any, setDataList?: any) {
 	const handleRequest = useCallback(

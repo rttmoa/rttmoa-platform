@@ -62,7 +62,7 @@ const App: React.FC = () => {
 		<ConfigProvider {...configProviderProps}>
 			<AppProvider>
 				{/* 每天9点定时提醒 */}
-				<SapReturnReminder />
+				{/* <SapReturnReminder /> */}
 				<I18nextProvider i18n={i18n}>
 					{/* 全局刷新 / 局部刷新数据  */}
 					<RefreshProvider>

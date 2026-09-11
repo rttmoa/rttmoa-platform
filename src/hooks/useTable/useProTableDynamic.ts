@@ -214,6 +214,7 @@ const useProTableDynamic = ({ api, headerStretch = false }: any) => {
 		rowKey: '_id',
 		className: 'ant-pro-table-scroll  ant-pro-table-compact    mater-stock-hover-table',
 		scroll: { x: 'max-content', y: tableScrollY },
+		// scroll: { x: 'max-content',   },
 		headerTitle: tableName,
 		formRef,
 		actionRef,
