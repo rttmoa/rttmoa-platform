@@ -62,7 +62,7 @@ const PrintModal = ({ api, open, onCancel, record }: PrintModalProps) => {
 			open={open}
 			onCancel={onCancel}
 			width={1280}
-			destroyOnClose
+			destroyOnHidden
 			styles={{ body: { minHeight: 760, padding: 16 } }}
 			footer={[
 				<Button key='cancel' onClick={onCancel}>

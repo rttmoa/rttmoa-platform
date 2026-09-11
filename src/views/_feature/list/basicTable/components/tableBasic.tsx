@@ -184,10 +184,12 @@ const App: any = ({ isShow }: any) => {
 				.toString()
 				.toLowerCase()
 				.includes((value as string).toLowerCase()),
-		onFilterDropdownOpenChange: visible => {
-			if (visible) {
-				setTimeout(() => searchInput.current?.select(), 100);
-			}
+		filterDropdownProps: {
+			onOpenChange: open => {
+				if (open) {
+					setTimeout(() => searchInput.current?.select(), 100);
+				}
+			},
 		},
 		render: text =>
 			searchedColumn === dataIndex ? <Highlighter highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }} searchWords={[searchText]} autoEscape textToHighlight={text ? text.toString() : ''} /> : text,

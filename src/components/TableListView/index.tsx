@@ -451,7 +451,7 @@ const TableListView: React.FC<TableListViewProps> = ({ columnSchema = {}, initCo
 				onOk={handleSubmit}
 				okText='提交'
 				cancelText='取消'
-				destroyOnClose
+				destroyOnHidden
 			>
 				<Space direction='vertical' size={12} style={{ width: '100%' }}>
 					<div>

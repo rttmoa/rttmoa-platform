@@ -66,7 +66,7 @@ const PasswordModal = forwardRef<PasswordModalRef, {}>((_props, ref) => {
 
 	let title = '修改用户信息（用户名，头像，密码）';
 	return (
-		<Modal title={title} open={isModalOpen} onOk={handleOk} onCancel={handleCancel} destroyOnClose={true}>
+		<Modal title={title} open={isModalOpen} onOk={handleOk} onCancel={handleCancel} destroyOnHidden={true}>
 			<Form
 				layout='horizontal'
 				// style={{ "--border-top": "none" }}

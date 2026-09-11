@@ -459,7 +459,7 @@ const ModalComponent = (Params: any) => {
 			grid // ★ 启用表单网格
 			rowProps={{ gutter: [16, 0] }}
 			// initialValues={modalUserInfo || {}} // initialValues只会初始化一次
-			modalProps={{ destroyOnClose: true }}
+			modalProps={{ destroyOnHidden: true }}
 			onOpenChange={onOpenChange}
 			onFinish={onFinish}
 		>

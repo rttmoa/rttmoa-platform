@@ -68,37 +68,37 @@ const getPopoverContent = (shelf?: ShelfItem) => {
 	const list = shelf ? [shelf] : [];
 
 	return (
-		<div className="max-w-[880px]">
-			<table className="table-fixed w-full text-slate-700 text-[13px] border border-slate-200">
-				<thead className="bg-slate-50">
+		<div className='max-w-[880px]'>
+			<table className='table-fixed w-full text-slate-700 text-[13px] border border-slate-200'>
+				<thead className='bg-slate-50'>
 					<tr>
-						<th className="px-2 py-2 text-center whitespace-nowrap w-[115px] border-2 border-gray-300">位置名称</th>
-						<th className="px-2 py-2 text-center whitespace-nowrap w-[70px] border-2 border-gray-300">仓位</th>
-						<th className="px-2 py-2 text-center whitespace-nowrap w-[90px] border-2 border-gray-300">组号</th>
-						<th className="px-2 py-2 text-center whitespace-nowrap w-[110px] border-2 border-gray-300">托盘号</th>
-						<th className="px-2 py-2 text-center whitespace-nowrap w-[70px] border-2 border-gray-300">物料代码</th>
-						<th className="px-2 py-2 text-center whitespace-nowrap max-w-[220px]  border-2 border-gray-300">物料名称</th>
-						<th className="px-2 py-2 text-center whitespace-nowrap w-[110px] border-2 border-gray-300">生产日期</th>
-						<th className="px-2 py-2 text-center whitespace-nowrap w-[110px] border-2 border-gray-300">批次</th>
+						<th className='px-2 py-2 text-center whitespace-nowrap w-[115px] border-2 border-gray-300'>位置名称</th>
+						<th className='px-2 py-2 text-center whitespace-nowrap w-[70px] border-2 border-gray-300'>仓位</th>
+						<th className='px-2 py-2 text-center whitespace-nowrap w-[90px] border-2 border-gray-300'>组号</th>
+						<th className='px-2 py-2 text-center whitespace-nowrap w-[110px] border-2 border-gray-300'>托盘号</th>
+						<th className='px-2 py-2 text-center whitespace-nowrap w-[70px] border-2 border-gray-300'>物料代码</th>
+						<th className='px-2 py-2 text-center whitespace-nowrap max-w-[220px]  border-2 border-gray-300'>物料名称</th>
+						<th className='px-2 py-2 text-center whitespace-nowrap w-[110px] border-2 border-gray-300'>生产日期</th>
+						<th className='px-2 py-2 text-center whitespace-nowrap w-[110px] border-2 border-gray-300'>批次</th>
 					</tr>
 				</thead>
 				<tbody>
 					{list.length ? (
 						list.map((item, idx) => (
-							<tr key={idx} className="divide-y divide-slate-200 font-bold">
-								<td className="  px-2 py-2 text-center whitespace-nowrap border-r-2 border-gray-300 overflow-hidden">{item.loc_name__c ?? '-'}</td>
-								<td className="px-2 py-2 text-center whitespace-nowrap border-r-2 border-gray-300 overflow-hidden">{item.position__c ?? '-'}</td>
-								<td className="px-2 py-2 text-center whitespace-nowrap border-r-2 border-gray-300 overflow-hidden">{item.group_id__c ?? '-'}</td>
-								<td className="px-2 py-2 text-center whitespace-nowrap border-r-2 border-gray-300 overflow-hidden">{item.pallet__c ?? '-'}</td>
-								<td className="px-2 py-2 text-center whitespace-nowrap border-r-2 border-gray-300 overflow-hidden">{item.material_code__c ?? '-'}</td>
-								<td className="px-2 py-2 text-center whitespace-nowrap border-r-2 border-gray-300 overflow-hidden">{item.material_name__c ?? '-'}</td>
-								<td className="px-2 py-2 text-center whitespace-nowrap border-r-2 border-gray-300 overflow-hidden">{item.production_date__c ?? '-'}</td>
-								<td className="px-2 py-2 text-center whitespace-nowrap border-r-2 border-gray-300 overflow-hidden">{item.batch__c ?? '-'}</td>
+							<tr key={idx} className='divide-y divide-slate-200 font-bold'>
+								<td className='  px-2 py-2 text-center whitespace-nowrap border-r-2 border-gray-300 overflow-hidden'>{item.loc_name__c ?? '-'}</td>
+								<td className='px-2 py-2 text-center whitespace-nowrap border-r-2 border-gray-300 overflow-hidden'>{item.position__c ?? '-'}</td>
+								<td className='px-2 py-2 text-center whitespace-nowrap border-r-2 border-gray-300 overflow-hidden'>{item.group_id__c ?? '-'}</td>
+								<td className='px-2 py-2 text-center whitespace-nowrap border-r-2 border-gray-300 overflow-hidden'>{item.pallet__c ?? '-'}</td>
+								<td className='px-2 py-2 text-center whitespace-nowrap border-r-2 border-gray-300 overflow-hidden'>{item.material_code__c ?? '-'}</td>
+								<td className='px-2 py-2 text-center whitespace-nowrap border-r-2 border-gray-300 overflow-hidden'>{item.material_name__c ?? '-'}</td>
+								<td className='px-2 py-2 text-center whitespace-nowrap border-r-2 border-gray-300 overflow-hidden'>{item.production_date__c ?? '-'}</td>
+								<td className='px-2 py-2 text-center whitespace-nowrap border-r-2 border-gray-300 overflow-hidden'>{item.batch__c ?? '-'}</td>
 							</tr>
 						))
 					) : (
 						<tr>
-							<td colSpan={5} className="text-center py-2 text-gray-500">
+							<td colSpan={5} className='text-center py-2 text-gray-500'>
 								暂无数据
 							</td>
 						</tr>
@@ -150,23 +150,23 @@ export const ShelfLane: React.FC<ShelfLaneProps> = ({ currLay, apiData, loading,
 
 	const header = useMemo(
 		() => (
-			<div className="flex flex-row justify-between gap-3">
-				<div className="flex flex-row">
+			<div className='flex flex-row justify-between gap-3'>
+				<div className='flex flex-row'>
 					{LEGEND_ITEMS.map(item => (
-						<div key={item.label} className="w-[80px] px-[4px] py-[6px] text-center text-[12px] text-[#ffffff]" style={{ backgroundColor: item.color }}>
+						<div key={item.label} className='w-[80px] px-[4px] py-[6px] text-center text-[12px] text-[#ffffff]' style={{ backgroundColor: item.color }}>
 							{item.label}
 						</div>
 					))}
 				</div>
-				<div className="flex flex-row gap-2">
+				<div className='flex flex-row gap-2'>
 					<Select
 						allowClear
 						showSearch
-						placeholder="物料代码"
+						placeholder='物料代码'
 						options={materialCodeOptions}
 						value={selectedMaterialCode}
 						style={{ width: 180 }}
-						optionFilterProp="label"
+						optionFilterProp='label'
 						onChange={value => {
 							setSelectedMaterialCode(value);
 							setSelectedProductionDate(undefined);
@@ -176,16 +176,16 @@ export const ShelfLane: React.FC<ShelfLaneProps> = ({ currLay, apiData, loading,
 						allowClear
 						showSearch
 						disabled={!selectedMaterialCode}
-						placeholder="生产日期"
+						placeholder='生产日期'
 						options={productionDateOptions}
 						value={selectedProductionDate}
 						style={{ width: 160 }}
-						optionFilterProp="label"
+						optionFilterProp='label'
 						onChange={setSelectedProductionDate}
 					/>
 				</div>
 				<div>
-					<Button type="text" icon={<RedoOutlined />} onClick={onRefresh}>
+					<Button type='text' icon={<RedoOutlined />} onClick={onRefresh}>
 						刷新
 					</Button>
 				</div>
@@ -226,7 +226,7 @@ export const ShelfLane: React.FC<ShelfLaneProps> = ({ currLay, apiData, loading,
 				render: (_: unknown, record: ColRecord) => {
 					if (isAisleCell(row, record.col__c)) {
 						return (
-							<div className="py-1 px-1 text-center font-sans text-[10px]" style={{ backgroundColor: '#f2f702' }}>
+							<div className='py-1 px-1 text-center font-sans text-[10px]' style={{ backgroundColor: '#f2f702' }}>
 								过道
 							</div>
 						);
@@ -240,8 +240,8 @@ export const ShelfLane: React.FC<ShelfLaneProps> = ({ currLay, apiData, loading,
 					const label = hasPos ? `${col}列-${row}排-${currLay}层` : '';
 
 					return (
-						<Popover placement="top" trigger="hover" overlayInnerStyle={POPOVER_STYLE} content={getPopoverContent(shelf)}>
-							<div className="text-[10px] py-1 text-center font-sans cursor-pointer" style={{ backgroundColor: color, color: 'white', whiteSpace: 'nowrap' }}>
+						<Popover placement='top' trigger='hover' overlayInnerStyle={POPOVER_STYLE} content={getPopoverContent(shelf)}>
+							<div className='text-[10px] py-1 text-center font-sans cursor-pointer' style={{ backgroundColor: color, color: 'white', whiteSpace: 'nowrap' }}>
 								{label}
 							</div>
 						</Popover>
@@ -259,12 +259,12 @@ export const ShelfLane: React.FC<ShelfLaneProps> = ({ currLay, apiData, loading,
 	}, [apiData, currLay, posMap, selectedMaterialCode, selectedProductionDate]);
 
 	if (loading) {
-		return <ProSkeleton type="list" />;
+		return <ProSkeleton type='list' />;
 	}
 
 	return (
 		<div ref={containerRef}>
-			<Table className="cusTable" title={() => header} columns={columns} dataSource={dataSource} scroll={{ x: columns.length * 50, y: tableHeight }} pagination={false} bordered size="small" />
+			<Table className='cusTable' title={() => header} columns={columns} dataSource={dataSource} scroll={{ x: columns.length * 50, y: tableHeight }} pagination={false} bordered size='small' />
 		</div>
 	);
 };

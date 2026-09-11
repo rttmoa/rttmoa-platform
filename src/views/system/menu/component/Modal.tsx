@@ -276,7 +276,7 @@ const ModalComponent = (Props: any) => {
 							</>
 						)}
 					</Row>
-					<Card className='mt-[25px]' title={<span className='text-[14px]'>菜单结构 JSON 数据、参考如何创建菜单</span>} bodyStyle={{ height: 400, overflow: 'auto' }}>
+					<Card className='mt-[25px]' title={<span className='text-[14px]'>菜单结构 JSON 数据、参考如何创建菜单</span>} styles={{ body: { height: 400, overflow: 'auto' } }}>
 						<pre style={{ backgroundColor: '#f5f5f5', padding: '12px', borderRadius: '6px', overflow: 'auto', fontSize: 13 }}>
 							<code>{JSON.stringify(menu, null, 2)}</code>
 						</pre>

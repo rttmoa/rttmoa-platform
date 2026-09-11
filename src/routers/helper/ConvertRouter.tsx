@@ -21,7 +21,7 @@ import LazyComponent from '@/components/Lazy'; // 懒加载 Lazy
 // 7、处理dynamicRouter数组，是否有 isFull 属性，有则为全屏
 // 8、最终返回动态路由器 dynamicRouter
 // const modules = import.meta.glob('@/views/**/*.tsx') as Record<string, Parameters<typeof lazy>[number]>
-const modules = import.meta.glob(['@/views/**/*.tsx', '!@/views/login/**/*.tsx', '!@/views/login/**']) as Record<string, Parameters<typeof lazy>[number]>;
+const modules = import.meta.glob(['@/views/**/*.tsx', '!@/views/_/login/**/*.tsx', '!@/views/_/login/**']) as Record<string, Parameters<typeof lazy>[number]>;
 export const convertToDynamicRouterFormat = (authMenuList: RouteObjectType[]) => {
 	const flatMenuList = getFlatMenuList(authMenuList);
 	// console.log("扁平化数组：", authMenuList, flatMenuList); // 接口中菜单 转换 react-router格式：(12) Array [{…},....]  -->  (66) Array [{…},....]

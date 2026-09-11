@@ -35,8 +35,8 @@
 		"build:prod:preview": "npm run build:production && vite preview",
 		"tailwindcss": "tailwindcss -i src/styles/index.css -o build.css --minify",
 		"type:check": "node node_modules/typescript-compiler/bin/tsc --noEmit --skipLibCheck",
-		"lint": "npm run lint:eslint  && npm run lint:prettier",
-		"lint:fix": "npm run eslint:fix && npm run stylelint && npm run lint:prettier:fix",
+		"lint": "npm run lint:eslint && npm run lint:stylelint && npm run lint:prettier:check",
+		"lint:fix": "npm run lint:eslint:fix && npm run lint:stylelint:fix && npm run lint:prettier:fix",
 		"lint:eslint": "eslint ./src",
 		"lint:eslint:fix": "eslint --fix --cache ./src",
 		"lint:prettier": "prettier --write --log-level warn \"src/**/*.{js,ts,json,tsx,css,less,scss,html,md}\"",
@@ -44,7 +44,8 @@
 		"lint:prettier:fix": "prettier --write \"src/**/*\" --end-of-line auto --ignore-unknown",
 		"lint:prettier:fix:all": "prettier --write . --end-of-line auto --ignore-unknown",
 		"lint:prettier:single": "prettier --write \"src/views/system/userManage/index.tsx\" --end-of-line auto --ignore-unknown",
-		"lint:stylelint": "stylelint --cache --fix \"**/*.{less,postcss,css,scss}\" --cache --cache-location node_modules/.cache/stylelint/",
+		"lint:stylelint": "stylelint \"src/**/*.{less,postcss,css,scss}\" --allow-empty-input",
+		"lint:stylelint:fix": "stylelint --cache --fix \"src/**/*.{less,postcss,css,scss}\" --allow-empty-input --cache-location node_modules/.cache/stylelint/",
 		"lint:lint-staged": "lint-staged",
 		"markdownlint": "markdownlint *.md",
 		"markdownlint:fix": "markdownlint --fix *.md",
@@ -164,16 +165,8 @@
 		"conventional-commits-filter": "^6.0.1"
 	},
 	"browserslist": {
-		"production": [
-			"> 1%",
-			"not dead",
-			"not op_mini all"
-		],
-		"development": [
-			"last 1 chrome version",
-			"last 1 firefox version",
-			"last 1 safari version"
-		]
+		"production": ["> 1%", "not dead", "not op_mini all"],
+		"development": ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"]
 	},
 	"config": {
 		"commitizen": {

@@ -67,7 +67,7 @@ const ModaLeiEntry = ({ open, selectedRow, onOpenChange, onSuccess }: ModaLeiEnt
 			layout='horizontal'
 			labelCol={{ span: 7 }}
 			wrapperCol={{ span: 14 }}
-			modalProps={{ destroyOnClose: true, maskClosable: false }}
+			modalProps={{ destroyOnHidden: true, maskClosable: false }}
 			submitter={{ submitButtonProps: { loading: submitting } }}
 			onOpenChange={nextOpen => {
 				onOpenChange(nextOpen);

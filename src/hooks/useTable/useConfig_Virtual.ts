@@ -27,9 +27,7 @@ const useConfigVirtual = ({ Virtual = false, innerHeight, openSearch, selectedRo
 
 			const pagination = tableRoot.querySelector('.ant-table-pagination');
 			const paginationStyle = pagination ? window.getComputedStyle(pagination) : null;
-			const paginationHeight = pagination
-				? pagination.getBoundingClientRect().height + Number.parseFloat(paginationStyle?.marginTop || '0') + Number.parseFloat(paginationStyle?.marginBottom || '0')
-				: 64;
+			const paginationHeight = pagination ? pagination.getBoundingClientRect().height + Number.parseFloat(paginationStyle?.marginTop || '0') + Number.parseFloat(paginationStyle?.marginBottom || '0') : 64;
 			const footer = document.querySelector('footer');
 			const footerHeight = footer?.getBoundingClientRect().height || 0;
 
@@ -43,11 +41,9 @@ const useConfigVirtual = ({ Virtual = false, innerHeight, openSearch, selectedRo
 			frameId = window.requestAnimationFrame(updateScrollHeight);
 		};
 		const resizeObserver = new ResizeObserver(scheduleUpdate);
-		const layoutElements = [
-			tableRoot.querySelector('.ant-pro-table-search'),
-			tableRoot.querySelector('.ant-pro-table-list-toolbar'),
-			tableRoot.querySelector('.ant-table-pagination'),
-		].filter((element): element is Element => Boolean(element));
+		const layoutElements = [tableRoot.querySelector('.ant-pro-table-search'), tableRoot.querySelector('.ant-pro-table-list-toolbar'), tableRoot.querySelector('.ant-table-pagination')].filter(
+			(element): element is Element => Boolean(element)
+		);
 		layoutElements.forEach(element => resizeObserver.observe(element));
 
 		return () => {

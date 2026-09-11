@@ -691,7 +691,7 @@ const ModalComponent = (Params: any) => {
 			wrapperCol={{ span: 14 }}
 			grid
 			rowProps={{ gutter: [16, 0] }}
-			modalProps={{ destroyOnClose: true, styles: { body: { minHeight: 600 } } }}
+			modalProps={{ destroyOnHidden: true, styles: { body: { minHeight: 600 } } }}
 			onOpenChange={onOpenChange}
 			onFinish={onFinish}
 			submitter={

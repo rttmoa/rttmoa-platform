@@ -13,7 +13,7 @@ export class hk_mater_doc__c_API {
 	static delMore = (data: string[]) => http.post(`${this.api}/delMore`, data);
 	static importEx = (params: Params) => http.post(`${this.api}/importEx`, params);
 
-	static searchSapDocs = (params: Params) => http.post(`${this.api}/searchSapDocs`, params); // 
+	static searchSapDocs = (params: Params) => http.post(`${this.api}/searchSapDocs`, params); //
 	static searchSapDocument = (params: Params) => http.post(`${this.api}/searchSapDocument`, params);
 	static submitSapDocument = (params: Params) => http.post(`${this.api}/submitSapDocument`, params);
 	static globalWarehouseInfo = () => http.post(`/api/global/global_warehouse_info`);
@@ -42,7 +42,7 @@ export class hk_mater_doc_detail__c_API {
 	static del = (id: string) => http.delete(`${this.api}/del/${id}`);
 	static delMore = (data: string[]) => http.post(`${this.api}/delMore`, data);
 	static importEx = (params: Params) => http.post(`${this.api}/importEx`, params);
-	
+
 	static transferSap = (url: string, params: Params) => http.post(url, params);
 	static materLeiEntry = (params: Params) => http.post('/api/Btn_Common/mater_lei_entry', params);
 	static getMaterLeiOutStock = (params: Params) => http.post('/api/Btn_Common/mater_lei_out_g', params);
