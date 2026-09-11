@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.20](https://github.com/rttmoa/rttmoa-platform/compare/v3.1.19...v3.1.20) (2026-09-11)
+
+### Features
+
+- 🚀 已完成升级后的兼容性检查和代码优化，主要修改如下：1、迁移 Ant Design 6 弃用属性 2、修复无效 Less 样式 ([5f52673](https://github.com/rttmoa/rttmoa-platform/commit/5f526730aabe9d953b68a212e1f06cb7affc781a))
+
 ### [3.1.19](https://github.com/rttmoa/rttmoa-platform/compare/v3.1.18...v3.1.19) (2026-09-11)
 
 ### Features
