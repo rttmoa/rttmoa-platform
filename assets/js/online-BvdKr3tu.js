@@ -1,0 +1,1 @@
+import{dn as e,it as t,jt as n}from"./antd-m9AZ6nbF.js";import{Y as r}from"./pro-components-CF8kfr39.js";var i=``+new URL(`../png/online-DsU4VW-3.png`,import.meta.url).href,a=r(),o=()=>(0,a.jsxs)(n,{children:[(0,a.jsx)(e,{message:`示例：`,type:`info`,showIcon:!0}),(0,a.jsx)(`br`,{}),(0,a.jsx)(t,{width:1600,src:i})]});export{o as default};

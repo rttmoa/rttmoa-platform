@@ -1,0 +1,1 @@
+import{jt as e}from"./antd-m9AZ6nbF.js";import{Y as t}from"./pro-components-CF8kfr39.js";var n=t(),r=()=>(0,n.jsx)(e,{children:`注意查看面包屑变化`});export{r as default};

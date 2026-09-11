@@ -1,0 +1,1 @@
+import"./rolldown-runtime-B0Z9INg1.js";import{pr as e}from"./antd-m9AZ6nbF.js";import{Y as t}from"./pro-components-CF8kfr39.js";e();var n=t();function r(){return(0,n.jsx)(`div`,{className:`root`,children:(0,n.jsx)(`h2`,{className:`title`,children:`React Three Fiber`})})}export{r as default};
