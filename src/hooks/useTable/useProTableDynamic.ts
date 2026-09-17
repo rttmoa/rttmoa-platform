@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
+import type { CSSProperties } from 'react';
 import { Form } from 'antd';
 import type { ActionType, ProTableProps } from '@ant-design/pro-components';
 import type { FormInstance } from 'antd';
@@ -34,6 +35,7 @@ const useProTableDynamic = ({ api, headerStretch = false }: any) => {
 	const [openSearch, setOpenSearch] = useState<boolean>(false);
 	const [dataList, setDataList] = useState<any[]>([]);
 	const [tableScrollY, setTableScrollY] = useState(320);
+	const tableRootClassName = `dynamic-pro-table-${useId().replaceAll(':', '')}`;
 	const { handleRequest, findApi } = useTableRequest(api, setLoading, setcolumnSchema, setPagination, setTableInfo, setInitColumnSchema, setDataList);
 
 	const [selectedRows, setSelectedRows] = useState<any[]>([]);
@@ -94,17 +96,18 @@ const useProTableDynamic = ({ api, headerStretch = false }: any) => {
 	// 避免使用 100vh 将横向滚动条和分页器推到视口之外。
 	useEffect(() => {
 		let frameId = 0;
-		const getVisibleTable = () => Array.from(document.querySelectorAll<HTMLElement>('.ant-pro-table-scroll')).find(element => element.getClientRects().length > 0);
+		const getTableRoot = () => document.querySelector<HTMLElement>(`.${tableRootClassName}`);
 
 		const updateScrollHeight = () => {
-			const tableRoot = getVisibleTable();
+			const tableRoot = getTableRoot();
 			const tableBody = tableRoot?.querySelector<HTMLElement>('.ant-table-body');
 			if (!tableRoot || !tableBody) return;
 
 			const pagination = tableRoot.querySelector<HTMLElement>('.ant-table-pagination');
 			const paginationStyle = pagination ? window.getComputedStyle(pagination) : null;
 			const paginationHeight = pagination ? pagination.getBoundingClientRect().height + Number.parseFloat(paginationStyle?.marginTop || '0') + Number.parseFloat(paginationStyle?.marginBottom || '0') : 0;
-			const availableBottom = Math.min(tableRoot.getBoundingClientRect().bottom, window.innerHeight);
+			const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
+			const availableBottom = Math.min(tableRoot.getBoundingClientRect().bottom, viewportHeight);
 			const nextHeight = Math.max(160, Math.floor(availableBottom - tableBody.getBoundingClientRect().top - paginationHeight - 8));
 
 			setTableScrollY(current => (current === nextHeight ? current : nextHeight));
@@ -117,21 +120,45 @@ const useProTableDynamic = ({ api, headerStretch = false }: any) => {
 
 		frameId = window.requestAnimationFrame(updateScrollHeight);
 		window.addEventListener('resize', scheduleUpdate);
+		window.visualViewport?.addEventListener('resize', scheduleUpdate);
 
 		const resizeObserver = new ResizeObserver(scheduleUpdate);
-		const tableRoot = getVisibleTable();
-		if (tableRoot) {
-			[tableRoot, tableRoot.querySelector('.ant-pro-table-search'), tableRoot.querySelector('.ant-pro-table-list-toolbar'), tableRoot.querySelector('.ant-table-pagination')]
+		const tableRoot = getTableRoot();
+		const observedElements = new Set<Element>();
+		const observeLayoutElements = () => {
+			if (!tableRoot) return;
+			[
+				tableRoot,
+				tableRoot.querySelector('.ant-pro-table-search'),
+				tableRoot.querySelector('.ant-pro-table-list-toolbar'),
+				tableRoot.querySelector('.ant-table-thead'),
+				tableRoot.querySelector('.ant-table-pagination'),
+			]
 				.filter((element): element is Element => Boolean(element))
-				.forEach(element => resizeObserver.observe(element));
+				.forEach(element => {
+					if (observedElements.has(element)) return;
+					observedElements.add(element);
+					resizeObserver.observe(element);
+				});
+		};
+
+		observeLayoutElements();
+		const mutationObserver = new MutationObserver(() => {
+			observeLayoutElements();
+			scheduleUpdate();
+		});
+		if (tableRoot) {
+			mutationObserver.observe(tableRoot, { childList: true, subtree: true });
 		}
 
 		return () => {
 			window.cancelAnimationFrame(frameId);
 			window.removeEventListener('resize', scheduleUpdate);
+			window.visualViewport?.removeEventListener('resize', scheduleUpdate);
+			mutationObserver.disconnect();
 			resizeObserver.disconnect();
 		};
-	}, [openSearch, paginationProps.total, searchSpan]);
+	}, [openSearch, paginationProps.total, searchSpan, tableRootClassName]);
 
 	// 工具栏 Config
 	const reloadTable = useCallback(async () => {
@@ -212,9 +239,9 @@ const useProTableDynamic = ({ api, headerStretch = false }: any) => {
 
 	const proTableProps: ProTableProps<any, any> = {
 		rowKey: '_id',
-		className: 'ant-pro-table-scroll  ant-pro-table-compact    mater-stock-hover-table',
+		className: `${tableRootClassName} ant-pro-table-scroll ant-pro-table-compact mater-stock-hover-table`,
+		style: { '--dynamic-pro-table-scroll-y': `${tableScrollY}px` } as CSSProperties,
 		scroll: { x: 'max-content', y: tableScrollY },
-		// scroll: { x: 'max-content',   },
 		headerTitle: tableName,
 		formRef,
 		actionRef,

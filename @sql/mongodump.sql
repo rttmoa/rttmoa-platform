@@ -90,7 +90,7 @@ mongorestore  --host 127.0.0.1 --port 27017   --drop   -d steedos_haikouZY  --co
 
 
 
--- 导入 rttmoa-platform 服务端表
+-- 导入 rttmoa-platform 服务端表: 部门表、角色表、用户表、菜单表、
 mongorestore  --host 127.0.0.1 --port 27017   --drop   -d steedos_haikouZY  --collection __dept  C:\rrr\steedos_kedongFH\__dept.bson
 mongorestore  --host 127.0.0.1 --port 27017   --drop   -d steedos_haikouZY  --collection __error  C:\rrr\steedos_kedongFH\__error.bson
 mongorestore  --host 127.0.0.1 --port 27017   --drop   -d steedos_haikouZY  --collection __job  C:\rrr\steedos_kedongFH\__job.bson

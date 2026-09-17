@@ -169,6 +169,14 @@
 	.ant-pro-table-search {
 		margin-block-end: 10px;
 	}
+
+	// scroll.y 在 Ant Design 中只是 max-height。数据不足一页时固定表体实际高度，
+	// 让横向滚动条仍位于可用区域底部，而不是紧跟最后一条数据。
+	.ant-table-container > .ant-table-body {
+		height: var(--dynamic-pro-table-scroll-y);
+		max-height: var(--dynamic-pro-table-scroll-y) !important;
+	}
+
 	.ant-pro-card:last-child {
 		flex: 1;
 		min-height: 0;
@@ -191,6 +199,13 @@
 						flex-direction: column;
 						height: 100%;
 						min-height: 0;
+
+						// Ant Design 6 中分页器是表格的同级节点。
+						// 让表格占据剩余空间，分页器自然固定在卡片可视区域底部。
+						> .ant-table {
+							flex: 1;
+							min-height: 0;
+						}
 						.ant-table {
 							// ! ProTable 组件中表格表头的文字大小
 							.ant-table-thead > tr > th .ant-table-column-title,
