@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.21](https://github.com/rttmoa/rttmoa-platform/compare/v3.1.20...v3.1.21) (2026-09-17)
+
+### Features
+
+- 🚀 优化proTable表格中 底部分页器位置通过srcoll.y，固定到底部位置 ([c31d9fe](https://github.com/rttmoa/rttmoa-platform/commit/c31d9fe8c0c78a87c83b151da0b6552b06305cd1))
+
 ### [3.1.20](https://github.com/rttmoa/rttmoa-platform/compare/v3.1.19...v3.1.20) (2026-09-11)
 
 ### Features
